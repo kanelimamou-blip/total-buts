@@ -38,7 +38,24 @@ RIDGE_LEAGUE = 0.3
 STATUS: dict = {}
 
 
+VARIANTS = [{"limit": 1000}, {"limit": 500}, {"limit": 200}, {}]
+_variant = {"i": None}
+
+
 def _get(url, params):
+    """Essaie les formats de requête connus et retient le premier accepté."""
+    order = [_variant["i"]] if _variant["i"] is not None else range(len(VARIANTS))
+    for i in order:
+        p = {k: v for k, v in params.items() if k != "limit"} | VARIANTS[i]
+        out = _get_once(url, p)
+        if out is not None:
+            _variant["i"] = i
+            STATUS["_variant"] = VARIANTS[i]
+            return out
+    return None
+
+
+def _get_once(url, params):
     key = url.split("/soccer/")[1].split("/")[0]
     st = STATUS.setdefault(key, {"ok": 0, "fail": 0, "last": None})
     for attempt in range(3):
@@ -47,6 +64,7 @@ def _get(url, params):
             st["last"] = r.status_code
             if r.status_code in (400, 404):
                 st["fail"] += 1
+                st["body"] = r.text[:200]
                 return None
             r.raise_for_status()
             st["ok"] += 1
