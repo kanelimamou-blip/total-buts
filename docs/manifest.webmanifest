@@ -1,0 +1,17 @@
+{
+  "name": "Total Buts",
+  "short_name": "Total Buts",
+  "description": "Prédictions des totaux de buts et coupons du jour.",
+  "lang": "fr",
+  "start_url": "./#coupons",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#0e1612",
+  "theme_color": "#0e1612",
+  "icons": [
+    {"src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png"},
+    {"src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png"},
+    {"src": "icons/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable"}
+  ]
+}
