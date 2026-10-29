@@ -126,7 +126,7 @@ function viewMatches() {
 function matchRow(m) {
   const bar = (k, label) => `<div class="pb"><span class="l">${label}<b>${pct(m.p[k])}</b></span><div class="meter"><span style="width:${Math.round(m.p[k] * 100)}%"></span></div></div>`;
   return `<button class="match" data-match="${esc(m.id)}">
-    <span class="teams">${esc(m.home)} – ${esc(m.away)}<br><span class="small muted">${esc(m.league)}</span></span>
+    <span class="teams">${esc(m.home)} – ${esc(m.away)}<br><span class="small muted">${esc(m.league)}${m.provisional ? " · en rodage" : ""}</span></span>
     <span class="time">${esc(m.time || "")}</span>
     <span class="probs">${bar("o15", "+1,5")}${bar("o20", "+2")}${bar("o25", "+2,5")}</span>
   </button>`;
@@ -157,6 +157,7 @@ function openMatch(id) {
     <p class="muted small" style="text-align:center">${esc(m.league)} · ${dayLabel(m.date, state.data.today)} ${esc(m.time)}</p>
     <div class="mk-grid">${box("o15")}${box("o20")}${box("o25")}</div>
     ${m.p.o20_push ? `<p class="small muted">+2 buts : remboursé si le match finit à 2 buts (${pct(m.p.o20_push)}).</p>` : ""}
+    ${m.provisional ? `<p class="note">Coupe d'Europe en rodage : l'historique des matchs européens se charge encore. Ce match n'entre pas dans les coupons pour l'instant.</p>` : ""}
     ${m.market_o25 != null ? `<p class="small">Marché sur +2,5 : <b>${pct(m.market_o25)}</b> (cote moyenne ${odds(m.odds_o25)}). Modèle seul : ${pct(m.p_model.o25)}.</p>` : `<p class="small muted">Pas encore de cotes pour ce match : probabilités du modèle seul.</p>`}
     <h3>Nombre de buts</h3>${distChart(m.total_dist)}
     <h3>Scores les plus probables</h3><div class="form">${m.top_scores.map((s) => `<span>${s.s} · ${pct(s.p)}</span>`).join("")}</div>

@@ -31,7 +31,8 @@ DOMESTIC = ["eng.1", "esp.1", "fra.1", "ita.1", "ger.1", "por.1", "tur.1", "ned.
             "cro.1", "srb.1", "ukr.1", "isr.1", "cyp.1", "hun.1", "rou.1"]
 CACHE = RAW_DIR / "espn"
 HISTORY_DAYS = 760
-MAX_REQUESTS = 1500
+MAX_REQUESTS = 3500
+MIN_COVERAGE_DAYS = 300  # en dessous, les matchs européens sont affichés mais pas mis en coupon
 RIDGE_TEAM = 3.0
 RIDGE_LEAGUE = 0.3
 
@@ -183,7 +184,7 @@ class Global:
 
 def fit_global(df: pd.DataFrame, as_of: pd.Timestamp) -> Global | None:
     m = df[df["completed"] & (df["dt"] < as_of) & (df["dt"] >= as_of - pd.Timedelta(days=730))]
-    if len(m) < 1000:
+    if len(m) < 600:
         return None
     teams = sorted(set(m["home"]) | set(m["away"]))
     idx = {t: i for i, t in enumerate(teams)}
@@ -309,4 +310,8 @@ def update(today: date, offline: bool = False):
                 "total_dist": [round(float(x), 4) for x in total_dist(mat)[:7]],
                 "form_home": team_form(df, r.home), "form_away": team_form(df, r.away),
             })
+    done = df[df["completed"]]
+    coverage = int((done["dt"].max() - done["dt"].min()).days) if len(done) else 0
+    for u in upcoming:
+        u["provisional"] = coverage < MIN_COVERAGE_DAYS
     return upcoming, scores, df, g

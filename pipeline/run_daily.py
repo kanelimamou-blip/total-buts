@@ -147,6 +147,7 @@ def main():
             "legs": [{k: (round(v, 3) if isinstance(v, float) else v) for k, v in l.items()} for l in legs],
             "top_scores": e["top_scores"], "total_dist": e["total_dist"],
             "form_home": e["form_home"], "form_away": e["form_away"],
+            "provisional": e.get("provisional", False),
         })
     matches.sort(key=lambda m: (m["date"], m["time"], -m["p"]["o15"]))
 
@@ -159,7 +160,7 @@ def main():
             continue
         if d in store and store[d].get("frozen"):
             continue
-        day = [{"id": m["id"], "div": m["div"], "rel": fb["reliability"].get(m["div"], 0.9 if m["div"] in CUPS else 1.0), "legs": m["legs"]} for m in by_date[d]]
+        day = [{"id": m["id"], "div": m["div"], "rel": fb["reliability"].get(m["div"], 0.9 if m["div"] in CUPS else 1.0), "legs": m["legs"]} for m in by_date[d] if not m.get("provisional")]
         coupons = build_day(day, league_names={k: v[0] for k, v in ALL_COMPETITIONS.items()})
         store[d] = {"frozen": d == today.isoformat(), "created": now.isoformat(timespec="minutes"), "coupons": coupons}
 
