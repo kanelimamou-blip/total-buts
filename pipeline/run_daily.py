@@ -11,6 +11,7 @@ from datetime import date, datetime, timedelta, timezone
 import numpy as np
 import pandas as pd
 
+import ahead
 import backtest
 import europe
 import feedback
@@ -20,7 +21,9 @@ from coupons import build_day, legs_for_match, settle_coupon
 from fetch import download, load_fixtures, load_results
 from model import fit, predict
 
-HORIZON_DAYS = 7
+HORIZON_DAYS = 30       # matchs affichés
+COUPON_DAYS = 7         # coupons proposés (provisoires jusqu'au jour J)
+DETAIL_DAYS = 8         # forme des équipes et scores probables détaillés
 
 
 def match_id(d: pd.Timestamp, div: str, home: str, away: str) -> str:
@@ -95,6 +98,16 @@ def main():
     fb = feedback.build(bt, log, store)
 
     # Notes d'équipes et prédictions des matchs à venir
+    # Calendrier à un mois : football-data (avec cotes) prioritaire, ESPN pour le reste
+    try:
+        far = ahead.fixtures(today, results, offline=args.offline)
+    except Exception as exc:  # noqa: BLE001
+        print("Calendrier à un mois indisponible :", exc)
+        far = fixtures.iloc[0:0]
+    known = {(r.div, r.home, r.away) for r in fixtures.itertuples()}
+    far = far[[(r.div, r.home, r.away) not in known for r in far.itertuples()]]
+    print(f"Calendrier : {len(fixtures)} matchs football-data, {len(far)} ajoutés depuis ESPN.")
+    fixtures = pd.concat([fixtures, far], ignore_index=True)
     fx = fixtures[(fixtures["date"] >= ts_today) & (fixtures["date"] < ts_today + pd.Timedelta(days=HORIZON_DAYS))]
     played = set(match_id(r.date, r.div, r.home, r.away) for r in results.itertuples())
     ratings, league_tables = {}, {}
@@ -128,7 +141,9 @@ def main():
             "odds_o25": o25,
             "legs": [{k: (round(v, 3) if isinstance(v, float) else v) for k, v in l.items()} for l in legs],
             "top_scores": pr["top_scores"], "total_dist": pr["total_dist"],
-            "form_home": team_form(results, row.home), "form_away": team_form(results, row.away),
+            **({"form_home": team_form(results, row.home), "form_away": team_form(results, row.away)}
+               if row.date < ts_today + pd.Timedelta(days=DETAIL_DAYS) else {"form_home": None, "form_away": None}),
+            "has_odds": o25 is not None,
         })
     for e in euro_matches:
         if e["id"] in scores:
@@ -151,12 +166,12 @@ def main():
         })
     matches.sort(key=lambda m: (m["date"], m["time"], -m["p"]["o15"]))
 
-    # Coupons : le jour J est figé au premier passage du jour, J+1 et J+2 restent provisoires
+    # Coupons : le jour J est figé au premier passage du jour, les jours suivants restent provisoires
     by_date = {}
     for m in matches:
         by_date.setdefault(m["date"], []).append(m)
     for d in sorted(by_date):
-        if d > (today + timedelta(days=2)).isoformat():
+        if d > (today + timedelta(days=COUPON_DAYS)).isoformat():
             continue
         if d in store and store[d].get("frozen"):
             continue

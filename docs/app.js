@@ -52,7 +52,7 @@ function couponDays() {
 function viewCoupons() {
   const d = state.data;
   const days = couponDays();
-  if (!days.length) return `<h1>Coupons</h1><div class="empty"><p>Aucun match analysé pour aujourd'hui et les deux prochains jours.</p><p class="small">Les coupons apparaissent dès que le calendrier et les cotes sont publiés, en général la veille.</p></div>${pastBlock()}`;
+  if (!days.length) return `<h1>Coupons</h1><div class="empty"><p>Pas encore de coupon pour les 7 prochains jours.</p><p class="small">Les coupons sont recalculés à 6 h, 12 h et 18 h.</p></div>${pastBlock()}`;
   if (!state.day || !days.includes(state.day)) state.day = days[0];
   const list = d.coupons.filter((c) => c.date === state.day);
   const shown = list.filter((c) => state.kind === "all" || c.kind === state.kind).sort((a, b) => a.priority - b.priority);
@@ -62,7 +62,7 @@ function viewCoupons() {
   <h1>Coupons</h1>
   <div class="chips">${days.map((x) => `<button class="chip" data-day="${x}" aria-pressed="${x === state.day}">${dayLabel(x, d.today)}</button>`).join("")}</div>
   <div class="chips">${KIND_FILTERS.filter(([k]) => count(k)).map(([k, l]) => `<button class="chip" data-kind="${k}" aria-pressed="${k === state.kind}">${l}<span class="c">${count(k)}</span></button>`).join("")}</div>
-  <p class="small muted">${frozen ? "Coupons du jour figés au premier calcul du matin." : "Coupons provisoires : ils peuvent encore changer avec les cotes."} Classés par priorité.</p>
+  <p class="small muted">${frozen ? "Coupons du jour figés au premier calcul du matin." : "Coupons provisoires : ils seront affinés quand les cotes du marché seront publiées, puis figés le jour du match."} Classés par priorité.</p>
   ${shown.map(couponCard).join("") || `<div class="empty">Aucun coupon de ce type ce jour-là.</div>`}
   ${pastBlock()}`;
 }
@@ -111,11 +111,14 @@ function viewMatches() {
   if (!d.matches.length) return `<h1>Matchs</h1><div class="empty">Aucun match à venir dans les données pour le moment.</div>`;
   const leagues = [...new Set(d.matches.map((m) => m.div))];
   let ms = d.matches.filter((m) => state.league === "all" || m.div === state.league);
+  const mdays = [...new Set(ms.map((m) => m.date))].sort();
+  if (!state.mday || !mdays.includes(state.mday)) state.mday = mdays[0];
   const byDay = {};
-  ms.forEach((m) => (byDay[m.date] ||= []).push(m));
+  ms.filter((m) => m.date === state.mday).forEach((m) => (byDay[m.date] ||= []).push(m));
   const sortKey = state.sort;
   return `<h1>Matchs</h1>
   <div class="chips"><button class="chip" data-league="all" aria-pressed="${state.league === "all"}">Toutes ligues</button>${leagues.map((l) => `<button class="chip" data-league="${l}" aria-pressed="${state.league === l}">${esc(d.leagues[l].name)}</button>`).join("")}</div>
+  <div class="chips">${mdays.map((x) => `<button class="chip" data-mday="${x}" aria-pressed="${x === state.mday}">${dayLabel(x, d.today)}<span class="c">${ms.filter((m) => m.date === x).length}</span></button>`).join("")}</div>
   <div class="chips">${["o15", "o20", "o25"].map((k) => `<button class="chip" data-sort="${k}" aria-pressed="${sortKey === k}">Trier par ${MK[k]}</button>`).join("")}<button class="chip" data-sort="time" aria-pressed="${sortKey === "time"}">Par heure</button></div>
   ${Object.keys(byDay).sort().map((day) => {
     const list = byDay[day].slice().sort((a, b) => (sortKey === "time" ? (a.time > b.time ? 1 : -1) : b.p[sortKey] - a.p[sortKey]));
@@ -126,7 +129,7 @@ function viewMatches() {
 function matchRow(m) {
   const bar = (k, label) => `<div class="pb"><span class="l">${label}<b>${pct(m.p[k])}</b></span><div class="meter"><span style="width:${Math.round(m.p[k] * 100)}%"></span></div></div>`;
   return `<button class="match" data-match="${esc(m.id)}">
-    <span class="teams">${esc(m.home)} – ${esc(m.away)}<br><span class="small muted">${esc(m.league)}${m.provisional ? " · en rodage" : ""}</span></span>
+    <span class="teams">${esc(m.home)} – ${esc(m.away)}<br><span class="small muted">${esc(m.league)}${m.provisional ? " · en rodage" : ""}${m.has_odds === false ? " · sans cotes" : ""}</span></span>
     <span class="time">${esc(m.time || "")}</span>
     <span class="probs">${bar("o15", "+1,5")}${bar("o20", "+2")}${bar("o25", "+2,5")}</span>
   </button>`;
@@ -158,7 +161,7 @@ function openMatch(id) {
     <div class="mk-grid">${box("o15")}${box("o20")}${box("o25")}</div>
     ${m.p.o20_push ? `<p class="small muted">+2 buts : remboursé si le match finit à 2 buts (${pct(m.p.o20_push)}).</p>` : ""}
     ${m.provisional ? `<p class="note">Coupe d'Europe en rodage : l'historique des matchs européens se charge encore. Ce match n'entre pas dans les coupons pour l'instant.</p>` : ""}
-    ${m.market_o25 != null ? `<p class="small">Marché sur +2,5 : <b>${pct(m.market_o25)}</b> (cote moyenne ${odds(m.odds_o25)}). Modèle seul : ${pct(m.p_model.o25)}.</p>` : `<p class="small muted">Pas encore de cotes pour ce match : probabilités du modèle seul.</p>`}
+    ${m.market_o25 != null ? `<p class="small">Marché sur +2,5 : <b>${pct(m.market_o25)}</b> (cote moyenne ${odds(m.odds_o25)}). Modèle seul : ${pct(m.p_model.o25)}.</p>` : `<p class="small muted">Cotes du marché pas encore publiées dans nos sources : probabilités du modèle seul, affinées à l'approche du match.</p>`}
     <h3>Nombre de buts</h3>${distChart(m.total_dist)}
     <h3>Scores les plus probables</h3><div class="form">${m.top_scores.map((s) => `<span>${s.s} · ${pct(s.p)}</span>`).join("")}</div>
     ${formBlock(m.home, m.form_home)}${formBlock(m.away, m.form_away)}`;
@@ -293,11 +296,12 @@ function backtestBlock(bt) {
 
 /* ---------- Événements ---------- */
 document.addEventListener("click", (e) => {
-  const t = e.target.closest("[data-day],[data-kind],[data-league],[data-sort],[data-match],[data-close]");
+  const t = e.target.closest("[data-day],[data-mday],[data-kind],[data-league],[data-sort],[data-match],[data-close]");
   if (!t) return;
   if (t.dataset.close !== undefined) { $("#sheet").hidden = true; return; }
   if (t.dataset.match) { openMatch(t.dataset.match); return; }
   if (t.dataset.day) state.day = t.dataset.day;
+  if (t.dataset.mday) state.mday = t.dataset.mday;
   if (t.dataset.kind) { state.kind = t.dataset.kind; store.set("kind", state.kind); }
   if (t.dataset.league) state.league = t.dataset.league;
   if (t.dataset.sort) { state.sort = t.dataset.sort; store.set("sort", state.sort); }
