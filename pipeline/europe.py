@@ -35,16 +35,26 @@ RIDGE_TEAM = 3.0
 RIDGE_LEAGUE = 0.3
 
 
+STATUS: dict = {}
+
+
 def _get(url, params):
+    key = url.split("/soccer/")[1].split("/")[0]
+    st = STATUS.setdefault(key, {"ok": 0, "fail": 0, "last": None})
     for attempt in range(3):
         try:
-            r = requests.get(url, params=params, timeout=30, headers={"User-Agent": "total-buts/1.0"})
+            r = requests.get(url, params=params, timeout=30, headers={"User-Agent": "Mozilla/5.0 (total-buts)"})
+            st["last"] = r.status_code
             if r.status_code in (400, 404):
+                st["fail"] += 1
                 return None
             r.raise_for_status()
+            st["ok"] += 1
             return r.json()
-        except (requests.RequestException, ValueError):
+        except (requests.RequestException, ValueError) as exc:
+            st["last"] = str(exc)[:120]
             time.sleep(2 ** attempt)
+    st["fail"] += 1
     return None
 
 
@@ -98,6 +108,8 @@ def download(today: date) -> None:
         data = _get(ESPN.format(slug=slug), {"dates": f"{today:%Y%m%d}-{today + timedelta(days=8):%Y%m%d}", "limit": 1000})
         if data is not None:
             path.write_text(json.dumps(_parse(data, slug)))
+    (RAW_DIR.parent / "state").mkdir(parents=True, exist_ok=True)
+    (RAW_DIR.parent / "state" / "europe_status.json").write_text(json.dumps(STATUS, indent=1))
 
 
 def load() -> pd.DataFrame:
