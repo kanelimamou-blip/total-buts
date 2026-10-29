@@ -1,217 +1,287 @@
 {
+ "_probe": {
+  "range_limit": {
+   "status": 400,
+   "events": null,
+   "body": "{\"code\":400,\"message\":\"Failed to get events endpoint.\"}"
+  },
+  "range": {
+   "status": 400,
+   "events": null,
+   "body": "{\"code\":400,\"message\":\"Failed to get events endpoint.\"}"
+  },
+  "day": {
+   "status": 200,
+   "events": 9,
+   "body": ""
+  },
+  "none": {
+   "status": 200,
+   "events": 9,
+   "body": ""
+  },
+  "web_range": {
+   "status": 400,
+   "events": null,
+   "body": "{\"code\":400,\"message\":\"Failed to get events endpoint.\"}"
+  }
+ },
  "uefa.champions": {
   "ok": 0,
-  "fail": 28,
-  "last": 400
+  "fail": 112,
+  "last": 400,
+  "body": "{\"code\":400,\"message\":\"Failed to get events endpoint.\"}"
  },
  "uefa.europa": {
   "ok": 0,
-  "fail": 28,
-  "last": 400
+  "fail": 112,
+  "last": 400,
+  "body": "{\"code\":400,\"message\":\"Failed to get events endpoint.\"}"
  },
  "uefa.europa.conf": {
   "ok": 0,
-  "fail": 28,
-  "last": 400
+  "fail": 112,
+  "last": 400,
+  "body": "{\"code\":400,\"message\":\"Failed to get events endpoint.\"}"
  },
  "eng.1": {
   "ok": 0,
-  "fail": 28,
-  "last": 400
+  "fail": 112,
+  "last": 400,
+  "body": "{\"code\":400,\"message\":\"Failed to get events endpoint.\"}"
  },
  "eng.2": {
   "ok": 0,
-  "fail": 28,
-  "last": 400
+  "fail": 112,
+  "last": 400,
+  "body": "{\"code\":400,\"message\":\"Failed to get events endpoint.\"}"
  },
  "esp.1": {
   "ok": 0,
-  "fail": 28,
-  "last": 400
+  "fail": 112,
+  "last": 400,
+  "body": "{\"code\":400,\"message\":\"Failed to get events endpoint.\"}"
  },
  "esp.2": {
   "ok": 0,
-  "fail": 28,
-  "last": 400
+  "fail": 112,
+  "last": 400,
+  "body": "{\"code\":400,\"message\":\"Failed to get events endpoint.\"}"
  },
  "fra.1": {
   "ok": 0,
-  "fail": 28,
-  "last": 400
+  "fail": 112,
+  "last": 400,
+  "body": "{\"code\":400,\"message\":\"Failed to get events endpoint.\"}"
  },
  "ita.1": {
   "ok": 0,
-  "fail": 28,
-  "last": 400
+  "fail": 112,
+  "last": 400,
+  "body": "{\"code\":400,\"message\":\"Failed to get events endpoint.\"}"
  },
  "ger.1": {
   "ok": 0,
-  "fail": 28,
-  "last": 400
+  "fail": 112,
+  "last": 400,
+  "body": "{\"code\":400,\"message\":\"Failed to get events endpoint.\"}"
  },
  "por.1": {
   "ok": 0,
-  "fail": 28,
-  "last": 400
+  "fail": 112,
+  "last": 400,
+  "body": "{\"code\":400,\"message\":\"Failed to get events endpoint.\"}"
  },
  "tur.1": {
   "ok": 0,
-  "fail": 28,
-  "last": 400
+  "fail": 112,
+  "last": 400,
+  "body": "{\"code\":400,\"message\":\"Failed to get events endpoint.\"}"
  },
  "ned.1": {
   "ok": 0,
-  "fail": 28,
-  "last": 400
+  "fail": 112,
+  "last": 400,
+  "body": "{\"code\":400,\"message\":\"Failed to get events endpoint.\"}"
  },
  "bel.1": {
   "ok": 0,
-  "fail": 28,
-  "last": 400
+  "fail": 112,
+  "last": 400,
+  "body": "{\"code\":400,\"message\":\"Failed to get events endpoint.\"}"
  },
  "sco.1": {
   "ok": 0,
-  "fail": 28,
-  "last": 400
+  "fail": 112,
+  "last": 400,
+  "body": "{\"code\":400,\"message\":\"Failed to get events endpoint.\"}"
  },
  "aut.1": {
   "ok": 0,
-  "fail": 28,
-  "last": 400
+  "fail": 112,
+  "last": 400,
+  "body": "{\"code\":400,\"message\":\"Failed to get events endpoint.\"}"
  },
  "sui.1": {
   "ok": 0,
-  "fail": 28,
-  "last": 400
+  "fail": 112,
+  "last": 400,
+  "body": "{\"code\":400,\"message\":\"Failed to get events endpoint.\"}"
  },
  "gre.1": {
   "ok": 0,
-  "fail": 28,
-  "last": 400
+  "fail": 112,
+  "last": 400,
+  "body": "{\"code\":400,\"message\":\"Failed to get events endpoint.\"}"
  },
  "den.1": {
   "ok": 0,
-  "fail": 28,
-  "last": 400
+  "fail": 112,
+  "last": 400,
+  "body": "{\"code\":400,\"message\":\"Failed to get events endpoint.\"}"
  },
  "cze.1": {
   "ok": 0,
-  "fail": 28,
-  "last": 400
+  "fail": 112,
+  "last": 400,
+  "body": "{\"code\":400,\"message\":\"Failed to get events endpoint.\"}"
  },
  "nor.1": {
   "ok": 0,
-  "fail": 28,
-  "last": 400
+  "fail": 112,
+  "last": 400,
+  "body": "{\"code\":400,\"message\":\"Failed to get events endpoint.\"}"
  },
  "swe.1": {
   "ok": 0,
-  "fail": 28,
-  "last": 400
+  "fail": 112,
+  "last": 400,
+  "body": "{\"code\":400,\"message\":\"Failed to get events endpoint.\"}"
  },
  "pol.1": {
   "ok": 0,
-  "fail": 28,
-  "last": 400
+  "fail": 112,
+  "last": 400,
+  "body": "{\"code\":400,\"message\":\"Failed to get events endpoint.\"}"
  },
  "cro.1": {
   "ok": 0,
-  "fail": 28,
-  "last": 400
+  "fail": 112,
+  "last": 400,
+  "body": "{\"code\":400,\"message\":\"Failed to get events endpoint.\"}"
  },
  "srb.1": {
   "ok": 0,
-  "fail": 28,
-  "last": 400
+  "fail": 112,
+  "last": 400,
+  "body": "{\"code\":400,\"message\":\"Failed to get events endpoint.\"}"
  },
  "ukr.1": {
   "ok": 0,
-  "fail": 28,
-  "last": 400
+  "fail": 112,
+  "last": 400,
+  "body": "{\"code\":400,\"message\":\"Failed to get events endpoint.\"}"
  },
  "isr.1": {
   "ok": 0,
-  "fail": 28,
-  "last": 400
+  "fail": 112,
+  "last": 400,
+  "body": "{\"code\":400,\"message\":\"Failed to get events endpoint.\"}"
  },
  "cyp.1": {
   "ok": 0,
-  "fail": 28,
-  "last": 400
+  "fail": 112,
+  "last": 400,
+  "body": "{\"code\":400,\"message\":\"Failed to get events endpoint.\"}"
  },
  "hun.1": {
   "ok": 0,
-  "fail": 28,
-  "last": 400
+  "fail": 112,
+  "last": 400,
+  "body": "{\"code\":400,\"message\":\"Failed to get events endpoint.\"}"
  },
  "rou.1": {
   "ok": 0,
-  "fail": 28,
-  "last": 400
+  "fail": 112,
+  "last": 400,
+  "body": "{\"code\":400,\"message\":\"Failed to get events endpoint.\"}"
  },
  "bul.1": {
   "ok": 0,
-  "fail": 28,
-  "last": 400
+  "fail": 112,
+  "last": 400,
+  "body": "{\"code\":400,\"message\":\"Failed to get events endpoint.\"}"
  },
  "svk.1": {
   "ok": 0,
-  "fail": 28,
-  "last": 400
+  "fail": 112,
+  "last": 400,
+  "body": "{\"code\":400,\"message\":\"Failed to get events endpoint.\"}"
  },
  "svn.1": {
   "ok": 0,
-  "fail": 28,
-  "last": 400
+  "fail": 112,
+  "last": 400,
+  "body": "{\"code\":400,\"message\":\"Failed to get events endpoint.\"}"
  },
  "ger.2": {
   "ok": 0,
-  "fail": 28,
-  "last": 400
+  "fail": 112,
+  "last": 400,
+  "body": "{\"code\":400,\"message\":\"Failed to get events endpoint.\"}"
  },
  "fra.2": {
   "ok": 0,
-  "fail": 28,
-  "last": 400
+  "fail": 112,
+  "last": 400,
+  "body": "{\"code\":400,\"message\":\"Failed to get events endpoint.\"}"
  },
  "ita.2": {
   "ok": 0,
-  "fail": 28,
-  "last": 400
+  "fail": 112,
+  "last": 400,
+  "body": "{\"code\":400,\"message\":\"Failed to get events endpoint.\"}"
  },
  "rus.1": {
   "ok": 0,
-  "fail": 28,
-  "last": 400
+  "fail": 112,
+  "last": 400,
+  "body": "{\"code\":400,\"message\":\"Failed to get events endpoint.\"}"
  },
  "kaz.1": {
   "ok": 0,
-  "fail": 28,
-  "last": 400
+  "fail": 112,
+  "last": 400,
+  "body": "{\"code\":400,\"message\":\"Failed to get events endpoint.\"}"
  },
  "aze.1": {
   "ok": 0,
-  "fail": 28,
-  "last": 400
+  "fail": 112,
+  "last": 400,
+  "body": "{\"code\":400,\"message\":\"Failed to get events endpoint.\"}"
  },
  "irl.1": {
   "ok": 0,
-  "fail": 28,
-  "last": 400
+  "fail": 112,
+  "last": 400,
+  "body": "{\"code\":400,\"message\":\"Failed to get events endpoint.\"}"
  },
  "fin.1": {
   "ok": 0,
-  "fail": 28,
-  "last": 400
+  "fail": 112,
+  "last": 400,
+  "body": "{\"code\":400,\"message\":\"Failed to get events endpoint.\"}"
  },
  "isl.1": {
   "ok": 0,
-  "fail": 28,
-  "last": 400
+  "fail": 112,
+  "last": 400,
+  "body": "{\"code\":400,\"message\":\"Failed to get events endpoint.\"}"
  },
  "mda.1": {
   "ok": 0,
-  "fail": 28,
-  "last": 400
+  "fail": 112,
+  "last": 400,
+  "body": "{\"code\":400,\"message\":\"Failed to get events endpoint.\"}"
  }
 }
