@@ -108,9 +108,37 @@ def _month_ranges(today: date):
     return out
 
 
+def probe(today: date) -> dict:
+    """Teste quelques formats de requête et garde la réponse, pour diagnostic."""
+    out = {}
+    d0, d1 = today - timedelta(days=30), today
+    tests = {
+        "range_limit": ({"dates": f"{d0:%Y%m%d}-{d1:%Y%m%d}", "limit": 1000}, ESPN),
+        "range": ({"dates": f"{d0:%Y%m%d}-{d1:%Y%m%d}"}, ESPN),
+        "day": ({"dates": f"{d1 - timedelta(days=8):%Y%m%d}"}, ESPN),
+        "none": ({}, ESPN),
+        "web_range": ({"dates": f"{d0:%Y%m%d}-{d1:%Y%m%d}", "limit": 1000},
+                      "https://site.web.api.espn.com/apis/site/v2/sports/soccer/{slug}/scoreboard"),
+    }
+    for name, (params, base) in tests.items():
+        try:
+            r = requests.get(base.format(slug="uefa.champions"), params=params, timeout=30,
+                             headers={"User-Agent": "Mozilla/5.0 (total-buts)"})
+            n = len(r.json().get("events", [])) if r.ok else None
+            out[name] = {"status": r.status_code, "events": n, "body": r.text[:300] if not r.ok else ""}
+        except Exception as exc:  # noqa: BLE001
+            out[name] = {"error": str(exc)[:200]}
+    return out
+
+
 def download(today: date) -> None:
     """Mois terminés : téléchargés une fois. Mois en cours et précédent : à chaque passage."""
     CACHE.mkdir(parents=True, exist_ok=True)
+    STATUS["_probe"] = probe(today)
+    (RAW_DIR.parent / "state").mkdir(parents=True, exist_ok=True)
+    (RAW_DIR.parent / "state" / "europe_status.json").write_text(json.dumps(STATUS, indent=1))
+    if not any(v.get("events") for v in STATUS["_probe"].values()):
+        return
     ranges = _month_ranges(today)
     recent = {r[0] for r in ranges[-2:]}
     for slug in list(CUPS) + DOMESTIC:
