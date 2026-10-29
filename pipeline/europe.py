@@ -25,12 +25,13 @@ CUPS = {
     "uefa.europa": ("UEL", "Ligue Europa"),
     "uefa.europa.conf": ("UECL", "Conference League"),
 }
-DOMESTIC = ["eng.1", "eng.2", "esp.1", "esp.2", "fra.1", "ita.1", "ger.1", "por.1", "tur.1", "ned.1",
+# Championnats dont les clubs jouent régulièrement les coupes d'Europe
+DOMESTIC = ["eng.1", "esp.1", "fra.1", "ita.1", "ger.1", "por.1", "tur.1", "ned.1",
             "bel.1", "sco.1", "aut.1", "sui.1", "gre.1", "den.1", "cze.1", "nor.1", "swe.1", "pol.1",
-            "cro.1", "srb.1", "ukr.1", "isr.1", "cyp.1", "hun.1", "rou.1", "bul.1", "svk.1", "svn.1",
-            "ger.2", "fra.2", "ita.2", "rus.1", "kaz.1", "aze.1", "irl.1", "fin.1", "isl.1", "mda.1"]
+            "cro.1", "srb.1", "ukr.1", "isr.1", "cyp.1", "hun.1", "rou.1"]
 CACHE = RAW_DIR / "espn"
-HISTORY_MONTHS = 26
+HISTORY_DAYS = 760
+MAX_REQUESTS = 1500
 RIDGE_TEAM = 3.0
 RIDGE_LEAGUE = 0.3
 
@@ -38,24 +39,7 @@ RIDGE_LEAGUE = 0.3
 STATUS: dict = {}
 
 
-VARIANTS = [{"limit": 1000}, {"limit": 500}, {"limit": 200}, {}]
-_variant = {"i": None}
-
-
 def _get(url, params):
-    """Essaie les formats de requête connus et retient le premier accepté."""
-    order = [_variant["i"]] if _variant["i"] is not None else range(len(VARIANTS))
-    for i in order:
-        p = {k: v for k, v in params.items() if k != "limit"} | VARIANTS[i]
-        out = _get_once(url, p)
-        if out is not None:
-            _variant["i"] = i
-            STATUS["_variant"] = VARIANTS[i]
-            return out
-    return None
-
-
-def _get_once(url, params):
     key = url.split("/soccer/")[1].split("/")[0]
     st = STATUS.setdefault(key, {"ok": 0, "fail": 0, "last": None})
     for attempt in range(3):
@@ -64,7 +48,6 @@ def _get_once(url, params):
             st["last"] = r.status_code
             if r.status_code in (400, 404):
                 st["fail"] += 1
-                st["body"] = r.text[:200]
                 return None
             r.raise_for_status()
             st["ok"] += 1
@@ -95,65 +78,67 @@ def _parse(payload, slug):
     return rows
 
 
-def _month_ranges(today: date):
-    first = date(today.year, today.month, 1)
-    out = []
-    for k in range(HISTORY_MONTHS, -1, -1):
-        y, m = first.year, first.month - k
-        while m <= 0:
-            y, m = y - 1, m + 12
-        start = date(y, m, 1)
-        end = (date(y + (m == 12), m % 12 + 1, 1) - timedelta(days=1))
-        out.append((start, end))
-    return out
+def _fetch(slug: str, start: date, days: int):
+    """Une requête couvrant `days` jours ; None si la source refuse."""
+    end = start + timedelta(days=days - 1)
+    dates = f"{start:%Y%m%d}" if days == 1 else f"{start:%Y%m%d}-{end:%Y%m%d}"
+    data = _get(ESPN.format(slug=slug), {"dates": dates, "limit": 500})
+    return None if data is None else _parse(data, slug)
 
 
-def probe(today: date) -> dict:
-    """Teste quelques formats de requête et garde la réponse, pour diagnostic."""
-    out = {}
-    d0, d1 = today - timedelta(days=30), today
-    tests = {
-        "range_limit": ({"dates": f"{d0:%Y%m%d}-{d1:%Y%m%d}", "limit": 1000}, ESPN),
-        "range": ({"dates": f"{d0:%Y%m%d}-{d1:%Y%m%d}"}, ESPN),
-        "day": ({"dates": f"{d1 - timedelta(days=8):%Y%m%d}"}, ESPN),
-        "none": ({}, ESPN),
-        "web_range": ({"dates": f"{d0:%Y%m%d}-{d1:%Y%m%d}", "limit": 1000},
-                      "https://site.web.api.espn.com/apis/site/v2/sports/soccer/{slug}/scoreboard"),
-    }
-    for name, (params, base) in tests.items():
-        try:
-            r = requests.get(base.format(slug="uefa.champions"), params=params, timeout=30,
-                             headers={"User-Agent": "Mozilla/5.0 (total-buts)"})
-            n = len(r.json().get("events", [])) if r.ok else None
-            out[name] = {"status": r.status_code, "events": n, "body": r.text[:300] if not r.ok else ""}
-        except Exception as exc:  # noqa: BLE001
-            out[name] = {"error": str(exc)[:200]}
-    return out
+def _chunk_days(today: date) -> int:
+    """La source refuse les longues périodes : on garde la plus longue acceptée (mémorisée)."""
+    path = CACHE / "_chunk.json"
+    try:
+        return json.loads(path.read_text())["days"]
+    except (FileNotFoundError, json.JSONDecodeError, KeyError):
+        pass
+    for days in (14, 7, 3, 1):
+        if _fetch("uefa.champions", today - timedelta(days=days + 7), days) is not None:
+            path.write_text(json.dumps({"days": days}))
+            return days
+    return 0
 
 
 def download(today: date) -> None:
-    """Mois terminés : téléchargés une fois. Mois en cours et précédent : à chaque passage."""
+    """Téléchargement progressif : à venir et récent à chaque passage, puis l'historique
+    manquant du plus récent au plus ancien, dans la limite de MAX_REQUESTS par passage."""
     CACHE.mkdir(parents=True, exist_ok=True)
-    STATUS["_probe"] = probe(today)
-    (RAW_DIR.parent / "state").mkdir(parents=True, exist_ok=True)
-    (RAW_DIR.parent / "state" / "europe_status.json").write_text(json.dumps(STATUS, indent=1))
-    if not any(v.get("events") for v in STATUS["_probe"].values()):
-        return
-    ranges = _month_ranges(today)
-    recent = {r[0] for r in ranges[-2:]}
-    for slug in list(CUPS) + DOMESTIC:
-        for start, end in ranges:
-            path = CACHE / f"{slug}_{start:%Y%m}.json"
-            if path.exists() and start not in recent:
-                continue
-            data = _get(ESPN.format(slug=slug), {"dates": f"{start:%Y%m%d}-{end:%Y%m%d}", "limit": 1000})
-            if data is not None:
-                path.write_text(json.dumps(_parse(data, slug)))
-        # semaine à venir (peut chevaucher le mois suivant)
-        path = CACHE / f"{slug}_next.json"
-        data = _get(ESPN.format(slug=slug), {"dates": f"{today:%Y%m%d}-{today + timedelta(days=8):%Y%m%d}", "limit": 1000})
-        if data is not None:
-            path.write_text(json.dumps(_parse(data, slug)))
+    days = _chunk_days(today)
+    STATUS["_chunk_days"] = days
+    budget = MAX_REQUESTS
+    if days:
+        # 1. matchs européens à venir et des derniers jours (rafraîchis à chaque passage)
+        for slug in CUPS:
+            rows = []
+            d = today - timedelta(days=4)
+            while d <= today + timedelta(days=8):
+                got = _fetch(slug, d, days)
+                budget -= 1
+                rows += got or []
+                d += timedelta(days=days)
+            (CACHE / f"{slug}_recent.json").write_text(json.dumps(rows))
+        # 2. historique manquant (les blocs terminés ne sont plus jamais retéléchargés)
+        first = today - timedelta(days=HISTORY_DAYS)
+        starts = []
+        d = date.fromordinal(first.toordinal() - first.toordinal() % days)
+        while d + timedelta(days=days) <= today - timedelta(days=4):
+            starts.append(d)
+            d += timedelta(days=days)
+        for start in reversed(starts):
+            for slug in list(CUPS) + DOMESTIC:
+                path = CACHE / f"{slug}_{start:%Y%m%d}_{days}.json"
+                if path.exists():
+                    continue
+                if budget <= 0:
+                    break
+                got = _fetch(slug, start, days)
+                budget -= 1
+                if got is not None:
+                    path.write_text(json.dumps(got))
+            if budget <= 0:
+                break
+    STATUS["_budget_left"] = budget
     (RAW_DIR.parent / "state").mkdir(parents=True, exist_ok=True)
     (RAW_DIR.parent / "state" / "europe_status.json").write_text(json.dumps(STATUS, indent=1))
 
@@ -161,6 +146,8 @@ def download(today: date) -> None:
 def load() -> pd.DataFrame:
     rows = []
     for p in sorted(CACHE.glob("*.json")):
+        if p.name.startswith("_"):
+            continue
         try:
             rows += json.loads(p.read_text())
         except json.JSONDecodeError:
