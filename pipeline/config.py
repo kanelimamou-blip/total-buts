@@ -22,6 +22,14 @@ LEAGUES = {
     "N1": ("Eredivisie", "Pays-Bas"),
 }
 
+# Coupes d'Europe (données ESPN, voir europe.py)
+CUPS = {
+    "UCL": ("Ligue des Champions", "Europe"),
+    "UEL": ("Ligue Europa", "Europe"),
+    "UECL": ("Conference League", "Europe"),
+}
+ALL_COMPETITIONS = {**LEAGUES, **CUPS}
+
 # Nombre de saisons d'historique téléchargées (saison en cours incluse)
 N_SEASONS = 8
 

@@ -283,6 +283,10 @@ function backtestBlock(bt) {
   ${bt.value.o25.map((v) => `<tr><td>${Math.round(v.threshold * 100)} %</td><td class="n">${v.bets}</td><td class="n">${pct(v.hit)}</td><td class="n ${v.roi >= 0 ? "pos" : "neg"}">${(v.roi * 100).toFixed(1).replace(".", ",")} %</td></tr>`).join("")}</tbody></table></div>` : ""}
   <h3>Par championnat</h3><div class="tbl"><table><thead><tr><th>Ligue</th><th class="n">Buts/match</th><th class="n">+1,5</th><th class="n">+2,5</th></tr></thead><tbody>
   ${bt.leagues.slice().sort((a, b) => b.avg_goals - a.avg_goals).map((l) => `<tr><td>${esc(l.name)}</td><td class="n">${String(l.avg_goals).replace(".", ",")}</td><td class="n">${pct(l.o15_rate)}</td><td class="n">${pct(l.o25_rate)}</td></tr>`).join("")}</tbody></table></div>
+  ${bt.europe ? `<h3>Coupes d'Europe</h3><p class="small muted">${bt.europe.n} matchs européens rejoués. Pas de cotes gratuites pour ces matchs : probabilités du modèle seul, à prendre avec plus de prudence.</p>
+  <div class="kv"><span>+1,5 annoncé / observé</span><b>${pct(bt.europe.o15.pred)} / ${pct(bt.europe.o15.rate)}</b></div>
+  <div class="kv"><span>+2,5 annoncé / observé</span><b>${pct(bt.europe.o25.pred)} / ${pct(bt.europe.o25.rate)}</b></div>
+  <div class="kv"><span>Gain de précision +2,5</span><b>${Math.round((1 - bt.europe.o25.brier / bt.europe.o25.brier_base) * 100)} %</b></div>` : ""}
   <p class="note">${esc(bt.note)}</p></section>`;
 }
 

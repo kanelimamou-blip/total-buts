@@ -12,9 +12,10 @@ import numpy as np
 import pandas as pd
 
 import backtest
+import europe
 import feedback
 import tips as tips_mod
-from config import COUPONS, LEAGUES, MARKETS, SITE_DATA, STATE_DIR
+from config import ALL_COMPETITIONS, COUPONS, CUPS, LEAGUES, MARKETS, SITE_DATA, STATE_DIR
 from coupons import build_day, legs_for_match, settle_coupon
 from fetch import download, load_fixtures, load_results
 from model import fit, predict
@@ -62,16 +63,31 @@ def main():
     STATE_DIR.mkdir(parents=True, exist_ok=True)
     SITE_DATA.mkdir(parents=True, exist_ok=True)
 
+    # Coupes d'Europe : une panne de cette source ne doit pas bloquer les championnats
+    try:
+        euro_matches, euro_scores, euro_df, _ = europe.update(today, offline=args.offline)
+    except Exception as exc:  # noqa: BLE001
+        print("Coupes d'Europe indisponibles :", exc)
+        euro_matches, euro_scores, euro_df = [], {}, None
+    print(f"Coupes d'Europe : {len(euro_matches)} matchs à venir, {len(euro_scores)} résultats.")
+
     bt = read_json(SITE_DATA / "backtest.json", None)
     stale = bt is None or (ts_today - pd.Timestamp(bt["generated"])).days >= 7
     if args.backtest or stale:
         print("Backtest…")
-        backtest.run(results, today)
+        report = backtest.run(results, today)
+        if euro_df is not None and len(euro_df):
+            try:
+                report["europe"] = europe.backtest(euro_df, pd.Timestamp(today, tz="UTC"))
+            except Exception as exc:  # noqa: BLE001
+                print("Backtest Europe impossible :", exc)
+            (SITE_DATA / "backtest.json").write_text(json.dumps(report, ensure_ascii=False))
     blend = read_json(STATE_DIR / "model_config.json", {"blend": 0.6})["blend"]
     bt = read_json(SITE_DATA / "backtest.json", None)
     store = read_json(STATE_DIR / "coupons.json", {})
     log = read_json(STATE_DIR / "predictions.json", {})
     scores = {match_id(r.date, r.div, r.home, r.away): (int(r.hg), int(r.ag)) for r in results.itertuples()}
+    scores.update(euro_scores)
     for mid, e in log.items():
         if "goals" not in e and mid in scores:
             e["goals"] = sum(scores[mid])
@@ -114,6 +130,24 @@ def main():
             "top_scores": pr["top_scores"], "total_dist": pr["total_dist"],
             "form_home": team_form(results, row.home), "form_away": team_form(results, row.away),
         })
+    for e in euro_matches:
+        if e["id"] in scores:
+            continue
+        final = feedback.apply(e["final"], e["div"], fb)
+        pr = {"final": final, "model": e["final"]}
+        legs = legs_for_match(pr, None, None)
+        matches.append({
+            "id": e["id"], "div": e["div"], "league": e["league"], "country": e["country"],
+            "date": e["date"], "time": e["time"], "home": e["home"], "away": e["away"],
+            "xg_home": round(e["lh"], 2), "xg_away": round(e["la"], 2),
+            "p": {"o15": round(final["o15"], 3), "o20": round(final["o20_win"], 3),
+                  "o20_push": round(final["o20_push"], 3), "o25": round(final["o25"], 3)},
+            "p_model": {"o15": round(e["final"]["o15"], 3), "o25": round(e["final"]["o25"], 3)},
+            "market_o25": None, "odds_o25": None,
+            "legs": [{k: (round(v, 3) if isinstance(v, float) else v) for k, v in l.items()} for l in legs],
+            "top_scores": e["top_scores"], "total_dist": e["total_dist"],
+            "form_home": e["form_home"], "form_away": e["form_away"],
+        })
     matches.sort(key=lambda m: (m["date"], m["time"], -m["p"]["o15"]))
 
     # Coupons : le jour J est figé au premier passage du jour, J+1 et J+2 restent provisoires
@@ -125,8 +159,8 @@ def main():
             continue
         if d in store and store[d].get("frozen"):
             continue
-        day = [{"id": m["id"], "div": m["div"], "rel": fb["reliability"].get(m["div"], 1.0), "legs": m["legs"]} for m in by_date[d]]
-        coupons = build_day(day, league_names={k: v[0] for k, v in LEAGUES.items()})
+        day = [{"id": m["id"], "div": m["div"], "rel": fb["reliability"].get(m["div"], 0.9 if m["div"] in CUPS else 1.0), "legs": m["legs"]} for m in by_date[d]]
+        coupons = build_day(day, league_names={k: v[0] for k, v in ALL_COMPETITIONS.items()})
         store[d] = {"frozen": d == today.isoformat(), "created": now.isoformat(timespec="minutes"), "coupons": coupons}
 
     # Règlement des coupons passés
@@ -165,7 +199,7 @@ def main():
 
     # Derniers résultats de nos prédictions (journal), pour l'écran Suivi
     recent = sorted(((mid, e) for mid, e in log.items() if "goals" in e), key=lambda x: x[1]["date"], reverse=True)[:80]
-    recent_out = [{"id": mid, "date": e["date"], "league": LEAGUES[e["div"]][0], "home": e.get("home", mid.split("|")[2]),
+    recent_out = [{"id": mid, "date": e["date"], "league": ALL_COMPETITIONS.get(e["div"], (e["div"],))[0], "home": e.get("home", mid.split("|")[2]),
                    "away": e.get("away", mid.split("|")[3]), "score": e.get("score"), "goals": e["goals"],
                    "o15": e["o15"], "o25": e["o25"]} for mid, e in recent]
 
@@ -180,7 +214,7 @@ def main():
         m = match_index.get(mid)
         if m:
             return {"home": m["home"], "away": m["away"], "league": m["league"], "time": m["time"]}
-        return {"home": home, "away": away, "league": LEAGUES.get(div, (div,))[0], "time": ""}
+        return {"home": home, "away": away, "league": ALL_COMPETITIONS.get(div, (div,))[0], "time": ""}
     for c in history:
         for leg in c["legs"]:
             leg.update({k: v for k, v in describe(leg["id"]).items() if k not in leg})
@@ -188,7 +222,7 @@ def main():
     out = {
         "generated": now.isoformat(timespec="minutes"), "today": today.isoformat(), "blend": blend,
         "markets": MARKETS, "coupon_kinds": COUPONS,
-        "leagues": {d: {"name": n, "country": c} for d, (n, c) in LEAGUES.items()},
+        "leagues": {d: {"name": n, "country": c} for d, (n, c) in ALL_COMPETITIONS.items()},
         "matches": matches, "coupons": history, "live": live, "predictions": pred_stats,
         "tips": tip_list, "recent": recent_out, "feedback": fb,
         "last_result_date": results["date"].max().strftime("%Y-%m-%d") if len(results) else None,
