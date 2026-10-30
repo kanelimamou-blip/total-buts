@@ -118,3 +118,5 @@ svg.chart text{fill:var(--muted);font-family:var(--f-body);font-size:10px}
 .mk-box .s{font-size:.7rem;color:var(--muted)}
 :focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 @media (prefers-reduced-motion:no-preference){.card,.match{animation:rise .25s ease both}@keyframes rise{from{transform:translateY(4px)}to{transform:none}}}
+.btn-copy{border:1px solid var(--line);background:var(--surface-2);border-radius:10px;padding:9px 12px;font-weight:600;font-size:.85rem;cursor:pointer;text-align:center}
+.btn-copy:active{background:var(--accent-soft)}

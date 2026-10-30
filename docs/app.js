@@ -84,6 +84,7 @@ function couponCard(c) {
     <div class="kv"><span>Chance de ne pas perdre</span><b>${pct(c.p_not_lose)}</b></div>
     <div class="meter ${meterCls}"><span style="width:${Math.round(c.p_not_lose * 100)}%"></span></div>`}
     <div class="legs">${c.legs.map((l) => legRow(l, settled)).join("")}</div>
+    ${settled ? "" : `<button class="btn-copy" data-copy="${esc(c.id || "")}" data-coupon='${esc(JSON.stringify(c.legs.map((l) => [l.home, l.away, MK[l.market], l.min_odds])))}'>Copier le coupon pour 1xBet</button>`}
     ${settled ? "" : `<div class="stake">Mise conseillée : <b>${String(c.stake_pct).replace(".", ",")} %</b> de ta bankroll${c.ev > 0 ? ` · avantage estimé <b class="pos">+${Math.round(c.ev * 100)} %</b>` : ""}</div>`}
   </article>`;
 }
@@ -307,6 +308,16 @@ document.addEventListener("click", (e) => {
   if (t.dataset.sort) { state.sort = t.dataset.sort; store.set("sort", state.sort); }
   const y = window.scrollY; route(); window.scrollTo(0, y);
 });
+document.addEventListener("click", async (e) => {
+  const b = e.target.closest("[data-coupon]");
+  if (!b) return;
+  e.stopPropagation();
+  const legs = JSON.parse(b.dataset.coupon);
+  const text = legs.map(([h, a, mk, mo], i) => `${i + 1}. ${h} - ${a} : ${mk.replace(" but", "").replace(" buts", "")} (cote min ${odds(mo)})`).join("\n");
+  try { await navigator.clipboard.writeText(text); b.textContent = "Copié ✓"; }
+  catch { const t = document.createElement("textarea"); t.value = text; document.body.appendChild(t); t.select(); document.execCommand("copy"); t.remove(); b.textContent = "Copié ✓"; }
+  setTimeout(() => (b.textContent = "Copier le coupon pour 1xBet"), 2000);
+}, true);
 document.addEventListener("keydown", (e) => { if (e.key === "Escape") $("#sheet").hidden = true; });
 window.addEventListener("hashchange", () => { $("#sheet").hidden = true; route(); });
 state.kind = store.get("kind", "all"); state.sort = store.get("sort", "o15");
