@@ -132,11 +132,38 @@ function viewMatches() {
   return `<h1>Matchs</h1>
   <div class="chips"><button class="chip" data-league="all" aria-pressed="${state.league === "all"}">Toutes ligues</button>${leagues.map((l) => `<button class="chip" data-league="${l}" aria-pressed="${state.league === l}">${esc(d.leagues[l].name)}</button>`).join("")}</div>
   <div class="chips">${mdays.map((x) => `<button class="chip" data-mday="${x}" aria-pressed="${x === state.mday}">${dayLabel(x, d.today)}<span class="c">${ms.filter((m) => m.date === x).length}</span></button>`).join("")}</div>
-  <div class="chips">${["o15", "o20", "o25"].map((k) => `<button class="chip" data-sort="${k}" aria-pressed="${sortKey === k}">Trier par ${MK[k]}</button>`).join("")}<button class="chip" data-sort="time" aria-pressed="${sortKey === "time"}">Par heure</button></div>
-  ${Object.keys(byDay).sort().map((day) => {
+  <div class="chips"><button class="chip" data-favview="1" aria-pressed="${!!state.favView}">Favoris ≤ 1,40</button>${["o15", "o20", "o25"].map((k) => `<button class="chip" data-sort="${k}" aria-pressed="${sortKey === k}">Trier par ${MK[k]}</button>`).join("")}<button class="chip" data-sort="time" aria-pressed="${sortKey === "time"}">Par heure</button></div>
+  ${state.favView ? favList(ms.filter((m) => m.date === state.mday)) : Object.keys(byDay).sort().map((day) => {
     const list = byDay[day].slice().sort((a, b) => (sortKey === "time" ? (a.time > b.time ? 1 : -1) : b.p[sortKey] - a.p[sortKey]));
     return `<section class="card"><h2>${dayLabel(day, d.today)}</h2><div>${list.map(matchRow).join("")}</div></section>`;
   }).join("")}`;
+}
+
+function favList(ms) {
+  const all = ms.filter((m) => m.fav && !m.provisional).sort((a, b) => b.fav.p_win - a.fav.p_win);
+  const favs = all.filter((m) => m.fav.odds <= 1.4).slice(0, 50);
+  const more = all.filter((m) => m.fav.odds > 1.4 && m.fav.odds <= 1.6).slice(0, Math.max(0, 50 - favs.length));
+  if (!favs.length && !more.length) return `<div class="empty">Aucun favori net ce jour-là.</div>`;
+  // suggestions : tickets de 3 favoris consécutifs (les plus sûrs ensemble), cote visée autour de 2
+  const tickets = [];
+  const pool = favs.concat(more);
+  for (let i = 0; i + 2 < pool.length && tickets.length < 6; ) {
+    const t = [pool[i], pool[i + 1], pool[i + 2]];
+    let o = t.reduce((a, m) => a * m.fav.odds, 1);
+    if (o < 2 && pool[i + 3]) { t.push(pool[i + 3]); o *= pool[i + 3].fav.odds; }
+    tickets.push(t); i += t.length;
+  }
+  const leg = (m) => ({ id: m.id, market: m.fav.market, team: m.fav.team, home: m.home, away: m.away, league: m.league, time: m.time, odds: m.fav.odds, p_win: m.fav.p_win, p_push: 0, min_odds: m.fav.min_odds });
+  return `<section class="card"><h2>Suggestions</h2><p class="small muted">Les favoris les plus sûrs, regroupés par 3 ou 4.</p>
+    ${tickets.map((t, k) => { const legs = t.map(leg), o = legs.reduce((a, l) => a * l.odds, 1), p = legs.reduce((a, l) => a * l.p_win, 1);
+      return `<div class="kv"><span>Ticket ${k + 1} : ${t.map((m) => esc(m.fav.team)).join(", ")}</span><b>${odds(o)} · ${pct(p)}</b></div>
+      <button class="btn-copy" data-play='${esc(JSON.stringify({ label: "Favoris ≤ 1,40", odds: +o.toFixed(2), legs }))}'>Je l'ai joué</button>`; }).join("")}
+  </section>
+  ${[[favs, `${favs.length} favori${favs.length > 1 ? "s" : ""} à 1,40 max`], [more, "Un peu plus risqués (1,41 à 1,60)"]].filter(([l]) => l.length).map(([l, title]) => `<section class="card"><h2>${title}</h2>
+    ${l.map((m) => `<button class="match" data-match="${esc(m.id)}"><span class="teams">${esc(m.fav.team)} <span class="small muted">gagne</span><br><span class="small muted">${esc(m.home)} – ${esc(m.away)} · ${esc(m.league)} ${esc(m.time || "")}</span></span>
+      <span class="time">${odds(m.fav.odds)}<br><span class="small">${pct(m.fav.p_win)}</span></span></button>`).join("")}
+  </section>`).join("")}
+  <p class="note">Les cotes sans marché publié sont estimées. Sur 1xBet, ne garde un favori que si sa cote est au moins la cote juste de la fiche du match.</p>`;
 }
 
 function matchRow(m) {
@@ -210,7 +237,22 @@ function viewTips() {
   const t = state.data.tips || [];
   const ic = { ligue: "L", prudence: "!", equipe: "↑", value: "€", suivi: "✓", discipline: "%" };
   return `<h1>Astuces</h1><p class="muted small">Générées chaque jour à partir des données et de nos propres résultats.</p>
+  ${surprisesBlock()}
   ${t.map((x) => `<article class="card tip ${x.type}"${x.match ? ` data-match="${esc(x.match)}" style="cursor:pointer"` : ""}><span class="ic">${ic[x.type] || "i"}</span><div><h3>${esc(x.title)}</h3><p class="small">${esc(x.text)}</p></div></article>`).join("")}`;
+}
+
+function surprisesBlock() {
+  const s = state.data.surprises;
+  if (!s) return "";
+  const list = (rows, fmt) => rows.map((r) => `<div class="kv"><span>${esc(r.team)} <span class="small">· ${esc(r.league)}</span></span><b>${fmt(r)}</b></div>`).join("");
+  const sign = (x) => (x > 0 ? "+" : "") + String(x).replace(".", ",");
+  return `<section class="card"><h2>Surprises de la saison</h2>
+  <p class="small muted">Comparées à ce que prévoyaient les cotes des bookmakers avant chaque match, depuis le début de la saison.</p>
+  <h3>Au-dessus des attentes</h3>${list(s.over, (r) => `${r.pts} pts au lieu de ${String(r.xpts).replace(".", ",")}`)}
+  <h3>En dessous des attentes</h3>${list(s.under, (r) => `${r.pts} pts au lieu de ${String(r.xpts).replace(".", ",")}`)}
+  <h3>Plus de buts que prévu</h3>${list(s.goals, (r) => `${r.o25} matchs à +2,5 sur ${r.n25} (prévu ${String(r.xo25).replace(".", ",")})`)}
+  <h3>Moins de buts que prévu</h3>${list(s.closed, (r) => `${r.o25} sur ${r.n25} (prévu ${String(r.xo25).replace(".", ",")})`)}
+  </section>`;
 }
 
 /* ---------- Suivi ---------- */
@@ -489,12 +531,13 @@ const fmt = (x) => Math.round(x).toLocaleString("fr-FR");
 
 /* ---------- Événements ---------- */
 document.addEventListener("click", (e) => {
-  const t = e.target.closest("[data-day],[data-mday],[data-kind],[data-league],[data-sort],[data-match],[data-close]");
+  const t = e.target.closest("[data-favview],[data-day],[data-mday],[data-kind],[data-league],[data-sort],[data-match],[data-close]");
   if (!t) return;
   if (t.dataset.close !== undefined) { $("#sheet").hidden = true; return; }
   if (t.dataset.match) { openMatch(t.dataset.match); return; }
   if (t.dataset.day) state.day = t.dataset.day;
   if (t.dataset.mday) state.mday = t.dataset.mday;
+  if (t.dataset.favview) state.favView = !state.favView;
   if (t.dataset.kind) { state.kind = t.dataset.kind; store.set("kind", state.kind); }
   if (t.dataset.league) state.league = t.dataset.league;
   if (t.dataset.sort) { state.sort = t.dataset.sort; store.set("sort", state.sort); }

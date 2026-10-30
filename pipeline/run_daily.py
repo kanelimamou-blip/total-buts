@@ -272,6 +272,11 @@ def main():
 
     season_start = pd.Timestamp(year=today.year if today.month >= 7 else today.year - 1, month=7, day=1)
     tip_list = tips_mod.build(results, matches, season_start, live)
+    try:
+        surprise = tips_mod.surprises(results, season_start)
+    except Exception as exc:  # noqa: BLE001
+        print("Surprises indisponibles :", exc)
+        surprise = None
 
     # Derniers résultats de nos prédictions (journal), pour l'écran Suivi
     recent = sorted(((mid, e) for mid, e in log.items() if "goals" in e), key=lambda x: x[1]["date"], reverse=True)[:400]
@@ -300,7 +305,7 @@ def main():
         "markets": MARKETS, "coupon_kinds": COUPONS,
         "leagues": {d: {"name": n, "country": c} for d, (n, c) in ALL_COMPETITIONS.items()},
         "matches": matches, "coupons": history, "live": live, "predictions": pred_stats,
-        "tips": tip_list, "recent": recent_out, "feedback": fb,
+        "tips": tip_list, "recent": recent_out, "feedback": fb, "surprises": surprise,
         "last_result_date": results["date"].max().strftime("%Y-%m-%d") if len(results) else None,
     }
     (SITE_DATA / "app.json").write_text(json.dumps(out, ensure_ascii=False))

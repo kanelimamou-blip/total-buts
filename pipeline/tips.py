@@ -70,3 +70,36 @@ def build(results: pd.DataFrame, matches: list[dict], season_start: pd.Timestamp
     tips.append({"type": "discipline", "title": "La cote minimum sur 1xBet",
                  "text": "Chaque sélection indique la cote minimum à exiger. Si 1xBet propose moins, remplace-la par une autre."})
     return tips
+
+
+def surprises(results: pd.DataFrame, season_start: pd.Timestamp, min_games: int = 6) -> dict:
+    """Équipes qui surprennent cette saison, mesurées contre les cotes d'avant-match :
+    points gagnés au-delà (ou en deçà) de ce que les bookmakers prévoyaient, et matchs à +2,5 de plus ou de moins."""
+    from model import devig, devig3
+    season = results[results["date"] >= season_start]
+    stats = {}
+    for r in season.itertuples():
+        p = devig3(r.oh, r.od, r.oa)
+        q = devig(r.o25, r.u25)
+        if p is None:
+            continue
+        tot = r.hg + r.ag
+        for team, side, gf, ga in ((r.home, "1", r.hg, r.ag), (r.away, "2", r.ag, r.hg)):
+            s = stats.setdefault((r.div, team), {"g": 0, "pts": 0.0, "xpts": 0.0, "o25": 0, "xo25": 0.0, "n25": 0})
+            s["g"] += 1
+            s["pts"] += 3 if gf > ga else (1 if gf == ga else 0)
+            s["xpts"] += 3 * p[side] + p["X"]
+            if q is not None:
+                s["n25"] += 1
+                s["o25"] += tot >= 3
+                s["xo25"] += q
+    rows = []
+    for (div, team), s in stats.items():
+        if s["g"] < min_games:
+            continue
+        rows.append({"team": team, "league": LEAGUES[div][0], "games": s["g"],
+                     "pts": int(s["pts"]), "xpts": round(s["xpts"], 1), "diff": round((s["pts"] - s["xpts"]) / s["g"], 2),
+                     "o25": s["o25"], "xo25": round(s["xo25"], 1), "n25": s["n25"],
+                     "gdiff": round((s["o25"] - s["xo25"]) / max(s["n25"], 1), 2)})
+    by = lambda k, rev: sorted(rows, key=lambda x: x[k], reverse=rev)[:10]
+    return {"over": by("diff", True), "under": by("diff", False), "goals": by("gdiff", True), "closed": by("gdiff", False)}

@@ -30,7 +30,7 @@ def legs_for_match(pred: dict, market_pred: dict | None, real_o25: float | None)
             odds, source = float(real_o25), "marché"
         else:
             ref = market_pred if market_pred is not None else pred["model"]
-            odds, source = fair_odds(m, ref) / (1 + BOOK_MARGIN), "estimée"
+            odds, source = max(fair_odds(m, ref) / (1 + BOOK_MARGIN), 1.05), "estimée"  # 1,05 : plus petite cote proposée en pratique
         fair = fair_odds(m, f)
         out.append({
             "market": m, "p_win": p_win, "p_push": p_push, "p_lose": 1 - p_win - p_push,
@@ -213,7 +213,7 @@ def favorite_leg(pred: dict, home: str, away: str, odds_1x2=None) -> dict:
             real = None
         if real is not None and np.isnan(real):
             real = None
-    odds = real if real else (1 / max(p, 1e-9)) / (1 + BOOK_MARGIN)
+    odds = real if real else max((1 / max(p, 1e-9)) / (1 + BOOK_MARGIN), 1.05)
     return {"market": side, "team": home if side == "1" else away, "p_win": p, "p_push": 0.0, "p_lose": 1 - p,
             "odds": round(max(odds, 1.01), 2), "odds_source": "marché" if real else "estimée",
             "fair": round(1 / max(p, 1e-9), 2), "min_odds": round((1 / max(p, 1e-9)) * (1 + VALUE_EDGE), 2),
