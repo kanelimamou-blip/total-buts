@@ -1,12 +1,12 @@
 {
  "_chunk_days": 1,
  "uefa.champions": {
-  "ok": 14,
+  "ok": 15,
   "fail": 0,
   "last": 200
  },
  "uefa.europa": {
-  "ok": 14,
+  "ok": 15,
   "fail": 0,
   "last": 200
  },
@@ -17,28 +17,38 @@
  },
  "pol.1": {
   "ok": 0,
-  "fail": 684,
+  "fail": 685,
   "last": 400
  },
  "cro.1": {
   "ok": 0,
-  "fail": 684,
+  "fail": 685,
   "last": 400
  },
  "srb.1": {
   "ok": 0,
-  "fail": 684,
+  "fail": 685,
   "last": 400
  },
  "ukr.1": {
   "ok": 0,
-  "fail": 684,
+  "fail": 685,
   "last": 400
  },
  "hun.1": {
   "ok": 0,
-  "fail": 683,
+  "fail": 685,
   "last": 400
+ },
+ "cyp.1": {
+  "ok": 2,
+  "fail": 0,
+  "last": 200
+ },
+ "rou.1": {
+  "ok": 2,
+  "fail": 0,
+  "last": 200
  },
  "eng.1": {
   "ok": 2,
@@ -81,61 +91,51 @@
   "last": 200
  },
  "bel.1": {
-  "ok": 2,
-  "fail": 0,
-  "last": 200
- },
- "sco.1": {
-  "ok": 2,
-  "fail": 0,
-  "last": 200
- },
- "aut.1": {
-  "ok": 2,
-  "fail": 0,
-  "last": 200
- },
- "sui.1": {
-  "ok": 2,
-  "fail": 0,
-  "last": 200
- },
- "gre.1": {
-  "ok": 2,
-  "fail": 0,
-  "last": 200
- },
- "den.1": {
-  "ok": 2,
-  "fail": 0,
-  "last": 200
- },
- "cze.1": {
-  "ok": 2,
-  "fail": 0,
-  "last": 200
- },
- "nor.1": {
-  "ok": 2,
-  "fail": 0,
-  "last": 200
- },
- "swe.1": {
-  "ok": 2,
-  "fail": 0,
-  "last": 200
- },
- "isr.1": {
-  "ok": 2,
-  "fail": 0,
-  "last": 200
- },
- "cyp.1": {
   "ok": 1,
   "fail": 0,
   "last": 200
  },
- "rou.1": {
+ "sco.1": {
+  "ok": 1,
+  "fail": 0,
+  "last": 200
+ },
+ "aut.1": {
+  "ok": 1,
+  "fail": 0,
+  "last": 200
+ },
+ "sui.1": {
+  "ok": 1,
+  "fail": 0,
+  "last": 200
+ },
+ "gre.1": {
+  "ok": 1,
+  "fail": 0,
+  "last": 200
+ },
+ "den.1": {
+  "ok": 1,
+  "fail": 0,
+  "last": 200
+ },
+ "cze.1": {
+  "ok": 1,
+  "fail": 0,
+  "last": 200
+ },
+ "nor.1": {
+  "ok": 1,
+  "fail": 0,
+  "last": 200
+ },
+ "swe.1": {
+  "ok": 1,
+  "fail": 0,
+  "last": 200
+ },
+ "isr.1": {
   "ok": 1,
   "fail": 0,
   "last": 200
