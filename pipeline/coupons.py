@@ -10,7 +10,7 @@ from itertools import combinations, product
 
 import numpy as np
 
-from config import BOOK_MARGIN, COUPONS, MAX_PER_DAY, MIN_LEG_ODDS, MIN_P, VALUE_EDGE
+from config import BOOK_MARGIN, COUPONS, TAX, MAX_PER_DAY, MIN_LEG_ODDS, MIN_P, VALUE_EDGE
 from model import fair_odds
 
 MKT_ORDER = ["o15", "o20", "o25"]
@@ -115,7 +115,7 @@ def _pack(kind, p_log, o_log, picks, scope="Toutes ligues"):
     return {
         "kind": kind, "label": cfg["label"], "scope": scope, "stake_pct": cfg["stake_pct"],
         "legs": legs, "odds": round(nominal, 2), "p_win": round(p_full, 3),
-        "p_not_lose": round(p_ok, 3), "ev": round(p_ok * exp_odds - 1, 3),
+        "p_not_lose": round(p_ok, 3), "ev": round(p_ok * (1 + (exp_odds - 1) * (1 - TAX)) - 1, 3),  # après taxe
         "reliability": round(float(np.mean(rel)), 3),
     }
 

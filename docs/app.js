@@ -83,7 +83,7 @@ function couponCard(c) {
         <h3>${esc(c.label)}${c.scope && c.scope !== "Toutes ligues" ? " · " + esc(c.scope) : ""}</h3>
         <span class="small muted">${c.legs.length} sélections${c.kind.startsWith("periode") ? " · ticket du " + dayLabel(c.date, state.data.today).toLowerCase() : settled ? "" : " · " + dayLabel(c.date, state.data.today)}</span>
       </div>
-      <div class="big-odds">${odds(c.odds)}<small>cote estimée</small></div>
+      <div class="big-odds">${odds(c.odds)}<small>cote estimée</small><small class="net">${odds(netOdds(c.odds))} après taxe</small></div>
     </div>
     ${settled ? `<div><span class="status ${st}">${{ won: "Gagné", lost: "Perdu", void: "Annulé" }[st]}</span>${st === "won" ? ` <span class="small muted">retour ${odds(c.return)} × la mise</span>` : ""}</div>` : `
     <div class="kv"><span>Chance de ne pas perdre</span><b>${c.p_not_lose < 0.01 ? "1 sur " + Math.round(1 / Math.max(c.p_not_lose, 1e-6)).toLocaleString("fr-FR") : pct(c.p_not_lose)}</b></div>
@@ -156,7 +156,7 @@ function favList(ms) {
   const leg = (m) => ({ id: m.id, market: m.fav.market, team: m.fav.team, home: m.home, away: m.away, league: m.league, time: m.time, odds: m.fav.odds, p_win: m.fav.p_win, p_push: 0, min_odds: m.fav.min_odds });
   return `<section class="card"><h2>Suggestions</h2><p class="small muted">Les favoris les plus sûrs, regroupés par 3 ou 4.</p>
     ${tickets.map((t, k) => { const legs = t.map(leg), o = legs.reduce((a, l) => a * l.odds, 1), p = legs.reduce((a, l) => a * l.p_win, 1);
-      return `<div class="kv"><span>Ticket ${k + 1} : ${t.map((m) => esc(m.fav.team)).join(", ")}</span><b>${odds(o)} · ${pct(p)}</b></div>
+      return `<div class="kv"><span>Ticket ${k + 1} : ${t.map((m) => esc(m.fav.team)).join(", ")}</span><b>${odds(o)} (net ${odds(netOdds(o))}) · ${pct(p)}</b></div>
       <button class="btn-copy" data-play='${esc(JSON.stringify({ label: "Favoris ≤ 1,40", odds: +o.toFixed(2), legs }))}'>Je l'ai joué</button>`; }).join("")}
   </section>
   ${[[favs, `${favs.length} favori${favs.length > 1 ? "s" : ""} à 1,40 max`], [more, "Un peu plus risqués (1,41 à 1,60)"]].filter(([l]) => l.length).map(([l, title]) => `<section class="card"><h2>${title}</h2>
@@ -458,13 +458,13 @@ function renderBasketBar() {
   let bar = $("#basket-bar");
   if (!bar) { bar = document.createElement("button"); bar.id = "basket-bar"; bar.className = "basket-bar"; bar.dataset.openBasket = "1"; document.body.appendChild(bar); }
   bar.hidden = !b.length;
-  if (b.length) { const st = comboStats(b); bar.innerHTML = `<span>Mon coupon · ${b.length} sélection${b.length > 1 ? "s" : ""}</span><b>${odds(st.odds)} · ${pct(st.pOk)}</b>`; }
+  if (b.length) { const st = comboStats(b); bar.innerHTML = `<span>Mon coupon · ${b.length} sélection${b.length > 1 ? "s" : ""}</span><b>${odds(st.odds)} (net ${odds(netOdds(st.odds))}) · ${pct(st.pOk)}</b>`; }
 }
 
 function openBasket() {
   const b = basket(), st = comboStats(b);
   $("#sheet-body").innerHTML = `<h2>Mon coupon</h2>
-  ${b.length ? `<div class="stats"><div class="stat"><span class="k">Cote estimée</span><span class="v">${odds(st.odds)}</span></div><div class="stat"><span class="k">Ne pas perdre</span><span class="v">${pct(st.pOk)}</span></div></div>
+  ${b.length ? `<div class="stats"><div class="stat"><span class="k">Cote estimée (nette)</span><span class="v">${odds(st.odds)} <span class="small">(${odds(netOdds(st.odds))})</span></span></div><div class="stat"><span class="k">Ne pas perdre</span><span class="v">${pct(st.pOk)}</span></div></div>
   <div class="legs">${b.map((l, i) => `<div class="leg"><span class="teams">${esc(l.home)} – ${esc(l.away)}</span><span class="o">${odds(l.odds)}</span>
     <span class="meta"><span class="mk">${esc(mkLabel(l))}</span> · ${esc(l.league)} · ${pct(l.p_win)}</span><button class="btn-x" data-remove="${i}">Retirer</button></div>`).join("")}</div>
   ${st.pOk < 0.3 ? `<p class="note">Moins de 30 % de chances de ne pas perdre : c'est un coupon risqué.</p>` : ""}
@@ -502,7 +502,7 @@ function betStatus(bet) {
   // remboursements : la cote du coupon est réduite de la cote estimée des sélections remboursées
   let o = bet.odds;
   bet.legs.forEach((l, i) => { if (rs[i].res === "push") o /= l.odds; });
-  return { status: "won", ret: bet.stake * Math.max(o, 1), rs };
+  return { status: "won", ret: bet.stake * Math.max(netOdds(o), 1), rs };  // gain net après taxe
 }
 
 function myBetsBlock() {
@@ -520,6 +520,7 @@ function myBetsBlock() {
   const profit = ret - staked;
   return `<section class="card"><h2>Mes paris</h2>
     <div class="form-row"><label for="bankroll">Bankroll de départ (FCFA)</label><input id="bankroll" type="number" inputmode="decimal" value="${start ?? ""}" placeholder="ex. 50000"></div>
+    <div class="form-row"><label for="tax">Taxe sur les gains (%)</label><input id="tax" type="number" inputmode="decimal" min="0" max="50" value="${store.get("tax", 20)}"></div>
     <div class="stats"><div class="stat"><span class="k">Bilan</span><span class="v ${profit >= 0 ? "pos" : "neg"}">${profit >= 0 ? "+" : ""}${fmt(profit)}</span></div>
     <div class="stat"><span class="k">Bankroll</span><span class="v">${start != null ? fmt(start + profit - pending) : "–"}</span></div>
     <div class="stat"><span class="k">En jeu</span><span class="v">${fmt(pending)}</span></div>
@@ -527,6 +528,8 @@ function myBetsBlock() {
     ${list.length ? `<div class="legs">${rows}</div>` : `<p class="small muted">Touche « Je l'ai joué » sur un coupon pour suivre tes vrais paris. Ils sont réglés automatiquement avec les scores. Ces données restent sur ce téléphone.</p>`}
   </section>`;
 }
+const taxRate = () => store.get("tax", 20) / 100;
+const netOdds = (o) => 1 + (o - 1) * (1 - taxRate());
 const fmt = (x) => Math.round(x).toLocaleString("fr-FR");
 
 /* ---------- Événements ---------- */
@@ -595,7 +598,10 @@ document.addEventListener("submit", (e) => {
   renderBasketBar();
   $("#sheet-body").innerHTML = `<h2>Pari enregistré</h2><p>Il sera réglé automatiquement avec les scores. Retrouve-le dans l'onglet Suivi.</p>`;
 });
-document.addEventListener("change", (e) => { if (e.target.id === "bankroll") { const v = parseFloat(e.target.value); store.set("bankroll", isNaN(v) ? null : v); route(); } });
+document.addEventListener("change", (e) => {
+  if (e.target.id === "bankroll") { const v = parseFloat(e.target.value); store.set("bankroll", isNaN(v) ? null : v); route(); }
+  if (e.target.id === "tax") { const v = parseFloat(e.target.value); store.set("tax", isNaN(v) ? 20 : Math.min(Math.max(v, 0), 50)); route(); }
+});
 document.addEventListener("keydown", (e) => { if (e.key === "Escape") $("#sheet").hidden = true; });
 window.addEventListener("hashchange", () => { $("#sheet").hidden = true; route(); });
 state.kind = store.get("kind", "all"); state.sort = store.get("sort", "o15");

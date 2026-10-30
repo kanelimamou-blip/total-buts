@@ -45,15 +45,24 @@ MARKETS = {"o15": "Plus de 1,5 but", "o20": "Plus de 2 buts", "o25": "Plus de 2,
 # Marge supposée du bookmaker sur les totaux (sert à estimer la cote 1xBet quand on ne l'a pas)
 BOOK_MARGIN = 0.06
 
-# Coupons
+# Taxe sur les gains au Sénégal : 20 % du gain net. Une cote 2 ne rapporte que 1 + (2 - 1) × 0,8 = 1,80.
+TAX = 0.20
+
+
+def gross_odds(net: float) -> float:
+    """Cote affichée nécessaire pour toucher `net` après taxe."""
+    return round(1 + (net - 1) / (1 - TAX), 2)
+
+
+# Coupons (les cotes minimales visent une cote nette de 2 après taxe, soit 2,25 affichés)
 COUPONS = {
     # stake_pct : mise conseillée en % de la bankroll (priorité aux petits gains réguliers)
-    "sur": {"label": "Coupon sûr", "min_odds": 2.0, "max_odds": 3.0, "legs": (3, 4), "stake_pct": 2.0},
-    "ligue": {"label": "Coupon championnat", "min_odds": 2.0, "max_odds": 3.2, "legs": (3, 4), "stake_pct": 1.5},
-    "favoris": {"label": "Ticket favoris", "min_odds": 2.0, "max_odds": 3.0, "legs": (3, 4), "stake_pct": 2.0},
-    "periode_buts": {"label": "Buts sur la période", "min_odds": 2.0, "max_odds": 3.5, "legs": (3, 5), "stake_pct": 1.0},
-    "periode_fav": {"label": "Favoris sur la période", "min_odds": 2.0, "max_odds": 3.5, "legs": (3, 5), "stake_pct": 1.0},
-    "value": {"label": "Coupon value", "min_odds": 2.0, "max_odds": 4.0, "legs": (2, 3), "stake_pct": 1.0},
+    "sur": {"label": "Coupon sûr", "min_odds": gross_odds(2.0), "max_odds": 3.2, "legs": (3, 4), "stake_pct": 2.0},
+    "ligue": {"label": "Coupon championnat", "min_odds": gross_odds(2.0), "max_odds": 3.2, "legs": (3, 4), "stake_pct": 1.5},
+    "favoris": {"label": "Ticket favoris", "min_odds": gross_odds(2.0), "max_odds": 3.2, "legs": (3, 4), "stake_pct": 2.0},
+    "periode_buts": {"label": "Buts sur la période", "min_odds": gross_odds(2.0), "max_odds": 3.5, "legs": (3, 5), "stake_pct": 1.0},
+    "periode_fav": {"label": "Favoris sur la période", "min_odds": gross_odds(2.0), "max_odds": 3.5, "legs": (3, 5), "stake_pct": 1.0},
+    "value": {"label": "Coupon value", "min_odds": gross_odds(2.0), "max_odds": 4.0, "legs": (2, 3), "stake_pct": 1.0},
     "audace": {"label": "Coupon audacieux", "min_odds": 4.0, "max_odds": 9.0, "legs": (3, 4), "stake_pct": 0.5},
     "mille": {"label": "Cote 1000", "min_odds": 1000.0, "max_odds": 1e9, "legs": (8, 22), "stake_pct": 0.1},
     "jackpot": {"label": "Jackpot", "min_odds": 15.0, "max_odds": 1e9, "legs": (6, 8), "stake_pct": 0.25},

@@ -136,3 +136,4 @@ svg.chart text{fill:var(--muted);font-family:var(--f-body);font-size:10px}
 .btn-team{border:1px solid var(--accent);background:var(--accent-soft);color:var(--accent);border-radius:8px;padding:4px 10px;font-weight:600;cursor:pointer}
 .leg.quick input{width:24px;height:24px;accent-color:var(--accent)}
 .leg.quick:has(input:checked){opacity:.45}
+.big-odds small.net{color:var(--ink);font-weight:600;text-transform:none;letter-spacing:0}
