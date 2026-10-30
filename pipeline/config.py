@@ -54,12 +54,13 @@ def gross_odds(net: float) -> float:
     return round(1 + (net - 1) / (1 - TAX), 2)
 
 
-# Coupons (les cotes minimales visent une cote nette de 2 après taxe, soit 2,25 affichés)
+# Coupons. Règle d'Est : les coupons sûrs, par championnat et favoris ne dépassent pas 2 net après taxe
+# (cote affichée entre 2,00 et 2,25) ; les autres visent au moins 2 net.
 COUPONS = {
     # stake_pct : mise conseillée en % de la bankroll (priorité aux petits gains réguliers)
-    "sur": {"label": "Coupon sûr", "min_odds": gross_odds(2.0), "max_odds": 3.2, "legs": (3, 4), "stake_pct": 2.0},
-    "ligue": {"label": "Coupon championnat", "min_odds": gross_odds(2.0), "max_odds": 3.2, "legs": (3, 4), "stake_pct": 1.5},
-    "favoris": {"label": "Ticket favoris", "min_odds": gross_odds(2.0), "max_odds": 3.2, "legs": (3, 4), "stake_pct": 2.0},
+    "sur": {"label": "Coupon sûr", "min_odds": 2.0, "max_odds": gross_odds(2.0), "legs": (3, 4), "stake_pct": 2.0},
+    "ligue": {"label": "Coupon championnat", "min_odds": 2.0, "max_odds": gross_odds(2.0), "legs": (3, 4), "stake_pct": 1.5},
+    "favoris": {"label": "Ticket favoris", "min_odds": 2.0, "max_odds": gross_odds(2.0), "legs": (3, 4), "stake_pct": 2.0},
     "periode_buts": {"label": "Buts sur la période", "min_odds": gross_odds(2.0), "max_odds": 3.5, "legs": (3, 5), "stake_pct": 1.0},
     "periode_fav": {"label": "Favoris sur la période", "min_odds": gross_odds(2.0), "max_odds": 3.5, "legs": (3, 5), "stake_pct": 1.0},
     "value": {"label": "Coupon value", "min_odds": gross_odds(2.0), "max_odds": 4.0, "legs": (2, 3), "stake_pct": 1.0},
