@@ -162,7 +162,8 @@ def load() -> pd.DataFrame:
 
 
 class Global:
-    def __init__(self, teams, team_league, att, dfn, latt, ldef, mu, home, rho, leagues):
+    def __init__(self, teams, team_league, att, dfn, latt, ldef, mu, home, rho, leagues, cup_mu=None):
+        self.cup_mu = cup_mu or {}
         self.teams, self.team_league = teams, team_league
         self.att, self.dfn, self.latt, self.ldef = att, dfn, latt, ldef
         self.mu, self.home, self.rho, self.leagues = mu, home, rho, leagues
@@ -175,11 +176,12 @@ class Global:
         l = self.team_league[i]
         return self.latt[l] + self.att[i], self.ldef[l] + self.dfn[i]
 
-    def rates(self, home, away, neutral=False):
+    def rates(self, home, away, neutral=False, slug=None):
         ah, dh = self._ad(home)
         aa, da = self._ad(away)
         hm = 0.0 if neutral else self.home
-        return float(np.exp(self.mu + hm + ah + da)), float(np.exp(self.mu + aa + dh))
+        c = self.cup_mu.get(slug, 0.0)  # niveau de buts propre à chaque coupe d'Europe
+        return float(np.exp(self.mu + c + hm + ah + da)), float(np.exp(self.mu + c + aa + dh))
 
 
 def fit_global(df: pd.DataFrame, as_of: pd.Timestamp) -> Global | None:
@@ -203,28 +205,44 @@ def fit_global(df: pd.DataFrame, as_of: pd.Timestamp) -> Global | None:
     w = np.exp(-XI * (as_of - m["dt"]).dt.days.to_numpy(float))
     cup = m["slug"].isin(CUPS).to_numpy()
     w = np.where(cup, w * 2.0, w)  # les matchs européens pèsent double : ce sont eux qui relient les ligues
+    cup_list = list(CUPS)
+    comp = np.array([cup_list.index(sl) + 1 if sl in CUPS else 0 for sl in m["slug"]])
+    K = len(cup_list) + 1
 
     def obj(x):
         mu, hm = x[0], x[1]
         att, dfn = x[2:2 + n], x[2 + n:2 + 2 * n]
-        la_, ld_ = x[2 + 2 * n:2 + 2 * n + L], x[2 + 2 * n + L:]
+        la_, ld_ = x[2 + 2 * n:2 + 2 * n + L], x[2 + 2 * n + L:2 + 2 * n + 2 * L]
+        cm = np.concatenate([[0.0], x[2 + 2 * n + 2 * L:]])
         A, D = la_[tl] + att, ld_[tl] + dfn
-        eh, ea = mu + hm + A[h] + D[a], mu + A[a] + D[h]
+        eh, ea = mu + cm[comp] + hm + A[h] + D[a], mu + cm[comp] + A[a] + D[h]
         lh, lav = np.exp(eh), np.exp(ea)
         nll = np.sum(w * (lh - yh * eh)) + np.sum(w * (lav - ya * ea))
-        nll += RIDGE_TEAM * (att @ att + dfn @ dfn) + RIDGE_LEAGUE * (la_ @ la_ + ld_ @ ld_)
+        nll += RIDGE_TEAM * (att @ att + dfn @ dfn) + RIDGE_LEAGUE * (la_ @ la_ + ld_ @ ld_) + 0.5 * cm @ cm
         rh, ra = w * (lh - yh), w * (lav - ya)
         gA = np.bincount(h, rh, n) + np.bincount(a, ra, n)
         gD = np.bincount(a, rh, n) + np.bincount(h, ra, n)
         g = np.concatenate([[rh.sum() + ra.sum(), rh.sum()], gA + 2 * RIDGE_TEAM * att, gD + 2 * RIDGE_TEAM * dfn,
-                            np.bincount(tl, gA, L) + 2 * RIDGE_LEAGUE * la_, np.bincount(tl, gD, L) + 2 * RIDGE_LEAGUE * ld_])
+                            np.bincount(tl, gA, L) + 2 * RIDGE_LEAGUE * la_, np.bincount(tl, gD, L) + 2 * RIDGE_LEAGUE * ld_,
+                            (np.bincount(comp, rh + ra, K) + 2 * 0.5 * cm)[1:]])
         return nll, g
 
-    x0 = np.zeros(2 + 2 * n + 2 * L)
+    x0 = np.zeros(2 + 2 * n + 2 * L + K - 1)
     x0[0], x0[1] = np.log(1.3), 0.2
     x = minimize(obj, x0, jac=True, method="L-BFGS-B", options={"maxiter": 3000}).x
-    return Global(idx, tl, x[2:2 + n], x[2 + n:2 + 2 * n], x[2 + 2 * n:2 + 2 * n + L], x[2 + 2 * n + L:],
-                  float(x[0]), float(x[1]), -0.05, leagues)
+    g = Global(idx, tl, x[2:2 + n], x[2 + n:2 + 2 * n], x[2 + 2 * n:2 + 2 * n + L], x[2 + 2 * n + L:2 + 2 * n + 2 * L],
+               float(x[0]), float(x[1]), -0.05, leagues, dict(zip(cup_list, x[2 + 2 * n + 2 * L:].tolist())))
+    # Tendance de la saison en cours : si les coupes sont plus prolifiques ces 4 derniers mois que prévu,
+    # on relève leur niveau de buts (avec prudence : 40 buts « fictifs » au prix du modèle)
+    recent = m[cup & (m["dt"] >= as_of - pd.Timedelta(days=120))]
+    for slug in cup_list:
+        r = recent[recent["slug"] == slug]
+        if len(r) < 10:
+            continue
+        pred = sum(sum(g.rates(a_, b_, slug=slug)) for a_, b_ in zip(r["home"], r["away"]))
+        obs = float((r["hg"] + r["ag"]).sum())
+        g.cup_mu[slug] += float(np.log((obs + 40) / (pred + 40)))
+    return g
 
 
 def match_id(dt: pd.Timestamp, code: str, home: str, away: str) -> str:
@@ -246,8 +264,11 @@ def team_form(df, team, n=6):
 def backtest(df: pd.DataFrame, today: pd.Timestamp) -> dict | None:
     """Matchs européens des 15 derniers mois, prédits avec un modèle ajusté avant chaque quinzaine."""
     from model import markets_from_total, score_matrix, total_dist
-    cups = df[df["completed"] & df["slug"].isin(CUPS) & (df["dt"] >= today - pd.Timedelta(days=450))]
-    if len(cups) < 100:
+    # on ne juge le modèle que lorsqu'il dispose d'au moins 300 jours d'historique
+    first = df.loc[df["completed"], "dt"].min()
+    start = max(today - pd.Timedelta(days=450), first + pd.Timedelta(days=300))
+    cups = df[df["completed"] & df["slug"].isin(CUPS) & (df["dt"] >= start)]
+    if len(cups) < 60:
         return None
     preds, ys = [], []
     t = cups["dt"].min().normalize()
@@ -259,7 +280,7 @@ def backtest(df: pd.DataFrame, today: pd.Timestamp) -> dict | None:
             if g is not None:
                 for r in block.itertuples():
                     if g.known(r.home) and g.known(r.away):
-                        lh, la = g.rates(r.home, r.away)
+                        lh, la = g.rates(r.home, r.away, slug=r.slug)
                         p = markets_from_total(total_dist(score_matrix(lh, la, g.rho)))
                         preds.append((p["o15"], p["o25"]))
                         ys.append(r.hg + r.ag)
@@ -269,9 +290,12 @@ def backtest(df: pd.DataFrame, today: pd.Timestamp) -> dict | None:
     p = np.array(preds)
     y = np.array(ys)
     out = {"n": len(y)}
+    before = df[df["completed"] & df["slug"].isin(CUPS) & (df["dt"] < start)]
+    tb = (before["hg"] + before["ag"]).to_numpy()
     for k, (j, thr) in {"o15": (0, 2), "o25": (1, 3)}.items():
         yy = (y >= thr).astype(float)
-        base = np.full_like(yy, yy.mean())
+        # référence honnête : la fréquence observée AVANT la période de test
+        base = np.full_like(yy, (tb >= thr).mean() if len(tb) else yy.mean())
         out[k] = {"rate": round(float(yy.mean()), 3), "pred": round(float(p[:, j].mean()), 3),
                   "brier": round(float(np.mean((p[:, j] - yy) ** 2)), 4), "brier_base": round(float(np.mean((base - yy) ** 2)), 4)}
     return out
@@ -298,7 +322,7 @@ def update(today: date, offline: bool = False):
             if not (g.known(r.home) and g.known(r.away)):
                 continue
             code, name = CUPS[r.slug]
-            lh, la = g.rates(r.home, r.away)
+            lh, la = g.rates(r.home, r.away, slug=r.slug)
             mat = score_matrix(lh, la, g.rho)
             final = markets_from_total(total_dist(mat))
             flat = sorted(((mat[i, j], i, j) for i in range(6) for j in range(6)), reverse=True)[:6]
