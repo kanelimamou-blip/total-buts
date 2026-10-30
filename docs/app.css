@@ -120,3 +120,12 @@ svg.chart text{fill:var(--muted);font-family:var(--f-body);font-size:10px}
 @media (prefers-reduced-motion:no-preference){.card,.match{animation:rise .25s ease both}@keyframes rise{from{transform:translateY(4px)}to{transform:none}}}
 .btn-copy{border:1px solid var(--line);background:var(--surface-2);border-radius:10px;padding:9px 12px;font-weight:600;font-size:.85rem;cursor:pointer;text-align:center}
 .btn-copy:active{background:var(--accent-soft)}
+.btn-main{border:0;background:var(--accent);color:var(--accent-ink);border-radius:10px;padding:10px 12px;font-weight:600;font-size:.9rem;cursor:pointer}
+.btn-add{margin-top:6px;border:1px solid var(--accent);background:transparent;color:var(--accent);border-radius:8px;padding:5px 4px;font-size:.72rem;font-weight:600;cursor:pointer}
+.btn-x{grid-column:1/-1;justify-self:start;border:0;background:none;color:var(--muted);font-size:.75rem;text-decoration:underline;padding:2px 0;cursor:pointer}
+.basket-bar{position:fixed;left:max(12px,env(safe-area-inset-left,0px));right:max(12px,env(safe-area-inset-right,0px));bottom:calc(var(--tabs-h) + env(safe-area-inset-bottom,0px) + 8px);z-index:35;
+  display:flex;justify-content:space-between;align-items:center;gap:10px;border:0;border-radius:12px;padding:12px 14px;background:var(--ink);color:var(--bg);font-size:.9rem;box-shadow:0 6px 18px rgba(0,0,0,.25);cursor:pointer}
+.basket-bar b{font-family:var(--f-display);font-size:1.15rem}
+.form-col{display:flex;flex-direction:column;gap:8px}
+.form-col input,.form-row input{font:inherit;padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:var(--surface);color:var(--ink);width:100%}
+.form-row{display:flex;flex-direction:column;gap:6px;font-size:.85rem}

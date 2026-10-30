@@ -41,6 +41,7 @@ function route() {
   if (!state.data) return;
   const v = { coupons: viewCoupons, matchs: viewMatches, astuces: viewTips, suivi: viewTracking }[tab] || viewCoupons;
   $("#view").innerHTML = v();
+  renderBasketBar();
   window.scrollTo(0, 0);
 }
 
@@ -86,6 +87,7 @@ function couponCard(c) {
     <div class="kv"><span>Chance de ne pas perdre</span><b>${pct(c.p_not_lose)}</b></div>
     <div class="meter ${meterCls}"><span style="width:${Math.round(c.p_not_lose * 100)}%"></span></div>`}
     <div class="legs">${c.legs.map((l) => legRow(l, settled)).join("")}</div>
+    ${settled ? "" : `<button class="btn-main" data-play='${esc(JSON.stringify({ label: c.label + (c.scope && c.scope !== "Toutes ligues" ? " · " + c.scope : ""), odds: c.odds, legs: c.legs.map((l) => ({ id: l.id, market: l.market, team: l.team, home: l.home, away: l.away, league: l.league, odds: l.odds, p_win: l.p_win, p_push: l.p_push })) }))}'>Je l'ai joué</button>`}
     ${settled ? "" : `<button class="btn-copy" data-copy="${esc(c.id || "")}" data-coupon='${esc(JSON.stringify(c.legs.map((l) => [l.home, l.away, mkLabel(l), l.min_odds])))}'>Copier le coupon pour 1xBet</button>`}
     ${settled ? "" : `<div class="stake">Mise conseillée : <b>${String(c.stake_pct).replace(".", ",")} %</b> de ta bankroll${c.ev > 0 ? ` · avantage estimé <b class="pos">+${Math.round(c.ev * 100)} %</b>` : ""}</div>`}
   </article>`;
@@ -157,12 +159,12 @@ function openMatch(id) {
     <div class="mk-box"><span class="s">Buts</span><span class="p">${m.goals}</span><span class="s">au total</span></div></div>`;
   } else {
     const legs = Object.fromEntries(m.legs.map((l) => [l.market, l]));
-    const box = (k) => `<div class="mk-box"><span class="s">${MK[k]}</span><span class="p">${pct(m.p[k])}</span><span class="s">cote juste ${odds(legs[k].fair)}</span><span class="s">exige ≥ <b>${odds(legs[k].min_odds)}</b></span></div>`;
+    const box = (k) => `<div class="mk-box"><span class="s">${MK[k]}</span><span class="p">${pct(m.p[k])}</span><span class="s">cote juste ${odds(legs[k].fair)}</span><span class="s">exige ≥ <b>${odds(legs[k].min_odds)}</b></span>${addBtn(m, k)}</div>`;
     html = `<div class="vs"><span class="team">${esc(m.home)}</span><span class="muted small">buts attendus</span><span class="team">${esc(m.away)}</span>
       <span class="xg">${String(m.xg_home).replace(".", ",")}</span><span class="muted">–</span><span class="xg">${String(m.xg_away).replace(".", ",")}</span></div>
     <p class="muted small" style="text-align:center">${esc(m.league)} · ${dayLabel(m.date, state.data.today)} ${esc(m.time)}</p>
     <div class="mk-grid">${box("o15")}${box("o20")}${box("o25")}</div>
-    ${m.res ? `<div class="mk-grid"><div class="mk-box"><span class="s">Victoire ${esc(m.home)}</span><span class="p">${pct(m.res["1"])}</span></div><div class="mk-box"><span class="s">Nul</span><span class="p">${pct(m.res.X)}</span></div><div class="mk-box"><span class="s">Victoire ${esc(m.away)}</span><span class="p">${pct(m.res["2"])}</span></div></div>` : ""}
+    ${m.res ? `<div class="mk-grid"><div class="mk-box"><span class="s">Victoire ${esc(m.home)}</span><span class="p">${pct(m.res["1"])}</span>${addBtn(m, "1")}</div><div class="mk-box"><span class="s">Nul</span><span class="p">${pct(m.res.X)}</span></div><div class="mk-box"><span class="s">Victoire ${esc(m.away)}</span><span class="p">${pct(m.res["2"])}</span>${addBtn(m, "2")}</div></div>` : ""}
     ${m.p.o20_push ? `<p class="small muted">+2 buts : remboursé si le match finit à 2 buts (${pct(m.p.o20_push)}).</p>` : ""}
     ${m.provisional ? `<p class="note">Coupe d'Europe en rodage : l'historique des matchs européens se charge encore. Ce match n'entre pas dans les coupons pour l'instant.</p>` : ""}
     ${m.market_o25 != null ? `<p class="small">Marché sur +2,5 : <b>${pct(m.market_o25)}</b> (cote moyenne ${odds(m.odds_o25)}). Modèle seul : ${pct(m.p_model.o25)}.</p>` : `<p class="small muted">Cotes du marché pas encore publiées dans nos sources : probabilités du modèle seul, affinées à l'approche du match.</p>`}
@@ -210,7 +212,7 @@ function viewTracking() {
   const kinds = Object.entries(d.coupon_kinds);
   const live = d.live || {};
   const tot = Object.values(live).reduce((a, s) => ({ n: a.n + s.n, won: a.won + s.won, units: a.units + s.units }), { n: 0, won: 0, units: 0 });
-  let html = `<h1>Suivi</h1>
+  let html = `<h1>Suivi</h1>${myBetsBlock()}<h2>Propositions de l'appli</h2>
   <div class="stats">
     <div class="stat"><span class="k">Coupons joués</span><span class="v">${tot.n}</span></div>
     <div class="stat"><span class="k">Gagnés</span><span class="v">${tot.n ? Math.round((tot.won / tot.n) * 100) + " %" : "–"}</span></div>
@@ -302,6 +304,107 @@ function backtestBlock(bt) {
   <p class="note">${esc(bt.note)}</p></section>`;
 }
 
+/* ---------- Mon coupon et Mes paris (gardés sur ce téléphone) ---------- */
+const basket = () => store.get("basket", []);
+const bets = () => store.get("bets", []);
+
+function legFor(m, mk) {
+  if (mk === "1" || mk === "2") {
+    const p = m.res[mk], real = m.fav && m.fav.market === mk && m.fav.odds_source === "marché" ? m.fav.odds : null;
+    return { market: mk, team: mk === "1" ? m.home : m.away, p_win: p, p_push: 0, odds: real || +(1 / p / 1.06).toFixed(2), min_odds: +((1 / p) * 1.03).toFixed(2) };
+  }
+  const l = m.legs.find((x) => x.market === mk);
+  return { market: mk, p_win: l.p_win, p_push: l.p_push, odds: l.odds, min_odds: l.min_odds };
+}
+
+function addBtn(m, mk) {
+  const inB = basket().some((b) => b.id === m.id && b.market === mk);
+  return `<button class="btn-add" data-add="${esc(m.id)}" data-mk="${mk}">${inB ? "Retirer" : "+ Mon coupon"}</button>`;
+}
+
+function comboStats(legs) {
+  const pOk = legs.reduce((a, l) => a * (l.p_win + l.p_push), 1);
+  const pWin = legs.reduce((a, l) => a * l.p_win, 1);
+  const o = legs.reduce((a, l) => a * l.odds, 1);
+  return { pOk, pWin, odds: o };
+}
+
+function renderBasketBar() {
+  const b = basket();
+  let bar = $("#basket-bar");
+  if (!bar) { bar = document.createElement("button"); bar.id = "basket-bar"; bar.className = "basket-bar"; bar.dataset.openBasket = "1"; document.body.appendChild(bar); }
+  bar.hidden = !b.length;
+  if (b.length) { const st = comboStats(b); bar.innerHTML = `<span>Mon coupon · ${b.length} sélection${b.length > 1 ? "s" : ""}</span><b>${odds(st.odds)} · ${pct(st.pOk)}</b>`; }
+}
+
+function openBasket() {
+  const b = basket(), st = comboStats(b);
+  $("#sheet-body").innerHTML = `<h2>Mon coupon</h2>
+  ${b.length ? `<div class="stats"><div class="stat"><span class="k">Cote estimée</span><span class="v">${odds(st.odds)}</span></div><div class="stat"><span class="k">Ne pas perdre</span><span class="v">${pct(st.pOk)}</span></div></div>
+  <div class="legs">${b.map((l, i) => `<div class="leg"><span class="teams">${esc(l.home)} – ${esc(l.away)}</span><span class="o">${odds(l.odds)}</span>
+    <span class="meta"><span class="mk">${esc(mkLabel(l))}</span> · ${esc(l.league)} · ${pct(l.p_win)}</span><button class="btn-x" data-remove="${i}">Retirer</button></div>`).join("")}</div>
+  ${st.pOk < 0.3 ? `<p class="note">Moins de 30 % de chances de ne pas perdre : c'est un coupon risqué.</p>` : ""}
+  <button class="btn-copy" data-coupon='${esc(JSON.stringify(b.map((l) => [l.home, l.away, mkLabel(l), l.min_odds])))}'>Copier le coupon pour 1xBet</button>
+  <button class="btn-main" data-played-basket="1">Je l'ai joué</button>
+  <button class="btn-x" data-clear-basket="1">Vider le coupon</button>` : `<p class="muted">Ajoute des sélections depuis la fiche d'un match (onglet Matchs).</p>`}`;
+  $("#sheet").hidden = false;
+}
+
+function openPlayForm(legs, label, est) {
+  state.pending = { legs, label };
+  $("#sheet-body").innerHTML = `<h2>J'ai joué ce coupon</h2><p class="small muted">${esc(label)} · ${legs.length} sélections</p>
+  <form id="play-form" class="form-col">
+    <label for="stake">Mise (FCFA)</label><input id="stake" type="number" inputmode="decimal" min="1" required value="${store.get("lastStake", 1000)}">
+    <label for="real-odds">Cote obtenue sur 1xBet</label><input id="real-odds" type="number" inputmode="decimal" step="0.01" min="1.01" required value="${est.toFixed(2)}">
+    <button class="btn-main" type="submit">Enregistrer</button>
+  </form>`;
+  $("#sheet").hidden = false;
+}
+
+function legResult(l) {
+  const r = state.data.recent.find((x) => x.id === l.id);
+  let sc = r ? r.score : null;
+  if (!sc) for (const c of state.data.coupons) { const x = c.legs.find((y) => y.id === l.id && y.score); if (x) { sc = x.score; break; } }
+  if (!sc) return null;
+  const [h, a] = sc.split("-").map(Number), t = h + a;
+  const res = l.market === "1" ? (h > a ? "won" : "lost") : l.market === "2" ? (a > h ? "won" : "lost") : l.market === "o15" ? (t >= 2 ? "won" : "lost") : l.market === "o25" ? (t >= 3 ? "won" : "lost") : t >= 3 ? "won" : t === 2 ? "push" : "lost";
+  return { res, score: sc };
+}
+
+function betStatus(bet) {
+  const rs = bet.legs.map(legResult);
+  if (rs.some((r) => r && r.res === "lost")) return { status: "lost", ret: 0, rs };
+  if (rs.some((r) => !r)) return { status: "pending", ret: null, rs };
+  // remboursements : la cote du coupon est réduite de la cote estimée des sélections remboursées
+  let o = bet.odds;
+  bet.legs.forEach((l, i) => { if (rs[i].res === "push") o /= l.odds; });
+  return { status: "won", ret: bet.stake * Math.max(o, 1), rs };
+}
+
+function myBetsBlock() {
+  const list = bets();
+  const start = store.get("bankroll", null);
+  let staked = 0, ret = 0, pending = 0;
+  const rows = list.slice().reverse().map((b, ri) => {
+    const st = betStatus(b), idx = list.length - 1 - ri;
+    if (st.status === "pending") pending += b.stake; else { staked += b.stake; ret += st.ret; }
+    return `<div class="leg"><span class="teams">${esc(b.label)}<br><span class="small muted">${new Date(b.created).toLocaleDateString("fr-FR")} · ${b.legs.length} sélections · cote ${odds(b.odds)}</span></span>
+      <span class="o"><span class="status ${st.status}">${{ won: "Gagné", lost: "Perdu", pending: "En cours" }[st.status]}</span></span>
+      <span class="meta">Mise ${fmt(b.stake)}${st.status === "won" ? ` · gain ${fmt(st.ret)}` : ""} · ${b.legs.map((l, i) => `${esc(l.home)}${st.rs[i] ? " " + esc(st.rs[i].score) : ""}`).join(", ")}</span>
+      <button class="btn-x" data-del-bet="${idx}">Supprimer</button></div>`;
+  }).join("");
+  const profit = ret - staked;
+  return `<section class="card"><h2>Mes paris</h2>
+    <div class="form-row"><label for="bankroll">Bankroll de départ (FCFA)</label><input id="bankroll" type="number" inputmode="decimal" value="${start ?? ""}" placeholder="ex. 50000"></div>
+    <div class="stats"><div class="stat"><span class="k">Bilan</span><span class="v ${profit >= 0 ? "pos" : "neg"}">${profit >= 0 ? "+" : ""}${fmt(profit)}</span></div>
+    <div class="stat"><span class="k">Bankroll</span><span class="v">${start != null ? fmt(start + profit - pending) : "–"}</span></div>
+    <div class="stat"><span class="k">En jeu</span><span class="v">${fmt(pending)}</span></div>
+    <div class="stat"><span class="k">Paris</span><span class="v">${list.length}</span></div></div>
+    ${list.length ? `<div class="legs">${rows}</div>` : `<p class="small muted">Touche « Je l'ai joué » sur un coupon pour suivre tes vrais paris. Ils sont réglés automatiquement avec les scores. Ces données restent sur ce téléphone.</p>`}
+  </section>`;
+}
+const fmt = (x) => Math.round(x).toLocaleString("fr-FR");
+
 /* ---------- Événements ---------- */
 document.addEventListener("click", (e) => {
   const t = e.target.closest("[data-day],[data-mday],[data-kind],[data-league],[data-sort],[data-match],[data-close]");
@@ -325,6 +428,40 @@ document.addEventListener("click", async (e) => {
   catch { const t = document.createElement("textarea"); t.value = text; document.body.appendChild(t); t.select(); document.execCommand("copy"); t.remove(); b.textContent = "Copié ✓"; }
   setTimeout(() => (b.textContent = "Copier le coupon pour 1xBet"), 2000);
 }, true);
+document.addEventListener("click", (e) => {
+  const t = e.target.closest("[data-add],[data-open-basket],[data-remove],[data-clear-basket],[data-played-basket],[data-play],[data-del-bet]");
+  if (!t) return;
+  e.stopPropagation();
+  if (t.dataset.add) {
+    const m = state.data.matches.find((x) => x.id === t.dataset.add);
+    let b = basket();
+    const i = b.findIndex((x) => x.id === m.id && x.market === t.dataset.mk);
+    if (i >= 0) b.splice(i, 1);
+    else { b = b.filter((x) => x.id !== m.id); b.push({ id: m.id, home: m.home, away: m.away, league: m.league, date: m.date, time: m.time, ...legFor(m, t.dataset.mk) }); }
+    store.set("basket", b); renderBasketBar(); openMatch(m.id); return;
+  }
+  if (t.dataset.openBasket) return openBasket();
+  if (t.dataset.remove) { const b = basket(); b.splice(+t.dataset.remove, 1); store.set("basket", b); renderBasketBar(); return openBasket(); }
+  if (t.dataset.clearBasket) { store.set("basket", []); renderBasketBar(); $("#sheet").hidden = true; return; }
+  if (t.dataset.playedBasket) { const b = basket(); return openPlayForm(b, "Mon coupon", comboStats(b).odds); }
+  if (t.dataset.play) { const c = JSON.parse(t.dataset.play); return openPlayForm(c.legs, c.label, c.odds); }
+  if (t.dataset.delBet) {
+    if (t.dataset.confirm !== "1") { t.dataset.confirm = "1"; t.textContent = "Confirmer la suppression"; return; }
+    const l = bets(); l.splice(+t.dataset.delBet, 1); store.set("bets", l); route(); return;
+  }
+}, true);
+document.addEventListener("submit", (e) => {
+  if (e.target.id !== "play-form") return;
+  e.preventDefault();
+  const stake = parseFloat($("#stake").value), o = parseFloat($("#real-odds").value);
+  if (!(stake > 0) || !(o > 1)) return;
+  const l = bets(); l.push({ created: new Date().toISOString(), label: state.pending.label, legs: state.pending.legs, stake, odds: o });
+  store.set("bets", l); store.set("lastStake", stake);
+  if (state.pending.label === "Mon coupon") store.set("basket", []);
+  renderBasketBar();
+  $("#sheet-body").innerHTML = `<h2>Pari enregistré</h2><p>Il sera réglé automatiquement avec les scores. Retrouve-le dans l'onglet Suivi.</p>`;
+});
+document.addEventListener("change", (e) => { if (e.target.id === "bankroll") { const v = parseFloat(e.target.value); store.set("bankroll", isNaN(v) ? null : v); route(); } });
 document.addEventListener("keydown", (e) => { if (e.key === "Escape") $("#sheet").hidden = true; });
 window.addEventListener("hashchange", () => { $("#sheet").hidden = true; route(); });
 state.kind = store.get("kind", "all"); state.sort = store.get("sort", "o15");

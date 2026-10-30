@@ -264,7 +264,7 @@ def main():
     tip_list = tips_mod.build(results, matches, season_start, live)
 
     # Derniers résultats de nos prédictions (journal), pour l'écran Suivi
-    recent = sorted(((mid, e) for mid, e in log.items() if "goals" in e), key=lambda x: x[1]["date"], reverse=True)[:80]
+    recent = sorted(((mid, e) for mid, e in log.items() if "goals" in e), key=lambda x: x[1]["date"], reverse=True)[:400]
     recent_out = [{"id": mid, "date": e["date"], "league": ALL_COMPETITIONS.get(e["div"], (e["div"],))[0], "home": e.get("home", mid.split("|")[2]),
                    "away": e.get("away", mid.split("|")[3]), "score": e.get("score"), "goals": e["goals"],
                    "o15": e["o15"], "o25": e["o25"]} for mid, e in recent]
