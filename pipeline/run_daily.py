@@ -16,8 +16,8 @@ import backtest
 import europe
 import feedback
 import tips as tips_mod
-from config import ALL_COMPETITIONS, COUPONS, CUPS, LEAGUES, MARKETS, SITE_DATA, STATE_DIR
-from coupons import build_day, legs_for_match, settle_coupon
+from config import ALL_COMPETITIONS, COUPONS, CUPS, LEAGUES, MARKETS, PERIODS, SITE_DATA, STATE_DIR
+from coupons import _repeat, build_day, build_favorites, favorite_leg, legs_for_match, prioritise, settle_coupon
 from fetch import download, load_fixtures, load_results
 from model import fit, predict
 
@@ -125,10 +125,13 @@ def main():
             continue
         o25 = None if pd.isna(row.o25) else float(row.o25)
         u25 = None if pd.isna(row.u25) else float(row.u25)
-        pr = predict(r, row.home, row.away, o25, u25, blend=blend)
+        o1x2 = tuple(getattr(row, k, float("nan")) for k in ("oh", "od", "oa"))
+        o1x2 = None if any(pd.isna(x) for x in o1x2) else o1x2
+        pr = predict(r, row.home, row.away, o25, u25, blend=blend, odds_1x2=o1x2)
         pr["final"] = feedback.apply(pr["final"], row.div, fb)
         mp = predict(r, row.home, row.away, o25, u25, blend=0.0)["final"] if pr["market_o25"] is not None else None
         legs = legs_for_match(pr, mp, o25)
+        fav = favorite_leg(pr, row.home, row.away, o1x2)
         matches.append({
             "id": mid, "div": row.div, "league": LEAGUES[row.div][0], "country": LEAGUES[row.div][1],
             "date": row.date.strftime("%Y-%m-%d"), "time": row.time or "",
@@ -141,6 +144,8 @@ def main():
             "odds_o25": o25,
             "legs": [{k: (round(v, 3) if isinstance(v, float) else v) for k, v in l.items()} for l in legs],
             "top_scores": pr["top_scores"], "total_dist": pr["total_dist"],
+            "res": {k: round(v, 3) for k, v in pr["res"].items()},
+            "fav": {k: (round(v, 3) if isinstance(v, float) else v) for k, v in fav.items()},
             **({"form_home": team_form(results, row.home), "form_away": team_form(results, row.away)}
                if row.date < ts_today + pd.Timedelta(days=DETAIL_DAYS) else {"form_home": None, "form_away": None}),
             "has_odds": o25 is not None,
@@ -149,8 +154,9 @@ def main():
         if e["id"] in scores:
             continue
         final = feedback.apply(e["final"], e["div"], fb)
-        pr = {"final": final, "model": e["final"]}
+        pr = {"final": final, "model": e["final"], "res": e["res"]}
         legs = legs_for_match(pr, None, None)
+        fav = favorite_leg(pr, e["home"], e["away"])
         matches.append({
             "id": e["id"], "div": e["div"], "league": e["league"], "country": e["country"],
             "date": e["date"], "time": e["time"], "home": e["home"], "away": e["away"],
@@ -163,6 +169,8 @@ def main():
             "top_scores": e["top_scores"], "total_dist": e["total_dist"],
             "form_home": e["form_home"], "form_away": e["form_away"],
             "provisional": e.get("provisional", False),
+            "res": {k: round(v, 3) for k, v in e["res"].items()},
+            "fav": {k: (round(v, 3) if isinstance(v, float) else v) for k, v in fav.items()},
         })
     matches.sort(key=lambda m: (m["date"], m["time"], -m["p"]["o15"]))
 
@@ -175,16 +183,41 @@ def main():
             continue
         if d in store and store[d].get("frozen"):
             continue
-        day = [{"id": m["id"], "div": m["div"], "rel": fb["reliability"].get(m["div"], 0.9 if m["div"] in CUPS else 1.0), "legs": m["legs"]} for m in by_date[d] if not m.get("provisional")]
+        day = [{"id": m["id"], "div": m["div"], "rel": fb["reliability"].get(m["div"], 0.9 if m["div"] in CUPS else 1.0),
+                "legs": m["legs"], "fav": m["fav"]} for m in by_date[d] if not m.get("provisional")]
         coupons = build_day(day, league_names={k: v[0] for k, v in ALL_COMPETITIONS.items()})
         store[d] = {"frozen": d == today.isoformat(), "created": now.isoformat(timespec="minutes"), "coupons": coupons}
+
+    # Tickets sur une période (5 jours à 1 mois), créés une fois par jour avec le jour J
+    td = today.isoformat()
+    entry = store.setdefault(td, {"frozen": True, "created": now.isoformat(timespec="minutes"), "coupons": []})
+    if not entry.get("periods_done"):
+        pool_all = [{"id": m["id"], "div": m["div"], "date": m["date"], "legs": m["legs"], "fav": m["fav"],
+                     "rel": fb["reliability"].get(m["div"], 0.9 if m["div"] in CUPS else 1.0)}
+                    for m in matches if not m.get("provisional")]
+        used_b, used_f = set(), set()
+        extra = []
+        for days, label in sorted(PERIODS.items()):
+            end = (today + timedelta(days=days)).isoformat()
+            window = [m for m in pool_all if m["date"] < end]
+            buts = _repeat("periode_buts", [m for m in window if m["id"] not in used_b], {"o15", "o20", "o25"}, pool=12, scope=label)
+            favs = build_favorites([m for m in window if m["id"] not in used_f], kind="periode_fav", scope=label)
+            for c in buts:
+                used_b |= {l["id"] for l in c["legs"]}
+            for c in favs:
+                used_f |= {l["id"] for l in c["legs"]}
+            extra += buts + favs
+        entry["coupons"] = prioritise(entry["coupons"] + extra)
+        entry["periods_done"] = True
 
     # Règlement des coupons passés
     for d, entry in store.items():
         for c in entry["coupons"]:
             if c.get("status") in ("won", "lost", "void"):
                 continue
-            if settle_coupon(c, scores) is None and d < (today - timedelta(days=6)).isoformat():
+            last = max(l["id"][:8] for l in c["legs"])
+            last = f"{last[:4]}-{last[4:6]}-{last[6:]}"
+            if settle_coupon(c, scores) is None and last < (today - timedelta(days=6)).isoformat():
                 c["status"] = "void"  # match reporté ou introuvable
     (STATE_DIR / "coupons.json").write_text(json.dumps(store, ensure_ascii=False, indent=1))
 

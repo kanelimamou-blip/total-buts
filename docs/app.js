@@ -1,6 +1,8 @@
 "use strict";
 const MK = { o15: "+1,5 but", o20: "+2 buts", o25: "+2,5 buts" };
-const KIND_FILTERS = [["all", "Tous"], ["sur", "Sûrs"], ["ligue", "Par championnat"], ["value", "Value"], ["audace", "Audacieux"], ["jackpot", "Jackpot"]];
+const KIND_FILTERS = [["all", "Tous"], ["sur", "Sûrs"], ["favoris", "Favoris"], ["periode", "Sur une période"], ["ligue", "Par championnat"], ["value", "Value"], ["audace", "Audacieux"], ["jackpot", "Jackpot"]];
+const kindOf = (c) => (c.kind.startsWith("periode") ? "periode" : c.kind);
+const mkLabel = (l) => (l.market === "1" || l.market === "2" ? `Victoire ${l.team || (l.market === "1" ? l.home : l.away)}` : MK[l.market]);
 const state = { data: null, bt: null, day: null, kind: "all", league: "all", sort: "o15" };
 const $ = (s, el = document) => el.querySelector(s);
 const esc = (s) => String(s ?? "").replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
@@ -55,8 +57,8 @@ function viewCoupons() {
   if (!days.length) return `<h1>Coupons</h1><div class="empty"><p>Pas encore de coupon pour les 7 prochains jours.</p><p class="small">Les coupons sont recalculés à 6 h, 12 h et 18 h.</p></div>${pastBlock()}`;
   if (!state.day || !days.includes(state.day)) state.day = days[0];
   const list = d.coupons.filter((c) => c.date === state.day);
-  const shown = list.filter((c) => state.kind === "all" || c.kind === state.kind).sort((a, b) => a.priority - b.priority);
-  const count = (k) => list.filter((c) => k === "all" || c.kind === k).length;
+  const shown = list.filter((c) => state.kind === "all" || kindOf(c) === state.kind).sort((a, b) => a.priority - b.priority);
+  const count = (k) => list.filter((c) => k === "all" || kindOf(c) === k).length;
   const frozen = list[0]?.frozen;
   return `
   <h1>Coupons</h1>
@@ -76,7 +78,7 @@ function couponCard(c) {
       <div class="t">
         <span class="prio ${c.level}"><i></i>Priorité ${c.priority} · ${c.level}</span>
         <h3>${esc(c.label)}${c.scope && c.scope !== "Toutes ligues" ? " · " + esc(c.scope) : ""}</h3>
-        <span class="small muted">${c.legs.length} sélections${settled ? "" : " · " + dayLabel(c.date, state.data.today)}</span>
+        <span class="small muted">${c.legs.length} sélections${c.kind.startsWith("periode") ? " · ticket du " + dayLabel(c.date, state.data.today).toLowerCase() : settled ? "" : " · " + dayLabel(c.date, state.data.today)}</span>
       </div>
       <div class="big-odds">${odds(c.odds)}<small>cote estimée</small></div>
     </div>
@@ -84,7 +86,7 @@ function couponCard(c) {
     <div class="kv"><span>Chance de ne pas perdre</span><b>${pct(c.p_not_lose)}</b></div>
     <div class="meter ${meterCls}"><span style="width:${Math.round(c.p_not_lose * 100)}%"></span></div>`}
     <div class="legs">${c.legs.map((l) => legRow(l, settled)).join("")}</div>
-    ${settled ? "" : `<button class="btn-copy" data-copy="${esc(c.id || "")}" data-coupon='${esc(JSON.stringify(c.legs.map((l) => [l.home, l.away, MK[l.market], l.min_odds])))}'>Copier le coupon pour 1xBet</button>`}
+    ${settled ? "" : `<button class="btn-copy" data-copy="${esc(c.id || "")}" data-coupon='${esc(JSON.stringify(c.legs.map((l) => [l.home, l.away, mkLabel(l), l.min_odds])))}'>Copier le coupon pour 1xBet</button>`}
     ${settled ? "" : `<div class="stake">Mise conseillée : <b>${String(c.stake_pct).replace(".", ",")} %</b> de ta bankroll${c.ev > 0 ? ` · avantage estimé <b class="pos">+${Math.round(c.ev * 100)} %</b>` : ""}</div>`}
   </article>`;
 }
@@ -94,7 +96,7 @@ function legRow(l, settled) {
   return `<button class="leg" data-match="${esc(l.id)}">
     <span class="teams">${esc(l.home)} – ${esc(l.away)}</span>
     <span class="o">${settled && res ? res : odds(l.odds)}</span>
-    <span class="meta"><span class="mk">${MK[l.market]}</span> · ${esc(l.league)}${l.time ? " · " + esc(l.time) : ""} · ${pct(l.p_win)}${l.p_push ? ` (+${pct(l.p_push)} remboursé)` : ""}</span>
+    <span class="meta"><span class="mk">${esc(mkLabel(l))}</span> · ${esc(l.league)}${l.id ? " · " + dayLabel(l.id.slice(0, 4) + "-" + l.id.slice(4, 6) + "-" + l.id.slice(6, 8), state.data.today) : ""}${l.time ? " " + esc(l.time) : ""} · ${pct(l.p_win)}${l.p_push ? ` (+${pct(l.p_push)} remboursé)` : ""}</span>
     <span class="min">${settled ? odds(l.odds) : "min. " + odds(l.min_odds)}</span>
   </button>`;
 }
@@ -160,6 +162,7 @@ function openMatch(id) {
       <span class="xg">${String(m.xg_home).replace(".", ",")}</span><span class="muted">–</span><span class="xg">${String(m.xg_away).replace(".", ",")}</span></div>
     <p class="muted small" style="text-align:center">${esc(m.league)} · ${dayLabel(m.date, state.data.today)} ${esc(m.time)}</p>
     <div class="mk-grid">${box("o15")}${box("o20")}${box("o25")}</div>
+    ${m.res ? `<div class="mk-grid"><div class="mk-box"><span class="s">Victoire ${esc(m.home)}</span><span class="p">${pct(m.res["1"])}</span></div><div class="mk-box"><span class="s">Nul</span><span class="p">${pct(m.res.X)}</span></div><div class="mk-box"><span class="s">Victoire ${esc(m.away)}</span><span class="p">${pct(m.res["2"])}</span></div></div>` : ""}
     ${m.p.o20_push ? `<p class="small muted">+2 buts : remboursé si le match finit à 2 buts (${pct(m.p.o20_push)}).</p>` : ""}
     ${m.provisional ? `<p class="note">Coupe d'Europe en rodage : l'historique des matchs européens se charge encore. Ce match n'entre pas dans les coupons pour l'instant.</p>` : ""}
     ${m.market_o25 != null ? `<p class="small">Marché sur +2,5 : <b>${pct(m.market_o25)}</b> (cote moyenne ${odds(m.odds_o25)}). Modèle seul : ${pct(m.p_model.o25)}.</p>` : `<p class="small muted">Cotes du marché pas encore publiées dans nos sources : probabilités du modèle seul, affinées à l'approche du match.</p>`}

@@ -96,7 +96,7 @@ def fixtures(today: date, results: pd.DataFrame, offline: bool = False) -> pd.Da
     if not offline:
         download(today)
     espn = _load()
-    cols = ["div", "date", "time", "home", "away", "o25", "u25"]
+    cols = ["div", "date", "time", "home", "away", "o25", "u25", "oh", "od", "oa"]
     if espn.empty:
         return pd.DataFrame(columns=cols)
     names = name_map(espn, results)
@@ -109,5 +109,6 @@ def fixtures(today: date, results: pd.DataFrame, offline: bool = False) -> pd.Da
         if div is None or r.home not in m or r.away not in m:
             continue
         rows.append({"div": div, "date": pd.Timestamp(r.dt.date()), "time": r.dt.strftime("%H:%M"),
-                     "home": m[r.home], "away": m[r.away], "o25": float("nan"), "u25": float("nan")})
+                     "home": m[r.home], "away": m[r.away], "o25": float("nan"), "u25": float("nan"),
+                     "oh": float("nan"), "od": float("nan"), "oa": float("nan")})
     return pd.DataFrame(rows, columns=cols)

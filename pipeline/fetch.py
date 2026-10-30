@@ -16,6 +16,9 @@ COLS = {
     "o25_max": ["Max>2.5", "BbMx>2.5"],
     "o25_close": ["AvgC>2.5", "PC>2.5", "B365C>2.5"],
     "u25_close": ["AvgC<2.5", "PC<2.5", "B365C<2.5"],
+    "oh": ["AvgH", "BbAvH", "B365H", "PSH"],
+    "od": ["AvgD", "BbAvD", "B365D", "PSD"],
+    "oa": ["AvgA", "BbAvA", "B365A", "PSA"],
 }
 
 

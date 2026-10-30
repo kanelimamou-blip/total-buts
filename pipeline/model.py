@@ -179,7 +179,25 @@ def devig(over: float, under: float) -> float | None:
     return po / (po + pu)
 
 
-def predict(r: Ratings, home: str, away: str, o25=None, u25=None, blend: float = 0.6) -> dict:
+RES_BLEND = 0.25  # poids du modèle face aux cotes 1X2 du marché (le marché est plus précis, cf. backtest des buts)
+
+
+def result_probs(mat: np.ndarray) -> dict:
+    return {"1": float(np.tril(mat, -1).sum()), "X": float(np.trace(mat)), "2": float(np.triu(mat, 1).sum())}
+
+
+def devig3(oh, od, oa):
+    try:
+        inv = [1 / float(x) for x in (oh, od, oa)]
+    except (TypeError, ValueError, ZeroDivisionError):
+        return None
+    if any(np.isnan(v) or v <= 0 or v >= 1 for v in inv):
+        return None
+    t = sum(inv)
+    return {"1": inv[0] / t, "X": inv[1] / t, "2": inv[2] / t}
+
+
+def predict(r: Ratings, home: str, away: str, o25=None, u25=None, blend: float = 0.6, odds_1x2=None) -> dict:
     """Probabilités du modèle, puis version ajustée au marché si des cotes existent.
 
     blend = poids du modèle dans le mélange avec la probabilité implicite du marché (choisi par le backtest).
@@ -195,11 +213,15 @@ def predict(r: Ratings, home: str, away: str, o25=None, u25=None, blend: float =
         final_lh, final_la = lh * s, la * s
         mat = score_matrix(final_lh, final_la, r.rho)
     final = markets_from_total(total_dist(mat))
+    res = result_probs(mat)
+    res_mkt = devig3(*odds_1x2) if odds_1x2 else None
+    if res_mkt:
+        res = {k: RES_BLEND * res[k] + (1 - RES_BLEND) * res_mkt[k] for k in res}
     flat = [(mat[i, j], i, j) for i in range(6) for j in range(6)]
     top = sorted(flat, reverse=True)[:6]
     return {
         "xg_home": round(final_lh, 2), "xg_away": round(final_la, 2),
-        "model": model, "final": final, "market_o25": mkt,
+        "model": model, "final": final, "market_o25": mkt, "res": res, "res_market": res_mkt,
         "top_scores": [{"s": f"{i}-{j}", "p": round(float(p), 3)} for p, i, j in top],
         "total_dist": [round(float(x), 4) for x in total_dist(mat)[:7]],
     }

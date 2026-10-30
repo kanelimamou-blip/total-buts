@@ -47,12 +47,12 @@ def _leg_stats(leg):
     return np.log(max(p_ok, 1e-12)), np.log(cond_odds)
 
 
-def _search(matches: list[dict], k_range, min_odds, allowed, pool, score="safety", max_odds=1e9, max_o25=1):
+def _search(matches: list[dict], k_range, min_odds, allowed, pool, score="safety", max_odds=1e9, max_o25=1, mk_order=None):
     """matches : [{"id":..., "legs":[...]}]. Recherche exhaustive vectorisée."""
     if len(matches) < k_range[0]:
         return None
-    mk = [m for m in MKT_ORDER if m in allowed]
-    pool_matches = sorted(matches, key=lambda m: -max(l["p_win"] + l["p_push"] for l in m["legs"] if l["market"] in mk))[:pool]
+    mk = [m for m in (mk_order or MKT_ORDER) if m in allowed]
+    pool_matches = sorted(matches, key=lambda m: -max((l["p_win"] + l["p_push"] for l in m["legs"] if l["market"] in mk), default=0))[:pool]
     n = len(pool_matches)
     lp = np.full((n, len(mk)), -np.inf)
     lr = np.array([0.5 * np.log(m.get("rel", 1.0)) for m in pool_matches])
@@ -61,8 +61,8 @@ def _search(matches: list[dict], k_range, min_odds, allowed, pool, score="safety
     no = np.zeros((n, len(mk)))
     for i, m in enumerate(pool_matches):
         for j, name in enumerate(mk):
-            leg = next(l for l in m["legs"] if l["market"] == name)
-            if leg.get("excluded") or leg["odds"] < MIN_LEG_ODDS:
+            leg = next((l for l in m["legs"] if l["market"] == name), None)
+            if leg is None or leg.get("excluded") or leg["odds"] < MIN_LEG_ODDS:
                 continue
             lp[i, j], lo[i, j] = _leg_stats(leg)
             ev[i, j] = leg["ev"]
@@ -108,7 +108,7 @@ def _pack(kind, p_log, o_log, picks, scope="Toutes ligues"):
         nominal *= leg["odds"]
         p_full *= leg["p_win"]
         rel.append(m.get("rel", 1.0))
-        legs.append({"id": m["id"], "market": name, "odds": leg["odds"], "odds_source": leg["odds_source"],
+        legs.append({"id": m["id"], "market": name, "team": leg.get("team"), "odds": leg["odds"], "odds_source": leg["odds_source"],
                      "p_win": round(leg["p_win"], 3), "p_push": round(leg["p_push"], 3), "min_odds": leg["min_odds"]})
     p_ok = float(np.exp(p_log))
     exp_odds = float(np.exp(o_log))
@@ -120,12 +120,12 @@ def _pack(kind, p_log, o_log, picks, scope="Toutes ligues"):
     }
 
 
-def _repeat(kind, matches, allowed, pool, score="safety", scope="Toutes ligues", max_o25=1):
+def _repeat(kind, matches, allowed, pool, score="safety", scope="Toutes ligues", max_o25=1, mk_order=None):
     """Construit autant de coupons que possible tant qu'ils passent le seuil de probabilité."""
     cfg = COUPONS[kind]
     out, rest = [], list(matches)
     while len(out) < MAX_PER_DAY[kind]:
-        r = _search(rest, cfg["legs"], cfg["min_odds"], allowed, pool=pool, score=score, max_odds=cfg["max_odds"], max_o25=max_o25)
+        r = _search(rest, cfg["legs"], cfg["min_odds"], allowed, pool=pool, score=score, max_odds=cfg["max_odds"], max_o25=max_o25, mk_order=mk_order)
         if not r or np.exp(r[0]) < MIN_P[kind]:
             break
         out.append(_pack(kind, *r, scope=scope))
@@ -134,7 +134,7 @@ def _repeat(kind, matches, allowed, pool, score="safety", scope="Toutes ligues",
     return out
 
 
-def build_day(matches: list[dict], kinds=("sur", "ligue", "value", "audace", "jackpot"), league_names=None) -> list[dict]:
+def build_day(matches: list[dict], kinds=("sur", "ligue", "favoris", "value", "audace", "jackpot"), league_names=None) -> list[dict]:
     """Coupons d'une journée. matches : [{"id", "div", "rel", "legs"}].
 
     Les coupons sûrs toutes ligues ne partagent aucun match entre eux ; les coupons par championnat
@@ -151,6 +151,8 @@ def build_day(matches: list[dict], kinds=("sur", "ligue", "value", "audace", "ja
             if len(ms) >= COUPONS["ligue"]["legs"][0]:
                 name = (league_names or {}).get(div, div)
                 out += _repeat("ligue", ms, {"o15", "o20", "o25"}, pool=10, scope=name)[:1]
+    if "favoris" in kinds:
+        out += build_favorites(matches)
     if "value" in kinds:
         vm = []
         for m in matches:
@@ -197,7 +199,39 @@ def prioritise(coupons: list[dict]) -> list[dict]:
     return coupons
 
 
-def settle_leg(market: str, total: int) -> str:
+def favorite_leg(pred: dict, home: str, away: str, odds_1x2=None) -> dict:
+    """Sélection « victoire du favori » : l'équipe la plus probable de gagner."""
+    res = pred["res"]
+    side = "1" if res["1"] >= res["2"] else "2"
+    p = res[side]
+    real = None
+    if odds_1x2:
+        try:
+            real = float(odds_1x2[0 if side == "1" else 2])
+            real = real if real > 1 else None
+        except (TypeError, ValueError):
+            real = None
+        if real is not None and np.isnan(real):
+            real = None
+    odds = real if real else (1 / max(p, 1e-9)) / (1 + BOOK_MARGIN)
+    return {"market": side, "team": home if side == "1" else away, "p_win": p, "p_push": 0.0, "p_lose": 1 - p,
+            "odds": round(max(odds, 1.01), 2), "odds_source": "marché" if real else "estimée",
+            "fair": round(1 / max(p, 1e-9), 2), "min_odds": round((1 / max(p, 1e-9)) * (1 + VALUE_EDGE), 2),
+            "ev": p * odds - 1}
+
+
+def build_favorites(matches: list[dict], kind="favoris", scope="Toutes ligues", min_p_leg=0.6) -> list[dict]:
+    """Tickets de favoris : 3 à 4 victoires de favoris nets, sans doublon de match entre tickets."""
+    fav = [{"id": m["id"], "div": m.get("div"), "rel": m.get("rel", 1.0), "legs": [m["fav"]]}
+           for m in matches if m.get("fav") and m["fav"]["p_win"] >= min_p_leg]
+    return _repeat(kind, fav, {"1", "2"}, pool=12, scope=scope, mk_order=["1", "2"])
+
+
+def settle_leg(market: str, total: int, hg: int = 0, ag: int = 0) -> str:
+    if market == "1":
+        return "won" if hg > ag else "lost"
+    if market == "2":
+        return "won" if ag > hg else "lost"
     if market == "o15":
         return "won" if total >= 2 else "lost"
     if market == "o25":
@@ -214,7 +248,7 @@ def settle_coupon(coupon: dict, scores: dict) -> dict | None:
             return None
     for leg in coupon["legs"]:
         hg, ag = scores[leg["id"]]
-        r = settle_leg(leg["market"], hg + ag)
+        r = settle_leg(leg["market"], hg + ag, hg, ag)
         leg["result"] = r
         leg["goals"] = int(hg + ag)
         leg["score"] = f"{int(hg)}-{int(ag)}"
