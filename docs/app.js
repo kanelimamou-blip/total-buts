@@ -90,6 +90,7 @@ function couponCard(c) {
     <div class="meter ${meterCls}"><span style="width:${Math.round(c.p_not_lose * 100)}%"></span></div>`}
     <div class="legs">${c.legs.map((l) => legRow(l, settled)).join("")}</div>
     ${settled ? "" : `<button class="btn-main" data-play='${esc(JSON.stringify({ label: c.label + (c.scope && c.scope !== "Toutes ligues" ? " · " + c.scope : ""), odds: c.odds, legs: c.legs.map((l) => ({ id: l.id, market: l.market, team: l.team, home: l.home, away: l.away, league: l.league, odds: l.odds, p_win: l.p_win, p_push: l.p_push })) }))}'>Je l'ai joué</button>`}
+    ${settled ? "" : `<button class="btn-copy" data-quick='${esc(JSON.stringify(c.legs.map((l) => [l.home, l.away, mkLabel(l), l.min_odds, l.time || ""])))}'>Saisie rapide 1xBet</button>`}
     ${settled ? "" : `<button class="btn-copy" data-copy="${esc(c.id || "")}" data-coupon='${esc(JSON.stringify(c.legs.map((l) => [l.home, l.away, mkLabel(l), l.min_odds])))}'>Copier le coupon pour 1xBet</button>`}
     ${settled ? "" : `<div class="stake">Mise conseillée : <b>${String(c.stake_pct).replace(".", ",")} %</b> de ta bankroll${c.ev > 0 ? ` · avantage estimé <b class="pos">+${Math.round(c.ev * 100)} %</b>` : ""}</div>`}
   </article>`;
@@ -369,6 +370,22 @@ function liveBlock() {
 }
 setInterval(liveTick, 60e3);
 
+/* ---------- Saisie rapide dans 1xBet ---------- */
+// libellés des marchés tels qu'ils apparaissent dans 1xBet
+function xbetLabel(mk, h, a) {
+  return mk.startsWith("+1,5") ? "Total Plus de 1.5" : mk.startsWith("+2,5") ? "Total Plus de 2.5" : mk.startsWith("+2 ") ? "Total Plus de 2 (asiatique)"
+    : mk === `Victoire ${h}` ? "V1 (victoire domicile)" : mk === `Victoire ${a}` ? "V2 (victoire extérieur)" : mk;
+}
+function openQuick(legs) {
+  $("#sheet-body").innerHTML = `<h2>Saisie rapide 1xBet</h2>
+  <p class="small muted">Pour chaque match : touche le nom pour le copier, colle-le dans « Recherche d'événement » de 1xBet, choisis le marché indiqué, puis coche.</p>
+  <div class="legs">${legs.map(([h, a, mk, mo, t], i) => `<div class="leg quick" id="q${i}">
+    <span class="teams"><button class="btn-team" data-copy-text="${esc(h)}">${esc(h)}</button> – ${esc(a)}${t ? ` <span class="small muted">${esc(t)}</span>` : ""}</span>
+    <span class="o"><input type="checkbox" id="qc${i}" aria-label="Fait"></span>
+    <span class="meta"><b>${esc(xbetLabel(mk, h, a))}</b> · cote min ${odds(mo)}</span></div>`).join("")}</div>`;
+  $("#sheet").hidden = false;
+}
+
 /* ---------- Mon coupon et Mes paris (gardés sur ce téléphone) ---------- */
 const basket = () => store.get("basket", []);
 const bets = () => store.get("bets", []);
@@ -488,15 +505,21 @@ document.addEventListener("click", async (e) => {
   if (!b) return;
   e.stopPropagation();
   const legs = JSON.parse(b.dataset.coupon);
-  // libellés des marchés tels qu'ils apparaissent dans 1xBet
-  const xbet = (mk, h, a) => mk.startsWith("+1,5") ? "Total Plus de 1.5" : mk.startsWith("+2,5") ? "Total Plus de 2.5" : mk.startsWith("+2 ") ? "Total Plus de 2 (asiatique)"
-    : mk === `Victoire ${h}` ? "V1 (victoire domicile)" : mk === `Victoire ${a}` ? "V2 (victoire extérieur)" : mk;
+  const xbet = xbetLabel;
   const text = legs.map(([h, a, mk, mo], i) => `${i + 1}. ${h} - ${a} : ${xbet(mk, h, a)}, cote min ${odds(mo)}`).join("\n");
   try { await navigator.clipboard.writeText(text); b.textContent = "Copié ✓"; }
   catch { const t = document.createElement("textarea"); t.value = text; document.body.appendChild(t); t.select(); document.execCommand("copy"); t.remove(); b.textContent = "Copié ✓"; }
   setTimeout(() => (b.textContent = "Copier le coupon pour 1xBet"), 2000);
 }, true);
 document.addEventListener("click", (e) => {
+  const q = e.target.closest("[data-quick],[data-copy-text]");
+  if (q) {
+    e.stopPropagation();
+    if (q.dataset.quick) return openQuick(JSON.parse(q.dataset.quick));
+    const txt = q.dataset.copyText, done = () => { q.textContent = "Copié ✓"; setTimeout(() => (q.textContent = txt), 1500); };
+    navigator.clipboard.writeText(txt).then(done).catch(() => { const t = document.createElement("textarea"); t.value = txt; document.body.appendChild(t); t.select(); document.execCommand("copy"); t.remove(); done(); });
+    return;
+  }
   const t = e.target.closest("[data-add],[data-open-basket],[data-remove],[data-clear-basket],[data-played-basket],[data-play],[data-del-bet]");
   if (!t) return;
   e.stopPropagation();
