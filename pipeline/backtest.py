@@ -168,12 +168,24 @@ def run(results: pd.DataFrame, today: date) -> dict:
             "roi": round(s["returned"] / s["staked"] - 1, 4),
             "curve": curve[k][::step],
         }
+    # Facteurs de contexte (classement, période, trêve, fatigue)
+    try:
+        import context
+        cups = context.cup_games_fd(results)
+        state = context.team_states(results, cups)
+        feats = pd.DataFrame([context.features(r.div, r.date, state(r.div, r.date, r.home), state(r.div, r.date, r.away))
+                              for r in bt.itertuples()], index=bt.index)
+        report["context"] = context.study(pd.concat([bt[["div", "date", "tot", "f_o15", "f_o25"]], feats], axis=1))
+    except Exception as exc:  # noqa: BLE001
+        print("Étude de contexte impossible :", exc)
+        report["context"] = None
+
     report["note"] = ("Les cotes +1,5 et +2 ne sont pas dans l'historique : pour les coupons, elles sont estimées "
                       "à partir de la cote +2,5 du marché moins une marge de 6 %. Le taux de réussite est fiable, "
                       "la rentabilité des coupons est une estimation.")
 
     STATE_DIR.mkdir(parents=True, exist_ok=True)
     SITE_DATA.mkdir(parents=True, exist_ok=True)
-    (STATE_DIR / "model_config.json").write_text(json.dumps({"blend": blend, "updated": report["generated"]}, indent=1))
+    (STATE_DIR / "model_config.json").write_text(json.dumps({"blend": blend, "updated": report["generated"], "context": report.get("context")}, indent=1))
     (SITE_DATA / "backtest.json").write_text(json.dumps(report, ensure_ascii=False))
     return report

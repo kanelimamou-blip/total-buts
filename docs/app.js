@@ -166,6 +166,7 @@ function openMatch(id) {
     ${m.p.o20_push ? `<p class="small muted">+2 buts : remboursé si le match finit à 2 buts (${pct(m.p.o20_push)}).</p>` : ""}
     ${m.provisional ? `<p class="note">Coupe d'Europe en rodage : l'historique des matchs européens se charge encore. Ce match n'entre pas dans les coupons pour l'instant.</p>` : ""}
     ${m.market_o25 != null ? `<p class="small">Marché sur +2,5 : <b>${pct(m.market_o25)}</b> (cote moyenne ${odds(m.odds_o25)}). Modèle seul : ${pct(m.p_model.o25)}.</p>` : `<p class="small muted">Cotes du marché pas encore publiées dans nos sources : probabilités du modèle seul, affinées à l'approche du match.</p>`}
+    ${m.context?.length ? `<div class="form">${m.context.map((c) => `<span>${esc(c)}</span>`).join("")}</div>` : ""}
     <h3>Nombre de buts</h3>${distChart(m.total_dist)}
     <h3>Scores les plus probables</h3><div class="form">${m.top_scores.map((s) => `<span>${s.s} · ${pct(s.p)}</span>`).join("")}</div>
     ${formBlock(m.home, m.form_home)}${formBlock(m.away, m.form_away)}`;
@@ -295,6 +296,9 @@ function backtestBlock(bt) {
   <div class="kv"><span>+1,5 annoncé / observé</span><b>${pct(bt.europe.o15.pred)} / ${pct(bt.europe.o15.rate)}</b></div>
   <div class="kv"><span>+2,5 annoncé / observé</span><b>${pct(bt.europe.o25.pred)} / ${pct(bt.europe.o25.rate)}</b></div>
   <div class="kv"><span>Gain de précision +2,5</span><b>${Math.round((1 - bt.europe.o25.brier / bt.europe.o25.brier_base) * 100)} %</b></div>` : ""}
+  ${bt.context?.factors?.length ? `<h3>Facteurs de contexte</h3><p class="small muted">Écart entre les buts prévus par les cotes et ce qui s'est vraiment passé, selon la situation.${["o15", "o25"].some((k) => bt.context.markets[k]?.use) ? " Les facteurs qui améliorent la précision sur une période de test sont appliqués aux probabilités." : " Aucun n'améliore assez la précision pour être appliqué pour l'instant."}</p>
+  <div class="tbl"><table><thead><tr><th>Situation</th><th class="n">Matchs</th><th class="n">+2,5 prévu</th><th class="n">+2,5 réel</th></tr></thead><tbody>
+  ${bt.context.factors.map((f) => `<tr><td style="white-space:normal">${esc(f.label)}</td><td class="n">${f.n}</td><td class="n">${pct(f.pred_o25)}</td><td class="n ${f.obs_o25 > f.pred_o25 ? "pos" : "neg"}">${pct(f.obs_o25)}</td></tr>`).join("")}</tbody></table></div>` : ""}
   <p class="note">${esc(bt.note)}</p></section>`;
 }
 

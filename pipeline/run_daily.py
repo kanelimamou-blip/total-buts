@@ -13,6 +13,7 @@ import pandas as pd
 
 import ahead
 import backtest
+import context
 import europe
 import feedback
 import tips as tips_mod
@@ -85,7 +86,13 @@ def main():
             except Exception as exc:  # noqa: BLE001
                 print("Backtest Europe impossible :", exc)
             (SITE_DATA / "backtest.json").write_text(json.dumps(report, ensure_ascii=False))
-    blend = read_json(STATE_DIR / "model_config.json", {"blend": 0.6})["blend"]
+    model_cfg = read_json(STATE_DIR / "model_config.json", {"blend": 0.6})
+    blend = model_cfg["blend"]
+    try:
+        state = context.team_states(results, context.cup_games_fd(results))
+    except Exception as exc:  # noqa: BLE001
+        print("Contexte indisponible :", exc)
+        state = None
     bt = read_json(SITE_DATA / "backtest.json", None)
     store = read_json(STATE_DIR / "coupons.json", {})
     log = read_json(STATE_DIR / "predictions.json", {})
@@ -128,6 +135,11 @@ def main():
         o1x2 = tuple(getattr(row, k, float("nan")) for k in ("oh", "od", "oa"))
         o1x2 = None if any(pd.isna(x) for x in o1x2) else o1x2
         pr = predict(r, row.home, row.away, o25, u25, blend=blend, odds_1x2=o1x2)
+        ctx_on = []
+        if state is not None:
+            feats = context.features(row.div, row.date, state(row.div, row.date, row.home), state(row.div, row.date, row.away))
+            pr["final"] = context.adjust(pr["final"], feats, model_cfg.get("context"))
+            ctx_on = [context.FEATURES[k] for k, v in feats.items() if v]
         pr["final"] = feedback.apply(pr["final"], row.div, fb)
         mp = predict(r, row.home, row.away, o25, u25, blend=0.0)["final"] if pr["market_o25"] is not None else None
         legs = legs_for_match(pr, mp, o25)
@@ -148,7 +160,7 @@ def main():
             "fav": {k: (round(v, 3) if isinstance(v, float) else v) for k, v in fav.items()},
             **({"form_home": team_form(results, row.home), "form_away": team_form(results, row.away)}
                if row.date < ts_today + pd.Timedelta(days=DETAIL_DAYS) else {"form_home": None, "form_away": None}),
-            "has_odds": o25 is not None,
+            "has_odds": o25 is not None, "context": ctx_on,
         })
     for e in euro_matches:
         if e["id"] in scores:
