@@ -47,7 +47,7 @@ def _leg_stats(leg):
     return np.log(max(p_ok, 1e-12)), np.log(cond_odds)
 
 
-def _search(matches: list[dict], k_range, min_odds, allowed, pool, score="safety", max_odds=1e9):
+def _search(matches: list[dict], k_range, min_odds, allowed, pool, score="safety", max_odds=1e9, max_o25=1):
     """matches : [{"id":..., "legs":[...]}]. Recherche exhaustive vectorisée."""
     if len(matches) < k_range[0]:
         return None
@@ -73,6 +73,8 @@ def _search(matches: list[dict], k_range, min_odds, allowed, pool, score="safety
             break
         C = np.array(list(combinations(range(n), k)))
         M = np.array(list(product(range(len(mk)), repeat=k)))
+        if "o25" in mk:  # le cœur du coupon reste sur +1,5 / +2 : au plus max_o25 sélections à +2,5
+            M = M[(M == mk.index("o25")).sum(1) <= max_o25]
         P = lp[C[:, None, :], M[None, :, :]].sum(-1)
         O = lo[C[:, None, :], M[None, :, :]].sum(-1)
         NO = no[C[:, None, :], M[None, :, :]].sum(-1)
@@ -118,12 +120,12 @@ def _pack(kind, p_log, o_log, picks, scope="Toutes ligues"):
     }
 
 
-def _repeat(kind, matches, allowed, pool, score="safety", scope="Toutes ligues", exclusive=True):
+def _repeat(kind, matches, allowed, pool, score="safety", scope="Toutes ligues", max_o25=1):
     """Construit autant de coupons que possible tant qu'ils passent le seuil de probabilité."""
     cfg = COUPONS[kind]
     out, rest = [], list(matches)
     while len(out) < MAX_PER_DAY[kind]:
-        r = _search(rest, cfg["legs"], cfg["min_odds"], allowed, pool=pool, score=score, max_odds=cfg["max_odds"])
+        r = _search(rest, cfg["legs"], cfg["min_odds"], allowed, pool=pool, score=score, max_odds=cfg["max_odds"], max_o25=max_o25)
         if not r or np.exp(r[0]) < MIN_P[kind]:
             break
         out.append(_pack(kind, *r, scope=scope))
@@ -157,24 +159,27 @@ def build_day(matches: list[dict], kinds=("sur", "ligue", "value", "audace", "ja
                 vm.append(dict(m, legs=legs))
         out += _repeat("value", vm, {"o15", "o20", "o25"}, pool=10, score="ev")
     if "audace" in kinds:
-        out += _repeat("audace", matches, {"o20", "o25"}, pool=9)
+        out += _repeat("audace", matches, {"o15", "o20", "o25"}, pool=9, max_o25=2)
     if "jackpot" in kinds:
+        # Jackpot : base en +2 sur les matchs les plus sûrs, puis passage de quelques sélections en +2,5
         cfg = COUPONS["jackpot"]
-        ranked = sorted(matches, key=lambda m: -next(l for l in m["legs"] if l["market"] == "o25")["p_win"] * m.get("rel", 1))
-        picks, odds, p_log = [], 1.0, 0.0
-        for m in ranked:
-            leg = next(l for l in m["legs"] if l["market"] == "o25")
-            if leg["odds"] < MIN_LEG_ODDS:
-                continue
-            picks.append((m, "o25"))
-            odds *= leg["odds"]
-            p_log += np.log(leg["p_win"])
-            if len(picks) >= cfg["legs"][0] and odds >= cfg["min_odds"]:
-                break
-            if len(picks) == cfg["legs"][1]:
-                break
-        if len(picks) >= cfg["legs"][0] and odds >= cfg["min_odds"]:
-            out.append(_pack("jackpot", p_log, np.log(odds), picks))
+
+        def leg(m, mk):
+            return next(l for l in m["legs"] if l["market"] == mk)
+
+        ranked = [m for m in sorted(matches, key=lambda m: -(leg(m, "o20")["p_win"] + leg(m, "o20")["p_push"]) * m.get("rel", 1))
+                  if leg(m, "o20")["odds"] >= MIN_LEG_ODDS][:cfg["legs"][1]]
+        if len(ranked) >= cfg["legs"][0]:
+            picks = [[m, "o20"] for m in ranked]
+            odds = lambda: float(np.prod([leg(m, mk)["odds"] for m, mk in picks]))
+            upgrades = sorted(range(len(picks)), key=lambda i: -leg(picks[i][0], "o25")["p_win"])
+            for i in upgrades:
+                if odds() >= cfg["min_odds"]:
+                    break
+                picks[i][1] = "o25"
+            if odds() >= cfg["min_odds"]:
+                stats = [_leg_stats(leg(m, mk)) for m, mk in picks]
+                out.append(_pack("jackpot", sum(s[0] for s in stats), sum(s[1] for s in stats), [tuple(p) for p in picks]))
     return prioritise(out)
 
 

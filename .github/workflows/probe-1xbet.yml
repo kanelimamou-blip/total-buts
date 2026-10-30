@@ -1,0 +1,27 @@
+name: Test d'accès 1xBet
+on: workflow_dispatch
+permissions:
+  contents: write
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Interroger 1xBet
+        run: |
+          out=data/state/probe_1xbet.txt
+          : > $out
+          for u in \
+            "https://1xbet.sn/" \
+            "https://1xbet.com/" \
+            "https://1xbet.sn/LineFeed/Get1x2_VZip?sports=1&count=5&lng=fr&mode=4&country=1&getEmpty=true" \
+            "https://1xbet.com/LineFeed/Get1x2_VZip?sports=1&count=5&lng=fr&mode=4&country=1&getEmpty=true" \
+            "https://1xbet.com/service-api/LineFeed/Get1x2_VZip?sports=1&count=5&lng=fr&mode=4&country=1&getEmpty=true"; do
+            echo "=== $u" >> $out
+            curl -sS -L -m 30 -A "Mozilla/5.0 (Linux; Android 14) AppleWebKit/537.36 Chrome/124 Mobile Safari/537.36" \
+              -o body.tmp -w "status=%{http_code} final=%{url_effective} size=%{size_download}\n" "$u" >> $out 2>&1 || true
+            head -c 1500 body.tmp >> $out 2>/dev/null; echo >> $out
+          done
+          git config user.name "total-buts-bot"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add $out && git commit -m "Test d'accès 1xBet" && git pull --rebase origin main && git push origin HEAD:main
