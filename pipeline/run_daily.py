@@ -162,9 +162,14 @@ def main():
                if row.date < ts_today + pd.Timedelta(days=DETAIL_DAYS) else {"form_home": None, "form_away": None}),
             "has_odds": o25 is not None, "context": ctx_on,
         })
+    # Les coupes n'entrent dans les coupons que si leur test sur le passé bat la simple moyenne
+    eb = (bt or {}).get("europe") or {}
+    euro_ok = bool(eb) and all(eb[k]["brier"] < eb[k]["brier_base"] for k in ("o15", "o25"))
     for e in euro_matches:
         if e["id"] in scores:
             continue
+        if not euro_ok:
+            e["provisional"] = True
         final = feedback.apply(e["final"], e["div"], fb)
         pr = {"final": final, "model": e["final"], "res": e["res"]}
         legs = legs_for_match(pr, None, None)
