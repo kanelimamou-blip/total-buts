@@ -63,7 +63,7 @@ COUPONS = {
     "favoris": {"label": "Ticket favoris", "min_odds": 2.0, "max_odds": gross_odds(2.0), "legs": (3, 4), "stake_pct": 2.0},
     "periode_buts": {"label": "Buts sur la période", "min_odds": gross_odds(2.0), "max_odds": 3.5, "legs": (3, 5), "stake_pct": 1.0},
     "periode_fav": {"label": "Favoris sur la période", "min_odds": gross_odds(2.0), "max_odds": 3.5, "legs": (3, 5), "stake_pct": 1.0},
-    "periode_long": {"label": "Combiné longue durée", "min_odds": 3.0, "max_odds": 1e9, "legs": (3, 14), "stake_pct": 0.5},
+    "periode_long": {"label": "Combiné longue durée", "min_odds": 3.0, "max_odds": 1e9, "legs": (3, 22), "stake_pct": 0.5},
     "value": {"label": "Coupon value", "min_odds": gross_odds(2.0), "max_odds": 4.0, "legs": (2, 3), "stake_pct": 1.0},
     "audace": {"label": "Coupon audacieux", "min_odds": 4.0, "max_odds": 9.0, "legs": (3, 4), "stake_pct": 0.5},
     "mille": {"label": "Cote 1000", "min_odds": 1000.0, "max_odds": 1e9, "legs": (8, 22), "stake_pct": 0.1},
@@ -80,4 +80,4 @@ MAX_PER_DAY = {"sur": 8, "ligue": 10, "value": 4, "audace": 3, "jackpot": 1, "fa
 PERIODS = {5: "5 jours", 7: "1 semaine", 15: "15 jours", 21: "3 semaines", 30: "1 mois"}
 # Combinés longue durée : +1,5, +2 et gros favoris uniquement, pour viser ces cotes sur ces périodes
 LONG_PERIODS = {7: "1 semaine", 15: "15 jours", 30: "1 mois"}
-LONG_TARGETS = (3.0, 5.0, 10.0)
+LONG_TARGETS = (3.0, 5.0, 10.0, 20.0, 50.0, 100.0)

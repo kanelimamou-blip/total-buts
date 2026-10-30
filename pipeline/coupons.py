@@ -277,11 +277,12 @@ def build_long(matches: list[dict], target: float, scope: str, min_p: float = 0.
     cands.sort(key=lambda x: -x[0])
     # on commence par les 2 plus gros favoris (victoire), puis on complète par efficacité
     favs = sorted([c for c in cands if c[2]["market"] in ("1", "2") and c[2]["p_win"] >= 0.75 and c[2]["odds"] >= 1.15],
-                  key=lambda c: -c[2]["p_win"])[:2]
+                  key=lambda c: -c[2]["p_win"])[:2 if target <= 10 else 4]
     cands = favs + [c for c in cands if c not in favs]
     cfg = COUPONS["periode_long"]
     # mélange voulu : +1,5, +2 et gros favoris (au plus 3 sélections +2 et 4 favoris)
-    quota = {"o20": 3, "1": 4, "2": 4}
+    big = target > 10
+    quota = {"o20": 7 if big else 3, "1": 7 if big else 4, "2": 7 if big else 4}
     used_q = {"o20": 0, "fav": 0}
     picks, odds, p_log, o_log, seen = [], 1.0, 0.0, 0.0, set()
     for _, m, l in cands:
