@@ -17,8 +17,8 @@ import context
 import europe
 import feedback
 import tips as tips_mod
-from config import ALL_COMPETITIONS, COUPONS, CUPS, LEAGUES, MARKETS, PERIODS, SITE_DATA, STATE_DIR
-from coupons import _repeat, build_day, build_mille, build_favorites, favorite_leg, legs_for_match, prioritise, settle_coupon
+from config import ALL_COMPETITIONS, COUPONS, CUPS, LEAGUES, LONG_PERIODS, LONG_TARGETS, MARKETS, PERIODS, SITE_DATA, STATE_DIR
+from coupons import _repeat, build_day, build_long, build_mille, build_favorites, favorite_leg, legs_for_match, prioritise, settle_coupon
 from fetch import download, load_fixtures, load_results
 from model import fit, predict
 
@@ -236,6 +236,20 @@ def main():
             extra += buts + favs
         entry["coupons"] = prioritise(entry["coupons"] + extra)
         entry["periods_done"] = True
+    if not entry.get("long_done"):
+        pool_all = [{"id": m["id"], "div": m["div"], "date": m["date"], "legs": m["legs"], "fav": m["fav"],
+                     "rel": fb["reliability"].get(m["div"], 0.9 if m["div"] in CUPS else 1.0)}
+                    for m in matches if not m.get("provisional")]
+        longs = []
+        for days, label in sorted(LONG_PERIODS.items()):
+            end = (today + timedelta(days=days)).isoformat()
+            window = [m for m in pool_all if m["date"] < end]
+            for target in LONG_TARGETS:
+                c = build_long(window, target, f"{label} · cote {target:g}")
+                if c:
+                    longs.append(c)
+        entry["coupons"] = prioritise(entry["coupons"] + longs)
+        entry["long_done"] = True
 
     # Règlement des coupons passés
     for d, entry in store.items():

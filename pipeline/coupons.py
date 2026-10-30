@@ -259,6 +259,54 @@ def build_mille(matches: list[dict]) -> dict | None:
     return _pack("mille", p_log, np.log(odds), picks)
 
 
+def build_long(matches: list[dict], target: float, scope: str, min_p: float = 0.72) -> dict | None:
+    """Combiné longue durée : uniquement +1,5, +2 et victoires de gros favoris (probabilité ≥ min_p),
+    empilés par ordre d'efficacité (cote gagnée par unité de risque) jusqu'à la cote visée."""
+    cands = []
+    for m in matches:
+        opts = [l for l in m["legs"] if l["market"] in ("o15", "o20") and l["odds"] >= MIN_LEG_ODDS]
+        if m.get("fav") and m["fav"]["odds"] >= MIN_LEG_ODDS:
+            opts.append(m["fav"])
+        for l in opts:
+            p_ok = l["p_win"] + l["p_push"]
+            if p_ok < min_p:
+                continue
+            # pour +2, la cote « effective » tient compte du remboursement
+            eff_odds = (l["p_win"] * l["odds"] + l["p_push"]) / p_ok
+            cands.append((np.log(eff_odds) / max(-np.log(p_ok), 1e-6), m, l))
+    cands.sort(key=lambda x: -x[0])
+    # on commence par les 2 plus gros favoris (victoire), puis on complète par efficacité
+    favs = sorted([c for c in cands if c[2]["market"] in ("1", "2") and c[2]["p_win"] >= 0.75 and c[2]["odds"] >= 1.15],
+                  key=lambda c: -c[2]["p_win"])[:2]
+    cands = favs + [c for c in cands if c not in favs]
+    cfg = COUPONS["periode_long"]
+    # mélange voulu : +1,5, +2 et gros favoris (au plus 3 sélections +2 et 4 favoris)
+    quota = {"o20": 3, "1": 4, "2": 4}
+    used_q = {"o20": 0, "fav": 0}
+    picks, odds, p_log, o_log, seen = [], 1.0, 0.0, 0.0, set()
+    for _, m, l in cands:
+        if m["id"] in seen or len(picks) >= cfg["legs"][1]:
+            continue
+        q = "fav" if l["market"] in ("1", "2") else l["market"]
+        if q in used_q and used_q[q] >= (quota["o20"] if q == "o20" else quota["1"]):
+            continue
+        if q in used_q:
+            used_q[q] += 1
+        seen.add(m["id"])
+        picks.append((m, l["market"]))
+        odds *= l["odds"]
+        st = _leg_stats(l)
+        p_log += st[0]
+        o_log += st[1]
+        if odds >= target:
+            break
+    if odds < target or len(picks) < cfg["legs"][0]:
+        return None
+    c = _pack("periode_long", p_log, o_log, picks, scope=scope)
+    c["target"] = target
+    return c
+
+
 def settle_leg(market: str, total: int, hg: int = 0, ag: int = 0) -> str:
     if market == "1":
         return "won" if hg > ag else "lost"
