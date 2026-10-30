@@ -103,6 +103,8 @@ def main():
             e["goals"] = sum(scores[mid])
             e["score"] = "%d-%d" % scores[mid]
     fb = feedback.build(bt, log, store)
+    import coupons as coupons_mod
+    coupons_mod.KIND_FACTOR = fb.get("kinds", {})
 
     # Notes d'équipes et prédictions des matchs à venir
     # Calendrier à un mois : football-data (avec cotes) prioritaire, ESPN pour le reste
@@ -144,7 +146,7 @@ def main():
         pr["final"] = feedback.apply(pr["final"], row.div, fb)
         mp = predict(r, row.home, row.away, o25, u25, blend=0.0)["final"] if pr["market_o25"] is not None else None
         legs = legs_for_match(pr, mp, o25)
-        fav = favorite_leg(pr, row.home, row.away, o1x2)
+        fav = favorite_leg(pr, row.home, row.away, o1x2, shift=fb["shifts"].get(row.div, {}).get("fav", 0.0))
         matches.append({
             "id": mid, "div": row.div, "league": LEAGUES[row.div][0], "country": LEAGUES[row.div][1],
             "date": row.date.strftime("%Y-%m-%d"), "time": row.time or "",
@@ -171,7 +173,7 @@ def main():
         final = feedback.apply(e["final"], e["div"], fb)
         pr = {"final": final, "model": e["final"], "res": e["res"]}
         legs = legs_for_match(pr, None, None)
-        fav = favorite_leg(pr, e["home"], e["away"])
+        fav = favorite_leg(pr, e["home"], e["away"], shift=fb["shifts"].get(e["div"], {}).get("fav", 0.0))
         matches.append({
             "id": e["id"], "div": e["div"], "league": e["league"], "country": e["country"],
             "date": e["date"], "time": e["time"], "home": e["home"], "away": e["away"],
@@ -287,6 +289,7 @@ def main():
     # la dernière prédiction avant le match fait foi
     for m in matches:
         log[m["id"]] = {"date": m["date"], "div": m["div"], "home": m["home"], "away": m["away"],
+                        "fav_p": m["fav"]["p_win"], "fav_side": m["fav"]["market"],
                         "o15": m["p"]["o15"], "o25": m["p"]["o25"]}
     (STATE_DIR / "predictions.json").write_text(json.dumps(log, indent=0))
 
@@ -313,6 +316,24 @@ def main():
                    "away": e.get("away", mid.split("|")[3]), "score": e.get("score"), "goals": e["goals"],
                    "o15": e["o15"], "o25": e["o25"]} for mid, e in recent]
 
+    # Courbe d'apprentissage : prévu contre réel, semaine par semaine (12 dernières semaines)
+    weeks = {}
+    for e in log.values():
+        if "goals" not in e:
+            continue
+        wk = pd.Timestamp(e["date"]).to_period("W-SUN").start_time.strftime("%Y-%m-%d")
+        w = weeks.setdefault(wk, {"n": 0, "p15": 0.0, "y15": 0, "p25": 0.0, "y25": 0, "pf": 0.0, "yf": 0, "nf": 0})
+        w["n"] += 1
+        w["p15"] += e["o15"]; w["y15"] += e["goals"] >= 2
+        w["p25"] += e["o25"]; w["y25"] += e["goals"] >= 3
+        if e.get("fav_p") is not None and e.get("score"):
+            hg, ag = map(int, e["score"].split("-"))
+            w["nf"] += 1; w["pf"] += e["fav_p"]; w["yf"] += (hg > ag) if e["fav_side"] == "1" else (ag > hg)
+    learning = [{"week": k, "n": w["n"], "p15": round(w["p15"] / w["n"], 3), "o15": round(w["y15"] / w["n"], 3),
+                 "p25": round(w["p25"] / w["n"], 3), "o25": round(w["y25"] / w["n"], 3),
+                 "pf": round(w["pf"] / w["nf"], 3) if w["nf"] else None, "of": round(w["yf"] / w["nf"], 3) if w["nf"] else None}
+                for k, w in sorted(weeks.items())[-12:]]
+
     match_index = {m["id"]: m for m in matches}
     history = []
     for d in sorted(store, reverse=True)[:60]:
@@ -334,7 +355,7 @@ def main():
         "markets": MARKETS, "coupon_kinds": COUPONS,
         "leagues": {d: {"name": n, "country": c} for d, (n, c) in ALL_COMPETITIONS.items()},
         "matches": matches, "coupons": history, "live": live, "predictions": pred_stats,
-        "tips": tip_list, "recent": recent_out, "feedback": fb, "surprises": surprise,
+        "tips": tip_list, "recent": recent_out, "feedback": fb, "surprises": surprise, "learning": learning,
         "last_result_date": results["date"].max().strftime("%Y-%m-%d") if len(results) else None,
     }
     (SITE_DATA / "app.json").write_text(json.dumps(out, ensure_ascii=False))

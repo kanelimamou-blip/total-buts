@@ -185,12 +185,16 @@ def build_day(matches: list[dict], kinds=("sur", "ligue", "favoris", "value", "a
     return prioritise(out)
 
 
+KIND_FACTOR: dict = {}  # rempli chaque jour par le retour d'expérience (feedback.build)
+
+
 def prioritise(coupons: list[dict]) -> list[dict]:
     """Classe les coupons du jour : probabilité, fiabilité des championnats et valeur. Le jackpot reste en dernier."""
     def score(c):
         if c["kind"] in ("jackpot", "mille"):
             return -1.0 if c["kind"] == "jackpot" else -2.0
-        return c["p_not_lose"] * c["reliability"] * (1 + max(min(c["ev"], 0.2), -0.15))
+        kf = KIND_FACTOR.get(c["kind"], {}).get("factor", 1.0)
+        return c["p_not_lose"] * c["reliability"] * kf * (1 + max(min(c["ev"], 0.2), -0.15))
     coupons.sort(key=score, reverse=True)
     n = len(coupons)
     for i, c in enumerate(coupons):
@@ -199,11 +203,11 @@ def prioritise(coupons: list[dict]) -> list[dict]:
     return coupons
 
 
-def favorite_leg(pred: dict, home: str, away: str, odds_1x2=None) -> dict:
+def favorite_leg(pred: dict, home: str, away: str, odds_1x2=None, shift: float = 0.0) -> dict:
     """Sélection « victoire du favori » : l'équipe la plus probable de gagner."""
     res = pred["res"]
     side = "1" if res["1"] >= res["2"] else "2"
-    p = res[side]
+    p = float(np.clip(res[side] + shift, 0.02, 0.98))  # correction apprise sur nos résultats
     real = None
     if odds_1x2:
         try:

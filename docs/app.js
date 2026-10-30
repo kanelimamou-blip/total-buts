@@ -282,6 +282,14 @@ function viewTracking() {
     <div class="kv"><span>+2,5 annoncé / observé</span><b>${pct(p.o25_pred)} / ${pct(p.o25_obs)}</b></div>
     <p class="small muted">Plus les deux chiffres sont proches, mieux le modèle est calibré.</p></section>`;
   }
+  if (d.learning?.length) {
+    html += `<section class="card"><h2>Apprentissage</h2><p class="small muted">Chaque semaine, ce que l'appli annonçait comparé à ce qui s'est passé. Les écarts corrigent automatiquement les prochaines prédictions, ligue par ligue et pour les favoris.</p>
+    <div class="tbl"><table><thead><tr><th>Semaine du</th><th class="n">Matchs</th><th class="n">+1,5 prévu/réel</th><th class="n">+2,5 prévu/réel</th><th class="n">Favoris prévu/réel</th></tr></thead><tbody>
+    ${d.learning.slice().reverse().map((w) => `<tr><td>${new Date(w.week).toLocaleDateString("fr-FR", { day: "numeric", month: "short" })}</td><td class="n">${w.n}</td><td class="n">${pct(w.p15)} / ${pct(w.o15)}</td><td class="n">${pct(w.p25)} / ${pct(w.o25)}</td><td class="n">${w.pf != null ? pct(w.pf) + " / " + pct(w.of) : "–"}</td></tr>`).join("")}
+    </tbody></table></div>
+    ${Object.keys(d.feedback?.kinds || {}).length ? `<h3>Par type de coupon</h3>${Object.entries(d.feedback.kinds).map(([k, v]) => `<div class="kv"><span>${esc(d.coupon_kinds[k]?.label || k)} · ${v.won} gagnés sur ${v.n} (prévu ${String(v.pred).replace(".", ",")})</span><b class="${v.factor >= 1 ? "pos" : "neg"}">${v.factor >= 1 ? "mis en avant" : "relégué"}</b></div>`).join("")}` : ""}
+    </section>`;
+  }
   const rel = d.feedback?.reliability || {};
   if (Object.keys(rel).length) {
     html += `<section class="card"><h2>Confiance par championnat</h2><p class="small muted">Les ligues au-dessus de 1 sont mises en avant dans les coupons.</p>

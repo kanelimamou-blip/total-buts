@@ -36,6 +36,9 @@ def build(backtest: dict | None, predictions: dict, coupon_store: dict) -> dict:
             continue
         add(e["div"], "o15", e["o15"], float(e["goals"] >= 2), 1.0)
         add(e["div"], "o25", e["o25"], float(e["goals"] >= 3), 1.0)
+        if e.get("fav_p") is not None and e.get("score"):
+            hg, ag = map(int, e["score"].split("-"))
+            add(e["div"], "fav", e["fav_p"], float(hg > ag if e["fav_side"] == "1" else ag > hg), 1.0)
         live_n[e["div"]] = live_n.get(e["div"], 0) + 1
 
     shifts = {}
@@ -62,7 +65,21 @@ def build(backtest: dict | None, predictions: dict, coupon_store: dict) -> dict:
             won, pred, n = legs[div]
             r += float(np.clip((won - pred) / (n + 30), -0.15, 0.1))
         rel[div] = round(float(np.clip(r, 0.75, 1.2)), 3)
-    return {"shifts": shifts, "reliability": rel, "live_matches": live_n}
+    # Par type de coupon : réussite réelle comparée à la probabilité annoncée
+    kinds = {}
+    for entry in coupon_store.values():
+        for c in entry.get("coupons", []):
+            if c.get("status") in ("won", "lost"):
+                k = kinds.setdefault(c["kind"], [0, 0.0, 0])
+                k[0] += c["status"] == "won"
+                k[1] += c["p_win"]
+                k[2] += 1
+    kind_factor = {}
+    for kind, (won, pred, n) in kinds.items():
+        prior = 10 * (pred / n)
+        kind_factor[kind] = {"n": n, "won": won, "pred": round(pred, 2),
+                             "factor": round(float(np.clip((won + prior) / (pred + prior), 0.8, 1.2)), 3)}
+    return {"shifts": shifts, "reliability": rel, "live_matches": live_n, "kinds": kind_factor}
 
 
 def apply(pred_final: dict, div: str, fb: dict) -> dict:
