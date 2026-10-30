@@ -18,7 +18,7 @@ import europe
 import feedback
 import tips as tips_mod
 from config import ALL_COMPETITIONS, COUPONS, CUPS, LEAGUES, MARKETS, PERIODS, SITE_DATA, STATE_DIR
-from coupons import _repeat, build_day, build_favorites, favorite_leg, legs_for_match, prioritise, settle_coupon
+from coupons import _repeat, build_day, build_mille, build_favorites, favorite_leg, legs_for_match, prioritise, settle_coupon
 from fetch import download, load_fixtures, load_results
 from model import fit, predict
 
@@ -111,6 +111,7 @@ def main():
     except Exception as exc:  # noqa: BLE001
         print("Calendrier à un mois indisponible :", exc)
         far = fixtures.iloc[0:0]
+    espn_ref = {(r.div, r.home, r.away): [r.slug, r.espn_id] for r in far.itertuples()}
     known = {(r.div, r.home, r.away) for r in fixtures.itertuples()}
     far = far[[(r.div, r.home, r.away) not in known for r in far.itertuples()]]
     print(f"Calendrier : {len(fixtures)} matchs football-data, {len(far)} ajoutés depuis ESPN.")
@@ -160,7 +161,7 @@ def main():
             "fav": {k: (round(v, 3) if isinstance(v, float) else v) for k, v in fav.items()},
             **({"form_home": team_form(results, row.home), "form_away": team_form(results, row.away)}
                if row.date < ts_today + pd.Timedelta(days=DETAIL_DAYS) else {"form_home": None, "form_away": None}),
-            "has_odds": o25 is not None, "context": ctx_on,
+            "has_odds": o25 is not None, "context": ctx_on, "espn": espn_ref.get((row.div, row.home, row.away)),
         })
     # Les coupes n'entrent dans les coupons que si leur test sur le passé bat la simple moyenne
     eb = (bt or {}).get("europe") or {}
@@ -185,7 +186,7 @@ def main():
             "legs": [{k: (round(v, 3) if isinstance(v, float) else v) for k, v in l.items()} for l in legs],
             "top_scores": e["top_scores"], "total_dist": e["total_dist"],
             "form_home": e["form_home"], "form_away": e["form_away"],
-            "provisional": e.get("provisional", False),
+            "provisional": e.get("provisional", False), "espn": e.get("espn"),
             "res": {k: round(v, 3) for k, v in e["res"].items()},
             "fav": {k: (round(v, 3) if isinstance(v, float) else v) for k, v in fav.items()},
         })
@@ -203,7 +204,19 @@ def main():
         day = [{"id": m["id"], "div": m["div"], "rel": fb["reliability"].get(m["div"], 0.9 if m["div"] in CUPS else 1.0),
                 "legs": m["legs"], "fav": m["fav"]} for m in by_date[d] if not m.get("provisional")]
         coupons = build_day(day, league_names={k: v[0] for k, v in ALL_COMPETITIONS.items()})
+        mille = build_mille(day)
+        if mille:
+            coupons = prioritise(coupons + [mille])
         store[d] = {"frozen": d == today.isoformat(), "created": now.isoformat(timespec="minutes"), "coupons": coupons}
+
+    # Ticket « cote 1000 » : ajouté aussi aux journées déjà figées qui n'en ont pas encore
+    for d, ms in by_date.items():
+        e = store.get(d)
+        if e and e.get("frozen") and not any(c["kind"] == "mille" for c in e["coupons"]):
+            mille = build_mille([{"id": m["id"], "div": m["div"], "legs": m["legs"], "fav": m["fav"]}
+                                 for m in ms if not m.get("provisional")])
+            if mille:
+                e["coupons"] = prioritise(e["coupons"] + [mille])
 
     # Tickets sur une période (5 jours à 1 mois), créés une fois par jour avec le jour J
     td = today.isoformat()

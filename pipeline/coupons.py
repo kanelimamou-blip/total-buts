@@ -104,7 +104,7 @@ def _pack(kind, p_log, o_log, picks, scope="Toutes ligues"):
     p_full = 1.0
     rel = []
     for m, name in picks:
-        leg = next(l for l in m["legs"] if l["market"] == name)
+        leg = next((l for l in m["legs"] if l["market"] == name), None) or m.get("fav")
         nominal *= leg["odds"]
         p_full *= leg["p_win"]
         rel.append(m.get("rel", 1.0))
@@ -188,14 +188,14 @@ def build_day(matches: list[dict], kinds=("sur", "ligue", "favoris", "value", "a
 def prioritise(coupons: list[dict]) -> list[dict]:
     """Classe les coupons du jour : probabilité, fiabilité des championnats et valeur. Le jackpot reste en dernier."""
     def score(c):
-        if c["kind"] == "jackpot":
-            return -1.0
+        if c["kind"] in ("jackpot", "mille"):
+            return -1.0 if c["kind"] == "jackpot" else -2.0
         return c["p_not_lose"] * c["reliability"] * (1 + max(min(c["ev"], 0.2), -0.15))
     coupons.sort(key=score, reverse=True)
     n = len(coupons)
     for i, c in enumerate(coupons):
         c["priority"] = i + 1
-        c["level"] = "haute" if c["kind"] != "jackpot" and i < max(1, n // 3) else ("basse" if c["kind"] in ("jackpot", "audace") or i >= 2 * n // 3 else "moyenne")
+        c["level"] = "haute" if c["kind"] not in ("jackpot", "mille") and i < max(1, n // 3) else ("basse" if c["kind"] in ("jackpot", "audace", "mille") or i >= 2 * n // 3 else "moyenne")
     return coupons
 
 
@@ -225,6 +225,38 @@ def build_favorites(matches: list[dict], kind="favoris", scope="Toutes ligues", 
     fav = [{"id": m["id"], "div": m.get("div"), "rel": m.get("rel", 1.0), "legs": [m["fav"]]}
            for m in matches if m.get("fav") and m["fav"]["p_win"] >= min_p_leg]
     return _repeat(kind, fav, {"1", "2"}, pool=12, scope=scope, mk_order=["1", "2"])
+
+
+def build_mille(matches: list[dict]) -> dict | None:
+    """Ticket « cote 1000 » : atteindre 1000 en perdant le moins de probabilité possible.
+
+    Pour chaque match on garde la sélection qui apporte le plus de cote par unité de risque
+    (log cote / -log probabilité), puis on empile les meilleures jusqu'à 1000.
+    """
+    cfg = COUPONS["mille"]
+    cands = []
+    for m in matches:
+        opts = [l for l in m["legs"] if l["market"] in ("o15", "o25") and l["odds"] >= 1.2]
+        if m.get("fav") and m["fav"]["odds"] >= 1.2:
+            opts.append(m["fav"])
+        best = None
+        for l in opts:
+            eff = np.log(l["odds"]) / max(-np.log(max(l["p_win"], 1e-6)), 1e-6)
+            if best is None or eff > best[0]:
+                best = (eff, l)
+        if best:
+            cands.append((best[0], m, best[1]))
+    cands.sort(key=lambda x: -x[0])
+    picks, odds, p_log = [], 1.0, 0.0
+    for _, m, l in cands[:cfg["legs"][1]]:
+        picks.append((m, l["market"]))
+        odds *= l["odds"]
+        p_log += np.log(l["p_win"])
+        if odds >= cfg["min_odds"]:
+            break
+    if odds < cfg["min_odds"] or len(picks) < cfg["legs"][0]:
+        return None
+    return _pack("mille", p_log, np.log(odds), picks)
 
 
 def settle_leg(market: str, total: int, hg: int = 0, ag: int = 0) -> str:

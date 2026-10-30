@@ -129,3 +129,7 @@ svg.chart text{fill:var(--muted);font-family:var(--f-body);font-size:10px}
 .form-col{display:flex;flex-direction:column;gap:8px}
 .form-col input,.form-row input{font:inherit;padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:var(--surface);color:var(--ink);width:100%}
 .form-row{display:flex;flex-direction:column;gap:6px;font-size:.85rem}
+.live{display:inline-block;font-family:var(--f-display);font-size:.85rem;font-weight:600;padding:1px 7px;border-radius:6px;background:var(--lost-soft);color:var(--lost);white-space:nowrap}
+.live.post{background:var(--surface-2);color:var(--muted)} .live.ok{background:var(--accent-soft);color:var(--won)}
+.tag{font-size:.7rem;font-weight:600;padding:1px 6px;border-radius:5px;background:var(--accent-soft);color:var(--accent)}
+.match .time{align-self:start}

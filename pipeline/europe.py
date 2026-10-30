@@ -305,7 +305,7 @@ def update(today: date, offline: bool = False):
             upcoming.append({
                 "id": match_id(r.dt, code, r.home, r.away), "div": code, "league": name, "country": "Europe",
                 "date": r.dt.strftime("%Y-%m-%d"), "time": r.dt.strftime("%H:%M"), "home": r.home, "away": r.away,
-                "lh": lh, "la": la, "final": final, "res": result_probs(mat),
+                "lh": lh, "la": la, "final": final, "res": result_probs(mat), "espn": [r.slug, r.espn_id],
                 "top_scores": [{"s": f"{i}-{j}", "p": round(float(p), 3)} for p, i, j in flat],
                 "total_dist": [round(float(x), 4) for x in total_dist(mat)[:7]],
                 "form_home": team_form(df, r.home), "form_away": team_form(df, r.away),

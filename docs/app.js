@@ -1,6 +1,6 @@
 "use strict";
 const MK = { o15: "+1,5 but", o20: "+2 buts", o25: "+2,5 buts" };
-const KIND_FILTERS = [["all", "Tous"], ["sur", "Sûrs"], ["favoris", "Favoris"], ["periode", "Sur une période"], ["ligue", "Par championnat"], ["value", "Value"], ["audace", "Audacieux"], ["jackpot", "Jackpot"]];
+const KIND_FILTERS = [["all", "Tous"], ["sur", "Sûrs"], ["favoris", "Favoris"], ["periode", "Sur une période"], ["ligue", "Par championnat"], ["value", "Value"], ["audace", "Audacieux"], ["jackpot", "Jackpot"], ["mille", "Cote 1000"]];
 const kindOf = (c) => (c.kind.startsWith("periode") ? "periode" : c.kind);
 const mkLabel = (l) => (l.market === "1" || l.market === "2" ? `Victoire ${l.team || (l.market === "1" ? l.home : l.away)}` : MK[l.market]);
 const state = { data: null, bt: null, day: null, kind: "all", league: "all", sort: "o15" };
@@ -33,6 +33,7 @@ async function load() {
   const g = new Date(state.data.generated);
   $("#updated").textContent = "Mis à jour " + g.toLocaleString("fr-FR", { weekday: "short", hour: "2-digit", minute: "2-digit" });
   route();
+  liveTick();
 }
 
 function route() {
@@ -65,6 +66,7 @@ function viewCoupons() {
   <h1>Coupons</h1>
   <div class="chips">${days.map((x) => `<button class="chip" data-day="${x}" aria-pressed="${x === state.day}">${dayLabel(x, d.today)}</button>`).join("")}</div>
   <div class="chips">${KIND_FILTERS.filter(([k]) => count(k)).map(([k, l]) => `<button class="chip" data-kind="${k}" aria-pressed="${k === state.kind}">${l}<span class="c">${count(k)}</span></button>`).join("")}</div>
+  ${liveBlock()}
   <p class="small muted">${frozen ? "Coupons du jour figés au premier calcul du matin." : "Coupons provisoires : ils seront affinés quand les cotes du marché seront publiées, puis figés le jour du match."} Classés par priorité.</p>
   ${shown.map(couponCard).join("") || `<div class="empty">Aucun coupon de ce type ce jour-là.</div>`}
   ${pastBlock()}`;
@@ -84,7 +86,7 @@ function couponCard(c) {
       <div class="big-odds">${odds(c.odds)}<small>cote estimée</small></div>
     </div>
     ${settled ? `<div><span class="status ${st}">${{ won: "Gagné", lost: "Perdu", void: "Annulé" }[st]}</span>${st === "won" ? ` <span class="small muted">retour ${odds(c.return)} × la mise</span>` : ""}</div>` : `
-    <div class="kv"><span>Chance de ne pas perdre</span><b>${pct(c.p_not_lose)}</b></div>
+    <div class="kv"><span>Chance de ne pas perdre</span><b>${c.p_not_lose < 0.01 ? "1 sur " + Math.round(1 / Math.max(c.p_not_lose, 1e-6)).toLocaleString("fr-FR") : pct(c.p_not_lose)}</b></div>
     <div class="meter ${meterCls}"><span style="width:${Math.round(c.p_not_lose * 100)}%"></span></div>`}
     <div class="legs">${c.legs.map((l) => legRow(l, settled)).join("")}</div>
     ${settled ? "" : `<button class="btn-main" data-play='${esc(JSON.stringify({ label: c.label + (c.scope && c.scope !== "Toutes ligues" ? " · " + c.scope : ""), odds: c.odds, legs: c.legs.map((l) => ({ id: l.id, market: l.market, team: l.team, home: l.home, away: l.away, league: l.league, odds: l.odds, p_win: l.p_win, p_push: l.p_push })) }))}'>Je l'ai joué</button>`}
@@ -95,8 +97,13 @@ function couponCard(c) {
 
 function legRow(l, settled) {
   const res = l.result ? `<span class="res ${l.result}">${esc(l.score || l.goals)}</span>` : "";
+  const lv = !settled && liveOf(state.data.matches.find((m) => m.id === l.id));
+  if (lv && lv.state !== "pre") {
+    const t = lv.hg + lv.ag, done = l.market === "o15" ? t >= 2 : l.market === "o25" || l.market === "o20" ? t >= 3 : l.market === "1" ? lv.hg > lv.ag : l.market === "2" ? lv.ag > lv.hg : false;
+    l = { ...l, _live: `<span class="live ${lv.state}${done ? " ok" : ""}">${lv.state === "in" ? esc(lv.clock) : "Fin"} ${lv.hg}-${lv.ag}${done ? " ✓" : ""}</span>` };
+  }
   return `<button class="leg" data-match="${esc(l.id)}">
-    <span class="teams">${esc(l.home)} – ${esc(l.away)}</span>
+    <span class="teams">${esc(l.home)} – ${esc(l.away)} ${l._live || ""}</span>
     <span class="o">${settled && res ? res : odds(l.odds)}</span>
     <span class="meta"><span class="mk">${esc(mkLabel(l))}</span> · ${esc(l.league)}${l.id ? " · " + dayLabel(l.id.slice(0, 4) + "-" + l.id.slice(4, 6) + "-" + l.id.slice(6, 8), state.data.today) : ""}${l.time ? " " + esc(l.time) : ""} · ${pct(l.p_win)}${l.p_push ? ` (+${pct(l.p_push)} remboursé)` : ""}</span>
     <span class="min">${settled ? odds(l.odds) : "min. " + odds(l.min_odds)}</span>
@@ -135,7 +142,7 @@ function matchRow(m) {
   const bar = (k, label) => `<div class="pb"><span class="l">${label}<b>${pct(m.p[k])}</b></span><div class="meter"><span style="width:${Math.round(m.p[k] * 100)}%"></span></div></div>`;
   return `<button class="match" data-match="${esc(m.id)}">
     <span class="teams">${esc(m.home)} – ${esc(m.away)}<br><span class="small muted">${esc(m.league)}${m.provisional ? " · en rodage" : ""}${m.has_odds === false ? " · sans cotes" : ""}</span></span>
-    <span class="time">${esc(m.time || "")}</span>
+    <span class="time">${liveBadge(m) || esc(m.time || "")}</span>
     <span class="probs">${bar("o15", "+1,5")}${bar("o20", "+2")}${bar("o25", "+2,5")}</span>
   </button>`;
 }
@@ -303,6 +310,64 @@ function backtestBlock(bt) {
   ${bt.context.factors.map((f) => `<tr><td style="white-space:normal">${esc(f.label)}</td><td class="n">${f.n}</td><td class="n">${pct(f.pred_o25)}</td><td class="n ${f.obs_o25 > f.pred_o25 ? "pos" : "neg"}">${pct(f.obs_o25)}</td></tr>`).join("")}</tbody></table></div>` : ""}
   <p class="note">${esc(bt.note)}</p></section>`;
 }
+
+/* ---------- Direct (scores ESPN, interrogés depuis le téléphone) ---------- */
+state.live = {};
+function poissonAtLeast(lam, k) {
+  if (k <= 0) return 1;
+  let term = Math.exp(-lam), cdf = term;
+  for (let i = 1; i < k; i++) { term *= lam / i; cdf += term; }
+  return Math.max(0, 1 - cdf);
+}
+function liveOf(m) { return m && m.espn ? state.live[m.espn[1]] : null; }
+function liveProbs(m, lv) {
+  const minute = lv.state === "post" ? 95 : Math.min(lv.minute || 0, 94);
+  const lam = (m.xg_home + m.xg_away) * Math.max(0, 94 - minute) / 94;
+  const g = lv.hg + lv.ag;
+  return { o15: poissonAtLeast(lam, 2 - g), o25: poissonAtLeast(lam, 3 - g), o20: poissonAtLeast(lam, 3 - g), goals: g };
+}
+async function liveTick() {
+  if (!state.data || document.visibilityState !== "visible") return;
+  const now = Date.now();
+  const wanted = state.data.matches.filter((m) => {
+    if (!m.espn || !m.time) return false;
+    const t = Date.parse(`${m.date}T${m.time}:00Z`);
+    return now > t - 10 * 60e3 && now < t + 3 * 3600e3;
+  });
+  const groups = {};
+  wanted.forEach((m) => (groups[`${m.espn[0]}|${m.date.replace(/-/g, "")}`] = 1));
+  let changed = false;
+  await Promise.all(Object.keys(groups).map(async (k) => {
+    const [slug, d] = k.split("|");
+    try {
+      const r = await fetch(`https://site.api.espn.com/apis/site/v2/sports/soccer/${slug}/scoreboard?dates=${d}`);
+      const j = await r.json();
+      (j.events || []).forEach((e) => {
+        const c = e.competitions[0], st = c.status || e.status, tm = Object.fromEntries(c.competitors.map((x) => [x.homeAway, x]));
+        state.live[e.id] = { state: st.type.state, clock: st.displayClock, minute: parseInt(st.displayClock, 10) || 0, detail: st.type.shortDetail,
+          hg: parseInt(tm.home.score, 10) || 0, ag: parseInt(tm.away.score, 10) || 0 };
+        changed = true;
+      });
+    } catch { /* pas de réseau ou source indisponible : on réessaiera */ }
+  }));
+  if (changed && $("#sheet").hidden) { const y = window.scrollY; route(); window.scrollTo(0, y); }
+}
+function liveBadge(m) {
+  const lv = liveOf(m);
+  if (!lv || lv.state === "pre") return "";
+  return `<span class="live ${lv.state}">${lv.state === "in" ? "● " + esc(lv.clock) : "Terminé"} · ${lv.hg}-${lv.ag}</span>`;
+}
+function liveBlock() {
+  const d = state.data;
+  const ids = new Set(d.coupons.filter((c) => c.date >= d.today || !c.status).flatMap((c) => c.legs.map((l) => l.id)));
+  const lives = d.matches.filter((m) => { const lv = liveOf(m); return lv && lv.state === "in"; });
+  if (!lives.length) return "";
+  lives.sort((a, b) => ids.has(b.id) - ids.has(a.id));
+  return `<section class="card"><h2>En direct</h2><p class="small muted">Probabilités recalculées avec le score et le temps restant. Mise à jour chaque minute.</p>
+  ${lives.map((m) => { const lp = liveProbs(m, liveOf(m)); return `<button class="match" data-match="${esc(m.id)}"><span class="teams">${esc(m.home)} – ${esc(m.away)}${ids.has(m.id) ? ' <span class="tag">dans un coupon</span>' : ""}<br><span class="small muted">${esc(m.league)}</span></span>${liveBadge(m)}
+    <span class="probs">${["o15", "o20", "o25"].map((k) => `<div class="pb"><span class="l">${{ o15: "+1,5", o20: "+2", o25: "+2,5" }[k]}<b>${lp[k] >= 0.999 ? "✓" : pct(lp[k])}</b></span><div class="meter"><span style="width:${Math.round(lp[k] * 100)}%"></span></div></div>`).join("")}</span></button>`; }).join("")}</section>`;
+}
+setInterval(liveTick, 60e3);
 
 /* ---------- Mon coupon et Mes paris (gardés sur ce téléphone) ---------- */
 const basket = () => store.get("basket", []);

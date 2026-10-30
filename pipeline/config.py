@@ -55,6 +55,7 @@ COUPONS = {
     "periode_fav": {"label": "Favoris sur la période", "min_odds": 2.0, "max_odds": 3.5, "legs": (3, 5), "stake_pct": 1.0},
     "value": {"label": "Coupon value", "min_odds": 2.0, "max_odds": 4.0, "legs": (2, 3), "stake_pct": 1.0},
     "audace": {"label": "Coupon audacieux", "min_odds": 4.0, "max_odds": 9.0, "legs": (3, 4), "stake_pct": 0.5},
+    "mille": {"label": "Cote 1000", "min_odds": 1000.0, "max_odds": 1e9, "legs": (8, 22), "stake_pct": 0.1},
     "jackpot": {"label": "Jackpot", "min_odds": 15.0, "max_odds": 1e9, "legs": (6, 8), "stake_pct": 0.25},
 }
 VALUE_EDGE = 0.03       # avantage minimum pour une sélection « value »
