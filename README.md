@@ -2,7 +2,7 @@
 
 Appli de téléphone qui estime chaque jour la probabilité de **plus de 1,5 / 2 / 2,5 buts** dans les matchs de 10 championnats européens, et propose des coupons classés par priorité.
 
-Tout tourne gratuitement sur GitHub : un calcul automatique 3 fois par jour (6 h, 12 h, 18 h UTC) met à jour l'appli publiée sur GitHub Pages.
+Tout tourne gratuitement sur GitHub : un calcul automatique toutes les 2 heures met à jour l'appli publiée sur GitHub Pages.
 
 ## Ce que fait le calcul
 

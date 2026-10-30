@@ -2,7 +2,7 @@ name: Mise à jour des prédictions
 
 on:
   schedule:
-    - cron: "0 6,12,18 * * *"   # 6 h, 12 h et 18 h (heure de Dakar = UTC)
+    - cron: "5 */2 * * *"   # toutes les 2 heures (heure de Dakar = UTC)
   workflow_dispatch:
     inputs:
       backtest:
