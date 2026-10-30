@@ -20,10 +20,4 @@ Tout tourne gratuitement sur GitHub : un calcul automatique toutes les heures me
 
 Aucun modèle ne garantit des gains. Joue seulement ce que tu peux te permettre de perdre.
 
-## Révision (6e à Terminale)
-
-Deuxième appli, sans lien avec les paris : quiz de révision de la 6e à la Terminale (séries L et S), publiée sur `/revision/`.
-Le manifeste de Total Buts a pour portée `index.html` pour que les deux applis s'installent séparément sur le téléphone.
-Les questions sont dans `revision/questions.py`, `q_college.py` et `q_lycee.py` ; `python revision/build.py` régénère `docs/revision/data/`.
-Les 5 premières questions de chaque matière sont gratuites, le reste se débloque avec un code premium vendu par Wave.
-Seuls les hachages des codes sont publiés (`revision/code_hashes.txt`) ; la liste en clair reste hors du dépôt.
+L'appli de révision scolaire a son propre dépôt : https://github.com/kanelimamou-blip/revision
