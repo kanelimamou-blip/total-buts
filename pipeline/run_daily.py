@@ -236,6 +236,27 @@ def main():
             extra += buts + favs
         entry["coupons"] = prioritise(entry["coupons"] + extra)
         entry["periods_done"] = True
+    # Coupons « tendances » : s'appuient sur les surprises de la saison (équipes qui marquent ou gagnent plus que prévu)
+    season_start = pd.Timestamp(year=today.year if today.month >= 7 else today.year - 1, month=7, day=1)
+    try:
+        surprise = tips_mod.surprises(results, season_start)
+    except Exception as exc:  # noqa: BLE001
+        print("Surprises indisponibles :", exc)
+        surprise = None
+    if surprise and not entry.get("tendance_done"):
+        goal_teams = {r["team"] for r in surprise["goals"]}
+        closed = {r["team"] for r in surprise["closed"]}
+        form_teams = {r["team"] for r in surprise["over"]}
+        end = (today + timedelta(days=7)).isoformat()
+        week = [m for m in matches if m["date"] < end and not m.get("provisional")]
+        pool_goals = [{"id": m["id"], "div": m["div"], "legs": m["legs"], "fav": m["fav"]} for m in week
+                      if (m["home"] in goal_teams or m["away"] in goal_teams) and not ({m["home"], m["away"]} & closed)]
+        pool_form = [{"id": m["id"], "div": m["div"], "legs": [m["fav"]], "fav": m["fav"]} for m in week
+                     if m["fav"]["team"] in form_teams]
+        tend = _repeat("tendance", pool_goals, {"o15", "o20"}, pool=12, scope="Équipes qui marquent plus que prévu")
+        tend += _repeat("tendance", pool_form, {"1", "2"}, pool=12, scope="Équipes en forme (victoires)", mk_order=["1", "2"])
+        entry["coupons"] = prioritise(entry["coupons"] + tend)
+        entry["tendance_done"] = True
     if not entry.get("long_done"):
         pool_all = [{"id": m["id"], "div": m["div"], "date": m["date"], "legs": m["legs"], "fav": m["fav"],
                      "rel": fb["reliability"].get(m["div"], 0.9 if m["div"] in CUPS else 1.0)}
@@ -284,13 +305,7 @@ def main():
         pred_stats = {"n": len(settled), "o15_pred": round(float(p15.mean()), 3), "o15_obs": round(float(y15.mean()), 3),
                       "o25_pred": round(float(p25.mean()), 3), "o25_obs": round(float(y25.mean()), 3)}
 
-    season_start = pd.Timestamp(year=today.year if today.month >= 7 else today.year - 1, month=7, day=1)
     tip_list = tips_mod.build(results, matches, season_start, live)
-    try:
-        surprise = tips_mod.surprises(results, season_start)
-    except Exception as exc:  # noqa: BLE001
-        print("Surprises indisponibles :", exc)
-        surprise = None
 
     # Derniers résultats de nos prédictions (journal), pour l'écran Suivi
     recent = sorted(((mid, e) for mid, e in log.items() if "goals" in e), key=lambda x: x[1]["date"], reverse=True)[:400]
