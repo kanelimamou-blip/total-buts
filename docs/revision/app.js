@@ -9,13 +9,16 @@ const store = {
   load() { try { return JSON.parse(localStorage.getItem("rev") || "{}"); } catch { return {}; } },
   save() { try { localStorage.setItem("rev", JSON.stringify(S)); } catch {} },
 };
-const S = Object.assign({ exam: "BFEM", premium: false, stats: {}, sessions: [], days: [] }, store.load());
+const S = Object.assign({ level: null, premium: false, stats: {}, sessions: [], days: [] }, store.load());
 
 const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
 const today = () => new Date().toISOString().slice(0, 10);
 const shuffle = (a) => { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
 const fcfa = (n) => n.toLocaleString("fr-FR") + " FCFA";
-const subjectsOf = (exam) => DATA.subjects.filter((s) => s.exam === exam);
+const subjectsOf = (level) => DATA.subjects.filter((s) => s.levels.includes(level));
+const inLevel = (q) => subjectsOf(S.level).some((s) => s.id === q.s);
+const examOf = () => CFG.exams[S.level] || null;
+const blancName = () => (examOf() ? "Examen blanc" : "Devoir blanc");
 const open = (q) => S.premium || q.free;
 const qsOf = (sid) => DATA.questions.filter((q) => q.s === sid);
 const subjName = (sid) => (DATA.subjects.find((s) => s.id === sid) || {}).name || "";
@@ -37,24 +40,32 @@ function streak() {
   return n;
 }
 
+// ---------- Choix de la classe
+function viewLevel() {
+  $view.innerHTML = `<h1>Tu es en quelle classe ?</h1>
+    <p class="muted">Tu pourras changer plus tard en touchant ta classe en haut de l'écran.</p>
+    <div class="grid">${DATA.levels.map((l) => `<button class="subj lvl" data-l="${esc(l)}"${l === S.level ? ' aria-pressed="true"' : ""}>
+      <b>${esc(l)}</b><span class="small muted">${CFG.exams[l] ? "Année du " + CFG.exams[l][0] : subjectsOf(l).length + " matières"}</span></button>`).join("")}</div>`;
+  $view.querySelectorAll("[data-l]").forEach((b) => b.onclick = () => { S.level = b.dataset.l; store.save(); go("accueil"); render(); });
+}
+
 // ---------- Accueil
 function viewHome() {
-  const exam = S.exam, date = CFG.exam_dates[exam];
-  const days = Math.max(0, Math.ceil((new Date(date) - new Date(today())) / 864e5));
-  const free = DATA.questions.filter((q) => q.free && q.s.startsWith(exam + "-"));
+  const ex = examOf();
+  const days = ex ? Math.max(0, Math.ceil((new Date(ex[1]) - new Date(today())) / 864e5)) : 0;
+  const answered = Object.values(S.stats).reduce((n, s) => n + s.ok + s.ko, 0);
+  const free = DATA.questions.filter((q) => q.free && inLevel(q));
   const daily = free[Math.floor(new Date(today()).getTime() / 864e5) % free.length];
-  const subs = subjectsOf(exam).map((s) => `
+  const subs = subjectsOf(S.level).map((s) => `
     <a class="subj" href="#quiz/${s.id}" style="text-decoration:none;color:inherit">
       <b>${esc(s.name)}</b>
       <span class="small muted">${S.premium ? s.count : s.free} questions${S.premium ? "" : ` · <span class="lock">🔒 ${s.count - s.free} premium</span>`}</span>
       <span class="bar"><i style="width:${mastery(s.id)}%"></i></span>
     </a>`).join("");
   $view.innerHTML = `
-    <div class="seg" role="group" aria-label="Examen">
-      ${["BFEM", "BAC"].map((e) => `<button data-exam="${e}" aria-pressed="${e === exam}">${e}</button>`).join("")}
-    </div>
     <div class="card">
-      <div class="row"><div><p class="small muted">${exam} ${date.slice(0, 4)}, date indicative</p><p class="count">J−${days}</p></div>
+      <div class="row">${ex ? `<div><p class="small muted">${ex[0]} ${ex[1].slice(0, 4)}, date indicative</p><p class="count">J−${days}</p></div>`
+        : `<div><p class="small muted">Réponses données</p><p class="count">${answered}</p></div>`}
       <div style="text-align:right"><p class="small muted">Série en cours</p><p class="count">${streak()} 🔥</p></div></div>
     </div>
     <div class="card" id="daily">
@@ -65,10 +76,9 @@ function viewHome() {
     <h2>Choisis une matière</h2>
     <div class="grid">${subs}</div>
     <div class="btns">
-      <a class="btn hi-btn" href="#examen">Examen blanc : ${EXAM_LEN} questions en ${EXAM_MIN} min${S.premium ? "" : " 🔒"}</a>
+      <a class="btn hi-btn" href="#examen">${blancName()} : ${EXAM_LEN} questions en ${EXAM_MIN} min${S.premium ? "" : " 🔒"}</a>
       <button class="btn alt" id="share">Partager l'appli à un camarade</button>
     </div>`;
-  $view.querySelectorAll("[data-exam]").forEach((b) => b.onclick = () => { S.exam = b.dataset.exam; store.save(); render(); });
   bindQuestion($view.querySelector("#daily"), daily, () => {});
   $view.querySelector("#share").onclick = share;
 }
@@ -139,19 +149,19 @@ function runQuiz(title, qs, back, { exam = false } = {}) {
 function viewQuiz(sid) {
   const s = DATA.subjects.find((x) => x.id === sid);
   if (!s) return go("accueil");
-  runQuiz(`${s.exam} · ${s.name}`, shuffle(qsOf(sid).filter(open)).slice(0, QUIZ_LEN), "#accueil");
+  runQuiz(`${S.level} · ${s.name}`, shuffle(qsOf(sid).filter(open)).slice(0, QUIZ_LEN), "#accueil");
 }
 function viewExam() {
-  if (!S.premium) return viewPremium("L'examen blanc fait partie du pack premium.");
-  const qs = shuffle(DATA.questions.filter((q) => q.s.startsWith(S.exam + "-"))).slice(0, EXAM_LEN);
-  runQuiz(`Examen blanc ${S.exam}`, qs, "#accueil", { exam: true });
+  if (!S.premium) return viewPremium(`Le ${blancName().toLowerCase()} fait partie du pack premium.`);
+  const qs = shuffle(DATA.questions.filter(inLevel)).slice(0, EXAM_LEN);
+  runQuiz(`${blancName()} ${S.level}`, qs, "#accueil", { exam: true });
 }
 function viewErrors() {
-  const wrong = DATA.questions.filter((q) => open(q) && q.s.startsWith(S.exam + "-") && S.stats[q.id] && S.stats[q.id].last === false);
-  if (location.hash === "#erreurs/go") return runQuiz(`Mes erreurs ${S.exam}`, shuffle(wrong).slice(0, QUIZ_LEN), "#erreurs");
+  const wrong = DATA.questions.filter((q) => open(q) && inLevel(q) && S.stats[q.id] && S.stats[q.id].last === false);
+  if (location.hash === "#erreurs/go") return runQuiz(`Mes erreurs ${S.level}`, shuffle(wrong).slice(0, QUIZ_LEN), "#erreurs");
   const by = {}; wrong.forEach((q) => (by[q.s] = (by[q.s] || 0) + 1));
   $view.innerHTML = `<h1>Mes erreurs</h1>
-    <p class="muted">Les questions ${S.exam} que tu as ratées la dernière fois. Quand tu les réussis, elles disparaissent de la liste.</p>
+    <p class="muted">Les questions de ${S.level} que tu as ratées la dernière fois. Quand tu les réussis, elles disparaissent de la liste.</p>
     ${wrong.length ? `<div class="card">${Object.entries(by).map(([sid, n]) => `<div class="row"><span>${esc(subjName(sid))}</span><b>${n}</b></div>`).join("")}</div>
       <a class="btn" href="#erreurs/go">Revoir ${Math.min(wrong.length, QUIZ_LEN)} erreur${wrong.length > 1 ? "s" : ""}</a>`
     : `<div class="card"><p>Aucune erreur à revoir. Fais un quiz depuis l'accueil.</p><a class="btn" href="#accueil">Choisir une matière</a></div>`}`;
@@ -161,13 +171,13 @@ function viewErrors() {
 function viewProgress() {
   const answered = Object.values(S.stats).reduce((n, s) => n + s.ok + s.ko, 0);
   const good = Object.values(S.stats).reduce((n, s) => n + s.ok, 0);
-  const rows = subjectsOf(S.exam).map((s) => `<div><div class="row small"><span>${esc(s.name)}</span><b>${mastery(s.id)} %</b></div><div class="bar"><i style="width:${mastery(s.id)}%"></i></div></div>`).join("");
+  const rows = subjectsOf(S.level).map((s) => `<div><div class="row small"><span>${esc(s.name)}</span><b>${mastery(s.id)} %</b></div><div class="bar"><i style="width:${mastery(s.id)}%"></i></div></div>`).join("");
   const last = S.sessions.slice(-8).reverse().map((x) => `<div class="row small"><span>${esc(x.t)}<br><span class="muted">${x.d}</span></span><b>${Math.round((200 * x.score) / x.total) / 10} / 20</b></div>`).join("");
   $view.innerHTML = `<h1>Mes progrès</h1>
     <div class="card"><div class="row"><div><p class="small muted">Réponses</p><p class="count">${answered}</p></div>
       <div><p class="small muted">Réussite</p><p class="count">${answered ? Math.round((100 * good) / answered) : 0} %</p></div>
       <div><p class="small muted">Série</p><p class="count">${streak()} 🔥</p></div></div></div>
-    <div class="card"><h2>Matières ${S.exam} maîtrisées</h2>${rows}<p class="small muted">Part des questions réussies la dernière fois.</p></div>
+    <div class="card"><h2>Matières maîtrisées en ${S.level}</h2>${rows}<p class="small muted">Part des questions réussies la dernière fois.</p></div>
     <div class="card"><h2>Derniers quiz</h2>${last || '<p class="muted">Pas encore de quiz.</p>'}</div>`;
 }
 
@@ -181,10 +191,10 @@ function viewPremium(reason = "") {
   const msg = encodeURIComponent(`Bonjour, j'ai payé ${fcfa(CFG.price_fcfa)} par Wave pour le pack premium Révision BAC BFEM. Voici ma capture :`);
   $view.innerHTML = `<h1>Pack premium</h1>
     ${reason ? `<p><b>${esc(reason)}</b></p>` : ""}
-    ${S.premium ? `<div class="card"><p class="msg-ok">Ton pack premium est actif. Toutes les questions et l'examen blanc sont débloqués.</p><a class="btn" href="#accueil">Réviser</a></div>` : `
+    ${S.premium ? `<div class="card"><p class="msg-ok">Ton pack premium est actif. Toutes les questions et les examens blancs sont débloqués.</p><a class="btn" href="#accueil">Réviser</a></div>` : `
     <div class="card">
       <p class="count">${fcfa(CFG.price_fcfa)}</p><p class="muted">Payé une seule fois, valable jusqu'à l'examen.</p>
-      <ul class="steps"><li>Les <b>${total}</b> questions du BAC et du BFEM, toutes corrigées</li><li>L'examen blanc chronométré avec sa note sur 20</li><li>Les nouvelles questions ajoutées pendant l'année</li></ul>
+      <ul class="steps"><li>Les <b>${total}</b> questions de la 6e à la Terminale, toutes corrigées</li><li>Les examens et devoirs blancs chronométrés, notés sur 20</li><li>Les nouvelles questions ajoutées pendant l'année</li></ul>
     </div>
     <div class="card"><h2>Comment payer</h2>
       ${wave ? `<ol class="steps">
@@ -209,7 +219,7 @@ function viewPremium(reason = "") {
 }
 
 function share() {
-  const url = location.href.split("#")[0], text = `Je révise le BAC et le BFEM avec cette appli gratuite, avec les corrections expliquées : ${url}`;
+  const url = location.href.split("#")[0], text = `Je révise mes cours de la 6e à la Terminale avec cette appli gratuite, avec les corrections expliquées : ${url}`;
   if (navigator.share) navigator.share({ title: "Révision BAC BFEM", text, url }).catch(() => {});
   else window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, "_blank");
 }
@@ -219,9 +229,10 @@ function go(h) { location.hash = h; }
 function render() {
   clearInterval(timer);
   const [tab, arg] = (location.hash.slice(1) || "accueil").split("/");
-  document.getElementById("exam-tag").textContent = S.exam;
+  document.getElementById("exam-tag").textContent = S.level || "";
+  if (!S.level && tab !== "classe") return viewLevel();
   document.querySelectorAll(".tabs a").forEach((a) => { if (a.dataset.tab === tab) a.setAttribute("aria-current", "page"); else a.removeAttribute("aria-current"); });
-  ({ quiz: () => viewQuiz(arg), examen: viewExam, erreurs: viewErrors, progres: viewProgress, premium: () => viewPremium() }[tab] || viewHome)();
+  ({ classe: viewLevel, quiz: () => viewQuiz(arg), examen: viewExam, erreurs: viewErrors, progres: viewProgress, premium: () => viewPremium() }[tab] || viewHome)();
   window.scrollTo(0, 0);
 }
 window.addEventListener("hashchange", render);

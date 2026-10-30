@@ -1,11 +1,12 @@
 # Banque de questions de l'appli Révision BAC et BFEM.
+# Chaque matière : (identifiant, [classes concernées], nom, questions).
 # Chaque question : (énoncé, [4 choix], indice de la bonne réponse, explication).
 # Les FREE premières questions de chaque matière sont gratuites, les autres sont premium.
 
 FREE = 5
 
-SUBJECTS = [
-  ("BFEM", "maths", "Mathématiques", [
+SUBJECTS_3E_TLE = [
+  ("3e-maths", ["3e"], "Mathématiques", [
     ("Développe (x + 3)².", ["x² + 9", "x² + 6x + 9", "x² + 3x + 9", "2x + 6"], 1, "(a + b)² = a² + 2ab + b², donc x² + 2·3·x + 9."),
     ("Résous 2x − 5 = 7.", ["x = 1", "x = 6", "x = 12", "x = −1"], 1, "2x = 12, donc x = 6."),
     ("Quel est le PGCD de 12 et 18 ?", ["2", "3", "6", "36"], 2, "Diviseurs communs : 1, 2, 3, 6. Le plus grand est 6."),
@@ -22,7 +23,7 @@ SUBJECTS = [
     ("Combien vaut (2³)² ?", ["32", "64", "12", "256"], 1, "(2³)² = 2⁶ = 64."),
     ("Coefficient directeur de la droite passant par A(1 ; 2) et B(3 ; 6) :", ["2", "4", "1/2", "3"], 0, "(6 − 2) / (3 − 1) = 4 / 2 = 2."),
   ]),
-  ("BFEM", "francais", "Français", [
+  ("3e-francais", ["3e"], "Français", [
     ("Quelle est la nature du mot « rapidement » ?", ["Adjectif", "Adverbe", "Verbe", "Nom"], 1, "Les mots en -ment formés sur un adjectif sont en général des adverbes."),
     ("Complète : « Les fleurs que j'ai ___ sont belles. » (cueillir)", ["cueilli", "cueillis", "cueillie", "cueillies"], 3, "Avec avoir, le participe s'accorde avec le COD placé avant : « que » remplace « les fleurs », féminin pluriel."),
     ("Conjugue « aller » au futur, avec « nous ».", ["nous allerons", "nous irons", "nous allions", "nous irions"], 1, "Le futur de aller se forme sur le radical ir- : j'irai, nous irons."),
@@ -39,7 +40,7 @@ SUBJECTS = [
     ("Complète : « Ils ont ___ leurs devoirs. » (finir)", ["finis", "fini", "finit", "finir"], 1, "Le COD « leurs devoirs » est placé après le verbe : pas d'accord."),
     ("Dans « Le livre dont je parle », « dont » est :", ["Une conjonction", "Un pronom relatif", "Un adverbe", "Une préposition"], 1, "« Dont » introduit une proposition subordonnée relative : c'est un pronom relatif."),
   ]),
-  ("BFEM", "svt", "SVT", [
+  ("3e-svt", ["3e"], "SVT", [
     ("Quel organe pompe le sang dans tout le corps ?", ["Le foie", "Le cœur", "Les poumons", "Les reins"], 1, "Le cœur est une pompe musculaire."),
     ("Les globules rouges transportent surtout :", ["Le dioxygène", "Les anticorps", "Le glucose", "Les vitamines"], 0, "L'hémoglobine des globules rouges fixe le dioxygène."),
     ("La photosynthèse produit :", ["CO₂ et eau", "Glucose et dioxygène", "Azote", "Protéines seulement"], 1, "À la lumière, la plante fabrique de la matière organique (glucose) et rejette du dioxygène."),
@@ -56,7 +57,7 @@ SUBJECTS = [
     ("Le premier maillon d'une chaîne alimentaire est :", ["Un herbivore", "Un carnivore", "Un végétal chlorophyllien", "Un décomposeur"], 2, "Les végétaux verts sont les producteurs."),
     ("La puberté est déclenchée par :", ["Des hormones", "La nourriture", "Le sport", "Les vitamines"], 0, "Des hormones (de l'hypophyse puis des glandes sexuelles) provoquent les transformations."),
   ]),
-  ("BFEM", "pc", "Sciences physiques", [
+  ("3e-pc", ["3e"], "Sciences physiques", [
     ("La loi d'Ohm s'écrit :", ["U = R / I", "U = R × I", "I = U × R", "R = U × I"], 1, "La tension aux bornes d'un conducteur ohmique vaut R × I."),
     ("L'unité de la puissance électrique est :", ["Le volt", "L'ampère", "Le watt", "L'ohm"], 2, "La puissance s'exprime en watts (W)."),
     ("La masse volumique de l'eau est d'environ :", ["1 g/cm³", "10 g/cm³", "0,1 g/cm³", "100 g/cm³"], 0, "1 g/cm³, soit 1 000 kg/m³."),
@@ -73,7 +74,7 @@ SUBJECTS = [
     ("Deux résistances de 10 Ω et 20 Ω en série équivalent à :", ["30 Ω", "10 Ω", "200 Ω", "6,7 Ω"], 0, "En série, les résistances s'additionnent."),
     ("Le passage de l'état solide à l'état liquide s'appelle :", ["La solidification", "La fusion", "La vaporisation", "La condensation"], 1, "Exemple : la glace qui fond."),
   ]),
-  ("BFEM", "histoire", "Histoire", [
+  ("3e-histoire", ["3e"], "Histoire", [
     ("Quel jour célèbre-t-on la fête de l'indépendance du Sénégal ?", ["20 août", "4 avril", "1er mai", "14 juillet"], 1, "Le 4 avril 1960 sont signés les accords de transfert des compétences."),
     ("Qui fut le premier président du Sénégal ?", ["Abdou Diouf", "Léopold Sédar Senghor", "Mamadou Dia", "Lamine Guèye"], 1, "Senghor a dirigé le pays de 1960 à 1980."),
     ("La Fédération du Mali (1959-1960) regroupait :", ["Le Sénégal et le Soudan français", "Le Sénégal et la Guinée", "Le Mali et le Niger", "Le Sénégal et la Mauritanie"], 0, "Le Soudan français est l'actuel Mali. La fédération éclate en août 1960."),
@@ -90,7 +91,7 @@ SUBJECTS = [
     ("Qui fut le premier député africain élu à l'Assemblée française, en 1914 ?", ["Blaise Diagne", "Lamine Guèye", "Galandou Diouf", "Senghor"], 0, "Blaise Diagne est élu député du Sénégal en 1914."),
     ("Le Sénégal proclame son indépendance après l'éclatement de la Fédération du Mali le :", ["4 avril 1960", "20 août 1960", "28 septembre 1958", "1er janvier 1961"], 1, "Le Sénégal se retire de la fédération dans la nuit du 19 au 20 août 1960."),
   ]),
-  ("BFEM", "geo", "Géographie", [
+  ("3e-geo", ["3e"], "Géographie", [
     ("Combien de régions compte le Sénégal ?", ["11", "12", "14", "16"], 2, "Le Sénégal a 14 régions depuis 2008."),
     ("Quel fleuve forme la frontière avec la Mauritanie ?", ["La Gambie", "La Casamance", "Le Sénégal", "Le Saloum"], 2, "Le fleuve Sénégal sépare les deux pays au nord."),
     ("Quel pays est presque entièrement entouré par le Sénégal ?", ["La Guinée", "La Gambie", "Le Mali", "La Guinée-Bissau"], 1, "La Gambie s'étend le long du fleuve Gambie."),
@@ -107,7 +108,7 @@ SUBJECTS = [
     ("Le lac de Guiers est surtout utile pour :", ["Le tourisme seulement", "L'eau potable de Dakar et l'irrigation", "La pêche industrielle", "L'extraction du sel"], 1, "Il alimente Dakar en eau et permet de cultiver dans la vallée."),
     ("Le Ferlo est une zone surtout consacrée à :", ["L'élevage", "La pêche", "L'industrie", "La riziculture"], 0, "C'est une grande zone pastorale du nord et du centre."),
   ]),
-  ("BFEM", "anglais", "Anglais", [
+  ("3e-anglais", ["3e"], "Anglais", [
     ("She ___ to school every day.", ["go", "goes", "going", "gone"], 1, "Présent simple, 3e personne : on ajoute -s ou -es."),
     ("Le passé de « go » est :", ["goed", "gone", "went", "going"], 2, "Verbe irrégulier : go, went, gone."),
     ("I have lived here ___ 2010.", ["for", "since", "during", "ago"], 1, "« Since » avec un point de départ, « for » avec une durée."),
@@ -124,7 +125,7 @@ SUBJECTS = [
     ("Le superlatif de « good » est :", ["the goodest", "the better", "the best", "the most good"], 2, "good, better, the best."),
     ("I ___ my homework yesterday.", ["do", "did", "done", "doing"], 1, "« Yesterday » demande le prétérit : did."),
   ]),
-  ("BAC", "maths", "Mathématiques", [
+  ("tle-maths", ["Tle S"], "Mathématiques", [
     ("La dérivée de ln(x) est :", ["x", "1/x", "ln(x)/x", "eˣ"], 1, "Pour x > 0, (ln x)' = 1/x."),
     ("Une primitive de e²ˣ est :", ["2e²ˣ", "e²ˣ / 2", "e²ˣ", "eˣ"], 1, "La dérivée de e²ˣ/2 est e²ˣ."),
     ("Quelle est la limite de ln(x)/x quand x tend vers +∞ ?", ["+∞", "1", "0", "−∞"], 2, "Croissances comparées : x l'emporte sur ln x."),
@@ -141,7 +142,7 @@ SUBJECTS = [
     ("Combien de façons de choisir 2 élèves parmi 5 ?", ["10", "20", "25", "7"], 0, "C(5, 2) = 5 × 4 / 2 = 10."),
     ("ln(a × b) est égal à :", ["ln a × ln b", "ln a + ln b", "ln a − ln b", "ln(a + b)"], 1, "Le logarithme transforme les produits en sommes."),
   ]),
-  ("BAC", "pc", "Physique-Chimie", [
+  ("tle-pc", ["Tle S"], "Physique-Chimie", [
     ("La deuxième loi de Newton s'écrit :", ["ΣF = m·v", "ΣF = m·a", "F = m/a", "P = m·v"], 1, "La somme des forces est égale à la masse fois l'accélération du centre d'inertie."),
     ("La période d'un pendule simple (petites oscillations) est :", ["2π√(g/l)", "2π√(l/g)", "√(l·g)", "2π·l·g"], 1, "T₀ = 2π√(l/g), indépendante de la masse."),
     ("L'énergie cinétique d'un solide en translation vaut :", ["m·v", "½·m·v²", "m·g·h", "½·m·v"], 1, "Ec = ½ m v², en joules."),
@@ -158,7 +159,7 @@ SUBJECTS = [
     ("L'énergie d'un photon de fréquence ν est :", ["E = h/ν", "E = h·ν", "E = m·c", "E = ν/c"], 1, "Relation de Planck-Einstein, h constante de Planck."),
     ("Le pKa d'un couple acide/base est :", ["log Ka", "−log Ka", "1/Ka", "Ka²"], 1, "pKa = −log Ka ; plus il est petit, plus l'acide est fort."),
   ]),
-  ("BAC", "svt", "SVT", [
+  ("tle-svt", ["Tle S"], "SVT", [
     ("À la synapse, le message nerveux est transmis par :", ["Le sang", "Des neurotransmetteurs", "Des hormones", "Des anticorps"], 1, "Les neurotransmetteurs (ex. acétylcholine) traversent la fente synaptique."),
     ("La méiose produit :", ["2 cellules diploïdes", "4 cellules haploïdes", "4 cellules diploïdes", "1 cellule œuf"], 1, "Deux divisions successives donnent 4 cellules à n chromosomes."),
     ("Le crossing-over a lieu pendant :", ["La prophase I de la méiose", "La mitose", "L'anaphase II", "La fécondation"], 0, "Échanges entre chromatides des chromosomes homologues appariés."),
@@ -175,7 +176,7 @@ SUBJECTS = [
     ("Le réflexe myotatique est :", ["Polysynaptique", "Monosynaptique", "Volontaire", "Hormonal"], 1, "Une seule synapse entre neurone sensitif et motoneurone."),
     ("Les lymphocytes T8 cytotoxiques :", ["Produisent des anticorps", "Détruisent les cellules infectées", "Transportent l'oxygène", "Fabriquent l'insuline"], 1, "Ils reconnaissent et tuent les cellules infectées."),
   ]),
-  ("BAC", "philo", "Philosophie", [
+  ("tle-philo", ["Tle L", "Tle S"], "Philosophie", [
     ("« Je pense, donc je suis » est de :", ["Platon", "Descartes", "Kant", "Sartre"], 1, "Le cogito, dans le Discours de la méthode (1637)."),
     ("« L'homme est un animal politique » est de :", ["Aristote", "Hobbes", "Rousseau", "Marx"], 0, "Aristote, dans Les Politiques."),
     ("« L'existence précède l'essence » est une thèse de :", ["Hegel", "Sartre", "Spinoza", "Pascal"], 1, "Sartre, L'existentialisme est un humanisme."),
@@ -192,7 +193,7 @@ SUBJECTS = [
     ("L'épistémologie est :", ["L'étude de la morale", "L'étude critique des sciences", "L'étude de l'art", "L'étude de la politique"], 1, "Elle examine les méthodes et la valeur des connaissances scientifiques."),
     ("« Le cœur a ses raisons que la raison ne connaît point » est de :", ["Pascal", "Montaigne", "Rousseau", "Descartes"], 0, "Blaise Pascal, Pensées."),
   ]),
-  ("BAC", "hg", "Histoire-Géographie", [
+  ("tle-hg", ["Tle L", "Tle S"], "Histoire-Géographie", [
     ("La guerre froide oppose principalement :", ["La France et l'Allemagne", "Les États-Unis et l'URSS", "La Chine et le Japon", "L'Angleterre et l'Inde"], 1, "Deux blocs rivaux de 1947 à 1991."),
     ("Le mur de Berlin tombe en :", ["1961", "1989", "1991", "1975"], 1, "Le 9 novembre 1989."),
     ("La conférence de Bandung, qui réunit des pays d'Afrique et d'Asie, a lieu en :", ["1945", "1955", "1960", "1963"], 1, "En Indonésie, en 1955 : naissance du tiers-monde sur la scène internationale."),
@@ -209,7 +210,7 @@ SUBJECTS = [
     ("Le pays le plus peuplé d'Afrique est :", ["L'Éthiopie", "L'Égypte", "Le Nigeria", "La RD Congo"], 2, "Le Nigeria dépasse 200 millions d'habitants."),
     ("Le siège de la BCEAO se trouve à :", ["Abidjan", "Dakar", "Bamako", "Lomé"], 1, "La Banque centrale des États de l'Afrique de l'Ouest est à Dakar."),
   ]),
-  ("BAC", "francais", "Français", [
+  ("tle-francais", ["Tle L", "Tle S"], "Français", [
     ("Les fondateurs de la Négritude sont :", ["Senghor, Césaire et Damas", "Sembène, Diop et Kane", "Camus, Sartre et Gide", "Hugo, Zola et Balzac"], 0, "Léopold Sédar Senghor, Aimé Césaire et Léon-Gontran Damas, dans les années 1930."),
     ("« Cahier d'un retour au pays natal » est d'Aimé Césaire. C'est :", ["Un roman", "Un long poème", "Une pièce de théâtre", "Un essai"], 1, "Poème publié en 1939, texte fondateur de la Négritude."),
     ("« Les Soleils des indépendances » est de :", ["Ahmadou Kourouma", "Camara Laye", "Mongo Beti", "Ferdinand Oyono"], 0, "Ahmadou Kourouma, 1968."),
@@ -226,7 +227,7 @@ SUBJECTS = [
     ("Dans une dissertation, l'antithèse sert à :", ["Résumer le texte", "Présenter le point de vue opposé", "Conclure", "Citer l'auteur"], 1, "Plan dialectique : thèse, antithèse, synthèse."),
     ("Le mouvement littéraire de Victor Hugo au XIXe siècle est :", ["Le classicisme", "Le romantisme", "Le réalisme", "Le symbolisme"], 1, "Hugo est la grande figure du romantisme français."),
   ]),
-  ("BAC", "anglais", "Anglais", [
+  ("tle-anglais", ["Tle L", "Tle S"], "Anglais", [
     ("Passif de « They built the house » :", ["The house is built", "The house was built", "The house has build", "The house built"], 1, "Prétérit au passif : was/were + participe passé."),
     ("If I ___ rich, I would travel around the world.", ["am", "was been", "were", "will be"], 2, "Condition irréelle : if + prétérit (were pour toutes les personnes)."),
     ("If she had studied, she ___ passed.", ["would", "will have", "would have", "had"], 2, "Condition dans le passé : if + past perfect, puis would have + participe."),
@@ -244,3 +245,10 @@ SUBJECTS = [
     ("Un synonyme de « nevertheless » est :", ["however", "because", "therefore", "moreover"], 0, "Les deux marquent une opposition."),
   ]),
 ]
+
+
+from q_college import SUBJECTS_COLLEGE
+from q_lycee import SUBJECTS_LYCEE
+
+LEVELS = ["6e", "5e", "4e", "3e", "2nde L", "2nde S", "1ère L", "1ère S", "Tle L", "Tle S"]
+SUBJECTS = SUBJECTS_COLLEGE + SUBJECTS_3E_TLE[:7] + SUBJECTS_LYCEE + SUBJECTS_3E_TLE[7:]
