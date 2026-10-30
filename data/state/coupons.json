@@ -6,7 +6,7 @@
  },
  "2026-11-03": {
   "frozen": false,
-  "created": "2026-10-30T15:51+00:00",
+  "created": "2026-10-30T16:48+00:00",
   "coupons": [
    {
     "kind": "sur",
@@ -155,9 +155,9 @@
       "team": null,
       "odds": 1.17,
       "odds_source": "estimée",
-      "p_win": 0.808,
+      "p_win": 0.807,
       "p_push": 0.0,
-      "min_odds": 1.27
+      "min_odds": 1.28
      },
      {
       "id": "20261103|E1|Charlton|Bolton",
@@ -182,8 +182,8 @@
     ],
     "odds": 2.24,
     "p_win": 0.289,
-    "p_not_lose": 0.436,
-    "ev": -0.215,
+    "p_not_lose": 0.435,
+    "ev": -0.216,
     "reliability": 0.948,
     "priority": 4,
     "level": "moyenne"
@@ -437,7 +437,7 @@
  },
  "2026-11-04": {
   "frozen": false,
-  "created": "2026-10-30T15:51+00:00",
+  "created": "2026-10-30T16:48+00:00",
   "coupons": [
    {
     "kind": "sur",
@@ -461,7 +461,7 @@
       "team": null,
       "odds": 1.22,
       "odds_source": "estimée",
-      "p_win": 0.775,
+      "p_win": 0.774,
       "p_push": 0.0,
       "min_odds": 1.33
      },
@@ -477,9 +477,9 @@
      }
     ],
     "odds": 2.25,
-    "p_win": 0.284,
+    "p_win": 0.283,
     "p_not_lose": 0.442,
-    "ev": -0.203,
+    "ev": -0.204,
     "reliability": 0.948,
     "priority": 1,
     "level": "haute"
@@ -516,15 +516,15 @@
       "team": null,
       "odds": 1.45,
       "odds_source": "estimée",
-      "p_win": 0.651,
+      "p_win": 0.65,
       "p_push": 0.0,
-      "min_odds": 1.58
+      "min_odds": 1.59
      }
     ],
     "odds": 2.0,
     "p_win": 0.43,
     "p_not_lose": 0.43,
-    "ev": -0.225,
+    "ev": -0.226,
     "reliability": 0.924,
     "priority": 2,
     "level": "moyenne"
@@ -537,13 +537,13 @@
     "legs": [
      {
       "id": "20261104|UEL|Stade Rennais|Olympiacos",
-      "market": "1",
-      "team": "Stade Rennais",
-      "odds": 2.48,
+      "market": "o25",
+      "team": null,
+      "odds": 2.52,
       "odds_source": "estimée",
-      "p_win": 0.381,
+      "p_win": 0.375,
       "p_push": 0.0,
-      "min_odds": 2.7
+      "min_odds": 2.75
      },
      {
       "id": "20261104|E1|Bristol City|Wolves",
@@ -556,16 +556,6 @@
       "min_odds": 2.8
      },
      {
-      "id": "20261104|UCL|PSV Eindhoven|Club Brugge",
-      "market": "1",
-      "team": "PSV Eindhoven",
-      "odds": 2.23,
-      "odds_source": "estimée",
-      "p_win": 0.424,
-      "p_push": 0.0,
-      "min_odds": 2.43
-     },
-     {
       "id": "20261104|E1|Wrexham|Middlesbrough",
       "market": "2",
       "team": "Middlesbrough",
@@ -576,14 +566,24 @@
       "min_odds": 2.5
      },
      {
+      "id": "20261104|UCL|PSV Eindhoven|Club Brugge",
+      "market": "1",
+      "team": "PSV Eindhoven",
+      "odds": 2.23,
+      "odds_source": "estimée",
+      "p_win": 0.423,
+      "p_push": 0.0,
+      "min_odds": 2.43
+     },
+     {
       "id": "20261104|UCL|Lens|Como",
       "market": "2",
       "team": "Como",
-      "odds": 2.04,
+      "odds": 2.06,
       "odds_source": "estimée",
-      "p_win": 0.462,
+      "p_win": 0.459,
       "p_push": 0.0,
-      "min_odds": 2.23
+      "min_odds": 2.24
      },
      {
       "id": "20261104|UCL|FC Porto|Napoli",
@@ -591,7 +591,7 @@
       "team": "FC Porto",
       "odds": 1.93,
       "odds_source": "estimée",
-      "p_win": 0.488,
+      "p_win": 0.489,
       "p_push": 0.0,
       "min_odds": 2.11
      },
@@ -611,7 +611,7 @@
       "team": "Liverpool",
       "odds": 1.52,
       "odds_source": "estimée",
-      "p_win": 0.622,
+      "p_win": 0.621,
       "p_push": 0.0,
       "min_odds": 1.66
      },
@@ -643,13 +643,13 @@
       "odds_source": "estimée",
       "p_win": 0.671,
       "p_push": 0.0,
-      "min_odds": 1.54
+      "min_odds": 1.53
      }
     ],
-    "odds": 1113.95,
+    "odds": 1143.02,
     "p_win": 0.0,
     "p_not_lose": 0.0,
-    "ev": -0.576,
+    "ev": -0.575,
     "reliability": 0.92,
     "priority": 3,
     "level": "basse"
@@ -2065,7 +2065,7 @@
  },
  "2026-10-31": {
   "frozen": false,
-  "created": "2026-10-30T15:51+00:00",
+  "created": "2026-10-30T16:48+00:00",
   "coupons": [
    {
     "kind": "ligue",
@@ -2561,7 +2561,7 @@
  },
  "2026-11-01": {
   "frozen": false,
-  "created": "2026-10-30T15:51+00:00",
+  "created": "2026-10-30T16:48+00:00",
   "coupons": [
    {
     "kind": "sur",
@@ -3497,7 +3497,7 @@
  },
  "2026-11-02": {
   "frozen": false,
-  "created": "2026-10-30T15:51+00:00",
+  "created": "2026-10-30T16:48+00:00",
   "coupons": [
    {
     "kind": "sur",
@@ -4018,53 +4018,8 @@
  },
  "2026-11-05": {
   "frozen": false,
-  "created": "2026-10-30T15:51+00:00",
+  "created": "2026-10-30T16:48+00:00",
   "coupons": [
-   {
-    "kind": "sur",
-    "label": "Coupon sûr",
-    "scope": "Toutes ligues",
-    "stake_pct": 2.0,
-    "legs": [
-     {
-      "id": "20261105|UECL|Atalanta|Kairat Almaty",
-      "market": "o20",
-      "team": null,
-      "odds": 1.13,
-      "odds_source": "estimée",
-      "p_win": 0.679,
-      "p_push": 0.188,
-      "min_odds": 1.23
-     },
-     {
-      "id": "20261105|UECL|Sint-Truidense|SK Brann",
-      "market": "o25",
-      "team": null,
-      "odds": 1.55,
-      "odds_source": "estimée",
-      "p_win": 0.61,
-      "p_push": 0.0,
-      "min_odds": 1.69
-     },
-     {
-      "id": "20261105|UECL|F.C. København|Iberia 1999",
-      "market": "o20",
-      "team": null,
-      "odds": 1.24,
-      "odds_source": "estimée",
-      "p_win": 0.594,
-      "p_push": 0.222,
-      "min_odds": 1.35
-     }
-    ],
-    "odds": 2.17,
-    "p_win": 0.246,
-    "p_not_lose": 0.432,
-    "ev": -0.221,
-    "reliability": 0.9,
-    "priority": 1,
-    "level": "haute"
-   },
    {
     "kind": "ligue",
     "label": "Coupon championnat",
@@ -4082,12 +4037,12 @@
       "min_odds": 1.25
      },
      {
-      "id": "20261105|UECL|Trabzonspor|SC Freiburg",
+      "id": "20261105|UECL|AS Monaco|FC Nordsjælland",
       "market": "o25",
       "team": null,
       "odds": 1.53,
       "odds_source": "estimée",
-      "p_win": 0.617,
+      "p_win": 0.616,
       "p_push": 0.0,
       "min_odds": 1.67
      },
@@ -4103,11 +4058,11 @@
      }
     ],
     "odds": 2.18,
-    "p_win": 0.243,
-    "p_not_lose": 0.432,
-    "ev": -0.221,
+    "p_win": 0.242,
+    "p_not_lose": 0.431,
+    "ev": -0.222,
     "reliability": 0.9,
-    "priority": 2,
+    "priority": 1,
     "level": "haute"
    },
    {
@@ -4117,40 +4072,85 @@
     "stake_pct": 1.5,
     "legs": [
      {
-      "id": "20261105|UEL|Celtic|Besiktas",
-      "market": "o25",
+      "id": "20261105|UEL|Crystal Palace|TSG Hoffenheim",
+      "market": "o20",
       "team": null,
-      "odds": 1.47,
+      "odds": 1.13,
       "odds_source": "estimée",
-      "p_win": 0.644,
-      "p_push": 0.0,
-      "min_odds": 1.6
+      "p_win": 0.674,
+      "p_push": 0.192,
+      "min_odds": 1.24
      },
      {
       "id": "20261105|UEL|Bayer Leverkusen|Marseille",
-      "market": "o20",
+      "market": "o25",
       "team": null,
-      "odds": 1.21,
+      "odds": 1.55,
       "odds_source": "estimée",
-      "p_win": 0.612,
-      "p_push": 0.217,
-      "min_odds": 1.32
+      "p_win": 0.61,
+      "p_push": 0.0,
+      "min_odds": 1.69
      },
      {
-      "id": "20261105|UEL|Sunderland|Dinamo Zagreb",
+      "id": "20261105|UEL|Sparta Prague|AFC Bournemouth",
       "market": "o20",
       "team": null,
-      "odds": 1.25,
+      "odds": 1.24,
       "odds_source": "estimée",
-      "p_win": 0.584,
-      "p_push": 0.225,
-      "min_odds": 1.37
+      "p_win": 0.593,
+      "p_push": 0.222,
+      "min_odds": 1.35
      }
     ],
-    "odds": 2.22,
-    "p_win": 0.23,
-    "p_not_lose": 0.432,
-    "ev": -0.221,
+    "odds": 2.17,
+    "p_win": 0.244,
+    "p_not_lose": 0.431,
+    "ev": -0.223,
+    "reliability": 0.9,
+    "priority": 2,
+    "level": "haute"
+   },
+   {
+    "kind": "sur",
+    "label": "Coupon sûr",
+    "scope": "Toutes ligues",
+    "stake_pct": 2.0,
+    "legs": [
+     {
+      "id": "20261105|UEL|Real Sociedad|Lyon",
+      "market": "o20",
+      "team": null,
+      "odds": 1.15,
+      "odds_source": "estimée",
+      "p_win": 0.656,
+      "p_push": 0.199,
+      "min_odds": 1.26
+     },
+     {
+      "id": "20261105|UEL|Bayer Leverkusen|Marseille",
+      "market": "o25",
+      "team": null,
+      "odds": 1.55,
+      "odds_source": "estimée",
+      "p_win": 0.61,
+      "p_push": 0.0,
+      "min_odds": 1.69
+     },
+     {
+      "id": "20261105|UECL|FC Midtjylland|Ajax Amsterdam",
+      "market": "o20",
+      "team": null,
+      "odds": 1.22,
+      "odds_source": "estimée",
+      "p_win": 0.604,
+      "p_push": 0.22,
+      "min_odds": 1.33
+     }
+    ],
+    "odds": 2.17,
+    "p_win": 0.242,
+    "p_not_lose": 0.43,
+    "ev": -0.224,
     "reliability": 0.9,
     "priority": 3,
     "level": "haute"
@@ -4162,40 +4162,40 @@
     "stake_pct": 2.0,
     "legs": [
      {
-      "id": "20261105|UEL|Real Sociedad|Lyon",
+      "id": "20261105|UECL|Atalanta|Kairat Almaty",
+      "market": "o20",
+      "team": null,
+      "odds": 1.13,
+      "odds_source": "estimée",
+      "p_win": 0.68,
+      "p_push": 0.188,
+      "min_odds": 1.23
+     },
+     {
+      "id": "20261105|UECL|Sint-Truidense|SK Brann",
       "market": "o25",
       "team": null,
-      "odds": 1.44,
+      "odds": 1.54,
       "odds_source": "estimée",
-      "p_win": 0.656,
+      "p_win": 0.611,
       "p_push": 0.0,
-      "min_odds": 1.57
+      "min_odds": 1.69
      },
      {
-      "id": "20261105|UECL|AS Monaco|FC Nordsjælland",
+      "id": "20261105|UEL|Sunderland|Dinamo Zagreb",
       "market": "o20",
       "team": null,
-      "odds": 1.2,
+      "odds": 1.25,
       "odds_source": "estimée",
-      "p_win": 0.615,
-      "p_push": 0.215,
-      "min_odds": 1.31
-     },
-     {
-      "id": "20261105|UEL|Anderlecht|RB Salzburg",
-      "market": "o20",
-      "team": null,
-      "odds": 1.3,
-      "odds_source": "estimée",
-      "p_win": 0.554,
-      "p_push": 0.237,
-      "min_odds": 1.42
+      "p_win": 0.583,
+      "p_push": 0.226,
+      "min_odds": 1.37
      }
     ],
-    "odds": 2.25,
-    "p_win": 0.224,
-    "p_not_lose": 0.431,
-    "ev": -0.224,
+    "odds": 2.18,
+    "p_win": 0.242,
+    "p_not_lose": 0.429,
+    "ev": -0.227,
     "reliability": 0.9,
     "priority": 4,
     "level": "haute"
@@ -4208,87 +4208,42 @@
     "legs": [
      {
       "id": "20261105|UECL|Panathinaikos|CSKA Sofia",
-      "market": "o20",
+      "market": "o25",
       "team": null,
-      "odds": 1.17,
+      "odds": 1.47,
       "odds_source": "estimée",
-      "p_win": 0.643,
-      "p_push": 0.204,
-      "min_odds": 1.28
+      "p_win": 0.64,
+      "p_push": 0.0,
+      "min_odds": 1.61
      },
      {
       "id": "20261105|UECL|Trabzonspor|SC Freiburg",
-      "market": "o25",
-      "team": null,
-      "odds": 1.53,
-      "odds_source": "estimée",
-      "p_win": 0.617,
-      "p_push": 0.0,
-      "min_odds": 1.67
-     },
-     {
-      "id": "20261105|UECL|FC Midtjylland|Ajax Amsterdam",
       "market": "o20",
       "team": null,
-      "odds": 1.22,
+      "odds": 1.2,
       "odds_source": "estimée",
-      "p_win": 0.603,
-      "p_push": 0.22,
-      "min_odds": 1.33
+      "p_win": 0.615,
+      "p_push": 0.216,
+      "min_odds": 1.31
+     },
+     {
+      "id": "20261105|UECL|Red Star Belgrade|Inter D'Escaldes",
+      "market": "o20",
+      "team": null,
+      "odds": 1.26,
+      "odds_source": "estimée",
+      "p_win": 0.577,
+      "p_push": 0.228,
+      "min_odds": 1.38
      }
     ],
-    "odds": 2.18,
-    "p_win": 0.239,
-    "p_not_lose": 0.43,
-    "ev": -0.224,
+    "odds": 2.22,
+    "p_win": 0.227,
+    "p_not_lose": 0.428,
+    "ev": -0.229,
     "reliability": 0.9,
     "priority": 5,
     "level": "haute"
-   },
-   {
-    "kind": "sur",
-    "label": "Coupon sûr",
-    "scope": "Toutes ligues",
-    "stake_pct": 2.0,
-    "legs": [
-     {
-      "id": "20261105|UEL|Sunderland|Dinamo Zagreb",
-      "market": "o15",
-      "team": null,
-      "odds": 1.17,
-      "odds_source": "estimée",
-      "p_win": 0.81,
-      "p_push": 0.0,
-      "min_odds": 1.27
-     },
-     {
-      "id": "20261105|UEL|AZ Alkmaar|Juventus",
-      "market": "o20",
-      "team": null,
-      "odds": 1.35,
-      "odds_source": "estimée",
-      "p_win": 0.526,
-      "p_push": 0.245,
-      "min_odds": 1.48
-     },
-     {
-      "id": "20261105|UECL|KuPS Kuopio|KAA Gent",
-      "market": "o15",
-      "team": null,
-      "odds": 1.38,
-      "odds_source": "estimée",
-      "p_win": 0.684,
-      "p_push": 0.0,
-      "min_odds": 1.51
-     }
-    ],
-    "odds": 2.18,
-    "p_win": 0.291,
-    "p_not_lose": 0.427,
-    "ev": -0.231,
-    "reliability": 0.9,
-    "priority": 6,
-    "level": "moyenne"
    },
    {
     "kind": "sur",
@@ -4322,17 +4277,17 @@
       "team": null,
       "odds": 1.47,
       "odds_source": "estimée",
-      "p_win": 0.64,
+      "p_win": 0.641,
       "p_push": 0.0,
       "min_odds": 1.61
      }
     ],
     "odds": 2.24,
-    "p_win": 0.226,
+    "p_win": 0.227,
     "p_not_lose": 0.427,
-    "ev": -0.227,
+    "ev": -0.225,
     "reliability": 0.9,
-    "priority": 7,
+    "priority": 6,
     "level": "moyenne"
    },
    {
@@ -4367,7 +4322,7 @@
       "team": null,
       "odds": 1.41,
       "odds_source": "estimée",
-      "p_win": 0.498,
+      "p_win": 0.499,
       "p_push": 0.253,
       "min_odds": 1.54
      }
@@ -4375,7 +4330,52 @@
     "odds": 2.22,
     "p_win": 0.282,
     "p_not_lose": 0.425,
-    "ev": -0.234,
+    "ev": -0.233,
+    "reliability": 0.9,
+    "priority": 7,
+    "level": "moyenne"
+   },
+   {
+    "kind": "sur",
+    "label": "Coupon sûr",
+    "scope": "Toutes ligues",
+    "stake_pct": 2.0,
+    "legs": [
+     {
+      "id": "20261105|UECL|F.C. København|Iberia 1999",
+      "market": "o15",
+      "team": null,
+      "odds": 1.16,
+      "odds_source": "estimée",
+      "p_win": 0.816,
+      "p_push": 0.0,
+      "min_odds": 1.26
+     },
+     {
+      "id": "20261105|UEL|SK Sturm Graz|NK Celje",
+      "market": "o20",
+      "team": null,
+      "odds": 1.38,
+      "odds_source": "estimée",
+      "p_win": 0.512,
+      "p_push": 0.25,
+      "min_odds": 1.51
+     },
+     {
+      "id": "20261105|UECL|KuPS Kuopio|KAA Gent",
+      "market": "o15",
+      "team": null,
+      "odds": 1.38,
+      "odds_source": "estimée",
+      "p_win": 0.684,
+      "p_push": 0.0,
+      "min_odds": 1.51
+     }
+    ],
+    "odds": 2.21,
+    "p_win": 0.286,
+    "p_not_lose": 0.425,
+    "ev": -0.231,
     "reliability": 0.9,
     "priority": 8,
     "level": "moyenne"
@@ -4387,24 +4387,24 @@
     "stake_pct": 2.0,
     "legs": [
      {
-      "id": "20261105|UECL|Red Star Belgrade|Inter D'Escaldes",
+      "id": "20261105|UEL|Anderlecht|RB Salzburg",
       "market": "o20",
       "team": null,
-      "odds": 1.26,
+      "odds": 1.3,
       "odds_source": "estimée",
-      "p_win": 0.577,
-      "p_push": 0.228,
-      "min_odds": 1.38
+      "p_win": 0.555,
+      "p_push": 0.237,
+      "min_odds": 1.42
      },
      {
-      "id": "20261105|UEL|SK Sturm Graz|NK Celje",
+      "id": "20261105|UEL|AZ Alkmaar|Juventus",
       "market": "o15",
       "team": null,
-      "odds": 1.24,
+      "odds": 1.22,
       "odds_source": "estimée",
-      "p_win": 0.761,
+      "p_win": 0.771,
       "p_push": 0.0,
-      "min_odds": 1.35
+      "min_odds": 1.34
      },
      {
       "id": "20261105|UEL|Lillestrom|Viktoria Plzen",
@@ -4417,9 +4417,9 @@
       "min_odds": 1.49
      }
     ],
-    "odds": 2.12,
-    "p_win": 0.304,
-    "p_not_lose": 0.425,
+    "odds": 2.16,
+    "p_win": 0.297,
+    "p_not_lose": 0.423,
     "ev": -0.236,
     "reliability": 0.9,
     "priority": 9,
@@ -4445,27 +4445,27 @@
       "id": "20261105|UEL|Sunderland|Dinamo Zagreb",
       "market": "1",
       "team": "Sunderland",
-      "odds": 1.25,
+      "odds": 1.26,
       "odds_source": "estimée",
-      "p_win": 0.752,
+      "p_win": 0.751,
       "p_push": 0.0,
       "min_odds": 1.37
      },
      {
-      "id": "20261105|UECL|Lincoln Red Imps|Hajduk Split",
-      "market": "2",
-      "team": "Hajduk Split",
+      "id": "20261105|UECL|AS Monaco|FC Nordsjælland",
+      "market": "1",
+      "team": "AS Monaco",
       "odds": 1.38,
       "odds_source": "estimée",
-      "p_win": 0.682,
+      "p_win": 0.683,
       "p_push": 0.0,
       "min_odds": 1.51
      }
     ],
-    "odds": 2.0,
+    "odds": 2.02,
     "p_win": 0.416,
     "p_not_lose": 0.416,
-    "ev": -0.251,
+    "ev": -0.246,
     "reliability": 0.9,
     "priority": 10,
     "level": "moyenne"
@@ -4482,7 +4482,7 @@
       "team": "Atalanta",
       "odds": 1.21,
       "odds_source": "estimée",
-      "p_win": 0.78,
+      "p_win": 0.781,
       "p_push": 0.0,
       "min_odds": 1.32
      },
@@ -4490,7 +4490,7 @@
       "id": "20261105|UECL|Red Star Belgrade|Inter D'Escaldes",
       "market": "1",
       "team": "Red Star Belgrade",
-      "odds": 1.27,
+      "odds": 1.28,
       "odds_source": "estimée",
       "p_win": 0.74,
       "p_push": 0.0,
@@ -4502,15 +4502,15 @@
       "team": "F.C. København",
       "odds": 1.31,
       "odds_source": "estimée",
-      "p_win": 0.721,
+      "p_win": 0.72,
       "p_push": 0.0,
       "min_odds": 1.43
      }
     ],
-    "odds": 2.01,
+    "odds": 2.03,
     "p_win": 0.416,
     "p_not_lose": 0.416,
-    "ev": -0.247,
+    "ev": -0.241,
     "reliability": 0.9,
     "priority": 11,
     "level": "basse"
@@ -4527,9 +4527,9 @@
       "team": null,
       "odds": 1.4,
       "odds_source": "estimée",
-      "p_win": 0.676,
+      "p_win": 0.674,
       "p_push": 0.0,
-      "min_odds": 1.52
+      "min_odds": 1.53
      },
      {
       "id": "20261105|UECL|Lincoln Red Imps|Hajduk Split",
@@ -4557,15 +4557,15 @@
       "team": null,
       "odds": 1.18,
       "odds_source": "estimée",
-      "p_win": 0.632,
+      "p_win": 0.633,
       "p_push": 0.209,
       "min_odds": 1.29
      }
     ],
     "odds": 2.22,
     "p_win": 0.182,
-    "p_not_lose": 0.414,
-    "ev": -0.255,
+    "p_not_lose": 0.413,
+    "ev": -0.256,
     "reliability": 0.9,
     "priority": 12,
     "level": "basse"
@@ -4580,9 +4580,9 @@
       "id": "20261105|UECL|FC Lugano|Kauno Zalgiris",
       "market": "1",
       "team": "FC Lugano",
-      "odds": 1.17,
+      "odds": 1.18,
       "odds_source": "estimée",
-      "p_win": 0.804,
+      "p_win": 0.803,
       "p_push": 0.0,
       "min_odds": 1.28
      },
@@ -4590,27 +4590,27 @@
       "id": "20261105|UEL|Sparta Prague|AFC Bournemouth",
       "market": "2",
       "team": "AFC Bournemouth",
-      "odds": 1.29,
+      "odds": 1.28,
       "odds_source": "estimée",
       "p_win": 0.734,
       "p_push": 0.0,
       "min_odds": 1.4
      },
      {
-      "id": "20261105|UECL|AS Monaco|FC Nordsjælland",
-      "market": "1",
-      "team": "AS Monaco",
+      "id": "20261105|UECL|Lincoln Red Imps|Hajduk Split",
+      "market": "2",
+      "team": "Hajduk Split",
       "odds": 1.38,
       "odds_source": "estimée",
-      "p_win": 0.682,
+      "p_win": 0.681,
       "p_push": 0.0,
       "min_odds": 1.51
      }
     ],
     "odds": 2.08,
-    "p_win": 0.402,
-    "p_not_lose": 0.402,
-    "ev": -0.249,
+    "p_win": 0.401,
+    "p_not_lose": 0.401,
+    "ev": -0.25,
     "reliability": 0.9,
     "priority": 13,
     "level": "basse"
@@ -4627,9 +4627,9 @@
       "team": null,
       "odds": 1.39,
       "odds_source": "estimée",
-      "p_win": 0.679,
+      "p_win": 0.68,
       "p_push": 0.0,
-      "min_odds": 1.52
+      "min_odds": 1.51
      },
      {
       "id": "20261105|UEL|Crystal Palace|TSG Hoffenheim",
@@ -4637,15 +4637,15 @@
       "team": null,
       "odds": 1.4,
       "odds_source": "estimée",
-      "p_win": 0.676,
+      "p_win": 0.674,
       "p_push": 0.0,
-      "min_odds": 1.52
+      "min_odds": 1.53
      },
      {
       "id": "20261105|UECL|Lincoln Red Imps|Hajduk Split",
       "market": "o25",
       "team": null,
-      "odds": 1.42,
+      "odds": 1.43,
       "odds_source": "estimée",
       "p_win": 0.662,
       "p_push": 0.0,
@@ -4665,7 +4665,7 @@
       "id": "20261105|UEL|Celtic|Besiktas",
       "market": "o25",
       "team": null,
-      "odds": 1.47,
+      "odds": 1.46,
       "odds_source": "estimée",
       "p_win": 0.644,
       "p_push": 0.0,
@@ -4677,9 +4677,9 @@
       "team": null,
       "odds": 1.47,
       "odds_source": "estimée",
-      "p_win": 0.643,
+      "p_win": 0.64,
       "p_push": 0.0,
-      "min_odds": 1.6
+      "min_odds": 1.61
      },
      {
       "id": "20261105|UEL|NEC Nijmegen|Omonia Nicosia",
@@ -4687,7 +4687,7 @@
       "team": null,
       "odds": 1.49,
       "odds_source": "estimée",
-      "p_win": 0.632,
+      "p_win": 0.633,
       "p_push": 0.0,
       "min_odds": 1.63
      },
@@ -4697,15 +4697,15 @@
       "team": null,
       "odds": 1.2,
       "odds_source": "estimée",
-      "p_win": 0.617,
-      "p_push": 0.215,
+      "p_win": 0.615,
+      "p_push": 0.216,
       "min_odds": 1.31
      }
     ],
-    "odds": 15.37,
+    "odds": 15.38,
     "p_win": 0.032,
     "p_not_lose": 0.043,
-    "ev": -0.48,
+    "ev": -0.484,
     "reliability": 0.9,
     "priority": 14,
     "level": "basse"
@@ -4717,10 +4717,20 @@
     "stake_pct": 0.1,
     "legs": [
      {
+      "id": "20261105|UECL|Riga FC|Jablonec",
+      "market": "o25",
+      "team": null,
+      "odds": 2.6,
+      "odds_source": "estimée",
+      "p_win": 0.363,
+      "p_push": 0.0,
+      "min_odds": 2.84
+     },
+     {
       "id": "20261105|UEL|Levski Sofia|Jagiellonia Bialystok",
       "market": "o25",
       "team": null,
-      "odds": 2.59,
+      "odds": 2.58,
       "odds_source": "estimée",
       "p_win": 0.365,
       "p_push": 0.0,
@@ -4730,21 +4740,11 @@
       "id": "20261105|UECL|Mjällby AIF|Borac Banja Luka",
       "market": "o25",
       "team": null,
-      "odds": 2.53,
+      "odds": 2.52,
       "odds_source": "estimée",
       "p_win": 0.374,
       "p_push": 0.0,
-      "min_odds": 2.76
-     },
-     {
-      "id": "20261105|UECL|Riga FC|Jablonec",
-      "market": "o25",
-      "team": null,
-      "odds": 2.6,
-      "odds_source": "estimée",
-      "p_win": 0.363,
-      "p_push": 0.0,
-      "min_odds": 2.84
+      "min_odds": 2.75
      },
      {
       "id": "20261105|UEL|Celta Vigo|Union St.-Gilloise",
@@ -4757,24 +4757,14 @@
       "min_odds": 2.69
      },
      {
-      "id": "20261105|UECL|Getafe|Brighton & Hove Albion",
-      "market": "o25",
-      "team": null,
-      "odds": 2.25,
+      "id": "20261105|UECL|CSU Craiova|Egnatia",
+      "market": "1",
+      "team": "CSU Craiova",
+      "odds": 2.22,
       "odds_source": "estimée",
-      "p_win": 0.42,
+      "p_win": 0.426,
       "p_push": 0.0,
-      "min_odds": 2.45
-     },
-     {
-      "id": "20261105|UEL|Lillestrom|Viktoria Plzen",
-      "market": "o25",
-      "team": null,
-      "odds": 2.23,
-      "odds_source": "estimée",
-      "p_win": 0.424,
-      "p_push": 0.0,
-      "min_odds": 2.43
+      "min_odds": 2.42
      },
      {
       "id": "20261105|UECL|KuPS Kuopio|KAA Gent",
@@ -4787,20 +4777,30 @@
       "min_odds": 2.49
      },
      {
-      "id": "20261105|UECL|CSU Craiova|Egnatia",
+      "id": "20261105|UECL|AGF|Braga",
+      "market": "2",
+      "team": "Braga",
+      "odds": 2.18,
+      "odds_source": "estimée",
+      "p_win": 0.434,
+      "p_push": 0.0,
+      "min_odds": 2.37
+     },
+     {
+      "id": "20261105|UECL|Getafe|Brighton & Hove Albion",
       "market": "o25",
       "team": null,
-      "odds": 2.26,
+      "odds": 2.24,
       "odds_source": "estimée",
-      "p_win": 0.417,
+      "p_win": 0.421,
       "p_push": 0.0,
-      "min_odds": 2.47
+      "min_odds": 2.45
      }
     ],
-    "odds": 1083.58,
+    "odds": 1027.83,
     "p_win": 0.001,
     "p_not_lose": 0.001,
-    "ev": -0.494,
+    "ev": -0.497,
     "reliability": 0.9,
     "priority": 15,
     "level": "basse"
@@ -4809,7 +4809,7 @@
  },
  "2026-11-06": {
   "frozen": false,
-  "created": "2026-10-30T15:51+00:00",
+  "created": "2026-10-30T16:48+00:00",
   "coupons": [
    {
     "kind": "sur",
