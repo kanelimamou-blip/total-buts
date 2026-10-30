@@ -56,7 +56,7 @@ function couponDays() {
 function viewCoupons() {
   const d = state.data;
   const days = couponDays();
-  if (!days.length) return `<h1>Coupons</h1><div class="empty"><p>Pas encore de coupon pour les 7 prochains jours.</p><p class="small">Les coupons sont recalculés toutes les 2 heures.</p></div>${pastBlock()}`;
+  if (!days.length) return `<h1>Coupons</h1><div class="empty"><p>Pas encore de coupon pour les 7 prochains jours.</p><p class="small">Les coupons sont recalculés toutes les heures.</p></div>${pastBlock()}`;
   if (!state.day || !days.includes(state.day)) state.day = days[0];
   const list = d.coupons.filter((c) => c.date === state.day);
   const shown = list.filter((c) => state.kind === "all" || kindOf(c) === state.kind).sort((a, b) => a.priority - b.priority);
