@@ -1,4 +1,167 @@
 {
  "blend": 0.0,
- "updated": "2026-10-29"
+ "updated": "2026-10-30",
+ "context": {
+  "n": 11979,
+  "markets": {
+   "o15": {
+    "test_logloss_base": 0.52031,
+    "test_logloss_ctx": 0.51978,
+    "gain": 0.00052,
+    "use": true,
+    "coef": {
+     "top_top": 0.0803,
+     "top_bottom": -0.1376,
+     "top_mid": 0.0541,
+     "mid_bottom": -0.0841,
+     "bottom_bottom": -0.2307,
+     "aug": 0.033,
+     "nov_dec": 0.0638,
+     "jan_feb": 0.1445,
+     "mar_apr": -0.0525,
+     "may_jun": 0.1028,
+     "post_break": 0.0261,
+     "euro_recent": -0.0102,
+     "short_rest": 0.0734,
+     "congested": -0.0955
+    }
+   },
+   "o25": {
+    "test_logloss_base": 0.67263,
+    "test_logloss_ctx": 0.67504,
+    "gain": -0.00241,
+    "use": false,
+    "coef": {
+     "top_top": 0.1247,
+     "top_bottom": -0.0679,
+     "top_mid": 0.0998,
+     "mid_bottom": -0.0225,
+     "bottom_bottom": -0.1411,
+     "aug": 0.0188,
+     "nov_dec": -0.0039,
+     "jan_feb": 0.0417,
+     "mar_apr": -0.0083,
+     "may_jun": 0.0131,
+     "post_break": 0.0994,
+     "euro_recent": -0.0062,
+     "short_rest": 0.0133,
+     "congested": -0.0145
+    }
+   }
+  },
+  "factors": [
+   {
+    "key": "top_top",
+    "label": "Choc entre deux \u00e9quipes du haut de tableau",
+    "n": 793,
+    "pred_o25": 0.549,
+    "obs_o25": 0.584,
+    "goals": 2.97
+   },
+   {
+    "key": "bottom_bottom",
+    "label": "Deux \u00e9quipes du bas de tableau",
+    "n": 635,
+    "pred_o25": 0.482,
+    "obs_o25": 0.45,
+    "goals": 2.52
+   },
+   {
+    "key": "top_mid",
+    "label": "Haut de tableau contre milieu",
+    "n": 3037,
+    "pred_o25": 0.543,
+    "obs_o25": 0.572,
+    "goals": 2.93
+   },
+   {
+    "key": "post_break",
+    "label": "Retour de tr\u00eave internationale",
+    "n": 971,
+    "pred_o25": 0.53,
+    "obs_o25": 0.558,
+    "goals": 2.87
+   },
+   {
+    "key": "jan_feb",
+    "label": "Janvier-f\u00e9vrier",
+    "n": 2370,
+    "pred_o25": 0.51,
+    "obs_o25": 0.524,
+    "goals": 2.75
+   },
+   {
+    "key": "top_bottom",
+    "label": "Haut de tableau contre bas de tableau",
+    "n": 1390,
+    "pred_o25": 0.56,
+    "obs_o25": 0.548,
+    "goals": 2.86
+   },
+   {
+    "key": "euro_recent",
+    "label": "Match europ\u00e9en dans les 4 jours avant",
+    "n": 555,
+    "pred_o25": 0.566,
+    "obs_o25": 0.575,
+    "goals": 2.92
+   },
+   {
+    "key": "short_rest",
+    "label": "Repos de 3 jours ou moins",
+    "n": 1658,
+    "pred_o25": 0.524,
+    "obs_o25": 0.533,
+    "goals": 2.81
+   },
+   {
+    "key": "congested",
+    "label": "4 matchs ou plus en 14 jours",
+    "n": 188,
+    "pred_o25": 0.546,
+    "obs_o25": 0.553,
+    "goals": 2.84
+   },
+   {
+    "key": "may_jun",
+    "label": "Fin de saison (mai-juin)",
+    "n": 1033,
+    "pred_o25": 0.556,
+    "obs_o25": 0.562,
+    "goals": 2.93
+   },
+   {
+    "key": "aug",
+    "label": "D\u00e9but de saison (ao\u00fbt)",
+    "n": 1029,
+    "pred_o25": 0.518,
+    "obs_o25": 0.523,
+    "goals": 2.8
+   },
+   {
+    "key": "nov_dec",
+    "label": "Novembre-d\u00e9cembre",
+    "n": 2341,
+    "pred_o25": 0.515,
+    "obs_o25": 0.52,
+    "goals": 2.75
+   },
+   {
+    "key": "mar_apr",
+    "label": "Mars-avril",
+    "n": 2403,
+    "pred_o25": 0.512,
+    "obs_o25": 0.514,
+    "goals": 2.71
+   },
+   {
+    "key": "mid_bottom",
+    "label": "Milieu contre bas de tableau",
+    "n": 2720,
+    "pred_o25": 0.493,
+    "obs_o25": 0.492,
+    "goals": 2.64
+   }
+  ]
+ }
 }
