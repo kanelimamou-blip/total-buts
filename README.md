@@ -19,3 +19,10 @@ Tout tourne gratuitement sur GitHub : un calcul automatique toutes les heures me
 - `data/` : historique téléchargé et mémoire des coupons et prédictions.
 
 Aucun modèle ne garantit des gains. Joue seulement ce que tu peux te permettre de perdre.
+
+## Révision BAC et BFEM
+
+Deuxième appli, sans lien avec les paris : quiz de révision pour le BAC et le BFEM, publiée sur `/revision/`.
+Les questions sont dans `revision/questions.py` ; `python revision/build.py` régénère `docs/revision/data/`.
+Les 5 premières questions de chaque matière sont gratuites, le reste se débloque avec un code premium vendu par Wave.
+Seuls les hachages des codes sont publiés (`revision/code_hashes.txt`) ; la liste en clair reste hors du dépôt.

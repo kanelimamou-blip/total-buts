@@ -11,7 +11,7 @@ on:
         default: false
   push:
     branches: [main]
-    paths: ["pipeline/**", "docs/*.html", "docs/*.js", "docs/*.css", ".github/workflows/**"]
+    paths: ["pipeline/**", "docs/revision/**", "docs/*.html", "docs/*.js", "docs/*.css", ".github/workflows/**"]
 
 permissions:
   contents: write
