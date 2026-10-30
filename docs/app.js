@@ -488,7 +488,10 @@ document.addEventListener("click", async (e) => {
   if (!b) return;
   e.stopPropagation();
   const legs = JSON.parse(b.dataset.coupon);
-  const text = legs.map(([h, a, mk, mo], i) => `${i + 1}. ${h} - ${a} : ${mk.replace(" but", "").replace(" buts", "")} (cote min ${odds(mo)})`).join("\n");
+  // libellés des marchés tels qu'ils apparaissent dans 1xBet
+  const xbet = (mk, h, a) => mk.startsWith("+1,5") ? "Total Plus de 1.5" : mk.startsWith("+2,5") ? "Total Plus de 2.5" : mk.startsWith("+2 ") ? "Total Plus de 2 (asiatique)"
+    : mk === `Victoire ${h}` ? "V1 (victoire domicile)" : mk === `Victoire ${a}` ? "V2 (victoire extérieur)" : mk;
+  const text = legs.map(([h, a, mk, mo], i) => `${i + 1}. ${h} - ${a} : ${xbet(mk, h, a)}, cote min ${odds(mo)}`).join("\n");
   try { await navigator.clipboard.writeText(text); b.textContent = "Copié ✓"; }
   catch { const t = document.createElement("textarea"); t.value = text; document.body.appendChild(t); t.select(); document.execCommand("copy"); t.remove(); b.textContent = "Copié ✓"; }
   setTimeout(() => (b.textContent = "Copier le coupon pour 1xBet"), 2000);
