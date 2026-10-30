@@ -6,12 +6,2407 @@
  },
  "2026-11-03": {
   "frozen": false,
-  "created": "2026-10-29T23:53+00:00",
-  "coupons": []
+  "created": "2026-10-29T23:54+00:00",
+  "coupons": [
+   {
+    "kind": "sur",
+    "label": "Coupon sûr",
+    "scope": "Toutes ligues",
+    "stake_pct": 2.0,
+    "legs": [
+     {
+      "id": "20261103|E1|Derby|Norwich",
+      "market": "o20",
+      "odds": 1.34,
+      "odds_source": "estimée",
+      "p_win": 0.54,
+      "p_push": 0.238,
+      "min_odds": 1.45
+     },
+     {
+      "id": "20261103|E1|QPR|Burnley",
+      "market": "o20",
+      "odds": 1.41,
+      "odds_source": "estimée",
+      "p_win": 0.507,
+      "p_push": 0.247,
+      "min_odds": 1.53
+     },
+     {
+      "id": "20261103|E1|West Brom|Southampton",
+      "market": "o15",
+      "odds": 1.28,
+      "odds_source": "estimée",
+      "p_win": 0.741,
+      "p_push": 0.0,
+      "min_odds": 1.39
+     }
+    ],
+    "odds": 2.42,
+    "p_win": 0.203,
+    "p_not_lose": 0.435,
+    "ev": -0.123,
+    "reliability": 0.972,
+    "priority": 1,
+    "level": "haute"
+   },
+   {
+    "kind": "ligue",
+    "label": "Coupon championnat",
+    "scope": "Championship",
+    "stake_pct": 1.5,
+    "legs": [
+     {
+      "id": "20261103|E1|Derby|Norwich",
+      "market": "o20",
+      "odds": 1.34,
+      "odds_source": "estimée",
+      "p_win": 0.54,
+      "p_push": 0.238,
+      "min_odds": 1.45
+     },
+     {
+      "id": "20261103|E1|QPR|Burnley",
+      "market": "o20",
+      "odds": 1.41,
+      "odds_source": "estimée",
+      "p_win": 0.507,
+      "p_push": 0.247,
+      "min_odds": 1.53
+     },
+     {
+      "id": "20261103|E1|West Brom|Southampton",
+      "market": "o15",
+      "odds": 1.28,
+      "odds_source": "estimée",
+      "p_win": 0.741,
+      "p_push": 0.0,
+      "min_odds": 1.39
+     }
+    ],
+    "odds": 2.42,
+    "p_win": 0.203,
+    "p_not_lose": 0.435,
+    "ev": -0.123,
+    "reliability": 0.972,
+    "priority": 2,
+    "level": "haute"
+   },
+   {
+    "kind": "sur",
+    "label": "Coupon sûr",
+    "scope": "Toutes ligues",
+    "stake_pct": 2.0,
+    "legs": [
+     {
+      "id": "20261103|E1|Preston|Sheffield United",
+      "market": "o15",
+      "odds": 1.28,
+      "odds_source": "estimée",
+      "p_win": 0.739,
+      "p_push": 0.0,
+      "min_odds": 1.39
+     },
+     {
+      "id": "20261103|E1|Watford|Lincoln",
+      "market": "o15",
+      "odds": 1.31,
+      "odds_source": "estimée",
+      "p_win": 0.725,
+      "p_push": 0.0,
+      "min_odds": 1.42
+     },
+     {
+      "id": "20261103|E1|Charlton|Bolton",
+      "market": "o15",
+      "odds": 1.31,
+      "odds_source": "estimée",
+      "p_win": 0.723,
+      "p_push": 0.0,
+      "min_odds": 1.42
+     }
+    ],
+    "odds": 2.2,
+    "p_win": 0.387,
+    "p_not_lose": 0.387,
+    "ev": -0.149,
+    "reliability": 0.972,
+    "priority": 3,
+    "level": "moyenne"
+   },
+   {
+    "kind": "audace",
+    "label": "Coupon audacieux",
+    "scope": "Toutes ligues",
+    "stake_pct": 0.5,
+    "legs": [
+     {
+      "id": "20261103|E1|Watford|Lincoln",
+      "market": "o20",
+      "odds": 1.51,
+      "odds_source": "estimée",
+      "p_win": 0.469,
+      "p_push": 0.256,
+      "min_odds": 1.64
+     },
+     {
+      "id": "20261103|E1|Charlton|Bolton",
+      "market": "o25",
+      "odds": 2.04,
+      "odds_source": "estimée",
+      "p_win": 0.467,
+      "p_push": 0.0,
+      "min_odds": 2.21
+     },
+     {
+      "id": "20261103|E1|Blackburn|Stoke",
+      "market": "o20",
+      "odds": 1.81,
+      "odds_source": "estimée",
+      "p_win": 0.384,
+      "p_push": 0.269,
+      "min_odds": 1.96
+     }
+    ],
+    "odds": 5.58,
+    "p_win": 0.084,
+    "p_not_lose": 0.221,
+    "ev": -0.114,
+    "reliability": 0.972,
+    "priority": 4,
+    "level": "basse"
+   },
+   {
+    "kind": "audace",
+    "label": "Coupon audacieux",
+    "scope": "Toutes ligues",
+    "stake_pct": 0.5,
+    "legs": [
+     {
+      "id": "20261103|E1|West Brom|Southampton",
+      "market": "o20",
+      "odds": 1.45,
+      "odds_source": "estimée",
+      "p_win": 0.489,
+      "p_push": 0.252,
+      "min_odds": 1.57
+     },
+     {
+      "id": "20261103|E1|Portsmouth|Swansea",
+      "market": "o20",
+      "odds": 1.59,
+      "odds_source": "estimée",
+      "p_win": 0.443,
+      "p_push": 0.261,
+      "min_odds": 1.72
+     },
+     {
+      "id": "20261103|E1|Birmingham|Millwall",
+      "market": "o25",
+      "odds": 2.27,
+      "odds_source": "estimée",
+      "p_win": 0.421,
+      "p_push": 0.0,
+      "min_odds": 2.44
+     }
+    ],
+    "odds": 5.23,
+    "p_win": 0.091,
+    "p_not_lose": 0.22,
+    "ev": -0.113,
+    "reliability": 0.972,
+    "priority": 5,
+    "level": "basse"
+   },
+   {
+    "kind": "audace",
+    "label": "Coupon audacieux",
+    "scope": "Toutes ligues",
+    "stake_pct": 0.5,
+    "legs": [
+     {
+      "id": "20261103|E1|Derby|Norwich",
+      "market": "o25",
+      "odds": 1.76,
+      "odds_source": "estimée",
+      "p_win": 0.54,
+      "p_push": 0.0,
+      "min_odds": 1.91
+     },
+     {
+      "id": "20261103|E1|QPR|Burnley",
+      "market": "o25",
+      "odds": 1.88,
+      "odds_source": "estimée",
+      "p_win": 0.507,
+      "p_push": 0.0,
+      "min_odds": 2.03
+     },
+     {
+      "id": "20261103|E1|Preston|Sheffield United",
+      "market": "o20",
+      "odds": 1.46,
+      "odds_source": "estimée",
+      "p_win": 0.487,
+      "p_push": 0.252,
+      "min_odds": 1.58
+     }
+    ],
+    "odds": 4.83,
+    "p_win": 0.133,
+    "p_not_lose": 0.202,
+    "ev": -0.128,
+    "reliability": 0.972,
+    "priority": 6,
+    "level": "basse"
+   },
+   {
+    "kind": "jackpot",
+    "label": "Jackpot",
+    "scope": "Toutes ligues",
+    "stake_pct": 0.25,
+    "legs": [
+     {
+      "id": "20261103|E1|Derby|Norwich",
+      "market": "o25",
+      "odds": 1.76,
+      "odds_source": "estimée",
+      "p_win": 0.54,
+      "p_push": 0.0,
+      "min_odds": 1.91
+     },
+     {
+      "id": "20261103|E1|QPR|Burnley",
+      "market": "o25",
+      "odds": 1.88,
+      "odds_source": "estimée",
+      "p_win": 0.507,
+      "p_push": 0.0,
+      "min_odds": 2.03
+     },
+     {
+      "id": "20261103|E1|West Brom|Southampton",
+      "market": "o25",
+      "odds": 1.95,
+      "odds_source": "estimée",
+      "p_win": 0.489,
+      "p_push": 0.0,
+      "min_odds": 2.1
+     },
+     {
+      "id": "20261103|E1|Preston|Sheffield United",
+      "market": "o25",
+      "odds": 1.96,
+      "odds_source": "estimée",
+      "p_win": 0.487,
+      "p_push": 0.0,
+      "min_odds": 2.11
+     },
+     {
+      "id": "20261103|E1|Watford|Lincoln",
+      "market": "o25",
+      "odds": 2.03,
+      "odds_source": "estimée",
+      "p_win": 0.469,
+      "p_push": 0.0,
+      "min_odds": 2.2
+     },
+     {
+      "id": "20261103|E1|Charlton|Bolton",
+      "market": "o25",
+      "odds": 2.04,
+      "odds_source": "estimée",
+      "p_win": 0.467,
+      "p_push": 0.0,
+      "min_odds": 2.21
+     }
+    ],
+    "odds": 52.37,
+    "p_win": 0.014,
+    "p_not_lose": 0.014,
+    "ev": -0.252,
+    "reliability": 0.972,
+    "priority": 7,
+    "level": "basse"
+   }
+  ]
  },
  "2026-11-04": {
   "frozen": false,
-  "created": "2026-10-29T23:53+00:00",
+  "created": "2026-10-29T23:54+00:00",
   "coupons": []
+ },
+ "2026-10-30": {
+  "frozen": false,
+  "created": "2026-10-29T23:54+00:00",
+  "coupons": [
+   {
+    "kind": "sur",
+    "label": "Coupon sûr",
+    "scope": "Toutes ligues",
+    "stake_pct": 2.0,
+    "legs": [
+     {
+      "id": "20261030|P1|Casa Pia|Sp Lisbon",
+      "market": "o25",
+      "odds": 1.43,
+      "odds_source": "estimée",
+      "p_win": 0.683,
+      "p_push": 0.0,
+      "min_odds": 1.51
+     },
+     {
+      "id": "20261030|SP1|Villarreal|Espanol",
+      "market": "o20",
+      "odds": 1.25,
+      "odds_source": "estimée",
+      "p_win": 0.587,
+      "p_push": 0.23,
+      "min_odds": 1.35
+     },
+     {
+      "id": "20261030|F1|Le Havre|Paris SG",
+      "market": "o20",
+      "odds": 1.26,
+      "odds_source": "estimée",
+      "p_win": 0.579,
+      "p_push": 0.221,
+      "min_odds": 1.39
+     }
+    ],
+    "odds": 2.25,
+    "p_win": 0.232,
+    "p_not_lose": 0.446,
+    "ev": -0.105,
+    "reliability": 1.027,
+    "priority": 1,
+    "level": "haute"
+   },
+   {
+    "kind": "sur",
+    "label": "Coupon sûr",
+    "scope": "Toutes ligues",
+    "stake_pct": 2.0,
+    "legs": [
+     {
+      "id": "20261030|D1|Elversberg|Mainz",
+      "market": "o25",
+      "odds": 1.4,
+      "odds_source": "estimée",
+      "p_win": 0.69,
+      "p_push": 0.0,
+      "min_odds": 1.49
+     },
+     {
+      "id": "20261030|F1|Nice|Rennes",
+      "market": "o20",
+      "odds": 1.22,
+      "odds_source": "estimée",
+      "p_win": 0.6,
+      "p_push": 0.214,
+      "min_odds": 1.35
+     },
+     {
+      "id": "20261030|T1|Konyaspor|Galatasaray",
+      "market": "o20",
+      "odds": 1.34,
+      "odds_source": "estimée",
+      "p_win": 0.521,
+      "p_push": 0.244,
+      "min_odds": 1.49
+     }
+    ],
+    "odds": 2.29,
+    "p_win": 0.216,
+    "p_not_lose": 0.43,
+    "ev": -0.139,
+    "reliability": 1.01,
+    "priority": 2,
+    "level": "moyenne"
+   },
+   {
+    "kind": "audace",
+    "label": "Coupon audacieux",
+    "scope": "Toutes ligues",
+    "stake_pct": 0.5,
+    "legs": [
+     {
+      "id": "20261030|D1|Elversberg|Mainz",
+      "market": "o25",
+      "odds": 1.4,
+      "odds_source": "estimée",
+      "p_win": 0.69,
+      "p_push": 0.0,
+      "min_odds": 1.49
+     },
+     {
+      "id": "20261030|SP1|Villarreal|Espanol",
+      "market": "o25",
+      "odds": 1.62,
+      "odds_source": "estimée",
+      "p_win": 0.587,
+      "p_push": 0.0,
+      "min_odds": 1.76
+     },
+     {
+      "id": "20261030|T1|Konyaspor|Galatasaray",
+      "market": "o25",
+      "odds": 1.79,
+      "odds_source": "estimée",
+      "p_win": 0.521,
+      "p_push": 0.0,
+      "min_odds": 1.98
+     }
+    ],
+    "odds": 4.06,
+    "p_win": 0.211,
+    "p_not_lose": 0.211,
+    "ev": -0.143,
+    "reliability": 1.03,
+    "priority": 3,
+    "level": "basse"
+   },
+   {
+    "kind": "audace",
+    "label": "Coupon audacieux",
+    "scope": "Toutes ligues",
+    "stake_pct": 0.5,
+    "legs": [
+     {
+      "id": "20261030|P1|Casa Pia|Sp Lisbon",
+      "market": "o20",
+      "odds": 1.16,
+      "odds_source": "estimée",
+      "p_win": 0.683,
+      "p_push": 0.174,
+      "min_odds": 1.25
+     },
+     {
+      "id": "20261030|E1|Sheffield United|Wrexham",
+      "market": "o25",
+      "odds": 1.69,
+      "odds_source": "estimée",
+      "p_win": 0.562,
+      "p_push": 0.0,
+      "min_odds": 1.83
+     },
+     {
+      "id": "20261030|F1|Lille|Lens",
+      "market": "o25",
+      "odds": 2.14,
+      "odds_source": "estimée",
+      "p_win": 0.44,
+      "p_push": 0.0,
+      "min_odds": 2.34
+     }
+    ],
+    "odds": 4.2,
+    "p_win": 0.169,
+    "p_not_lose": 0.212,
+    "ev": -0.136,
+    "reliability": 0.998,
+    "priority": 4,
+    "level": "basse"
+   },
+   {
+    "kind": "jackpot",
+    "label": "Jackpot",
+    "scope": "Toutes ligues",
+    "stake_pct": 0.25,
+    "legs": [
+     {
+      "id": "20261030|D1|Elversberg|Mainz",
+      "market": "o25",
+      "odds": 1.4,
+      "odds_source": "estimée",
+      "p_win": 0.69,
+      "p_push": 0.0,
+      "min_odds": 1.49
+     },
+     {
+      "id": "20261030|P1|Casa Pia|Sp Lisbon",
+      "market": "o25",
+      "odds": 1.43,
+      "odds_source": "estimée",
+      "p_win": 0.683,
+      "p_push": 0.0,
+      "min_odds": 1.51
+     },
+     {
+      "id": "20261030|SP1|Villarreal|Espanol",
+      "market": "o25",
+      "odds": 1.62,
+      "odds_source": "estimée",
+      "p_win": 0.587,
+      "p_push": 0.0,
+      "min_odds": 1.76
+     },
+     {
+      "id": "20261030|F1|Nice|Rennes",
+      "market": "o25",
+      "odds": 1.57,
+      "odds_source": "estimée",
+      "p_win": 0.6,
+      "p_push": 0.0,
+      "min_odds": 1.72
+     },
+     {
+      "id": "20261030|F1|Le Havre|Paris SG",
+      "market": "o25",
+      "odds": 1.63,
+      "odds_source": "estimée",
+      "p_win": 0.579,
+      "p_push": 0.0,
+      "min_odds": 1.78
+     },
+     {
+      "id": "20261030|E1|Sheffield United|Wrexham",
+      "market": "o25",
+      "odds": 1.69,
+      "odds_source": "estimée",
+      "p_win": 0.562,
+      "p_push": 0.0,
+      "min_odds": 1.83
+     },
+     {
+      "id": "20261030|T1|Konyaspor|Galatasaray",
+      "market": "o25",
+      "odds": 1.79,
+      "odds_source": "estimée",
+      "p_win": 0.521,
+      "p_push": 0.0,
+      "min_odds": 1.98
+     }
+    ],
+    "odds": 25.11,
+    "p_win": 0.028,
+    "p_not_lose": 0.028,
+    "ev": -0.293,
+    "reliability": 1.012,
+    "priority": 5,
+    "level": "basse"
+   }
+  ]
+ },
+ "2026-10-31": {
+  "frozen": false,
+  "created": "2026-10-29T23:54+00:00",
+  "coupons": [
+   {
+    "kind": "ligue",
+    "label": "Coupon championnat",
+    "scope": "LaLiga",
+    "stake_pct": 1.5,
+    "legs": [
+     {
+      "id": "20261031|SP1|Betis|Malaga",
+      "market": "o20",
+      "odds": 1.25,
+      "odds_source": "estimée",
+      "p_win": 0.586,
+      "p_push": 0.23,
+      "min_odds": 1.35
+     },
+     {
+      "id": "20261031|SP1|Levante|Ath Madrid",
+      "market": "o15",
+      "odds": 1.18,
+      "odds_source": "estimée",
+      "p_win": 0.808,
+      "p_push": 0.0,
+      "min_odds": 1.27
+     },
+     {
+      "id": "20261031|SP1|Vallecano|Celta",
+      "market": "o20",
+      "odds": 1.74,
+      "odds_source": "estimée",
+      "p_win": 0.399,
+      "p_push": 0.276,
+      "min_odds": 1.87
+     }
+    ],
+    "odds": 2.57,
+    "p_win": 0.189,
+    "p_not_lose": 0.445,
+    "ev": -0.11,
+    "reliability": 1.057,
+    "priority": 1,
+    "level": "haute"
+   },
+   {
+    "kind": "sur",
+    "label": "Coupon sûr",
+    "scope": "Toutes ligues",
+    "stake_pct": 2.0,
+    "legs": [
+     {
+      "id": "20261031|D1|Bayern Munich|Dortmund",
+      "market": "o25",
+      "odds": 1.32,
+      "odds_source": "estimée",
+      "p_win": 0.732,
+      "p_push": 0.0,
+      "min_odds": 1.41
+     },
+     {
+      "id": "20261031|D1|Leverkusen|Stuttgart",
+      "market": "o25",
+      "odds": 1.36,
+      "odds_source": "estimée",
+      "p_win": 0.708,
+      "p_push": 0.0,
+      "min_odds": 1.45
+     },
+     {
+      "id": "20261031|N1|Heerenveen|Nijmegen",
+      "market": "o20",
+      "odds": 1.16,
+      "odds_source": "estimée",
+      "p_win": 0.653,
+      "p_push": 0.22,
+      "min_odds": 1.23
+     }
+    ],
+    "odds": 2.08,
+    "p_win": 0.338,
+    "p_not_lose": 0.452,
+    "ev": -0.091,
+    "reliability": 1.011,
+    "priority": 2,
+    "level": "haute"
+   },
+   {
+    "kind": "sur",
+    "label": "Coupon sûr",
+    "scope": "Toutes ligues",
+    "stake_pct": 2.0,
+    "legs": [
+     {
+      "id": "20261031|E0|Chelsea|Man United",
+      "market": "o20",
+      "odds": 1.17,
+      "odds_source": "estimée",
+      "p_win": 0.642,
+      "p_push": 0.221,
+      "min_odds": 1.25
+     },
+     {
+      "id": "20261031|N1|Ajax|AZ Alkmaar",
+      "market": "o15",
+      "odds": 1.15,
+      "odds_source": "estimée",
+      "p_win": 0.84,
+      "p_push": 0.0,
+      "min_odds": 1.23
+     },
+     {
+      "id": "20261031|P1|Porto|Estoril",
+      "market": "o25",
+      "odds": 1.56,
+      "odds_source": "estimée",
+      "p_win": 0.626,
+      "p_push": 0.0,
+      "min_odds": 1.65
+     }
+    ],
+    "odds": 2.1,
+    "p_win": 0.338,
+    "p_not_lose": 0.454,
+    "ev": -0.083,
+    "reliability": 0.995,
+    "priority": 3,
+    "level": "haute"
+   },
+   {
+    "kind": "sur",
+    "label": "Coupon sûr",
+    "scope": "Toutes ligues",
+    "stake_pct": 2.0,
+    "legs": [
+     {
+      "id": "20261031|SP1|Barcelona|Alaves",
+      "market": "o25",
+      "odds": 1.29,
+      "odds_source": "estimée",
+      "p_win": 0.736,
+      "p_push": 0.0,
+      "min_odds": 1.4
+     },
+     {
+      "id": "20261031|N1|Feyenoord|For Sittard",
+      "market": "o20",
+      "odds": 1.12,
+      "odds_source": "estimée",
+      "p_win": 0.694,
+      "p_push": 0.2,
+      "min_odds": 1.19
+     },
+     {
+      "id": "20261031|D1|Werder Bremen|Hoffenheim",
+      "market": "o25",
+      "odds": 1.42,
+      "odds_source": "estimée",
+      "p_win": 0.682,
+      "p_push": 0.0,
+      "min_odds": 1.51
+     }
+    ],
+    "odds": 2.05,
+    "p_win": 0.348,
+    "p_not_lose": 0.449,
+    "ev": -0.101,
+    "reliability": 1.023,
+    "priority": 4,
+    "level": "haute"
+   },
+   {
+    "kind": "ligue",
+    "label": "Coupon championnat",
+    "scope": "Bundesliga",
+    "stake_pct": 1.5,
+    "legs": [
+     {
+      "id": "20261031|D1|Bayern Munich|Dortmund",
+      "market": "o25",
+      "odds": 1.32,
+      "odds_source": "estimée",
+      "p_win": 0.732,
+      "p_push": 0.0,
+      "min_odds": 1.41
+     },
+     {
+      "id": "20261031|D1|Werder Bremen|Hoffenheim",
+      "market": "o20",
+      "odds": 1.14,
+      "odds_source": "estimée",
+      "p_win": 0.682,
+      "p_push": 0.181,
+      "min_odds": 1.24
+     },
+     {
+      "id": "20261031|D1|M'gladbach|Paderborn",
+      "market": "o20",
+      "odds": 1.57,
+      "odds_source": "estimée",
+      "p_win": 0.456,
+      "p_push": 0.252,
+      "min_odds": 1.69
+     }
+    ],
+    "odds": 2.36,
+    "p_win": 0.228,
+    "p_not_lose": 0.447,
+    "ev": -0.104,
+    "reliability": 1.02,
+    "priority": 5,
+    "level": "haute"
+   },
+   {
+    "kind": "ligue",
+    "label": "Coupon championnat",
+    "scope": "Premier League",
+    "stake_pct": 1.5,
+    "legs": [
+     {
+      "id": "20261031|E0|Brentford|Nott'm Forest",
+      "market": "o20",
+      "odds": 1.36,
+      "odds_source": "estimée",
+      "p_win": 0.521,
+      "p_push": 0.263,
+      "min_odds": 1.46
+     },
+     {
+      "id": "20261031|E0|Aston Villa|Fulham",
+      "market": "o20",
+      "odds": 1.4,
+      "odds_source": "estimée",
+      "p_win": 0.504,
+      "p_push": 0.267,
+      "min_odds": 1.5
+     },
+     {
+      "id": "20261031|E0|Bournemouth|Leeds",
+      "market": "o20",
+      "odds": 1.44,
+      "odds_source": "estimée",
+      "p_win": 0.488,
+      "p_push": 0.272,
+      "min_odds": 1.54
+     }
+    ],
+    "odds": 2.74,
+    "p_win": 0.128,
+    "p_not_lose": 0.459,
+    "ev": -0.079,
+    "reliability": 0.965,
+    "priority": 6,
+    "level": "moyenne"
+   },
+   {
+    "kind": "sur",
+    "label": "Coupon sûr",
+    "scope": "Toutes ligues",
+    "stake_pct": 2.0,
+    "legs": [
+     {
+      "id": "20261031|SP2|Eibar|Almeria",
+      "market": "o20",
+      "odds": 1.33,
+      "odds_source": "estimée",
+      "p_win": 0.557,
+      "p_push": 0.217,
+      "min_odds": 1.45
+     },
+     {
+      "id": "20261031|E0|Aston Villa|Fulham",
+      "market": "o20",
+      "odds": 1.4,
+      "odds_source": "estimée",
+      "p_win": 0.504,
+      "p_push": 0.267,
+      "min_odds": 1.5
+     },
+     {
+      "id": "20261031|E0|Bournemouth|Leeds",
+      "market": "o20",
+      "odds": 1.44,
+      "odds_source": "estimée",
+      "p_win": 0.488,
+      "p_push": 0.272,
+      "min_odds": 1.54
+     }
+    ],
+    "odds": 2.68,
+    "p_win": 0.137,
+    "p_not_lose": 0.454,
+    "ev": -0.092,
+    "reliability": 0.974,
+    "priority": 7,
+    "level": "moyenne"
+   },
+   {
+    "kind": "sur",
+    "label": "Coupon sûr",
+    "scope": "Toutes ligues",
+    "stake_pct": 2.0,
+    "legs": [
+     {
+      "id": "20261031|T1|Fenerbahce|Goztep",
+      "market": "o25",
+      "odds": 1.38,
+      "odds_source": "estimée",
+      "p_win": 0.679,
+      "p_push": 0.0,
+      "min_odds": 1.52
+     },
+     {
+      "id": "20261031|SP1|Levante|Ath Madrid",
+      "market": "o20",
+      "odds": 1.27,
+      "odds_source": "estimée",
+      "p_win": 0.573,
+      "p_push": 0.235,
+      "min_odds": 1.37
+     },
+     {
+      "id": "20261031|E0|Tottenham|Crystal Palace",
+      "market": "o20",
+      "odds": 1.32,
+      "odds_source": "estimée",
+      "p_win": 0.543,
+      "p_push": 0.256,
+      "min_odds": 1.41
+     }
+    ],
+    "odds": 2.31,
+    "p_win": 0.211,
+    "p_not_lose": 0.438,
+    "ev": -0.122,
+    "reliability": 1.012,
+    "priority": 8,
+    "level": "moyenne"
+   },
+   {
+    "kind": "sur",
+    "label": "Coupon sûr",
+    "scope": "Toutes ligues",
+    "stake_pct": 2.0,
+    "legs": [
+     {
+      "id": "20261031|E1|West Ham|West Brom",
+      "market": "o25",
+      "odds": 1.45,
+      "odds_source": "estimée",
+      "p_win": 0.654,
+      "p_push": 0.0,
+      "min_odds": 1.58
+     },
+     {
+      "id": "20261031|SP1|Betis|Malaga",
+      "market": "o20",
+      "odds": 1.25,
+      "odds_source": "estimée",
+      "p_win": 0.586,
+      "p_push": 0.23,
+      "min_odds": 1.35
+     },
+     {
+      "id": "20261031|D1|Augsburg|Freiburg",
+      "market": "o20",
+      "odds": 1.25,
+      "odds_source": "estimée",
+      "p_win": 0.601,
+      "p_push": 0.213,
+      "min_odds": 1.35
+     }
+    ],
+    "odds": 2.27,
+    "p_win": 0.23,
+    "p_not_lose": 0.434,
+    "ev": -0.12,
+    "reliability": 1.016,
+    "priority": 9,
+    "level": "moyenne"
+   },
+   {
+    "kind": "sur",
+    "label": "Coupon sûr",
+    "scope": "Toutes ligues",
+    "stake_pct": 2.0,
+    "legs": [
+     {
+      "id": "20261031|SP2|Celta B|Cordoba",
+      "market": "o25",
+      "odds": 1.36,
+      "odds_source": "estimée",
+      "p_win": 0.708,
+      "p_push": 0.0,
+      "min_odds": 1.45
+     },
+     {
+      "id": "20261031|SP2|Sociedad B|Girona",
+      "market": "o20",
+      "odds": 1.27,
+      "odds_source": "estimée",
+      "p_win": 0.59,
+      "p_push": 0.207,
+      "min_odds": 1.39
+     },
+     {
+      "id": "20261031|E0|Brentford|Nott'm Forest",
+      "market": "o15",
+      "odds": 1.23,
+      "odds_source": "estimée",
+      "p_win": 0.784,
+      "p_push": 0.0,
+      "min_odds": 1.31
+     }
+    ],
+    "odds": 2.12,
+    "p_win": 0.327,
+    "p_not_lose": 0.442,
+    "ev": -0.112,
+    "reliability": 0.984,
+    "priority": 10,
+    "level": "moyenne"
+   },
+   {
+    "kind": "ligue",
+    "label": "Coupon championnat",
+    "scope": "Championship",
+    "stake_pct": 1.5,
+    "legs": [
+     {
+      "id": "20261031|E1|Wolves|Cardiff",
+      "market": "o20",
+      "odds": 1.23,
+      "odds_source": "estimée",
+      "p_win": 0.601,
+      "p_push": 0.218,
+      "min_odds": 1.34
+     },
+     {
+      "id": "20261031|E1|Bolton|Bristol City",
+      "market": "o20",
+      "odds": 1.38,
+      "odds_source": "estimée",
+      "p_win": 0.521,
+      "p_push": 0.243,
+      "min_odds": 1.5
+     },
+     {
+      "id": "20261031|E1|Millwall|Derby",
+      "market": "o20",
+      "odds": 1.57,
+      "odds_source": "estimée",
+      "p_win": 0.449,
+      "p_push": 0.26,
+      "min_odds": 1.7
+     }
+    ],
+    "odds": 2.66,
+    "p_win": 0.141,
+    "p_not_lose": 0.444,
+    "ev": -0.111,
+    "reliability": 0.972,
+    "priority": 11,
+    "level": "basse"
+   },
+   {
+    "kind": "ligue",
+    "label": "Coupon championnat",
+    "scope": "LaLiga 2",
+    "stake_pct": 1.5,
+    "legs": [
+     {
+      "id": "20261031|SP2|Celta B|Cordoba",
+      "market": "o25",
+      "odds": 1.36,
+      "odds_source": "estimée",
+      "p_win": 0.708,
+      "p_push": 0.0,
+      "min_odds": 1.45
+     },
+     {
+      "id": "20261031|SP2|Sociedad B|Girona",
+      "market": "o20",
+      "odds": 1.27,
+      "odds_source": "estimée",
+      "p_win": 0.59,
+      "p_push": 0.207,
+      "min_odds": 1.39
+     },
+     {
+      "id": "20261031|SP2|Eibar|Almeria",
+      "market": "o20",
+      "odds": 1.33,
+      "odds_source": "estimée",
+      "p_win": 0.557,
+      "p_push": 0.217,
+      "min_odds": 1.45
+     }
+    ],
+    "odds": 2.3,
+    "p_win": 0.233,
+    "p_not_lose": 0.437,
+    "ev": -0.118,
+    "reliability": 0.993,
+    "priority": 12,
+    "level": "basse"
+   },
+   {
+    "kind": "sur",
+    "label": "Coupon sûr",
+    "scope": "Toutes ligues",
+    "stake_pct": 2.0,
+    "legs": [
+     {
+      "id": "20261031|E0|Man City|Brighton",
+      "market": "o20",
+      "odds": 1.21,
+      "odds_source": "estimée",
+      "p_win": 0.612,
+      "p_push": 0.232,
+      "min_odds": 1.29
+     },
+     {
+      "id": "20261031|I1|Bologna|Monza",
+      "market": "o25",
+      "odds": 1.52,
+      "odds_source": "estimée",
+      "p_win": 0.627,
+      "p_push": 0.0,
+      "min_odds": 1.64
+     },
+     {
+      "id": "20261031|E1|Southampton|QPR",
+      "market": "o20",
+      "odds": 1.2,
+      "odds_source": "estimée",
+      "p_win": 0.623,
+      "p_push": 0.21,
+      "min_odds": 1.31
+     }
+    ],
+    "odds": 2.21,
+    "p_win": 0.239,
+    "p_not_lose": 0.441,
+    "ev": -0.112,
+    "reliability": 0.967,
+    "priority": 13,
+    "level": "basse"
+   },
+   {
+    "kind": "ligue",
+    "label": "Coupon championnat",
+    "scope": "Eredivisie",
+    "stake_pct": 1.5,
+    "legs": [
+     {
+      "id": "20261031|N1|Cambuur|Go Ahead Eagles",
+      "market": "o25",
+      "odds": 1.2,
+      "odds_source": "estimée",
+      "p_win": 0.792,
+      "p_push": 0.0,
+      "min_odds": 1.3
+     },
+     {
+      "id": "20261031|N1|Heerenveen|Nijmegen",
+      "market": "o25",
+      "odds": 1.46,
+      "odds_source": "estimée",
+      "p_win": 0.653,
+      "p_push": 0.0,
+      "min_odds": 1.58
+     },
+     {
+      "id": "20261031|N1|Ajax|AZ Alkmaar",
+      "market": "o15",
+      "odds": 1.15,
+      "odds_source": "estimée",
+      "p_win": 0.84,
+      "p_push": 0.0,
+      "min_odds": 1.23
+     }
+    ],
+    "odds": 2.01,
+    "p_win": 0.434,
+    "p_not_lose": 0.434,
+    "ev": -0.125,
+    "reliability": 0.992,
+    "priority": 14,
+    "level": "basse"
+   },
+   {
+    "kind": "ligue",
+    "label": "Coupon championnat",
+    "scope": "Süper Lig",
+    "stake_pct": 1.5,
+    "legs": [
+     {
+      "id": "20261031|T1|Fenerbahce|Goztep",
+      "market": "o20",
+      "odds": 1.12,
+      "odds_source": "estimée",
+      "p_win": 0.679,
+      "p_push": 0.185,
+      "min_odds": 1.24
+     },
+     {
+      "id": "20261031|T1|Erzurumspor|Corum",
+      "market": "o20",
+      "odds": 1.34,
+      "odds_source": "estimée",
+      "p_win": 0.522,
+      "p_push": 0.245,
+      "min_odds": 1.49
+     },
+     {
+      "id": "20261031|T1|Kocaelispor|Rizespor",
+      "market": "o20",
+      "odds": 1.86,
+      "odds_source": "estimée",
+      "p_win": 0.359,
+      "p_push": 0.277,
+      "min_odds": 2.08
+     }
+    ],
+    "odds": 2.79,
+    "p_win": 0.127,
+    "p_not_lose": 0.421,
+    "ev": -0.156,
+    "reliability": 1.014,
+    "priority": 15,
+    "level": "basse"
+   },
+   {
+    "kind": "ligue",
+    "label": "Coupon championnat",
+    "scope": "Serie A",
+    "stake_pct": 1.5,
+    "legs": [
+     {
+      "id": "20261031|I1|Bologna|Monza",
+      "market": "o25",
+      "odds": 1.52,
+      "odds_source": "estimée",
+      "p_win": 0.627,
+      "p_push": 0.0,
+      "min_odds": 1.64
+     },
+     {
+      "id": "20261031|I1|Milan|Inter",
+      "market": "o15",
+      "odds": 1.15,
+      "odds_source": "estimée",
+      "p_win": 0.824,
+      "p_push": 0.0,
+      "min_odds": 1.25
+     },
+     {
+      "id": "20261031|I1|Udinese|Roma",
+      "market": "o15",
+      "odds": 1.27,
+      "odds_source": "estimée",
+      "p_win": 0.748,
+      "p_push": 0.0,
+      "min_odds": 1.38
+     }
+    ],
+    "odds": 2.22,
+    "p_win": 0.386,
+    "p_not_lose": 0.386,
+    "ev": -0.142,
+    "reliability": 0.964,
+    "priority": 16,
+    "level": "basse"
+   }
+  ]
+ },
+ "2026-11-01": {
+  "frozen": false,
+  "created": "2026-10-29T23:54+00:00",
+  "coupons": [
+   {
+    "kind": "sur",
+    "label": "Coupon sûr",
+    "scope": "Toutes ligues",
+    "stake_pct": 2.0,
+    "legs": [
+     {
+      "id": "20261101|N1|Zwolle|Den Haag",
+      "market": "o20",
+      "odds": 1.18,
+      "odds_source": "estimée",
+      "p_win": 0.634,
+      "p_push": 0.228,
+      "min_odds": 1.26
+     },
+     {
+      "id": "20261101|N1|Groningen|Sparta Rotterdam",
+      "market": "o20",
+      "odds": 1.23,
+      "odds_source": "estimée",
+      "p_win": 0.602,
+      "p_push": 0.239,
+      "min_odds": 1.3
+     },
+     {
+      "id": "20261101|D1|Ein Frankfurt|Hamburg",
+      "market": "o25",
+      "odds": 1.52,
+      "odds_source": "estimée",
+      "p_win": 0.637,
+      "p_push": 0.0,
+      "min_odds": 1.62
+     }
+    ],
+    "odds": 2.21,
+    "p_win": 0.243,
+    "p_not_lose": 0.462,
+    "ev": -0.074,
+    "reliability": 1.001,
+    "priority": 1,
+    "level": "haute"
+   },
+   {
+    "kind": "sur",
+    "label": "Coupon sûr",
+    "scope": "Toutes ligues",
+    "stake_pct": 2.0,
+    "legs": [
+     {
+      "id": "20261101|N1|Excelsior|Twente",
+      "market": "o20",
+      "odds": 1.28,
+      "odds_source": "estimée",
+      "p_win": 0.565,
+      "p_push": 0.252,
+      "min_odds": 1.36
+     },
+     {
+      "id": "20261101|F1|Strasbourg|Auxerre",
+      "market": "o20",
+      "odds": 1.25,
+      "odds_source": "estimée",
+      "p_win": 0.585,
+      "p_push": 0.22,
+      "min_odds": 1.37
+     },
+     {
+      "id": "20261101|P1|Maritimo|Santa Clara",
+      "market": "o20",
+      "odds": 1.65,
+      "odds_source": "estimée",
+      "p_win": 0.446,
+      "p_push": 0.241,
+      "min_odds": 1.75
+     }
+    ],
+    "odds": 2.64,
+    "p_win": 0.147,
+    "p_not_lose": 0.452,
+    "ev": -0.094,
+    "reliability": 1.005,
+    "priority": 2,
+    "level": "haute"
+   },
+   {
+    "kind": "sur",
+    "label": "Coupon sûr",
+    "scope": "Toutes ligues",
+    "stake_pct": 2.0,
+    "legs": [
+     {
+      "id": "20261101|F1|Paris FC|Monaco",
+      "market": "o20",
+      "odds": 1.29,
+      "odds_source": "estimée",
+      "p_win": 0.561,
+      "p_push": 0.228,
+      "min_odds": 1.42
+     },
+     {
+      "id": "20261101|P1|Arouca|Nacional",
+      "market": "o20",
+      "odds": 1.42,
+      "odds_source": "estimée",
+      "p_win": 0.528,
+      "p_push": 0.225,
+      "min_odds": 1.51
+     },
+     {
+      "id": "20261101|SP1|Elche|Valencia",
+      "market": "o20",
+      "odds": 1.43,
+      "odds_source": "estimée",
+      "p_win": 0.494,
+      "p_push": 0.258,
+      "min_odds": 1.55
+     }
+    ],
+    "odds": 2.62,
+    "p_win": 0.146,
+    "p_not_lose": 0.447,
+    "ev": -0.105,
+    "reliability": 1.027,
+    "priority": 3,
+    "level": "haute"
+   },
+   {
+    "kind": "ligue",
+    "label": "Coupon championnat",
+    "scope": "Eredivisie",
+    "stake_pct": 1.5,
+    "legs": [
+     {
+      "id": "20261101|N1|Zwolle|Den Haag",
+      "market": "o25",
+      "odds": 1.51,
+      "odds_source": "estimée",
+      "p_win": 0.634,
+      "p_push": 0.0,
+      "min_odds": 1.63
+     },
+     {
+      "id": "20261101|N1|Telstar|Utrecht",
+      "market": "o15",
+      "odds": 1.14,
+      "odds_source": "estimée",
+      "p_win": 0.845,
+      "p_push": 0.0,
+      "min_odds": 1.22
+     },
+     {
+      "id": "20261101|N1|Groningen|Sparta Rotterdam",
+      "market": "o20",
+      "odds": 1.23,
+      "odds_source": "estimée",
+      "p_win": 0.602,
+      "p_push": 0.239,
+      "min_odds": 1.3
+     }
+    ],
+    "odds": 2.12,
+    "p_win": 0.323,
+    "p_not_lose": 0.451,
+    "ev": -0.097,
+    "reliability": 0.992,
+    "priority": 4,
+    "level": "haute"
+   },
+   {
+    "kind": "sur",
+    "label": "Coupon sûr",
+    "scope": "Toutes ligues",
+    "stake_pct": 2.0,
+    "legs": [
+     {
+      "id": "20261101|P1|Academico Viseu|Rio Ave",
+      "market": "o20",
+      "odds": 1.35,
+      "odds_source": "estimée",
+      "p_win": 0.558,
+      "p_push": 0.217,
+      "min_odds": 1.44
+     },
+     {
+      "id": "20261101|T1|Kasimpasa|Besiktas",
+      "market": "o20",
+      "odds": 1.37,
+      "odds_source": "estimée",
+      "p_win": 0.509,
+      "p_push": 0.249,
+      "min_odds": 1.52
+     },
+     {
+      "id": "20261101|D1|Union Berlin|FC Koln",
+      "market": "o20",
+      "odds": 1.42,
+      "odds_source": "estimée",
+      "p_win": 0.514,
+      "p_push": 0.239,
+      "min_odds": 1.52
+     }
+    ],
+    "odds": 2.63,
+    "p_win": 0.146,
+    "p_not_lose": 0.442,
+    "ev": -0.11,
+    "reliability": 1.02,
+    "priority": 5,
+    "level": "haute"
+   },
+   {
+    "kind": "sur",
+    "label": "Coupon sûr",
+    "scope": "Toutes ligues",
+    "stake_pct": 2.0,
+    "legs": [
+     {
+      "id": "20261101|T1|Amedspor|Eyupspor",
+      "market": "o25",
+      "odds": 1.4,
+      "odds_source": "estimée",
+      "p_win": 0.669,
+      "p_push": 0.0,
+      "min_odds": 1.54
+     },
+     {
+      "id": "20261101|N1|Telstar|Utrecht",
+      "market": "o20",
+      "odds": 1.22,
+      "odds_source": "estimée",
+      "p_win": 0.607,
+      "p_push": 0.238,
+      "min_odds": 1.29
+     },
+     {
+      "id": "20261101|SP1|Ath Bilbao|Sociedad",
+      "market": "o20",
+      "odds": 1.37,
+      "odds_source": "estimée",
+      "p_win": 0.521,
+      "p_push": 0.251,
+      "min_odds": 1.48
+     }
+    ],
+    "odds": 2.34,
+    "p_win": 0.212,
+    "p_not_lose": 0.436,
+    "ev": -0.116,
+    "reliability": 1.021,
+    "priority": 6,
+    "level": "haute"
+   },
+   {
+    "kind": "sur",
+    "label": "Coupon sûr",
+    "scope": "Toutes ligues",
+    "stake_pct": 2.0,
+    "legs": [
+     {
+      "id": "20261101|T1|Trabzonspor|Gaziantep",
+      "market": "o20",
+      "odds": 1.17,
+      "odds_source": "estimée",
+      "p_win": 0.635,
+      "p_push": 0.203,
+      "min_odds": 1.29
+     },
+     {
+      "id": "20261101|F1|Lyon|Angers",
+      "market": "o20",
+      "odds": 1.39,
+      "odds_source": "estimée",
+      "p_win": 0.511,
+      "p_push": 0.242,
+      "min_odds": 1.53
+     },
+     {
+      "id": "20261101|P1|Sp Braga|Famalicao",
+      "market": "o20",
+      "odds": 1.64,
+      "odds_source": "estimée",
+      "p_win": 0.45,
+      "p_push": 0.241,
+      "min_odds": 1.74
+     }
+    ],
+    "odds": 2.67,
+    "p_win": 0.146,
+    "p_not_lose": 0.436,
+    "ev": -0.118,
+    "reliability": 1.012,
+    "priority": 7,
+    "level": "moyenne"
+   },
+   {
+    "kind": "sur",
+    "label": "Coupon sûr",
+    "scope": "Toutes ligues",
+    "stake_pct": 2.0,
+    "legs": [
+     {
+      "id": "20261101|SP1|Santander|Real Madrid",
+      "market": "o25",
+      "odds": 1.18,
+      "odds_source": "estimée",
+      "p_win": 0.805,
+      "p_push": 0.0,
+      "min_odds": 1.28
+     },
+     {
+      "id": "20261101|SP2|Ceuta|Sp Gijon",
+      "market": "o20",
+      "odds": 1.38,
+      "odds_source": "estimée",
+      "p_win": 0.533,
+      "p_push": 0.224,
+      "min_odds": 1.5
+     },
+     {
+      "id": "20261101|I1|Lazio|Cagliari",
+      "market": "o20",
+      "odds": 1.52,
+      "odds_source": "estimée",
+      "p_win": 0.467,
+      "p_push": 0.253,
+      "min_odds": 1.65
+     }
+    ],
+    "odds": 2.48,
+    "p_win": 0.2,
+    "p_not_lose": 0.439,
+    "ev": -0.122,
+    "reliability": 1.005,
+    "priority": 8,
+    "level": "moyenne"
+   },
+   {
+    "kind": "sur",
+    "label": "Coupon sûr",
+    "scope": "Toutes ligues",
+    "stake_pct": 2.0,
+    "legs": [
+     {
+      "id": "20261101|I1|Frosinone|Torino",
+      "market": "o20",
+      "odds": 1.17,
+      "odds_source": "estimée",
+      "p_win": 0.654,
+      "p_push": 0.195,
+      "min_odds": 1.27
+     },
+     {
+      "id": "20261101|F1|Marseille|Toulouse",
+      "market": "o15",
+      "odds": 1.13,
+      "odds_source": "estimée",
+      "p_win": 0.83,
+      "p_push": 0.0,
+      "min_odds": 1.24
+     },
+     {
+      "id": "20261101|SP1|Getafe|Sevilla",
+      "market": "o15",
+      "odds": 1.61,
+      "odds_source": "estimée",
+      "p_win": 0.595,
+      "p_push": 0.0,
+      "min_odds": 1.73
+     }
+    ],
+    "odds": 2.13,
+    "p_win": 0.323,
+    "p_not_lose": 0.419,
+    "ev": -0.137,
+    "reliability": 1.006,
+    "priority": 9,
+    "level": "moyenne"
+   },
+   {
+    "kind": "ligue",
+    "label": "Coupon championnat",
+    "scope": "Liga Portugal",
+    "stake_pct": 1.5,
+    "legs": [
+     {
+      "id": "20261101|P1|Academico Viseu|Rio Ave",
+      "market": "o15",
+      "odds": 1.23,
+      "odds_source": "estimée",
+      "p_win": 0.775,
+      "p_push": 0.0,
+      "min_odds": 1.33
+     },
+     {
+      "id": "20261101|P1|Arouca|Nacional",
+      "market": "o15",
+      "odds": 1.26,
+      "odds_source": "estimée",
+      "p_win": 0.752,
+      "p_push": 0.0,
+      "min_odds": 1.37
+     },
+     {
+      "id": "20261101|P1|Sp Braga|Famalicao",
+      "market": "o15",
+      "odds": 1.38,
+      "odds_source": "estimée",
+      "p_win": 0.691,
+      "p_push": 0.0,
+      "min_odds": 1.49
+     }
+    ],
+    "odds": 2.14,
+    "p_win": 0.403,
+    "p_not_lose": 0.403,
+    "ev": -0.139,
+    "reliability": 1.027,
+    "priority": 10,
+    "level": "moyenne"
+   },
+   {
+    "kind": "ligue",
+    "label": "Coupon championnat",
+    "scope": "Süper Lig",
+    "stake_pct": 1.5,
+    "legs": [
+     {
+      "id": "20261101|T1|Amedspor|Eyupspor",
+      "market": "o20",
+      "odds": 1.13,
+      "odds_source": "estimée",
+      "p_win": 0.669,
+      "p_push": 0.188,
+      "min_odds": 1.25
+     },
+     {
+      "id": "20261101|T1|Trabzonspor|Gaziantep",
+      "market": "o25",
+      "odds": 1.47,
+      "odds_source": "estimée",
+      "p_win": 0.635,
+      "p_push": 0.0,
+      "min_odds": 1.62
+     },
+     {
+      "id": "20261101|T1|Kasimpasa|Besiktas",
+      "market": "o20",
+      "odds": 1.37,
+      "odds_source": "estimée",
+      "p_win": 0.509,
+      "p_push": 0.249,
+      "min_odds": 1.52
+     }
+    ],
+    "odds": 2.28,
+    "p_win": 0.216,
+    "p_not_lose": 0.412,
+    "ev": -0.166,
+    "reliability": 1.014,
+    "priority": 11,
+    "level": "moyenne"
+   },
+   {
+    "kind": "ligue",
+    "label": "Coupon championnat",
+    "scope": "Serie A",
+    "stake_pct": 1.5,
+    "legs": [
+     {
+      "id": "20261101|I1|Frosinone|Torino",
+      "market": "o20",
+      "odds": 1.17,
+      "odds_source": "estimée",
+      "p_win": 0.654,
+      "p_push": 0.195,
+      "min_odds": 1.27
+     },
+     {
+      "id": "20261101|I1|Como|Venezia",
+      "market": "o15",
+      "odds": 1.26,
+      "odds_source": "estimée",
+      "p_win": 0.754,
+      "p_push": 0.0,
+      "min_odds": 1.37
+     },
+     {
+      "id": "20261101|I1|Juventus|Napoli",
+      "market": "o15",
+      "odds": 1.42,
+      "odds_source": "estimée",
+      "p_win": 0.666,
+      "p_push": 0.0,
+      "min_odds": 1.55
+     }
+    ],
+    "odds": 2.09,
+    "p_win": 0.328,
+    "p_not_lose": 0.426,
+    "ev": -0.137,
+    "reliability": 0.964,
+    "priority": 12,
+    "level": "moyenne"
+   },
+   {
+    "kind": "ligue",
+    "label": "Coupon championnat",
+    "scope": "LaLiga",
+    "stake_pct": 1.5,
+    "legs": [
+     {
+      "id": "20261101|SP1|Santander|Real Madrid",
+      "market": "o25",
+      "odds": 1.18,
+      "odds_source": "estimée",
+      "p_win": 0.805,
+      "p_push": 0.0,
+      "min_odds": 1.28
+     },
+     {
+      "id": "20261101|SP1|Ath Bilbao|Sociedad",
+      "market": "o15",
+      "odds": 1.23,
+      "odds_source": "estimée",
+      "p_win": 0.772,
+      "p_push": 0.0,
+      "min_odds": 1.33
+     },
+     {
+      "id": "20261101|SP1|Getafe|Sevilla",
+      "market": "o15",
+      "odds": 1.61,
+      "odds_source": "estimée",
+      "p_win": 0.595,
+      "p_push": 0.0,
+      "min_odds": 1.73
+     }
+    ],
+    "odds": 2.34,
+    "p_win": 0.37,
+    "p_not_lose": 0.37,
+    "ev": -0.136,
+    "reliability": 1.057,
+    "priority": 13,
+    "level": "basse"
+   },
+   {
+    "kind": "ligue",
+    "label": "Coupon championnat",
+    "scope": "Ligue 1",
+    "stake_pct": 1.5,
+    "legs": [
+     {
+      "id": "20261101|F1|Marseille|Toulouse",
+      "market": "o25",
+      "odds": 1.51,
+      "odds_source": "estimée",
+      "p_win": 0.626,
+      "p_push": 0.0,
+      "min_odds": 1.65
+     },
+     {
+      "id": "20261101|F1|Strasbourg|Auxerre",
+      "market": "o15",
+      "odds": 1.16,
+      "odds_source": "estimée",
+      "p_win": 0.804,
+      "p_push": 0.0,
+      "min_odds": 1.28
+     },
+     {
+      "id": "20261101|F1|Paris FC|Monaco",
+      "market": "o15",
+      "odds": 1.19,
+      "odds_source": "estimée",
+      "p_win": 0.789,
+      "p_push": 0.0,
+      "min_odds": 1.31
+     }
+    ],
+    "odds": 2.08,
+    "p_win": 0.397,
+    "p_not_lose": 0.397,
+    "ev": -0.172,
+    "reliability": 0.996,
+    "priority": 14,
+    "level": "basse"
+   },
+   {
+    "kind": "ligue",
+    "label": "Coupon championnat",
+    "scope": "LaLiga 2",
+    "stake_pct": 1.5,
+    "legs": [
+     {
+      "id": "20261101|SP2|Ceuta|Sp Gijon",
+      "market": "o15",
+      "odds": 1.24,
+      "odds_source": "estimée",
+      "p_win": 0.757,
+      "p_push": 0.0,
+      "min_odds": 1.36
+     },
+     {
+      "id": "20261101|SP2|Eldense|Granada",
+      "market": "o15",
+      "odds": 1.27,
+      "odds_source": "estimée",
+      "p_win": 0.738,
+      "p_push": 0.0,
+      "min_odds": 1.4
+     },
+     {
+      "id": "20261101|SP2|Tenerife|Andorra",
+      "market": "o15",
+      "odds": 1.37,
+      "odds_source": "estimée",
+      "p_win": 0.684,
+      "p_push": 0.0,
+      "min_odds": 1.51
+     }
+    ],
+    "odds": 2.16,
+    "p_win": 0.382,
+    "p_not_lose": 0.382,
+    "ev": -0.176,
+    "reliability": 0.993,
+    "priority": 15,
+    "level": "basse"
+   },
+   {
+    "kind": "audace",
+    "label": "Coupon audacieux",
+    "scope": "Toutes ligues",
+    "stake_pct": 0.5,
+    "legs": [
+     {
+      "id": "20261101|F1|Paris FC|Monaco",
+      "market": "o20",
+      "odds": 1.29,
+      "odds_source": "estimée",
+      "p_win": 0.561,
+      "p_push": 0.228,
+      "min_odds": 1.42
+     },
+     {
+      "id": "20261101|SP1|Ath Bilbao|Sociedad",
+      "market": "o25",
+      "odds": 1.82,
+      "odds_source": "estimée",
+      "p_win": 0.521,
+      "p_push": 0.0,
+      "min_odds": 1.98
+     },
+     {
+      "id": "20261101|SP2|Ceuta|Sp Gijon",
+      "market": "o25",
+      "odds": 1.83,
+      "odds_source": "estimée",
+      "p_win": 0.533,
+      "p_push": 0.0,
+      "min_odds": 1.93
+     }
+    ],
+    "odds": 4.3,
+    "p_win": 0.156,
+    "p_not_lose": 0.219,
+    "ev": -0.12,
+    "reliability": 1.015,
+    "priority": 16,
+    "level": "basse"
+   },
+   {
+    "kind": "audace",
+    "label": "Coupon audacieux",
+    "scope": "Toutes ligues",
+    "stake_pct": 0.5,
+    "legs": [
+     {
+      "id": "20261101|I1|Frosinone|Torino",
+      "market": "o25",
+      "odds": 1.45,
+      "odds_source": "estimée",
+      "p_win": 0.654,
+      "p_push": 0.0,
+      "min_odds": 1.57
+     },
+     {
+      "id": "20261101|N1|Groningen|Sparta Rotterdam",
+      "market": "o25",
+      "odds": 1.59,
+      "odds_source": "estimée",
+      "p_win": 0.602,
+      "p_push": 0.0,
+      "min_odds": 1.71
+     },
+     {
+      "id": "20261101|P1|Academico Viseu|Rio Ave",
+      "market": "o25",
+      "odds": 1.76,
+      "odds_source": "estimée",
+      "p_win": 0.558,
+      "p_push": 0.0,
+      "min_odds": 1.84
+     }
+    ],
+    "odds": 4.06,
+    "p_win": 0.22,
+    "p_not_lose": 0.22,
+    "ev": -0.109,
+    "reliability": 0.994,
+    "priority": 17,
+    "level": "basse"
+   },
+   {
+    "kind": "audace",
+    "label": "Coupon audacieux",
+    "scope": "Toutes ligues",
+    "stake_pct": 0.5,
+    "legs": [
+     {
+      "id": "20261101|N1|Zwolle|Den Haag",
+      "market": "o25",
+      "odds": 1.51,
+      "odds_source": "estimée",
+      "p_win": 0.634,
+      "p_push": 0.0,
+      "min_odds": 1.63
+     },
+     {
+      "id": "20261101|N1|Telstar|Utrecht",
+      "market": "o20",
+      "odds": 1.22,
+      "odds_source": "estimée",
+      "p_win": 0.607,
+      "p_push": 0.238,
+      "min_odds": 1.29
+     },
+     {
+      "id": "20261101|D1|Ein Frankfurt|Hamburg",
+      "market": "o25",
+      "odds": 1.52,
+      "odds_source": "estimée",
+      "p_win": 0.637,
+      "p_push": 0.0,
+      "min_odds": 1.62
+     },
+     {
+      "id": "20261101|F1|Marseille|Toulouse",
+      "market": "o25",
+      "odds": 1.51,
+      "odds_source": "estimée",
+      "p_win": 0.626,
+      "p_push": 0.0,
+      "min_odds": 1.65
+     }
+    ],
+    "odds": 4.23,
+    "p_win": 0.153,
+    "p_not_lose": 0.214,
+    "ev": -0.143,
+    "reliability": 1.0,
+    "priority": 18,
+    "level": "basse"
+   },
+   {
+    "kind": "jackpot",
+    "label": "Jackpot",
+    "scope": "Toutes ligues",
+    "stake_pct": 0.25,
+    "legs": [
+     {
+      "id": "20261101|SP1|Santander|Real Madrid",
+      "market": "o25",
+      "odds": 1.18,
+      "odds_source": "estimée",
+      "p_win": 0.805,
+      "p_push": 0.0,
+      "min_odds": 1.28
+     },
+     {
+      "id": "20261101|T1|Amedspor|Eyupspor",
+      "market": "o25",
+      "odds": 1.4,
+      "odds_source": "estimée",
+      "p_win": 0.669,
+      "p_push": 0.0,
+      "min_odds": 1.54
+     },
+     {
+      "id": "20261101|D1|Ein Frankfurt|Hamburg",
+      "market": "o25",
+      "odds": 1.52,
+      "odds_source": "estimée",
+      "p_win": 0.637,
+      "p_push": 0.0,
+      "min_odds": 1.62
+     },
+     {
+      "id": "20261101|T1|Trabzonspor|Gaziantep",
+      "market": "o25",
+      "odds": 1.47,
+      "odds_source": "estimée",
+      "p_win": 0.635,
+      "p_push": 0.0,
+      "min_odds": 1.62
+     },
+     {
+      "id": "20261101|I1|Frosinone|Torino",
+      "market": "o25",
+      "odds": 1.45,
+      "odds_source": "estimée",
+      "p_win": 0.654,
+      "p_push": 0.0,
+      "min_odds": 1.57
+     },
+     {
+      "id": "20261101|N1|Zwolle|Den Haag",
+      "market": "o25",
+      "odds": 1.51,
+      "odds_source": "estimée",
+      "p_win": 0.634,
+      "p_push": 0.0,
+      "min_odds": 1.63
+     },
+     {
+      "id": "20261101|F1|Marseille|Toulouse",
+      "market": "o25",
+      "odds": 1.51,
+      "odds_source": "estimée",
+      "p_win": 0.626,
+      "p_push": 0.0,
+      "min_odds": 1.65
+     },
+     {
+      "id": "20261101|N1|Telstar|Utrecht",
+      "market": "o25",
+      "odds": 1.57,
+      "odds_source": "estimée",
+      "p_win": 0.607,
+      "p_push": 0.0,
+      "min_odds": 1.7
+     }
+    ],
+    "odds": 19.16,
+    "p_win": 0.034,
+    "p_not_lose": 0.034,
+    "ev": -0.342,
+    "reliability": 1.006,
+    "priority": 19,
+    "level": "basse"
+   }
+  ]
+ },
+ "2026-11-02": {
+  "frozen": false,
+  "created": "2026-10-29T23:54+00:00",
+  "coupons": [
+   {
+    "kind": "sur",
+    "label": "Coupon sûr",
+    "scope": "Toutes ligues",
+    "stake_pct": 2.0,
+    "legs": [
+     {
+      "id": "20261102|P1|Benfica|Alverca",
+      "market": "o20",
+      "odds": 1.15,
+      "odds_source": "estimée",
+      "p_win": 0.689,
+      "p_push": 0.172,
+      "min_odds": 1.24
+     },
+     {
+      "id": "20261102|SP1|La Coruna|Osasuna",
+      "market": "o15",
+      "odds": 1.31,
+      "odds_source": "estimée",
+      "p_win": 0.729,
+      "p_push": 0.0,
+      "min_odds": 1.41
+     },
+     {
+      "id": "20261102|SP2|Oviedo|Las Palmas",
+      "market": "o20",
+      "odds": 1.55,
+      "odds_source": "estimée",
+      "p_win": 0.467,
+      "p_push": 0.239,
+      "min_odds": 1.68
+     }
+    ],
+    "odds": 2.34,
+    "p_win": 0.235,
+    "p_not_lose": 0.443,
+    "ev": -0.113,
+    "reliability": 1.026,
+    "priority": 1,
+    "level": "haute"
+   },
+   {
+    "kind": "sur",
+    "label": "Coupon sûr",
+    "scope": "Toutes ligues",
+    "stake_pct": 2.0,
+    "legs": [
+     {
+      "id": "20261102|I1|Sassuolo|Fiorentina",
+      "market": "o20",
+      "odds": 1.29,
+      "odds_source": "estimée",
+      "p_win": 0.569,
+      "p_push": 0.226,
+      "min_odds": 1.4
+     },
+     {
+      "id": "20261102|F1|Lorient|Brest",
+      "market": "o15",
+      "odds": 1.22,
+      "odds_source": "estimée",
+      "p_win": 0.763,
+      "p_push": 0.0,
+      "min_odds": 1.35
+     },
+     {
+      "id": "20261102|I1|Atalanta|Parma",
+      "market": "o20",
+      "odds": 1.57,
+      "odds_source": "estimée",
+      "p_win": 0.452,
+      "p_push": 0.256,
+      "min_odds": 1.7
+     }
+    ],
+    "odds": 2.47,
+    "p_win": 0.196,
+    "p_not_lose": 0.429,
+    "ev": -0.137,
+    "reliability": 0.975,
+    "priority": 2,
+    "level": "haute"
+   },
+   {
+    "kind": "audace",
+    "label": "Coupon audacieux",
+    "scope": "Toutes ligues",
+    "stake_pct": 0.5,
+    "legs": [
+     {
+      "id": "20261102|P1|Benfica|Alverca",
+      "market": "o20",
+      "odds": 1.15,
+      "odds_source": "estimée",
+      "p_win": 0.689,
+      "p_push": 0.172,
+      "min_odds": 1.24
+     },
+     {
+      "id": "20261102|SP2|Oviedo|Las Palmas",
+      "market": "o20",
+      "odds": 1.55,
+      "odds_source": "estimée",
+      "p_win": 0.467,
+      "p_push": 0.239,
+      "min_odds": 1.68
+     },
+     {
+      "id": "20261102|SP2|Valladolid|Leganes",
+      "market": "o25",
+      "odds": 2.65,
+      "odds_source": "estimée",
+      "p_win": 0.373,
+      "p_push": 0.0,
+      "min_odds": 2.76
+     }
+    ],
+    "odds": 4.72,
+    "p_win": 0.12,
+    "p_not_lose": 0.227,
+    "ev": -0.082,
+    "reliability": 1.004,
+    "priority": 3,
+    "level": "basse"
+   },
+   {
+    "kind": "audace",
+    "label": "Coupon audacieux",
+    "scope": "Toutes ligues",
+    "stake_pct": 0.5,
+    "legs": [
+     {
+      "id": "20261102|E0|Newcastle|Everton",
+      "market": "o20",
+      "odds": 1.42,
+      "odds_source": "estimée",
+      "p_win": 0.497,
+      "p_push": 0.269,
+      "min_odds": 1.51
+     },
+     {
+      "id": "20261102|SP1|La Coruna|Osasuna",
+      "market": "o25",
+      "odds": 2.04,
+      "odds_source": "estimée",
+      "p_win": 0.464,
+      "p_push": 0.0,
+      "min_odds": 2.22
+     },
+     {
+      "id": "20261102|P1|Gil Vicente|Guimaraes",
+      "market": "o20",
+      "odds": 1.92,
+      "odds_source": "estimée",
+      "p_win": 0.383,
+      "p_push": 0.248,
+      "min_odds": 2.02
+     }
+    ],
+    "odds": 5.56,
+    "p_win": 0.088,
+    "p_not_lose": 0.224,
+    "ev": -0.093,
+    "reliability": 1.016,
+    "priority": 4,
+    "level": "basse"
+   },
+   {
+    "kind": "audace",
+    "label": "Coupon audacieux",
+    "scope": "Toutes ligues",
+    "stake_pct": 0.5,
+    "legs": [
+     {
+      "id": "20261102|I1|Sassuolo|Fiorentina",
+      "market": "o25",
+      "odds": 1.67,
+      "odds_source": "estimée",
+      "p_win": 0.569,
+      "p_push": 0.0,
+      "min_odds": 1.81
+     },
+     {
+      "id": "20261102|T1|Genclerbirligi|Alanyaspor",
+      "market": "o20",
+      "odds": 1.79,
+      "odds_source": "estimée",
+      "p_win": 0.374,
+      "p_push": 0.275,
+      "min_odds": 2.0
+     },
+     {
+      "id": "20261102|SP2|Mallorca|Cadiz",
+      "market": "o20",
+      "odds": 2.14,
+      "odds_source": "estimée",
+      "p_win": 0.338,
+      "p_push": 0.252,
+      "min_odds": 2.28
+     }
+    ],
+    "odds": 6.4,
+    "p_win": 0.072,
+    "p_not_lose": 0.218,
+    "ev": -0.125,
+    "reliability": 0.99,
+    "priority": 5,
+    "level": "basse"
+   },
+   {
+    "kind": "jackpot",
+    "label": "Jackpot",
+    "scope": "Toutes ligues",
+    "stake_pct": 0.25,
+    "legs": [
+     {
+      "id": "20261102|P1|Benfica|Alverca",
+      "market": "o25",
+      "odds": 1.41,
+      "odds_source": "estimée",
+      "p_win": 0.689,
+      "p_push": 0.0,
+      "min_odds": 1.5
+     },
+     {
+      "id": "20261102|I1|Sassuolo|Fiorentina",
+      "market": "o25",
+      "odds": 1.67,
+      "odds_source": "estimée",
+      "p_win": 0.569,
+      "p_push": 0.0,
+      "min_odds": 1.81
+     },
+     {
+      "id": "20261102|F1|Lorient|Brest",
+      "market": "o25",
+      "odds": 1.8,
+      "odds_source": "estimée",
+      "p_win": 0.524,
+      "p_push": 0.0,
+      "min_odds": 1.97
+     },
+     {
+      "id": "20261102|SP1|La Coruna|Osasuna",
+      "market": "o25",
+      "odds": 2.04,
+      "odds_source": "estimée",
+      "p_win": 0.464,
+      "p_push": 0.0,
+      "min_odds": 2.22
+     },
+     {
+      "id": "20261102|E0|Newcastle|Everton",
+      "market": "o25",
+      "odds": 1.92,
+      "odds_source": "estimée",
+      "p_win": 0.497,
+      "p_push": 0.0,
+      "min_odds": 2.07
+     },
+     {
+      "id": "20261102|SP2|Oviedo|Las Palmas",
+      "market": "o25",
+      "odds": 2.09,
+      "odds_source": "estimée",
+      "p_win": 0.467,
+      "p_push": 0.0,
+      "min_odds": 2.2
+     }
+    ],
+    "odds": 34.7,
+    "p_win": 0.022,
+    "p_not_lose": 0.022,
+    "ev": -0.232,
+    "reliability": 1.0,
+    "priority": 6,
+    "level": "basse"
+   }
+  ]
  }
 }
