@@ -12,11 +12,12 @@ import pandas as pd
 
 from config import COUPONS, LEAGUES, SITE_DATA, STATE_DIR, VALUE_EDGE
 from coupons import build_day, favorite_leg, legs_for_match, settle_coupon
+import extra
 import meta
 from coupons import settle_leg
 from model import devig, fit, markets_from_total, predict, result_probs, score_matrix, total_dist
 
-VERSION = 3  # à augmenter quand le test change, pour qu'il soit relancé sans attendre la semaine
+VERSION = 4  # à augmenter quand le test change, pour qu'il soit relancé sans attendre la semaine
 BACKTEST_YEARS = 3.2
 REFIT_DAYS = 7
 
@@ -47,6 +48,7 @@ def walk_forward(results: pd.DataFrame, today: pd.Timestamp) -> pd.DataFrame:
                             "m_o15": mod["o15"], "m_o25": mod["o25"],
                             "oh": row.oh, "od": row.od, "oa": row.oa,
                             "fav_m": abs(rp["1"] - rp["2"]),
+                            "hthg": row.hthg, "htag": row.htag,
                         })
             t = nxt
     return pd.DataFrame(rows)
@@ -83,7 +85,7 @@ def diagnostic(bt: pd.DataFrame):
     rows = []
     for r in bt.itertuples():
         for l in r.legs:
-            if l["p_win"] < 0.5 or l["market"] == "o20":  # +2 asiatique = +2,5 gagné ou remboursé : même diagnostic
+            if l["p_win"] < 0.5 or l["market"] == "o20" or l["market"] in extra.EXTRA:  # +2 = +2,5 gagné ou remboursé ; autres paris : bloc à part
                 continue
             res = settle_leg(l["market"], r.tot, r.hg, r.ag)
             rows.append((r.div, l["market"], l["p_win"], l["p_push"], res == "won", res == "push", l["odds"]))
@@ -116,6 +118,13 @@ def diagnostic(bt: pd.DataFrame):
     return out, blocked
 
 
+def match_info(r) -> dict:
+    """Score de mi-temps d'un match joué, s'il est publié (sert aux paris de mi-temps)."""
+    if pd.isna(r.hthg) or pd.isna(r.htag):
+        return {}
+    return {"ht": (int(r.hthg), int(r.htag))}
+
+
 class _R:  # notes figées pour rejouer predict() sur une ligne du backtest
     def __init__(self, lh, la, rho):
         self._lh, self._la, self.rho = lh, la, rho
@@ -139,7 +148,10 @@ def run(results: pd.DataFrame, today: date) -> dict:
     scores = {float(w): logloss(w * sub["m_o25"] + (1 - w) * sub["mkt"].astype(float), sub["y25"]) for w in grid}
     blend = min(scores, key=scores.get)
 
-    finals, legs_all, base, favs = [], [], [], []
+    # Autres paris : part des buts marqués en 1re mi-temps
+    ht_ok = results.dropna(subset=["hthg", "htag"])
+    ht_share = float((ht_ok["hthg"] + ht_ok["htag"]).sum() / max((ht_ok["hg"] + ht_ok["ag"]).sum(), 1))
+    finals, legs_all, base, favs, xraw = [], [], [], [], []
     for row in bt.itertuples():
         o1x2 = None if any(pd.isna(x) for x in (row.oh, row.od, row.oa)) else (row.oh, row.od, row.oa)
         pr = predict(_R(row.lh, row.la, row.rho), "", "", row.o25, row.u25, blend=blend, odds_1x2=o1x2)
@@ -148,6 +160,7 @@ def run(results: pd.DataFrame, today: date) -> dict:
         base.append((mp["o15"], mp["o25"]) if mp else (np.nan, np.nan))
         finals.append((pr["final"]["o15"], pr["final"]["o25"]))
         legs_all.append(legs_for_match(pr, mp, row.o25 if not pd.isna(row.o25) else None))
+        xraw.append((pr["xg_home"], pr["xg_away"], pr["res"]))
     bt["f_o15"] = [f[0] for f in finals]
     bt["f_o25"] = [f[1] for f in finals]
     bt["b_o15"] = [b[0] for b in base]
@@ -197,6 +210,19 @@ def run(results: pd.DataFrame, today: date) -> dict:
                       "clv": round(float(clv.mean()), 4) if len(clv) else None})
     report["value"]["o25"] = value
 
+    # Autres paris : annoncé / réel par marché, recalibrage, puis sélections ajoutées aux matchs rejoués
+    infos = [match_info(r) for r in bt.itertuples()]
+    xrows = []
+    for r, (xh, xa, res), info in zip(bt.itertuples(), xraw, infos):
+        for mk, (pw, pp) in extra.raw_probs(xh, xa, r.rho, res, ht_share).items():
+            out = extra.settle(mk, r.hg, r.ag, info)
+            if out is not None:  # chance de gagner hors remboursement, comparée aux matchs non remboursés
+                xrows.append((r.date, mk, pw / max(1 - pp, 1e-9), 1.0 if out == "won" else 0.0, 1 if out == "push" else 0))
+    xcfg = extra.study(pd.DataFrame(xrows, columns=["date", "market", "p", "y", "push"]), today)
+    report["extra"] = {"ht_share": round(ht_share, 4), "markets": xcfg}
+    for legs, r, (xh, xa, res) in zip(legs_all, bt.itertuples(), xraw):
+        legs += extra.legs(xh, xa, r.rho, res, xcfg, ht_share)
+
     # Rejouer les coupons quotidiens (toutes ligues confondues, une journée = une date)
     bt["id"] = [f"{d.strftime('%Y%m%d')}|{dv}|{h}|{a}" for d, dv, h, a in zip(bt["date"], bt["div"], bt["home"], bt["away"])]
     bt["legs"] = legs_all
@@ -205,7 +231,7 @@ def run(results: pd.DataFrame, today: date) -> dict:
     curve = {k: [] for k in COUPONS}
     for d, g in bt.groupby("date"):
         matches = [{"id": i, "div": dv, "legs": l, "fav": f} for i, dv, l, f in zip(g["id"], g["div"], g["legs"], g["fav_leg"])]
-        scores = dict(zip(g["id"], zip(g["hg"], g["ag"])))
+        scores = {i: (r.hg, r.ag, match_info(r)) for i, r in zip(g["id"], g.itertuples())}
         for c in build_day(matches, league_names={k: v[0] for k, v in LEAGUES.items()}):
             settle_coupon(c, scores)
             s = stats[c["kind"]]
@@ -259,6 +285,7 @@ def run(results: pd.DataFrame, today: date) -> dict:
     STATE_DIR.mkdir(parents=True, exist_ok=True)
     SITE_DATA.mkdir(parents=True, exist_ok=True)
     (STATE_DIR / "model_config.json").write_text(json.dumps({"blend": blend, "updated": report["generated"], "context": report.get("context"),
-                                                              "meta": report.get("meta"), "blocked": blocked}, indent=1))
+                                                              "meta": report.get("meta"), "blocked": blocked,
+                                                              "extra": report.get("extra")}, indent=1))
     (SITE_DATA / "backtest.json").write_text(json.dumps(report, ensure_ascii=False))
     return report

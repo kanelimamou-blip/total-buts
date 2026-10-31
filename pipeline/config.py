@@ -40,7 +40,7 @@ RIDGE = 2.0            # rappel des notes d'équipe vers la moyenne
 MAX_GOALS = 10
 
 # Marchés suivis : clé -> libellé
-MARKETS = {"o15": "Plus de 1,5 but", "o20": "Plus de 2 buts", "o25": "Plus de 2,5 buts"}
+MARKETS = {"o15": "Plus de 1,5 but", "o20": "Plus de 2 buts", "o25": "Plus de 2,5 buts"}  # autres paris : extra.LABELS
 
 # Marge supposée du bookmaker sur les totaux (sert à estimer la cote 1xBet quand on ne l'a pas)
 BOOK_MARGIN = 0.06
@@ -64,6 +64,8 @@ COUPONS = {
     "buts15": {"label": "Coupon +1,5", "min_odds": 2.0, "max_odds": gross_odds(2.0), "legs": (3, 5), "stake_pct": 1.5},
     "buts25": {"label": "Coupon +2,5", "min_odds": 2.0, "max_odds": 4.0, "legs": (2, 3), "stake_pct": 1.0},
     "mix": {"label": "Coupon mix", "min_odds": 2.0, "max_odds": gross_odds(2.0), "legs": (2, 3), "stake_pct": 1.5},
+    "dc": {"label": "Double chance", "min_odds": 2.0, "max_odds": gross_odds(2.0), "legs": (3, 6), "stake_pct": 1.5},
+    "autres": {"label": "Autres paris", "min_odds": 2.0, "max_odds": gross_odds(2.0), "legs": (2, 5), "stake_pct": 1.0},
     "periode_buts": {"label": "Buts sur la période", "min_odds": gross_odds(2.0), "max_odds": 3.5, "legs": (3, 5), "stake_pct": 1.0},
     "periode_fav": {"label": "Favoris sur la période", "min_odds": gross_odds(2.0), "max_odds": 3.5, "legs": (3, 5), "stake_pct": 1.0},
     "periode_long": {"label": "Combiné longue durée", "min_odds": 3.0, "max_odds": 1e9, "legs": (3, 22), "stake_pct": 0.5},
@@ -84,8 +86,8 @@ MIN_LEG_P: dict = {}  # testé de 0,65 à 0,80 : aucun gain de réussite, la cot
 MAX_COUPONS_PER_MATCH = 3
 
 # Nombre de coupons par jour : pas de limite fixe, on garde tous ceux qui passent ces seuils
-MIN_P = {"buts15": 0.36, "buts25": 0.25, "mix": 0.36, "tendance": 0.3, "sur": 0.36, "ligue": 0.34, "value": 0.25, "audace": 0.15, "favoris": 0.36, "periode_buts": 0.3, "periode_fav": 0.3}
-MAX_PER_DAY = {"buts15": 4, "buts25": 3, "mix": 6, "tendance": 2, "sur": 8, "ligue": 10, "value": 4, "audace": 3, "jackpot": 1, "favoris": 4, "periode_buts": 1, "periode_fav": 1}
+MIN_P = {"dc": 0.36, "autres": 0.36, "buts15": 0.36, "buts25": 0.25, "mix": 0.36, "tendance": 0.3, "sur": 0.36, "ligue": 0.34, "value": 0.25, "audace": 0.15, "favoris": 0.36, "periode_buts": 0.3, "periode_fav": 0.3}
+MAX_PER_DAY = {"dc": 4, "autres": 6, "buts15": 4, "buts25": 3, "mix": 6, "tendance": 2, "sur": 8, "ligue": 10, "value": 4, "audace": 3, "jackpot": 1, "favoris": 4, "periode_buts": 1, "periode_fav": 1}
 
 # Tickets sur une période (en jours), créés chaque jour
 PERIODS = {5: "5 jours", 7: "1 semaine", 15: "15 jours", 21: "3 semaines", 30: "1 mois"}

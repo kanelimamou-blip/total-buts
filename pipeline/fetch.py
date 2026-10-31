@@ -20,6 +20,7 @@ COLS = {
     "od": ["AvgD", "BbAvD", "B365D", "PSD"],
     "oa": ["AvgA", "BbAvA", "B365A", "PSA"],
     "hs": ["HS"], "as_": ["AS"], "hst": ["HST"], "ast": ["AST"],
+    "hthg": ["HTHG"], "htag": ["HTAG"],
 }
 
 

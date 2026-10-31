@@ -12,9 +12,11 @@ from itertools import combinations, product
 import numpy as np
 
 from config import BOOK_MARGIN, COUPONS, MAX_COUPONS_PER_MATCH, MAX_PER_DAY, MIN_LEG_ODDS, MIN_LEG_P, MIN_P, TAX, VALUE_EDGE
+import extra
 from model import fair_odds
 
 MKT_ORDER = ["o15", "o20", "o25"]
+EXTRA_ORDER = ["u45", "1X", "X2", "h05", "a05", "sh05", "dnb1", "dnb2", "ht05", "u35", "h15", "a15"]
 
 
 def legs_for_match(pred: dict, market_pred: dict | None, real_o25: float | None) -> list[dict]:
@@ -141,7 +143,26 @@ def _repeat(kind, matches, allowed, pool, score="safety", scope="Toutes ligues",
     return out
 
 
-def build_day(matches: list[dict], kinds=("sur", "favoris", "buts15", "buts25", "mix", "ligue", "value", "audace", "jackpot"), league_names=None) -> list[dict]:
+def _virtual(matches: list[dict], markets: set) -> list[dict]:
+    """Garde pour chaque match ses 2 meilleures sélections parmi `markets` (la plus sûre et la plus
+    rentable en cote par unité de risque), renommées x1 / x2 : la recherche reste rapide malgré
+    le grand nombre de marchés. Le vrai marché est conservé dans « side »."""
+    out = []
+    for m in matches:
+        c = [l for l in m["legs"] if l["market"] in markets and not l.get("excluded") and l["odds"] >= MIN_LEG_ODDS]
+        if not c:
+            continue
+        safe = max(c, key=lambda l: l["p_win"] + l["p_push"])
+        eff = max(c, key=lambda l: np.log(l["odds"]) / max(-np.log(max(l["p_win"] + l["p_push"], 1e-6)), 1e-6))
+        legs = [dict(safe, market="x1", side=safe["market"])]
+        if eff is not safe:
+            legs.append(dict(eff, market="x2", side=eff["market"]))
+        out.append(dict(m, legs=legs))
+    return out
+
+
+def build_day(matches: list[dict], kinds=("sur", "favoris", "buts15", "buts25", "mix", "dc", "autres", "ligue", "value", "audace", "jackpot"),
+              league_names=None) -> list[dict]:
     """Coupons d'une journée. matches : [{"id", "div", "rel", "legs"}].
 
     Les coupons sûrs toutes ligues ne partagent aucun match entre eux ; les coupons par championnat
@@ -189,6 +210,10 @@ def build_day(matches: list[dict], kinds=("sur", "favoris", "buts15", "buts25", 
             if len(ms) >= COUPONS["ligue"]["legs"][0]:
                 name = (league_names or {}).get(div, div)
                 add(_repeat("ligue", ms, {"o15", "o20", "o25"}, pool=10, scope=name)[:1])
+    if "dc" in kinds:  # double chance et remboursé si nul : le favori ne doit pas perdre
+        add(_repeat("dc", _virtual(free(matches), {"1X", "X2", "dnb1", "dnb2"}), {"x1", "x2"}, pool=12, mk_order=["x1", "x2"]))
+    if "autres" in kinds:
+        add(_repeat("autres", _virtual(free(matches), set(EXTRA_ORDER)), {"x1", "x2"}, pool=12, mk_order=["x1", "x2"]))
     if "value" in kinds:
         vm = []
         for m in free(matches):
@@ -348,7 +373,10 @@ def build_long(matches: list[dict], target: float, scope: str, min_p: float = 0.
     return c
 
 
-def settle_leg(market: str, total: int, hg: int = 0, ag: int = 0) -> str:
+def settle_leg(market: str, total: int, hg: int = 0, ag: int = 0, info: dict | None = None) -> str | None:
+    """None : résultat pas encore connu (score de mi-temps pas encore publié)."""
+    if market in extra.EXTRA:
+        return extra.settle(market, hg, ag, info)
     if market == "1":
         return "won" if hg > ag else "lost"
     if market == "2":
@@ -360,29 +388,36 @@ def settle_leg(market: str, total: int, hg: int = 0, ag: int = 0) -> str:
     return "won" if total >= 3 else ("push" if total == 2 else "lost")
 
 
+def _split(sc):
+    """Score enregistré : (buts dom., buts ext.) puis, si connu, un dict {"ht": (buts dom., buts ext.)}."""
+    return int(sc[0]), int(sc[1]), (sc[2] if len(sc) >= 3 else None)
+
+
 def settle_coupon(coupon: dict, scores: dict) -> dict | None:
-    """scores : id du match -> (buts domicile, buts extérieur). Renvoie None si un match n'est pas encore joué."""
+    """scores : id du match -> score (voir _split). Renvoie None si un résultat manque encore."""
     payout = 1.0
     status = "won"
     # chaque sélection jouée est notée tout de suite, même si le coupon attend encore un match
-    for leg in coupon["legs"]:
-        if leg["id"] in scores:
-            hg, ag = scores[leg["id"]]
-            leg["result"] = settle_leg(leg["market"], hg + ag, hg, ag)
-            leg["goals"] = int(hg + ag)
-            leg["score"] = f"{int(hg)}-{int(ag)}"
+    ready = True
     for leg in coupon["legs"]:
         if leg["id"] not in scores:
-            return None
-    for leg in coupon["legs"]:
-        hg, ag = scores[leg["id"]]
-        r = settle_leg(leg["market"], hg + ag, hg, ag)
-        leg["result"] = r
+            ready = False
+            continue
+        hg, ag, info = _split(scores[leg["id"]])
+        r = settle_leg(leg["market"], hg + ag, hg, ag, info)
         leg["goals"] = int(hg + ag)
-        leg["score"] = f"{int(hg)}-{int(ag)}"
-        if r == "lost":
+        leg["score"] = f"{hg}-{ag}"
+        if r is None:
+            ready = False
+            leg.pop("result", None)
+            continue
+        leg["result"] = r
+    if not ready:
+        return None
+    for leg in coupon["legs"]:
+        if leg["result"] == "lost":
             status = "lost"
-        elif r == "won":
+        elif leg["result"] == "won":
             payout *= leg["odds"]
     coupon["status"] = status
     coupon["return"] = round(payout if status == "won" else 0.0, 3)

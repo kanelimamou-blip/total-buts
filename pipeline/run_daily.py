@@ -15,6 +15,7 @@ import ahead
 import backtest
 import context
 import europe
+import extra
 import feedback
 import meta
 import tips as tips_mod
@@ -104,7 +105,8 @@ def main():
     except Exception as exc:  # noqa: BLE001
         print("Calendrier à un mois indisponible :", exc)
         far = fixtures.iloc[0:0]
-    scores = {match_id(r.date, r.div, r.home, r.away): (int(r.hg), int(r.ag)) for r in results.itertuples()}
+    # score final, plus score de mi-temps quand football-data l'a publié (paris de mi-temps)
+    scores = {match_id(r.date, r.div, r.home, r.away): (int(r.hg), int(r.ag), backtest.match_info(r)) for r in results.itertuples()}
     scores.update(euro_scores)
     # scores ESPN dès la fin du match, sans attendre football-data
     try:
@@ -114,8 +116,8 @@ def main():
         print("Scores ESPN indisponibles :", exc)
     for mid, e in log.items():
         if "goals" not in e and mid in scores:
-            e["goals"] = sum(scores[mid])
-            e["score"] = "%d-%d" % scores[mid]
+            e["goals"] = int(scores[mid][0] + scores[mid][1])
+            e["score"] = "%d-%d" % tuple(scores[mid][:2])
     fb = feedback.build(bt, log, store)
     import coupons as coupons_mod
     coupons_mod.KIND_FACTOR = fb.get("kinds", {})
@@ -143,6 +145,8 @@ def main():
         print("Tirs indisponibles :", exc)
         shots_now, meta_cfg = None, None
     blocked = set(model_cfg.get("blocked") or [])
+    xcfg = (model_cfg.get("extra") or {}).get("markets")
+    ht_share = (model_cfg.get("extra") or {}).get("ht_share", extra.HT_SHARE)
 
     def ok_legs(m):  # sélections hors des réglages que le diagnostic a jugés trop optimistes
         return [l for l in m["legs"] if f"{m['div']}|{l['market']}" not in blocked]
@@ -175,6 +179,7 @@ def main():
         pr["final"] = feedback.apply(pr["final"], row.div, fb)
         mp = predict(r, row.home, row.away, o25, u25, blend=0.0)["final"] if pr["market_o25"] is not None else None
         legs = legs_for_match(pr, mp, o25)
+        legs += extra.legs(pr["xg_home"], pr["xg_away"], r.rho, pr["res"], xcfg, ht_share)
         fav = favorite_leg(pr, row.home, row.away, o1x2, shift=fb["shifts"].get(row.div, {}).get("fav", 0.0))
         matches.append({
             "id": mid, "div": row.div, "league": LEAGUES[row.div][0], "country": LEAGUES[row.div][1],
@@ -202,6 +207,7 @@ def main():
         final = feedback.apply(e["final"], e["div"], fb)
         pr = {"final": final, "model": e["final"], "res": e["res"]}
         legs = legs_for_match(pr, None, None)
+        legs += extra.legs(e["lh"], e["la"], 0.0, e["res"], xcfg, ht_share)
         fav = favorite_leg(pr, e["home"], e["away"], shift=fb["shifts"].get(e["div"], {}).get("fav", 0.0))
         matches.append({
             "id": e["id"], "div": e["div"], "league": e["league"], "country": e["country"],
@@ -254,7 +260,7 @@ def main():
                      "rel": fb["reliability"].get(m["div"], 0.9 if m["div"] in CUPS else 1.0)}
                     for m in matches if not m.get("provisional")]
         used_b, used_f = set(), set()
-        extra = []
+        period_coupons = []
         for days, label in sorted(PERIODS.items()):
             end = (today + timedelta(days=days)).isoformat()
             window = [m for m in pool_all if m["date"] < end]
@@ -264,8 +270,8 @@ def main():
                 used_b |= {l["id"] for l in c["legs"]}
             for c in favs:
                 used_f |= {l["id"] for l in c["legs"]}
-            extra += buts + favs
-        entry["coupons"] = prioritise(entry["coupons"] + extra)
+            period_coupons += buts + favs
+        entry["coupons"] = prioritise(entry["coupons"] + period_coupons)
         entry["periods_done"] = True
     # Coupons « tendances » : s'appuient sur les surprises de la saison (équipes qui marquent ou gagnent plus que prévu)
     season_start = pd.Timestamp(year=today.year if today.month >= 7 else today.year - 1, month=7, day=1)
@@ -410,6 +416,7 @@ def main():
         "matches": matches, "coupons": history, "live": live, "predictions": pred_stats,
         "tips": tip_list, "recent": recent_out, "feedback": fb, "surprises": surprise, "learning": learning,
         "trajectory": {"live": traj, "base": base},
+        "extra_labels": {k: list(v) for k, v in extra.LABELS.items()},
         "last_result_date": results["date"].max().strftime("%Y-%m-%d") if len(results) else None,
     }
     (SITE_DATA / "app.json").write_text(json.dumps(out, ensure_ascii=False))

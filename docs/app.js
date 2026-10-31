@@ -1,8 +1,9 @@
 "use strict";
 const MK = { o15: "+1,5 but", o20: "+2 buts", o25: "+2,5 buts" };
-const KIND_FILTERS = [["all", "Tous"], ["sur", "Sûrs"], ["favoris", "Favoris"], ["mix", "Mix"], ["buts15", "+1,5"], ["buts25", "+2,5"], ["periode", "Sur une période"], ["ligue", "Par championnat"], ["tendance", "Tendances"], ["value", "Value"], ["audace", "Audacieux"], ["jackpot", "Jackpot"], ["mille", "Cote 1000"]];
+const KIND_FILTERS = [["all", "Tous"], ["sur", "Sûrs"], ["favoris", "Favoris"], ["mix", "Mix"], ["buts15", "+1,5"], ["buts25", "+2,5"], ["dc", "Double chance"], ["autres", "Autres paris"], ["periode", "Sur une période"], ["ligue", "Par championnat"], ["tendance", "Tendances"], ["value", "Value"], ["audace", "Audacieux"], ["jackpot", "Jackpot"], ["mille", "Cote 1000"]];
 const kindOf = (c) => (c.kind.startsWith("periode") ? "periode" : c.kind);
-const mkLabel = (l) => (l.market === "1" || l.market === "2" ? `Victoire ${l.team || (l.market === "1" ? l.home : l.away)}` : MK[l.market]);
+const XL = () => state.data?.extra_labels || {};  // autres paris : [libellé appli, libellé 1xBet]
+const mkLabel = (l) => (l.market === "1" || l.market === "2" ? `Victoire ${l.team || (l.market === "1" ? l.home : l.away)}` : MK[l.market] || XL()[l.market]?.[0] || l.market);
 const state = { data: null, bt: null, day: null, kind: "all", league: "all", sort: "o15" };
 const $ = (s, el = document) => el.querySelector(s);
 const esc = (s) => String(s ?? "").replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
@@ -200,6 +201,7 @@ function openMatch(id) {
     <p class="muted small" style="text-align:center">${esc(m.league)} · ${dayLabel(m.date, state.data.today)} ${esc(m.time)}</p>
     <div class="mk-grid">${box("o15")}${box("o20")}${box("o25")}</div>
     ${m.res ? `<div class="mk-grid"><div class="mk-box"><span class="s">Victoire ${esc(m.home)}</span><span class="p">${pct(m.res["1"])}</span>${addBtn(m, "1")}</div><div class="mk-box"><span class="s">Nul</span><span class="p">${pct(m.res.X)}</span></div><div class="mk-box"><span class="s">Victoire ${esc(m.away)}</span><span class="p">${pct(m.res["2"])}</span>${addBtn(m, "2")}</div></div>` : ""}
+    ${extraGrid(m)}
     ${m.p.o20_push ? `<p class="small muted">+2 buts : remboursé si le match finit à 2 buts (${pct(m.p.o20_push)}).</p>` : ""}
     ${m.provisional ? `<p class="note">Coupe d'Europe en rodage : l'historique des matchs européens se charge encore. Ce match n'entre pas dans les coupons pour l'instant.</p>` : ""}
     ${m.market_o25 != null ? `<p class="small">Marché sur +2,5 : <b>${pct(m.market_o25)}</b> (cote moyenne ${odds(m.odds_o25)}). Modèle seul : ${pct(m.p_model.o25)}.</p>` : `<p class="small muted">Cotes du marché pas encore publiées dans nos sources : probabilités du modèle seul, affinées à l'approche du match.</p>`}
@@ -210,6 +212,13 @@ function openMatch(id) {
   }
   $("#sheet-body").innerHTML = html;
   $("#sheet").hidden = false;
+}
+
+// Autres paris du match : double chance, remboursé si nul, moins de 3,5 / 4,5, le favori marque, mi-temps
+function extraGrid(m) {
+  const xs = m.legs.filter((l) => XL()[l.market]);
+  if (!xs.length) return "";
+  return `<h3>Autres paris</h3><div class="mk-grid">${xs.map((l) => `<div class="mk-box"><span class="s">${esc(mkLabel(l))}</span><span class="p">${pct(l.p_win)}</span><span class="s">${l.p_push ? `+${pct(l.p_push)} remboursé · ` : ""}cote estimée ${odds(l.odds)}</span>${addBtn(m, l.market)}</div>`).join("")}</div>`;
 }
 
 function formBlock(team, f) {
@@ -500,8 +509,18 @@ function backtestBlock(bt) {
   ${bt.context?.factors?.length ? `<h3>Facteurs de contexte</h3><p class="small muted">Écart entre les buts prévus par les cotes et ce qui s'est vraiment passé, selon la situation.${["o15", "o25"].some((k) => bt.context.markets[k]?.use) ? " Les facteurs qui améliorent la précision sur une période de test sont appliqués aux probabilités." : " Aucun n'améliore assez la précision pour être appliqué pour l'instant."}</p>
   <div class="tbl"><table><thead><tr><th>Situation</th><th class="n">Matchs</th><th class="n">+2,5 prévu</th><th class="n">+2,5 réel</th></tr></thead><tbody>
   ${bt.context.factors.map((f) => `<tr><td style="white-space:normal">${esc(f.label)}</td><td class="n">${f.n}</td><td class="n">${pct(f.pred_o25)}</td><td class="n ${f.obs_o25 > f.pred_o25 ? "pos" : "neg"}">${pct(f.obs_o25)}</td></tr>`).join("")}</tbody></table></div>` : ""}
-  ${metaBlock(bt)}${diagBlock(bt)}
+  ${extraBlock(bt)}${metaBlock(bt)}${diagBlock(bt)}
   <p class="note">${esc(bt.note)}</p></section>`;
+}
+
+// Autres paris : annoncé contre réel sur le passé, après recalibrage quand il améliore la précision
+function extraBlock(bt) {
+  const x = bt.extra?.markets;
+  if (!x) return "";
+  return `<h3>Autres paris</h3><p class="small muted">Chaque marché rejoué sur le passé. Le recalibrage corrige l'annoncé quand il améliore la précision sur une année jamais vue. Remboursé si nul : réussite calculée hors matchs nuls.</p>
+  <div class="tbl"><table><thead><tr><th>Marché</th><th class="n">Matchs</th><th class="n">Annoncé</th><th class="n">Réel</th></tr></thead><tbody>
+  ${Object.values(x).map((e) => `<tr><td style="white-space:normal">${esc(e.label)}</td><td class="n">${e.n}</td><td class="n">${pct(e.pred_cal ?? e.pred)}</td><td class="n">${pct(e.obs)}</td></tr>`).join("")}
+  </tbody></table></div>`;
 }
 
 // Méta-modèle : ce que les tirs cadrés apportent, testé sur une année jamais vue
@@ -592,7 +611,8 @@ setInterval(liveTick, 60e3);
 // libellés des marchés tels qu'ils apparaissent dans 1xBet
 function xbetLabel(mk, h, a) {
   return mk.startsWith("+1,5") ? "Total Plus de 1.5" : mk.startsWith("+2,5") ? "Total Plus de 2.5" : mk.startsWith("+2 ") ? "Total Plus de 2 (asiatique)"
-    : mk === `Victoire ${h}` ? "V1 (victoire domicile)" : mk === `Victoire ${a}` ? "V2 (victoire extérieur)" : mk;
+    : mk === `Victoire ${h}` ? "V1 (victoire domicile)" : mk === `Victoire ${a}` ? "V2 (victoire extérieur)"
+    : Object.values(XL()).find((x) => x[0] === mk)?.[1] || mk;
 }
 function openQuick(legs) {
   $("#sheet-body").innerHTML = `<h2>Saisie rapide 1xBet</h2>
