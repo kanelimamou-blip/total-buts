@@ -44,7 +44,7 @@
 "div": "UCL",
 "home": "Barcelona",
 "away": "Aston Villa",
-"fav_p": 0.51,
+"fav_p": 0.511,
 "fav_side": "1",
 "o15": 0.933,
 "o25": 0.807
@@ -84,7 +84,7 @@
 "div": "UCL",
 "home": "Bodo/Glimt",
 "away": "Lille",
-"fav_p": 0.483,
+"fav_p": 0.482,
 "fav_side": "1",
 "o15": 0.869,
 "o25": 0.68
@@ -94,7 +94,7 @@
 "div": "UCL",
 "home": "Atl\u00e9tico Madrid",
 "away": "Bayern Munich",
-"fav_p": 0.456,
+"fav_p": 0.457,
 "fav_side": "2",
 "o15": 0.928,
 "o25": 0.797
@@ -114,7 +114,7 @@
 "div": "UEL",
 "home": "Stade Rennais",
 "away": "Olympiacos",
-"fav_p": 0.378,
+"fav_p": 0.379,
 "fav_side": "1",
 "o15": 0.651,
 "o25": 0.376
@@ -194,7 +194,7 @@
 "div": "UCL",
 "home": "FC Porto",
 "away": "Napoli",
-"fav_p": 0.491,
+"fav_p": 0.49,
 "fav_side": "1",
 "o15": 0.774,
 "o25": 0.529
@@ -481,7 +481,9 @@
 "fav_p": 0.613,
 "fav_side": "1",
 "o15": 0.822,
-"o25": 0.588
+"o25": 0.588,
+"goals": 4,
+"score": "1-3"
 },
 "20261031|E0|Man City|Brighton": {
 "date": "2026-10-31",
@@ -491,7 +493,9 @@
 "fav_p": 0.585,
 "fav_side": "1",
 "o15": 0.892,
-"o25": 0.675
+"o25": 0.675,
+"goals": 1,
+"score": "0-1"
 },
 "20261031|E1|Southampton|QPR": {
 "date": "2026-10-31",
@@ -501,7 +505,9 @@
 "fav_p": 0.563,
 "fav_side": "1",
 "o15": 0.833,
-"o25": 0.612
+"o25": 0.612,
+"goals": 5,
+"score": "4-1"
 },
 "20261031|E1|Wolves|Cardiff": {
 "date": "2026-10-31",
@@ -511,7 +517,9 @@
 "fav_p": 0.592,
 "fav_side": "1",
 "o15": 0.856,
-"o25": 0.649
+"o25": 0.649,
+"goals": 3,
+"score": "3-0"
 },
 "20261031|E0|Brentford|Nott'm Forest": {
 "date": "2026-10-31",
@@ -521,7 +529,9 @@
 "fav_p": 0.468,
 "fav_side": "1",
 "o15": 0.797,
-"o25": 0.557
+"o25": 0.557,
+"goals": 2,
+"score": "2-0"
 },
 "20261031|E0|Hull|Ipswich": {
 "date": "2026-10-31",
@@ -531,7 +541,9 @@
 "fav_p": 0.421,
 "fav_side": "1",
 "o15": 0.786,
-"o25": 0.522
+"o25": 0.522,
+"goals": 4,
+"score": "2-2"
 },
 "20261031|E1|Bolton|Bristol City": {
 "date": "2026-10-31",
@@ -541,7 +553,9 @@
 "fav_p": 0.412,
 "fav_side": "2",
 "o15": 0.775,
-"o25": 0.536
+"o25": 0.536,
+"goals": 5,
+"score": "2-3"
 },
 "20261031|E0|Bournemouth|Leeds": {
 "date": "2026-10-31",
@@ -551,7 +565,9 @@
 "fav_p": 0.45,
 "fav_side": "1",
 "o15": 0.78,
-"o25": 0.513
+"o25": 0.513,
+"goals": 2,
+"score": "2-0"
 },
 "20261031|E1|Burnley|Portsmouth": {
 "date": "2026-10-31",
@@ -561,7 +577,9 @@
 "fav_p": 0.488,
 "fav_side": "1",
 "o15": 0.739,
-"o25": 0.508
+"o25": 0.508,
+"goals": 0,
+"score": "0-0"
 },
 "20261031|E1|Middlesbrough|Charlton": {
 "date": "2026-10-31",
@@ -571,7 +589,9 @@
 "fav_p": 0.751,
 "fav_side": "1",
 "o15": 0.869,
-"o25": 0.674
+"o25": 0.674,
+"goals": 3,
+"score": "3-0"
 },
 "20261031|E1|Millwall|Derby": {
 "date": "2026-10-31",
@@ -581,7 +601,9 @@
 "fav_p": 0.564,
 "fav_side": "1",
 "o15": 0.75,
-"o25": 0.523
+"o25": 0.523,
+"goals": 5,
+"score": "4-1"
 },
 "20261031|E0|Coventry|Sunderland": {
 "date": "2026-10-31",
@@ -591,7 +613,9 @@
 "fav_p": 0.413,
 "fav_side": "2",
 "o15": 0.718,
-"o25": 0.49
+"o25": 0.49,
+"goals": 4,
+"score": "3-1"
 },
 "20261031|E1|Swansea|Blackburn": {
 "date": "2026-10-31",
@@ -601,7 +625,9 @@
 "fav_p": 0.529,
 "fav_side": "1",
 "o15": 0.767,
-"o25": 0.511
+"o25": 0.511,
+"goals": 4,
+"score": "4-0"
 },
 "20261031|SP2|Eibar|Almeria": {
 "date": "2026-10-31",
@@ -611,7 +637,9 @@
 "fav_p": 0.379,
 "fav_side": "1",
 "o15": 0.786,
-"o25": 0.555
+"o25": 0.555,
+"goals": 2,
+"score": "1-1"
 },
 "20261031|SP1|Vallecano|Celta": {
 "date": "2026-10-31",
@@ -621,7 +649,9 @@
 "fav_p": 0.388,
 "fav_side": "1",
 "o15": 0.72,
-"o25": 0.452
+"o25": 0.452,
+"goals": 3,
+"score": "3-0"
 },
 "20261031|N1|Feyenoord|For Sittard": {
 "date": "2026-10-31",
@@ -631,7 +661,9 @@
 "fav_p": 0.794,
 "fav_side": "1",
 "o15": 0.93,
-"o25": 0.752
+"o25": 0.752,
+"goals": 2,
+"score": "1-1"
 },
 "20261031|P1|Moreirense|Estrela": {
 "date": "2026-10-31",
@@ -641,7 +673,9 @@
 "fav_p": 0.37,
 "fav_side": "1",
 "o15": 0.736,
-"o25": 0.504
+"o25": 0.504,
+"goals": 3,
+"score": "2-1"
 },
 "20261031|T1|Fenerbahce|Goztep": {
 "date": "2026-10-31",
@@ -678,50 +712,50 @@
 "div": "SP2",
 "home": "Celta B",
 "away": "Cordoba",
-"fav_p": 0.416,
+"fav_p": 0.412,
 "fav_side": "2",
-"o15": 0.827,
-"o25": 0.639
+"o15": 0.828,
+"o25": 0.638
 },
 "20261031|SP1|Betis|Malaga": {
 "date": "2026-10-31",
 "div": "SP1",
 "home": "Betis",
 "away": "Malaga",
-"fav_p": 0.717,
+"fav_p": 0.723,
 "fav_side": "1",
-"o15": 0.826,
-"o25": 0.633
+"o15": 0.827,
+"o25": 0.634
 },
 "20261031|E0|Tottenham|Crystal Palace": {
 "date": "2026-10-31",
 "div": "E0",
 "home": "Tottenham",
 "away": "Crystal Palace",
-"fav_p": 0.579,
+"fav_p": 0.575,
 "fav_side": "1",
 "o15": 0.827,
-"o25": 0.601
+"o25": 0.599
 },
 "20261031|N1|PSV Eindhoven|Willem II": {
 "date": "2026-10-31",
 "div": "N1",
 "home": "PSV Eindhoven",
 "away": "Willem II",
-"fav_p": 0.885,
+"fav_p": 0.877,
 "fav_side": "1",
-"o15": 0.966,
-"o25": 0.863
+"o15": 0.967,
+"o25": 0.861
 },
 "20261031|N1|Heerenveen|Nijmegen": {
 "date": "2026-10-31",
 "div": "N1",
 "home": "Heerenveen",
 "away": "Nijmegen",
-"fav_p": 0.433,
+"fav_p": 0.426,
 "fav_side": "1",
 "o15": 0.899,
-"o25": 0.698
+"o25": 0.696
 },
 "20261031|I1|Milan|Inter": {
 "date": "2026-10-31",
@@ -748,60 +782,60 @@
 "div": "N1",
 "home": "Cambuur",
 "away": "Go Ahead Eagles",
-"fav_p": 0.416,
+"fav_p": 0.408,
 "fav_side": "2",
 "o15": 0.877,
-"o25": 0.659
+"o25": 0.657
 },
 "20261031|SP1|Barcelona|Alaves": {
 "date": "2026-10-31",
 "div": "SP1",
 "home": "Barcelona",
 "away": "Alaves",
-"fav_p": 0.851,
+"fav_p": 0.857,
 "fav_side": "1",
-"o15": 0.931,
-"o25": 0.784
+"o15": 0.932,
+"o25": 0.785
 },
 "20261031|N1|Ajax|AZ Alkmaar": {
 "date": "2026-10-31",
 "div": "N1",
 "home": "Ajax",
 "away": "AZ Alkmaar",
-"fav_p": 0.559,
+"fav_p": 0.551,
 "fav_side": "1",
 "o15": 0.905,
-"o25": 0.694
+"o25": 0.692
 },
 "20261031|E0|Aston Villa|Fulham": {
 "date": "2026-10-31",
 "div": "E0",
 "home": "Aston Villa",
 "away": "Fulham",
-"fav_p": 0.49,
+"fav_p": 0.487,
 "fav_side": "1",
 "o15": 0.817,
-"o25": 0.567
+"o25": 0.565
 },
 "20261031|SP2|Albacete|Sabadell": {
 "date": "2026-10-31",
 "div": "SP2",
 "home": "Albacete",
 "away": "Sabadell",
-"fav_p": 0.358,
+"fav_p": 0.354,
 "fav_side": "1",
-"o15": 0.661,
-"o25": 0.435
+"o15": 0.662,
+"o25": 0.434
 },
 "20261031|P1|Porto|Estoril": {
 "date": "2026-10-31",
 "div": "P1",
 "home": "Porto",
 "away": "Estoril",
-"fav_p": 0.777,
+"fav_p": 0.783,
 "fav_side": "1",
-"o15": 0.771,
-"o25": 0.582
+"o15": 0.772,
+"o25": 0.584
 },
 "20261101|T1|Amedspor|Eyupspor": {
 "date": "2026-11-01",
@@ -818,10 +852,10 @@
 "div": "N1",
 "home": "Zwolle",
 "away": "Den Haag",
-"fav_p": 0.425,
+"fav_p": 0.418,
 "fav_side": "1",
-"o15": 0.813,
-"o25": 0.596
+"o15": 0.814,
+"o25": 0.594
 },
 "20261101|I1|Como|Venezia": {
 "date": "2026-11-01",
@@ -848,40 +882,40 @@
 "div": "SP2",
 "home": "Eldense",
 "away": "Granada",
-"fav_p": 0.402,
+"fav_p": 0.398,
 "fav_side": "1",
-"o15": 0.766,
-"o25": 0.517
+"o15": 0.767,
+"o25": 0.515
 },
 "20261101|SP1|Getafe|Sevilla": {
 "date": "2026-11-01",
 "div": "SP1",
 "home": "Getafe",
 "away": "Sevilla",
-"fav_p": 0.361,
+"fav_p": 0.367,
 "fav_side": "2",
-"o15": 0.629,
-"o25": 0.352
+"o15": 0.63,
+"o25": 0.353
 },
 "20261101|N1|Telstar|Utrecht": {
 "date": "2026-11-01",
 "div": "N1",
 "home": "Telstar",
 "away": "Utrecht",
-"fav_p": 0.411,
+"fav_p": 0.403,
 "fav_side": "2",
 "o15": 0.856,
-"o25": 0.628
+"o25": 0.625
 },
 "20261101|N1|Excelsior|Twente": {
 "date": "2026-11-01",
 "div": "N1",
 "home": "Excelsior",
 "away": "Twente",
-"fav_p": 0.577,
+"fav_p": 0.569,
 "fav_side": "2",
 "o15": 0.885,
-"o25": 0.648
+"o25": 0.646
 },
 "20261101|I1|Frosinone|Torino": {
 "date": "2026-11-01",
@@ -928,40 +962,40 @@
 "div": "SP1",
 "home": "Santander",
 "away": "Real Madrid",
-"fav_p": 0.769,
+"fav_p": 0.775,
 "fav_side": "2",
 "o15": 0.938,
-"o25": 0.787
+"o25": 0.789
 },
 "20261101|SP2|Ceuta|Sp Gijon": {
 "date": "2026-11-01",
 "div": "SP2",
 "home": "Ceuta",
 "away": "Sp Gijon",
-"fav_p": 0.37,
+"fav_p": 0.366,
 "fav_side": "2",
 "o15": 0.752,
-"o25": 0.531
+"o25": 0.53
 },
 "20261101|P1|Arouca|Nacional": {
 "date": "2026-11-01",
 "div": "P1",
 "home": "Arouca",
 "away": "Nacional",
-"fav_p": 0.519,
+"fav_p": 0.525,
 "fav_side": "1",
-"o15": 0.747,
-"o25": 0.536
+"o15": 0.748,
+"o25": 0.538
 },
 "20261101|N1|Groningen|Sparta Rotterdam": {
 "date": "2026-11-01",
 "div": "N1",
 "home": "Groningen",
 "away": "Sparta Rotterdam",
-"fav_p": 0.535,
+"fav_p": 0.527,
 "fav_side": "1",
 "o15": 0.876,
-"o25": 0.662
+"o25": 0.66
 },
 "20261101|T1|Kasimpasa|Besiktas": {
 "date": "2026-11-01",
@@ -1008,10 +1042,10 @@
 "div": "E0",
 "home": "Liverpool",
 "away": "Arsenal",
-"fav_p": 0.418,
+"fav_p": 0.415,
 "fav_side": "2",
 "o15": 0.808,
-"o25": 0.517
+"o25": 0.515
 },
 "20261101|I1|Lecce|Genoa": {
 "date": "2026-11-01",
@@ -1028,40 +1062,40 @@
 "div": "SP1",
 "home": "Elche",
 "away": "Valencia",
-"fav_p": 0.426,
+"fav_p": 0.432,
 "fav_side": "1",
 "o15": 0.746,
-"o25": 0.489
+"o25": 0.49
 },
 "20261101|SP2|Burgos|Castellon": {
 "date": "2026-11-01",
 "div": "SP2",
 "home": "Burgos",
 "away": "Castellon",
-"fav_p": 0.424,
+"fav_p": 0.421,
 "fav_side": "2",
 "o15": 0.782,
-"o25": 0.533
+"o25": 0.532
 },
 "20261101|P1|Academico Viseu|Rio Ave": {
 "date": "2026-11-01",
 "div": "P1",
 "home": "Academico Viseu",
 "away": "Rio Ave",
-"fav_p": 0.526,
+"fav_p": 0.532,
 "fav_side": "1",
 "o15": 0.74,
-"o25": 0.526
+"o25": 0.527
 },
 "20261101|P1|Maritimo|Santa Clara": {
 "date": "2026-11-01",
 "div": "P1",
 "home": "Maritimo",
 "away": "Santa Clara",
-"fav_p": 0.434,
+"fav_p": 0.44,
 "fav_side": "2",
 "o15": 0.684,
-"o25": 0.408
+"o25": 0.409
 },
 "20261101|F1|Marseille|Toulouse": {
 "date": "2026-11-01",
@@ -1088,40 +1122,40 @@
 "div": "SP1",
 "home": "Ath Bilbao",
 "away": "Sociedad",
-"fav_p": 0.454,
+"fav_p": 0.46,
 "fav_side": "1",
 "o15": 0.823,
-"o25": 0.565
+"o25": 0.567
 },
 "20261101|SP2|Tenerife|Andorra": {
 "date": "2026-11-01",
 "div": "SP2",
 "home": "Tenerife",
 "away": "Andorra",
-"fav_p": 0.415,
+"fav_p": 0.411,
 "fav_side": "1",
 "o15": 0.707,
-"o25": 0.473
+"o25": 0.471
 },
 "20261101|P1|Sp Braga|Famalicao": {
 "date": "2026-11-01",
 "div": "P1",
 "home": "Sp Braga",
 "away": "Famalicao",
-"fav_p": 0.511,
+"fav_p": 0.517,
 "fav_side": "1",
-"o15": 0.702,
-"o25": 0.444
+"o15": 0.703,
+"o25": 0.445
 },
 "20261102|SP2|Oviedo|Las Palmas": {
 "date": "2026-11-02",
 "div": "SP2",
 "home": "Oviedo",
 "away": "Las Palmas",
-"fav_p": 0.525,
+"fav_p": 0.522,
 "fav_side": "1",
-"o15": 0.746,
-"o25": 0.503
+"o15": 0.747,
+"o25": 0.502
 },
 "20261102|T1|Genclerbirligi|Alanyaspor": {
 "date": "2026-11-02",
@@ -1148,10 +1182,10 @@
 "div": "SP2",
 "home": "Valladolid",
 "away": "Leganes",
-"fav_p": 0.502,
+"fav_p": 0.499,
 "fav_side": "1",
-"o15": 0.735,
-"o25": 0.488
+"o15": 0.736,
+"o25": 0.487
 },
 "20261102|F1|Lorient|Brest": {
 "date": "2026-11-02",
@@ -1178,170 +1212,170 @@
 "div": "E0",
 "home": "Newcastle",
 "away": "Everton",
-"fav_p": 0.429,
+"fav_p": 0.425,
 "fav_side": "1",
 "o15": 0.825,
-"o25": 0.563
+"o25": 0.561
 },
 "20261102|SP1|La Coruna|Osasuna": {
 "date": "2026-11-02",
 "div": "SP1",
 "home": "La Coruna",
 "away": "Osasuna",
-"fav_p": 0.443,
+"fav_p": 0.449,
 "fav_side": "1",
-"o15": 0.714,
-"o25": 0.427
+"o15": 0.715,
+"o25": 0.429
 },
 "20261102|SP2|Mallorca|Cadiz": {
 "date": "2026-11-02",
 "div": "SP2",
 "home": "Mallorca",
 "away": "Cadiz",
-"fav_p": 0.626,
+"fav_p": 0.622,
 "fav_side": "1",
 "o15": 0.738,
-"o25": 0.513
+"o25": 0.511
 },
 "20261102|P1|Benfica|Alverca": {
 "date": "2026-11-02",
 "div": "P1",
 "home": "Benfica",
 "away": "Alverca",
-"fav_p": 0.803,
+"fav_p": 0.81,
 "fav_side": "1",
-"o15": 0.881,
-"o25": 0.698
+"o15": 0.882,
+"o25": 0.699
 },
 "20261102|P1|Gil Vicente|Guimaraes": {
 "date": "2026-11-02",
 "div": "P1",
 "home": "Gil Vicente",
 "away": "Guimaraes",
-"fav_p": 0.364,
+"fav_p": 0.37,
 "fav_side": "2",
 "o15": 0.703,
-"o25": 0.445
+"o25": 0.447
 },
 "20261103|E1|Derby|Norwich": {
 "date": "2026-11-03",
 "div": "E1",
 "home": "Derby",
 "away": "Norwich",
-"fav_p": 0.397,
+"fav_p": 0.409,
 "fav_side": "1",
-"o15": 0.712,
-"o25": 0.505
+"o15": 0.713,
+"o25": 0.509
 },
 "20261103|E1|QPR|Burnley": {
 "date": "2026-11-03",
 "div": "E1",
 "home": "QPR",
 "away": "Burnley",
-"fav_p": 0.39,
+"fav_p": 0.402,
 "fav_side": "2",
-"o15": 0.74,
-"o25": 0.503
+"o15": 0.741,
+"o25": 0.507
 },
 "20261103|E1|Preston|Sheffield United": {
 "date": "2026-11-03",
 "div": "E1",
 "home": "Preston",
 "away": "Sheffield United",
-"fav_p": 0.445,
+"fav_p": 0.457,
 "fav_side": "2",
-"o15": 0.743,
-"o25": 0.503
+"o15": 0.744,
+"o25": 0.508
 },
 "20261103|E1|Watford|Lincoln": {
 "date": "2026-11-03",
 "div": "E1",
 "home": "Watford",
 "away": "Lincoln",
-"fav_p": 0.457,
+"fav_p": 0.469,
 "fav_side": "1",
-"o15": 0.755,
-"o25": 0.52
+"o15": 0.756,
+"o25": 0.524
 },
 "20261103|E1|Charlton|Bolton": {
 "date": "2026-11-03",
 "div": "E1",
 "home": "Charlton",
 "away": "Bolton",
-"fav_p": 0.425,
+"fav_p": 0.437,
 "fav_side": "1",
-"o15": 0.76,
-"o25": 0.506
+"o15": 0.761,
+"o25": 0.51
 },
 "20261103|E1|Portsmouth|Swansea": {
 "date": "2026-11-03",
 "div": "E1",
 "home": "Portsmouth",
 "away": "Swansea",
-"fav_p": 0.393,
+"fav_p": 0.404,
 "fav_side": "1",
-"o15": 0.684,
-"o25": 0.394
+"o15": 0.685,
+"o25": 0.398
 },
 "20261103|E1|Blackburn|Stoke": {
 "date": "2026-11-03",
 "div": "E1",
 "home": "Blackburn",
 "away": "Stoke",
-"fav_p": 0.445,
+"fav_p": 0.456,
 "fav_side": "1",
-"o15": 0.711,
-"o25": 0.436
+"o15": 0.712,
+"o25": 0.44
 },
 "20261103|E1|West Brom|Southampton": {
 "date": "2026-11-03",
 "div": "E1",
 "home": "West Brom",
 "away": "Southampton",
-"fav_p": 0.455,
+"fav_p": 0.467,
 "fav_side": "2",
-"o15": 0.773,
-"o25": 0.503
+"o15": 0.774,
+"o25": 0.508
 },
 "20261103|E1|Birmingham|Millwall": {
 "date": "2026-11-03",
 "div": "E1",
 "home": "Birmingham",
 "away": "Millwall",
-"fav_p": 0.442,
+"fav_p": 0.454,
 "fav_side": "1",
-"o15": 0.708,
-"o25": 0.435
+"o15": 0.709,
+"o25": 0.439
 },
 "20261104|E1|Cardiff|West Ham": {
 "date": "2026-11-04",
 "div": "E1",
 "home": "Cardiff",
 "away": "West Ham",
-"fav_p": 0.639,
+"fav_p": 0.651,
 "fav_side": "2",
-"o15": 0.885,
-"o25": 0.7
+"o15": 0.886,
+"o25": 0.704
 },
 "20261104|E1|Wrexham|Middlesbrough": {
 "date": "2026-11-04",
 "div": "E1",
 "home": "Wrexham",
 "away": "Middlesbrough",
-"fav_p": 0.431,
+"fav_p": 0.443,
 "fav_side": "2",
-"o15": 0.811,
-"o25": 0.565
+"o15": 0.812,
+"o25": 0.57
 },
 "20261104|E1|Bristol City|Wolves": {
 "date": "2026-11-04",
 "div": "E1",
 "home": "Bristol City",
 "away": "Wolves",
-"fav_p": 0.387,
+"fav_p": 0.399,
 "fav_side": "1",
-"o15": 0.716,
-"o25": 0.426
+"o15": 0.717,
+"o25": 0.43
 },
 "20261106|T1|Gaziantep|Kasimpasa": {
 "date": "2026-11-06",
@@ -1358,10 +1392,10 @@
 "div": "N1",
 "home": "Willem II",
 "away": "Zwolle",
-"fav_p": 0.46,
+"fav_p": 0.452,
 "fav_side": "2",
 "o15": 0.838,
-"o25": 0.596
+"o25": 0.594
 },
 "20261106|D1|Hamburg|M'gladbach": {
 "date": "2026-11-06",
@@ -1378,10 +1412,10 @@
 "div": "SP2",
 "home": "Castellon",
 "away": "Eibar",
-"fav_p": 0.474,
+"fav_p": 0.47,
 "fav_side": "1",
-"o15": 0.768,
-"o25": 0.534
+"o15": 0.769,
+"o25": 0.533
 },
 "20261106|F1|Toulouse|Strasbourg": {
 "date": "2026-11-06",
@@ -1408,40 +1442,40 @@
 "div": "E1",
 "home": "Derby",
 "away": "Bolton",
-"fav_p": 0.514,
+"fav_p": 0.526,
 "fav_side": "1",
-"o15": 0.797,
-"o25": 0.577
+"o15": 0.798,
+"o25": 0.581
 },
 "20261106|SP1|Sevilla|Alaves": {
 "date": "2026-11-06",
 "div": "SP1",
 "home": "Sevilla",
 "away": "Alaves",
-"fav_p": 0.443,
+"fav_p": 0.449,
 "fav_side": "1",
-"o15": 0.742,
-"o25": 0.454
+"o15": 0.743,
+"o25": 0.456
 },
 "20261106|E0|Everton|Coventry": {
 "date": "2026-11-06",
 "div": "E0",
 "home": "Everton",
 "away": "Coventry",
-"fav_p": 0.544,
+"fav_p": 0.541,
 "fav_side": "1",
 "o15": 0.816,
-"o25": 0.547
+"o25": 0.545
 },
 "20261106|P1|Famalicao|Arouca": {
 "date": "2026-11-06",
 "div": "P1",
 "home": "Famalicao",
 "away": "Arouca",
-"fav_p": 0.497,
+"fav_p": 0.503,
 "fav_side": "1",
-"o15": 0.738,
-"o25": 0.489
+"o15": 0.739,
+"o25": 0.49
 },
 "20261107|T1|Eyupspor|Kocaelispor": {
 "date": "2026-11-07",
@@ -1458,60 +1492,60 @@
 "div": "E1",
 "home": "Wrexham",
 "away": "Wolves",
-"fav_p": 0.41,
+"fav_p": 0.422,
 "fav_side": "1",
-"o15": 0.764,
-"o25": 0.491
+"o15": 0.765,
+"o25": 0.495
 },
 "20261107|E0|Leeds|Tottenham": {
 "date": "2026-11-07",
 "div": "E0",
 "home": "Leeds",
 "away": "Tottenham",
-"fav_p": 0.458,
+"fav_p": 0.455,
 "fav_side": "1",
 "o15": 0.82,
-"o25": 0.535
+"o25": 0.533
 },
 "20261107|E1|Bristol City|Norwich": {
 "date": "2026-11-07",
 "div": "E1",
 "home": "Bristol City",
 "away": "Norwich",
-"fav_p": 0.417,
+"fav_p": 0.429,
 "fav_side": "1",
-"o15": 0.7,
-"o25": 0.443
+"o15": 0.701,
+"o25": 0.447
 },
 "20261107|E1|Portsmouth|Stoke": {
 "date": "2026-11-07",
 "div": "E1",
 "home": "Portsmouth",
 "away": "Stoke",
-"fav_p": 0.433,
+"fav_p": 0.445,
 "fav_side": "1",
-"o15": 0.7,
-"o25": 0.419
+"o15": 0.701,
+"o25": 0.423
 },
 "20261107|SP1|Malaga|Santander": {
 "date": "2026-11-07",
 "div": "SP1",
 "home": "Malaga",
 "away": "Santander",
-"fav_p": 0.404,
+"fav_p": 0.41,
 "fav_side": "1",
 "o15": 0.812,
-"o25": 0.58
+"o25": 0.581
 },
 "20261107|SP2|Burgos|Celta B": {
 "date": "2026-11-07",
 "div": "SP2",
 "home": "Burgos",
 "away": "Celta B",
-"fav_p": 0.575,
+"fav_p": 0.571,
 "fav_side": "1",
 "o15": 0.758,
-"o25": 0.525
+"o25": 0.523
 },
 "20261107|T1|Samsunspor|Konyaspor": {
 "date": "2026-11-07",
@@ -1588,140 +1622,140 @@
 "div": "E1",
 "home": "Blackburn",
 "away": "West Ham",
-"fav_p": 0.563,
+"fav_p": 0.575,
 "fav_side": "2",
-"o15": 0.837,
-"o25": 0.607
+"o15": 0.838,
+"o25": 0.611
 },
 "20261107|E0|Fulham|Newcastle": {
 "date": "2026-11-07",
 "div": "E0",
 "home": "Fulham",
 "away": "Newcastle",
-"fav_p": 0.378,
+"fav_p": 0.375,
 "fav_side": "1",
 "o15": 0.835,
-"o25": 0.561
+"o25": 0.559
 },
 "20261107|E1|Preston|Southampton": {
 "date": "2026-11-07",
 "div": "E1",
 "home": "Preston",
 "away": "Southampton",
-"fav_p": 0.583,
+"fav_p": 0.595,
 "fav_side": "2",
-"o15": 0.802,
-"o25": 0.596
+"o15": 0.803,
+"o25": 0.6
 },
 "20261107|E1|QPR|Lincoln": {
 "date": "2026-11-07",
 "div": "E1",
 "home": "QPR",
 "away": "Lincoln",
-"fav_p": 0.548,
+"fav_p": 0.56,
 "fav_side": "1",
-"o15": 0.794,
-"o25": 0.55
+"o15": 0.795,
+"o25": 0.554
 },
 "20261107|E1|Cardiff|Burnley": {
 "date": "2026-11-07",
 "div": "E1",
 "home": "Cardiff",
 "away": "Burnley",
-"fav_p": 0.452,
+"fav_p": 0.464,
 "fav_side": "2",
-"o15": 0.794,
-"o25": 0.574
+"o15": 0.795,
+"o25": 0.578
 },
 "20261107|E1|Watford|Middlesbrough": {
 "date": "2026-11-07",
 "div": "E1",
 "home": "Watford",
 "away": "Middlesbrough",
-"fav_p": 0.506,
+"fav_p": 0.518,
 "fav_side": "2",
-"o15": 0.807,
-"o25": 0.606
+"o15": 0.808,
+"o25": 0.61
 },
 "20261107|E1|Birmingham|Swansea": {
 "date": "2026-11-07",
 "div": "E1",
 "home": "Birmingham",
 "away": "Swansea",
-"fav_p": 0.472,
+"fav_p": 0.484,
 "fav_side": "1",
-"o15": 0.725,
-"o25": 0.437
+"o15": 0.726,
+"o25": 0.442
 },
 "20261107|E0|Arsenal|Hull": {
 "date": "2026-11-07",
 "div": "E0",
 "home": "Arsenal",
 "away": "Hull",
-"fav_p": 0.624,
+"fav_p": 0.621,
 "fav_side": "1",
 "o15": 0.823,
-"o25": 0.521
+"o25": 0.519
 },
 "20261107|E1|Charlton|Sheffield United": {
 "date": "2026-11-07",
 "div": "E1",
 "home": "Charlton",
 "away": "Sheffield United",
-"fav_p": 0.435,
+"fav_p": 0.447,
 "fav_side": "2",
-"o15": 0.734,
-"o25": 0.464
+"o15": 0.735,
+"o25": 0.468
 },
 "20261107|E1|West Brom|Millwall": {
 "date": "2026-11-07",
 "div": "E1",
 "home": "West Brom",
 "away": "Millwall",
-"fav_p": 0.408,
+"fav_p": 0.42,
 "fav_side": "1",
-"o15": 0.698,
-"o25": 0.402
+"o15": 0.699,
+"o25": 0.406
 },
 "20261107|SP1|Espanol|La Coruna": {
 "date": "2026-11-07",
 "div": "SP1",
 "home": "Espanol",
 "away": "La Coruna",
-"fav_p": 0.408,
+"fav_p": 0.413,
 "fav_side": "1",
 "o15": 0.727,
-"o25": 0.454
+"o25": 0.455
 },
 "20261107|SP2|Cadiz|Oviedo": {
 "date": "2026-11-07",
 "div": "SP2",
 "home": "Cadiz",
 "away": "Oviedo",
-"fav_p": 0.418,
+"fav_p": 0.414,
 "fav_side": "2",
 "o15": 0.69,
-"o25": 0.471
+"o25": 0.469
 },
 "20261107|N1|For Sittard|Telstar": {
 "date": "2026-11-07",
 "div": "N1",
 "home": "For Sittard",
 "away": "Telstar",
-"fav_p": 0.413,
+"fav_p": 0.405,
 "fav_side": "1",
 "o15": 0.831,
-"o25": 0.549
+"o25": 0.546
 },
 "20261107|P1|Nacional|Academico Viseu": {
 "date": "2026-11-07",
 "div": "P1",
 "home": "Nacional",
 "away": "Academico Viseu",
-"fav_p": 0.495,
+"fav_p": 0.501,
 "fav_side": "2",
-"o15": 0.779,
-"o25": 0.597
+"o15": 0.78,
+"o25": 0.598
 },
 "20261107|T1|Galatasaray|Amedspor": {
 "date": "2026-11-07",
@@ -1768,60 +1802,60 @@
 "div": "SP2",
 "home": "Cordoba",
 "away": "Ceuta",
-"fav_p": 0.585,
+"fav_p": 0.581,
 "fav_side": "1",
 "o15": 0.802,
-"o25": 0.626
+"o25": 0.625
 },
 "20261107|E0|Nott'm Forest|Man City": {
 "date": "2026-11-07",
 "div": "E0",
 "home": "Nott'm Forest",
 "away": "Man City",
-"fav_p": 0.535,
+"fav_p": 0.531,
 "fav_side": "2",
 "o15": 0.828,
-"o25": 0.582
+"o25": 0.58
 },
 "20261107|SP1|Osasuna|Ath Bilbao": {
 "date": "2026-11-07",
 "div": "SP1",
 "home": "Osasuna",
 "away": "Ath Bilbao",
-"fav_p": 0.361,
+"fav_p": 0.366,
 "fav_side": "2",
 "o15": 0.706,
-"o25": 0.408
+"o25": 0.41
 },
 "20261107|SP2|Leganes|Albacete": {
 "date": "2026-11-07",
 "div": "SP2",
 "home": "Leganes",
 "away": "Albacete",
-"fav_p": 0.395,
+"fav_p": 0.391,
 "fav_side": "1",
 "o15": 0.67,
-"o25": 0.445
+"o25": 0.444
 },
 "20261107|N1|Den Haag|Sparta Rotterdam": {
 "date": "2026-11-07",
 "div": "N1",
 "home": "Den Haag",
 "away": "Sparta Rotterdam",
-"fav_p": 0.384,
+"fav_p": 0.376,
 "fav_side": "1",
 "o15": 0.835,
-"o25": 0.593
+"o25": 0.591
 },
 "20261107|P1|Alverca|Casa Pia": {
 "date": "2026-11-07",
 "div": "P1",
 "home": "Alverca",
 "away": "Casa Pia",
-"fav_p": 0.498,
+"fav_p": 0.504,
 "fav_side": "1",
-"o15": 0.724,
-"o25": 0.506
+"o15": 0.725,
+"o25": 0.507
 },
 "20261107|F1|Paris SG|Troyes": {
 "date": "2026-11-07",
@@ -1848,40 +1882,40 @@
 "div": "N1",
 "home": "Excelsior",
 "away": "Go Ahead Eagles",
-"fav_p": 0.384,
+"fav_p": 0.376,
 "fav_side": "2",
 "o15": 0.86,
-"o25": 0.58
+"o25": 0.577
 },
 "20261107|SP1|Valencia|Real Madrid": {
 "date": "2026-11-07",
 "div": "SP1",
 "home": "Valencia",
 "away": "Real Madrid",
-"fav_p": 0.59,
+"fav_p": 0.596,
 "fav_side": "2",
-"o15": 0.791,
-"o25": 0.557
+"o15": 0.792,
+"o25": 0.558
 },
 "20261107|SP2|Granada|Tenerife": {
 "date": "2026-11-07",
 "div": "SP2",
 "home": "Granada",
 "away": "Tenerife",
-"fav_p": 0.505,
+"fav_p": 0.502,
 "fav_side": "1",
-"o15": 0.693,
-"o25": 0.437
+"o15": 0.694,
+"o25": 0.436
 },
 "20261107|P1|Sp Lisbon|Moreirense": {
 "date": "2026-11-07",
 "div": "P1",
 "home": "Sp Lisbon",
 "away": "Moreirense",
-"fav_p": 0.813,
+"fav_p": 0.819,
 "fav_side": "1",
-"o15": 0.877,
-"o25": 0.709
+"o15": 0.878,
+"o25": 0.711
 },
 "20261108|T1|Rizespor|Erzurumspor": {
 "date": "2026-11-08",
@@ -1898,10 +1932,10 @@
 "div": "N1",
 "home": "Heerenveen",
 "away": "Feyenoord",
-"fav_p": 0.54,
+"fav_p": 0.532,
 "fav_side": "2",
 "o15": 0.904,
-"o25": 0.656
+"o25": 0.654
 },
 "20261108|I1|Napoli|Lazio": {
 "date": "2026-11-08",
@@ -1928,40 +1962,40 @@
 "div": "SP1",
 "home": "Elche",
 "away": "Betis",
-"fav_p": 0.37,
+"fav_p": 0.375,
 "fav_side": "2",
-"o15": 0.799,
-"o25": 0.525
+"o15": 0.8,
+"o25": 0.526
 },
 "20261108|SP2|Andorra|Mallorca": {
 "date": "2026-11-08",
 "div": "SP2",
 "home": "Andorra",
 "away": "Mallorca",
-"fav_p": 0.393,
+"fav_p": 0.39,
 "fav_side": "2",
 "o15": 0.629,
-"o25": 0.399
+"o25": 0.398
 },
 "20261108|N1|Twente|Ajax": {
 "date": "2026-11-08",
 "div": "N1",
 "home": "Twente",
 "away": "Ajax",
-"fav_p": 0.379,
+"fav_p": 0.371,
 "fav_side": "1",
 "o15": 0.869,
-"o25": 0.577
+"o25": 0.575
 },
 "20261108|E0|Ipswich|Bournemouth": {
 "date": "2026-11-08",
 "div": "E0",
 "home": "Ipswich",
 "away": "Bournemouth",
-"fav_p": 0.547,
+"fav_p": 0.544,
 "fav_side": "2",
 "o15": 0.873,
-"o25": 0.631
+"o25": 0.629
 },
 "20261108|I1|Monza|Atalanta": {
 "date": "2026-11-08",
@@ -1978,30 +2012,30 @@
 "div": "E0",
 "home": "Brighton",
 "away": "Brentford",
-"fav_p": 0.485,
+"fav_p": 0.482,
 "fav_side": "1",
 "o15": 0.872,
-"o25": 0.614
+"o25": 0.613
 },
 "20261108|E0|Crystal Palace|Liverpool": {
 "date": "2026-11-08",
 "div": "E0",
 "home": "Crystal Palace",
 "away": "Liverpool",
-"fav_p": 0.501,
+"fav_p": 0.498,
 "fav_side": "2",
 "o15": 0.84,
-"o25": 0.603
+"o25": 0.601
 },
 "20261108|E0|Sunderland|Chelsea": {
 "date": "2026-11-08",
 "div": "E0",
 "home": "Sunderland",
 "away": "Chelsea",
-"fav_p": 0.441,
+"fav_p": 0.438,
 "fav_side": "2",
-"o15": 0.801,
-"o25": 0.54
+"o15": 0.8,
+"o25": 0.538
 },
 "20261108|F1|Rennes|Lille": {
 "date": "2026-11-08",
@@ -2038,30 +2072,30 @@
 "div": "SP2",
 "home": "Girona",
 "away": "Almeria",
-"fav_p": 0.548,
+"fav_p": 0.544,
 "fav_side": "1",
 "o15": 0.811,
-"o25": 0.6
+"o25": 0.599
 },
 "20261108|SP1|Sociedad|Vallecano": {
 "date": "2026-11-08",
 "div": "SP1",
 "home": "Sociedad",
 "away": "Vallecano",
-"fav_p": 0.505,
+"fav_p": 0.511,
 "fav_side": "1",
 "o15": 0.831,
-"o25": 0.574
+"o25": 0.576
 },
 "20261108|P1|Estoril|Maritimo": {
 "date": "2026-11-08",
 "div": "P1",
 "home": "Estoril",
 "away": "Maritimo",
-"fav_p": 0.57,
+"fav_p": 0.576,
 "fav_side": "1",
-"o15": 0.829,
-"o25": 0.662
+"o15": 0.83,
+"o25": 0.663
 },
 "20261108|T1|Alanyaspor|Trabzonspor": {
 "date": "2026-11-08",
@@ -2078,30 +2112,30 @@
 "div": "P1",
 "home": "Santa Clara",
 "away": "Gil Vicente",
-"fav_p": 0.398,
+"fav_p": 0.404,
 "fav_side": "1",
-"o15": 0.651,
-"o25": 0.379
+"o15": 0.652,
+"o25": 0.381
 },
 "20261108|N1|Cambuur|PSV Eindhoven": {
 "date": "2026-11-08",
 "div": "N1",
 "home": "Cambuur",
 "away": "PSV Eindhoven",
-"fav_p": 0.752,
+"fav_p": 0.744,
 "fav_side": "2",
-"o15": 0.957,
-"o25": 0.787
+"o15": 0.958,
+"o25": 0.785
 },
 "20261108|N1|AZ Alkmaar|Groningen": {
 "date": "2026-11-08",
 "div": "N1",
 "home": "AZ Alkmaar",
 "away": "Groningen",
-"fav_p": 0.495,
+"fav_p": 0.487,
 "fav_side": "1",
 "o15": 0.873,
-"o25": 0.59
+"o25": 0.588
 },
 "20261108|F1|Le Mans|Monaco": {
 "date": "2026-11-08",
@@ -2148,10 +2182,10 @@
 "div": "E0",
 "home": "Man United",
 "away": "Aston Villa",
-"fav_p": 0.426,
+"fav_p": 0.423,
 "fav_side": "1",
 "o15": 0.847,
-"o25": 0.603
+"o25": 0.601
 },
 "20261108|D1|Freiburg|Union Berlin": {
 "date": "2026-11-08",
@@ -2178,40 +2212,40 @@
 "div": "SP1",
 "home": "Celta",
 "away": "Levante",
-"fav_p": 0.541,
+"fav_p": 0.547,
 "fav_side": "1",
-"o15": 0.782,
-"o25": 0.509
+"o15": 0.783,
+"o25": 0.51
 },
 "20261108|SP2|Las Palmas|Eldense": {
 "date": "2026-11-08",
 "div": "SP2",
 "home": "Las Palmas",
 "away": "Eldense",
-"fav_p": 0.518,
+"fav_p": 0.515,
 "fav_side": "1",
-"o15": 0.709,
-"o25": 0.474
+"o15": 0.71,
+"o25": 0.473
 },
 "20261108|SP2|Sp Gijon|Valladolid": {
 "date": "2026-11-08",
 "div": "SP2",
 "home": "Sp Gijon",
 "away": "Valladolid",
-"fav_p": 0.492,
+"fav_p": 0.488,
 "fav_side": "1",
-"o15": 0.694,
-"o25": 0.456
+"o15": 0.695,
+"o25": 0.455
 },
 "20261108|SP1|Villarreal|Getafe": {
 "date": "2026-11-08",
 "div": "SP1",
 "home": "Villarreal",
 "away": "Getafe",
-"fav_p": 0.61,
+"fav_p": 0.616,
 "fav_side": "1",
-"o15": 0.751,
-"o25": 0.483
+"o15": 0.752,
+"o25": 0.484
 },
 "20261108|T1|Besiktas|Genclerbirligi": {
 "date": "2026-11-08",
@@ -2228,10 +2262,10 @@
 "div": "P1",
 "home": "Guimaraes",
 "away": "Porto",
-"fav_p": 0.602,
+"fav_p": 0.609,
 "fav_side": "2",
-"o15": 0.784,
-"o25": 0.551
+"o15": 0.785,
+"o25": 0.553
 },
 "20261108|D1|Hoffenheim|Schalke 04": {
 "date": "2026-11-08",
@@ -2248,10 +2282,10 @@
 "div": "N1",
 "home": "Utrecht",
 "away": "Nijmegen",
-"fav_p": 0.399,
+"fav_p": 0.391,
 "fav_side": "1",
 "o15": 0.876,
-"o25": 0.61
+"o25": 0.608
 },
 "20261108|F1|Lens|Marseille": {
 "date": "2026-11-08",
@@ -2278,150 +2312,150 @@
 "div": "SP1",
 "home": "Ath Madrid",
 "away": "Barcelona",
-"fav_p": 0.433,
+"fav_p": 0.439,
 "fav_side": "2",
-"o15": 0.822,
-"o25": 0.554
+"o15": 0.823,
+"o25": 0.556
 },
 "20261108|P1|Estrela|Benfica": {
 "date": "2026-11-08",
 "div": "P1",
 "home": "Estrela",
 "away": "Benfica",
-"fav_p": 0.771,
+"fav_p": 0.777,
 "fav_side": "2",
-"o15": 0.867,
-"o25": 0.692
+"o15": 0.868,
+"o25": 0.694
 },
 "20261108|P1|Rio Ave|Sp Braga": {
 "date": "2026-11-08",
 "div": "P1",
 "home": "Rio Ave",
 "away": "Sp Braga",
-"fav_p": 0.594,
+"fav_p": 0.601,
 "fav_side": "2",
 "o15": 0.773,
-"o25": 0.573
+"o25": 0.574
 },
 "20261109|SP2|Sabadell|Sociedad B": {
 "date": "2026-11-09",
 "div": "SP2",
 "home": "Sabadell",
 "away": "Sociedad B",
-"fav_p": 0.531,
+"fav_p": 0.527,
 "fav_side": "1",
 "o15": 0.677,
-"o25": 0.451
+"o25": 0.45
 },
 "20261113|SP2|Leganes|Burgos": {
 "date": "2026-11-13",
 "div": "SP2",
 "home": "Leganes",
 "away": "Burgos",
-"fav_p": 0.361,
+"fav_p": 0.357,
 "fav_side": "2",
 "o15": 0.65,
-"o25": 0.384
+"o25": 0.382
 },
 "20261114|SP2|Valladolid|Castellon": {
 "date": "2026-11-14",
 "div": "SP2",
 "home": "Valladolid",
 "away": "Castellon",
-"fav_p": 0.437,
+"fav_p": 0.433,
 "fav_side": "2",
 "o15": 0.722,
-"o25": 0.478
+"o25": 0.477
 },
 "20261114|SP2|Sociedad B|Sp Gijon": {
 "date": "2026-11-14",
 "div": "SP2",
 "home": "Sociedad B",
 "away": "Sp Gijon",
-"fav_p": 0.378,
+"fav_p": 0.374,
 "fav_side": "2",
 "o15": 0.686,
-"o25": 0.469
+"o25": 0.468
 },
 "20261114|SP2|Almeria|Andorra": {
 "date": "2026-11-14",
 "div": "SP2",
 "home": "Almeria",
 "away": "Andorra",
-"fav_p": 0.598,
+"fav_p": 0.595,
 "fav_side": "1",
-"o15": 0.794,
-"o25": 0.628
+"o15": 0.795,
+"o25": 0.627
 },
 "20261114|SP2|Mallorca|Cordoba": {
 "date": "2026-11-14",
 "div": "SP2",
 "home": "Mallorca",
 "away": "Cordoba",
-"fav_p": 0.58,
+"fav_p": 0.576,
 "fav_side": "1",
-"o15": 0.73,
-"o25": 0.498
+"o15": 0.731,
+"o25": 0.497
 },
 "20261114|SP2|Oviedo|Girona": {
 "date": "2026-11-14",
 "div": "SP2",
 "home": "Oviedo",
 "away": "Girona",
-"fav_p": 0.369,
+"fav_p": 0.365,
 "fav_side": "1",
-"o15": 0.733,
-"o25": 0.493
+"o15": 0.734,
+"o25": 0.492
 },
 "20261115|SP2|Tenerife|Ceuta": {
 "date": "2026-11-15",
 "div": "SP2",
 "home": "Tenerife",
 "away": "Ceuta",
-"fav_p": 0.5,
+"fav_p": 0.497,
 "fav_side": "1",
 "o15": 0.673,
-"o25": 0.449
+"o25": 0.448
 },
 "20261115|SP2|Granada|Las Palmas": {
 "date": "2026-11-15",
 "div": "SP2",
 "home": "Granada",
 "away": "Las Palmas",
-"fav_p": 0.438,
+"fav_p": 0.435,
 "fav_side": "1",
 "o15": 0.718,
-"o25": 0.472
+"o25": 0.471
 },
 "20261115|SP2|Eibar|Cadiz": {
 "date": "2026-11-15",
 "div": "SP2",
 "home": "Eibar",
 "away": "Cadiz",
-"fav_p": 0.577,
+"fav_p": 0.573,
 "fav_side": "1",
-"o15": 0.721,
-"o25": 0.522
+"o15": 0.722,
+"o25": 0.521
 },
 "20261115|SP2|Eldense|Sabadell": {
 "date": "2026-11-15",
 "div": "SP2",
 "home": "Eldense",
 "away": "Sabadell",
-"fav_p": 0.342,
+"fav_p": 0.338,
 "fav_side": "2",
 "o15": 0.609,
-"o25": 0.358
+"o25": 0.357
 },
 "20261116|SP2|Albacete|Celta B": {
 "date": "2026-11-16",
 "div": "SP2",
 "home": "Albacete",
 "away": "Celta B",
-"fav_p": 0.508,
+"fav_p": 0.504,
 "fav_side": "1",
 "o15": 0.758,
-"o25": 0.562
+"o25": 0.561
 },
 "20261120|D1|Bayern Munich|FC Koln": {
 "date": "2026-11-20",
@@ -2438,10 +2472,10 @@
 "div": "SP2",
 "home": "Andorra",
 "away": "Leganes",
-"fav_p": 0.495,
+"fav_p": 0.491,
 "fav_side": "1",
 "o15": 0.715,
-"o25": 0.501
+"o25": 0.5
 },
 "20261120|F1|Troyes|Le Havre": {
 "date": "2026-11-20",
@@ -2458,10 +2492,10 @@
 "div": "SP1",
 "home": "Ath Bilbao",
 "away": "Espanol",
-"fav_p": 0.529,
+"fav_p": 0.535,
 "fav_side": "1",
-"o15": 0.74,
-"o25": 0.47
+"o15": 0.741,
+"o25": 0.471
 },
 "20261121|T1|Genclerbirligi|Gaziantep": {
 "date": "2026-11-21",
@@ -2478,40 +2512,40 @@
 "div": "E1",
 "home": "Norwich",
 "away": "Cardiff",
-"fav_p": 0.572,
+"fav_p": 0.584,
 "fav_side": "1",
-"o15": 0.811,
-"o25": 0.6
+"o15": 0.812,
+"o25": 0.604
 },
 "20261121|E0|Man City|Fulham": {
 "date": "2026-11-21",
 "div": "E0",
 "home": "Man City",
 "away": "Fulham",
-"fav_p": 0.663,
+"fav_p": 0.66,
 "fav_side": "1",
 "o15": 0.879,
-"o25": 0.628
+"o25": 0.626
 },
 "20261121|E1|Southampton|Derby": {
 "date": "2026-11-21",
 "div": "E1",
 "home": "Southampton",
 "away": "Derby",
-"fav_p": 0.655,
+"fav_p": 0.667,
 "fav_side": "1",
-"o15": 0.821,
-"o25": 0.627
+"o15": 0.822,
+"o25": 0.632
 },
 "20261121|E1|Millwall|QPR": {
 "date": "2026-11-21",
 "div": "E1",
 "home": "Millwall",
 "away": "QPR",
-"fav_p": 0.491,
+"fav_p": 0.502,
 "fav_side": "1",
-"o15": 0.741,
-"o25": 0.473
+"o15": 0.742,
+"o25": 0.477
 },
 "20261121|T1|Amedspor|Rizespor": {
 "date": "2026-11-21",
@@ -2538,20 +2572,20 @@
 "div": "SP1",
 "home": "Alaves",
 "away": "La Coruna",
-"fav_p": 0.438,
+"fav_p": 0.444,
 "fav_side": "1",
-"o15": 0.734,
-"o25": 0.442
+"o15": 0.735,
+"o25": 0.444
 },
 "20261121|SP2|Sabadell|Granada": {
 "date": "2026-11-21",
 "div": "SP2",
 "home": "Sabadell",
 "away": "Granada",
-"fav_p": 0.438,
+"fav_p": 0.434,
 "fav_side": "1",
-"o15": 0.668,
-"o25": 0.407
+"o15": 0.669,
+"o25": 0.406
 },
 "20261121|I1|Como|Cagliari": {
 "date": "2026-11-21",
@@ -2628,160 +2662,160 @@
 "div": "E1",
 "home": "West Ham",
 "away": "Preston",
-"fav_p": 0.801,
+"fav_p": 0.813,
 "fav_side": "1",
-"o15": 0.877,
-"o25": 0.722
+"o15": 0.878,
+"o25": 0.726
 },
 "20261121|E0|Tottenham|Ipswich": {
 "date": "2026-11-21",
 "div": "E0",
 "home": "Tottenham",
 "away": "Ipswich",
-"fav_p": 0.583,
+"fav_p": 0.58,
 "fav_side": "1",
 "o15": 0.876,
-"o25": 0.635
+"o25": 0.633
 },
 "20261121|E0|Chelsea|Leeds": {
 "date": "2026-11-21",
 "div": "E0",
 "home": "Chelsea",
 "away": "Leeds",
-"fav_p": 0.475,
+"fav_p": 0.472,
 "fav_side": "1",
 "o15": 0.846,
-"o25": 0.567
+"o25": 0.565
 },
 "20261121|E1|Lincoln|Wrexham": {
 "date": "2026-11-21",
 "div": "E1",
 "home": "Lincoln",
 "away": "Wrexham",
-"fav_p": 0.42,
+"fav_p": 0.432,
 "fav_side": "2",
-"o15": 0.764,
-"o25": 0.506
+"o15": 0.765,
+"o25": 0.51
 },
 "20261121|E1|Bolton|Portsmouth": {
 "date": "2026-11-21",
 "div": "E1",
 "home": "Bolton",
 "away": "Portsmouth",
-"fav_p": 0.424,
+"fav_p": 0.436,
 "fav_side": "1",
-"o15": 0.756,
-"o25": 0.496
+"o15": 0.757,
+"o25": 0.5
 },
 "20261121|E0|Bournemouth|Nott'm Forest": {
 "date": "2026-11-21",
 "div": "E0",
 "home": "Bournemouth",
 "away": "Nott'm Forest",
-"fav_p": 0.463,
+"fav_p": 0.46,
 "fav_side": "1",
 "o15": 0.815,
-"o25": 0.547
+"o25": 0.545
 },
 "20261121|E1|Middlesbrough|Bristol City": {
 "date": "2026-11-21",
 "div": "E1",
 "home": "Middlesbrough",
 "away": "Bristol City",
-"fav_p": 0.568,
+"fav_p": 0.58,
 "fav_side": "1",
-"o15": 0.8,
-"o25": 0.543
+"o15": 0.801,
+"o25": 0.547
 },
 "20261121|E0|Coventry|Crystal Palace": {
 "date": "2026-11-21",
 "div": "E0",
 "home": "Coventry",
 "away": "Crystal Palace",
-"fav_p": 0.413,
+"fav_p": 0.41,
 "fav_side": "2",
 "o15": 0.776,
-"o25": 0.527
+"o25": 0.525
 },
 "20261121|E1|Sheffield United|Watford": {
 "date": "2026-11-21",
 "div": "E1",
 "home": "Sheffield United",
 "away": "Watford",
-"fav_p": 0.564,
+"fav_p": 0.576,
 "fav_side": "1",
-"o15": 0.781,
-"o25": 0.551
+"o15": 0.782,
+"o25": 0.555
 },
 "20261121|E0|Aston Villa|Sunderland": {
 "date": "2026-11-21",
 "div": "E0",
 "home": "Aston Villa",
 "away": "Sunderland",
-"fav_p": 0.517,
+"fav_p": 0.514,
 "fav_side": "1",
 "o15": 0.817,
-"o25": 0.55
+"o25": 0.548
 },
 "20261121|E1|Wolves|Charlton": {
 "date": "2026-11-21",
 "div": "E1",
 "home": "Wolves",
 "away": "Charlton",
-"fav_p": 0.599,
+"fav_p": 0.611,
 "fav_side": "1",
-"o15": 0.79,
-"o25": 0.525
+"o15": 0.791,
+"o25": 0.53
 },
 "20261121|E1|Stoke|Birmingham": {
 "date": "2026-11-21",
 "div": "E1",
 "home": "Stoke",
 "away": "Birmingham",
-"fav_p": 0.384,
+"fav_p": 0.396,
 "fav_side": "2",
-"o15": 0.704,
-"o25": 0.426
+"o15": 0.705,
+"o25": 0.43
 },
 "20261121|E1|Swansea|West Brom": {
 "date": "2026-11-21",
 "div": "E1",
 "home": "Swansea",
 "away": "West Brom",
-"fav_p": 0.426,
+"fav_p": 0.438,
 "fav_side": "1",
-"o15": 0.7,
-"o25": 0.4
+"o15": 0.701,
+"o25": 0.404
 },
 "20261121|SP2|Sociedad B|Cadiz": {
 "date": "2026-11-21",
 "div": "SP2",
 "home": "Sociedad B",
 "away": "Cadiz",
-"fav_p": 0.433,
+"fav_p": 0.43,
 "fav_side": "1",
 "o15": 0.676,
-"o25": 0.493
+"o25": 0.491
 },
 "20261121|SP1|Vallecano|Valencia": {
 "date": "2026-11-21",
 "div": "SP1",
 "home": "Vallecano",
 "away": "Valencia",
-"fav_p": 0.445,
+"fav_p": 0.451,
 "fav_side": "1",
-"o15": 0.744,
-"o25": 0.475
+"o15": 0.745,
+"o25": 0.477
 },
 "20261121|N1|Nijmegen|PSV Eindhoven": {
 "date": "2026-11-21",
 "div": "N1",
 "home": "Nijmegen",
 "away": "PSV Eindhoven",
-"fav_p": 0.575,
+"fav_p": 0.567,
 "fav_side": "2",
 "o15": 0.924,
-"o25": 0.7
+"o25": 0.698
 },
 "20261121|T1|Kocaelispor|Fenerbahce": {
 "date": "2026-11-21",
@@ -2818,30 +2852,30 @@
 "div": "SP2",
 "home": "Castellon",
 "away": "Eldense",
-"fav_p": 0.634,
+"fav_p": 0.63,
 "fav_side": "1",
-"o15": 0.781,
-"o25": 0.559
+"o15": 0.782,
+"o25": 0.557
 },
 "20261121|SP1|Sevilla|Betis": {
 "date": "2026-11-21",
 "div": "SP1",
 "home": "Sevilla",
 "away": "Betis",
-"fav_p": 0.382,
+"fav_p": 0.387,
 "fav_side": "2",
 "o15": 0.792,
-"o25": 0.513
+"o25": 0.514
 },
 "20261121|E0|Newcastle|Arsenal": {
 "date": "2026-11-21",
 "div": "E0",
 "home": "Newcastle",
 "away": "Arsenal",
-"fav_p": 0.544,
+"fav_p": 0.54,
 "fav_side": "2",
 "o15": 0.85,
-"o25": 0.57
+"o25": 0.568
 },
 "20261121|D1|Schalke 04|Stuttgart": {
 "date": "2026-11-21",
@@ -2858,20 +2892,20 @@
 "div": "N1",
 "home": "Utrecht",
 "away": "Cambuur",
-"fav_p": 0.567,
+"fav_p": 0.559,
 "fav_side": "1",
 "o15": 0.912,
-"o25": 0.684
+"o25": 0.681
 },
 "20261121|N1|Feyenoord|Excelsior": {
 "date": "2026-11-21",
 "div": "N1",
 "home": "Feyenoord",
 "away": "Excelsior",
-"fav_p": 0.724,
+"fav_p": 0.716,
 "fav_side": "1",
-"o15": 0.917,
-"o25": 0.686
+"o15": 0.918,
+"o25": 0.684
 },
 "20261121|F1|Strasbourg|Brest": {
 "date": "2026-11-21",
@@ -2928,40 +2962,40 @@
 "div": "N1",
 "home": "Telstar",
 "away": "Zwolle",
-"fav_p": 0.496,
+"fav_p": 0.488,
 "fav_side": "1",
 "o15": 0.846,
-"o25": 0.609
+"o25": 0.607
 },
 "20261121|N1|Groningen|Heerenveen": {
 "date": "2026-11-21",
 "div": "N1",
 "home": "Groningen",
 "away": "Heerenveen",
-"fav_p": 0.427,
+"fav_p": 0.419,
 "fav_side": "1",
 "o15": 0.873,
-"o25": 0.604
+"o25": 0.602
 },
 "20261121|SP1|Real Madrid|Celta": {
 "date": "2026-11-21",
 "div": "SP1",
 "home": "Real Madrid",
 "away": "Celta",
-"fav_p": 0.685,
+"fav_p": 0.691,
 "fav_side": "1",
-"o15": 0.834,
-"o25": 0.578
+"o15": 0.835,
+"o25": 0.579
 },
 "20261121|SP2|Tenerife|Mallorca": {
 "date": "2026-11-21",
 "div": "SP2",
 "home": "Tenerife",
 "away": "Mallorca",
-"fav_p": 0.411,
+"fav_p": 0.408,
 "fav_side": "2",
 "o15": 0.562,
-"o25": 0.307
+"o25": 0.306
 },
 "20261122|T1|Erzurumspor|Goztep": {
 "date": "2026-11-22",
@@ -2978,10 +3012,10 @@
 "div": "N1",
 "home": "Twente",
 "away": "Willem II",
-"fav_p": 0.799,
+"fav_p": 0.791,
 "fav_side": "1",
 "o15": 0.922,
-"o25": 0.738
+"o25": 0.736
 },
 "20261122|I1|Juventus|Venezia": {
 "date": "2026-11-22",
@@ -2998,30 +3032,30 @@
 "div": "E1",
 "home": "Burnley",
 "away": "Blackburn",
-"fav_p": 0.523,
+"fav_p": 0.535,
 "fav_side": "1",
-"o15": 0.757,
-"o25": 0.514
+"o15": 0.758,
+"o25": 0.518
 },
 "20261122|SP1|Barcelona|Villarreal": {
 "date": "2026-11-22",
 "div": "SP1",
 "home": "Barcelona",
 "away": "Villarreal",
-"fav_p": 0.73,
+"fav_p": 0.736,
 "fav_side": "1",
 "o15": 0.888,
-"o25": 0.678
+"o25": 0.68
 },
 "20261122|SP2|Cordoba|Oviedo": {
 "date": "2026-11-22",
 "div": "SP2",
 "home": "Cordoba",
 "away": "Oviedo",
-"fav_p": 0.395,
+"fav_p": 0.391,
 "fav_side": "2",
 "o15": 0.765,
-"o25": 0.552
+"o25": 0.551
 },
 "20261122|T1|Kasimpasa|Alanyaspor": {
 "date": "2026-11-22",
@@ -3048,20 +3082,20 @@
 "div": "N1",
 "home": "Ajax",
 "away": "Den Haag",
-"fav_p": 0.74,
+"fav_p": 0.732,
 "fav_side": "1",
-"o15": 0.918,
-"o25": 0.729
+"o15": 0.919,
+"o25": 0.727
 },
 "20261122|N1|Sparta Rotterdam|AZ Alkmaar": {
 "date": "2026-11-22",
 "div": "N1",
 "home": "Sparta Rotterdam",
 "away": "AZ Alkmaar",
-"fav_p": 0.479,
+"fav_p": 0.471,
 "fav_side": "2",
-"o15": 0.845,
-"o25": 0.586
+"o15": 0.846,
+"o25": 0.584
 },
 "20261122|I1|Sassuolo|Genoa": {
 "date": "2026-11-22",
@@ -3088,10 +3122,10 @@
 "div": "E0",
 "home": "Hull",
 "away": "Brighton",
-"fav_p": 0.395,
+"fav_p": 0.392,
 "fav_side": "2",
 "o15": 0.816,
-"o25": 0.514
+"o25": 0.512
 },
 "20261122|F1|Paris FC|Angers": {
 "date": "2026-11-22",
@@ -3118,30 +3152,30 @@
 "div": "SP1",
 "home": "Santander",
 "away": "Sociedad",
-"fav_p": 0.474,
+"fav_p": 0.48,
 "fav_side": "2",
-"o15": 0.878,
-"o25": 0.663
+"o15": 0.879,
+"o25": 0.665
 },
 "20261122|SP2|Sp Gijon|Las Palmas": {
 "date": "2026-11-22",
 "div": "SP2",
 "home": "Sp Gijon",
 "away": "Las Palmas",
-"fav_p": 0.435,
+"fav_p": 0.432,
 "fav_side": "1",
-"o15": 0.659,
-"o25": 0.416
+"o15": 0.66,
+"o25": 0.415
 },
 "20261122|N1|Go Ahead Eagles|For Sittard": {
 "date": "2026-11-22",
 "div": "N1",
 "home": "Go Ahead Eagles",
 "away": "For Sittard",
-"fav_p": 0.504,
+"fav_p": 0.496,
 "fav_side": "1",
 "o15": 0.884,
-"o25": 0.626
+"o25": 0.624
 },
 "20261122|T1|Trabzonspor|Eyupspor": {
 "date": "2026-11-22",
@@ -3168,10 +3202,10 @@
 "div": "E0",
 "home": "Liverpool",
 "away": "Man United",
-"fav_p": 0.526,
+"fav_p": 0.523,
 "fav_side": "1",
 "o15": 0.858,
-"o25": 0.634
+"o25": 0.632
 },
 "20261122|D1|Werder Bremen|Hamburg": {
 "date": "2026-11-22",
@@ -3198,30 +3232,30 @@
 "div": "SP2",
 "home": "Celta B",
 "away": "Valladolid",
-"fav_p": 0.424,
+"fav_p": 0.42,
 "fav_side": "1",
-"o15": 0.741,
-"o25": 0.52
+"o15": 0.742,
+"o25": 0.519
 },
 "20261122|SP1|Osasuna|Malaga": {
 "date": "2026-11-22",
 "div": "SP1",
 "home": "Osasuna",
 "away": "Malaga",
-"fav_p": 0.599,
+"fav_p": 0.605,
 "fav_side": "1",
 "o15": 0.776,
-"o25": 0.52
+"o25": 0.521
 },
 "20261122|SP2|Girona|Eibar": {
 "date": "2026-11-22",
 "div": "SP2",
 "home": "Girona",
 "away": "Eibar",
-"fav_p": 0.514,
+"fav_p": 0.51,
 "fav_side": "1",
-"o15": 0.778,
-"o25": 0.548
+"o15": 0.779,
+"o25": 0.547
 },
 "20261122|F1|Marseille|Le Mans": {
 "date": "2026-11-22",
@@ -3248,30 +3282,30 @@
 "div": "SP2",
 "home": "Burgos",
 "away": "Albacete",
-"fav_p": 0.509,
+"fav_p": 0.505,
 "fav_side": "1",
-"o15": 0.676,
-"o25": 0.466
+"o15": 0.677,
+"o25": 0.464
 },
 "20261122|SP1|Getafe|Ath Madrid": {
 "date": "2026-11-22",
 "div": "SP1",
 "home": "Getafe",
 "away": "Ath Madrid",
-"fav_p": 0.468,
+"fav_p": 0.474,
 "fav_side": "2",
-"o15": 0.691,
-"o25": 0.419
+"o15": 0.692,
+"o25": 0.42
 },
 "20261123|SP2|Ceuta|Almeria": {
 "date": "2026-11-23",
 "div": "SP2",
 "home": "Ceuta",
 "away": "Almeria",
-"fav_p": 0.543,
+"fav_p": 0.539,
 "fav_side": "2",
 "o15": 0.79,
-"o25": 0.621
+"o25": 0.62
 },
 "20261123|I1|Monza|Fiorentina": {
 "date": "2026-11-23",
@@ -3288,140 +3322,140 @@
 "div": "SP1",
 "home": "Levante",
 "away": "Elche",
-"fav_p": 0.45,
+"fav_p": 0.456,
 "fav_side": "1",
 "o15": 0.796,
-"o25": 0.531
+"o25": 0.533
 },
 "20261123|E0|Brentford|Everton": {
 "date": "2026-11-23",
 "div": "E0",
 "home": "Brentford",
 "away": "Everton",
-"fav_p": 0.465,
+"fav_p": 0.462,
 "fav_side": "1",
 "o15": 0.839,
-"o25": 0.567
+"o25": 0.565
 },
 "20261124|E1|Portsmouth|West Ham": {
 "date": "2026-11-24",
 "div": "E1",
 "home": "Portsmouth",
 "away": "West Ham",
-"fav_p": 0.605,
+"fav_p": 0.617,
 "fav_side": "2",
-"o15": 0.831,
-"o25": 0.594
+"o15": 0.832,
+"o25": 0.599
 },
 "20261124|E1|Norwich|QPR": {
 "date": "2026-11-24",
 "div": "E1",
 "home": "Norwich",
 "away": "QPR",
-"fav_p": 0.503,
+"fav_p": 0.515,
 "fav_side": "1",
-"o15": 0.76,
-"o25": 0.522
+"o15": 0.761,
+"o25": 0.527
 },
 "20261124|E1|Sheffield United|Southampton": {
 "date": "2026-11-24",
 "div": "E1",
 "home": "Sheffield United",
 "away": "Southampton",
-"fav_p": 0.446,
+"fav_p": 0.458,
 "fav_side": "2",
-"o15": 0.806,
-"o25": 0.556
+"o15": 0.807,
+"o25": 0.561
 },
 "20261124|E1|Cardiff|Preston": {
 "date": "2026-11-24",
 "div": "E1",
 "home": "Cardiff",
 "away": "Preston",
-"fav_p": 0.49,
+"fav_p": 0.502,
 "fav_side": "1",
-"o15": 0.792,
-"o25": 0.568
+"o15": 0.793,
+"o25": 0.572
 },
 "20261124|E1|Middlesbrough|Swansea": {
 "date": "2026-11-24",
 "div": "E1",
 "home": "Middlesbrough",
 "away": "Swansea",
-"fav_p": 0.552,
+"fav_p": 0.564,
 "fav_side": "1",
-"o15": 0.81,
-"o25": 0.555
+"o15": 0.811,
+"o25": 0.559
 },
 "20261124|E1|Bristol City|Wrexham": {
 "date": "2026-11-24",
 "div": "E1",
 "home": "Bristol City",
 "away": "Wrexham",
-"fav_p": 0.443,
+"fav_p": 0.455,
 "fav_side": "1",
-"o15": 0.72,
-"o25": 0.445
+"o15": 0.721,
+"o25": 0.449
 },
 "20261124|E1|Charlton|Lincoln": {
 "date": "2026-11-24",
 "div": "E1",
 "home": "Charlton",
 "away": "Lincoln",
-"fav_p": 0.426,
+"fav_p": 0.438,
 "fav_side": "1",
-"o15": 0.732,
-"o25": 0.46
+"o15": 0.733,
+"o25": 0.464
 },
 "20261124|E1|Wolves|Derby": {
 "date": "2026-11-24",
 "div": "E1",
 "home": "Wolves",
 "away": "Derby",
-"fav_p": 0.548,
+"fav_p": 0.56,
 "fav_side": "1",
-"o15": 0.766,
-"o25": 0.542
+"o15": 0.767,
+"o25": 0.547
 },
 "20261125|E1|Bolton|West Brom": {
 "date": "2026-11-25",
 "div": "E1",
 "home": "Bolton",
 "away": "West Brom",
-"fav_p": 0.409,
+"fav_p": 0.421,
 "fav_side": "2",
-"o15": 0.76,
-"o25": 0.487
+"o15": 0.761,
+"o25": 0.491
 },
 "20261125|E1|Burnley|Birmingham": {
 "date": "2026-11-25",
 "div": "E1",
 "home": "Burnley",
 "away": "Birmingham",
-"fav_p": 0.469,
+"fav_p": 0.481,
 "fav_side": "1",
-"o15": 0.747,
-"o25": 0.503
+"o15": 0.748,
+"o25": 0.507
 },
 "20261125|E1|Watford|Blackburn": {
 "date": "2026-11-25",
 "div": "E1",
 "home": "Watford",
 "away": "Blackburn",
-"fav_p": 0.377,
+"fav_p": 0.389,
 "fav_side": "1",
-"o15": 0.714,
-"o25": 0.459
+"o15": 0.715,
+"o25": 0.463
 },
 "20261125|E1|Stoke|Millwall": {
 "date": "2026-11-25",
 "div": "E1",
 "home": "Stoke",
 "away": "Millwall",
-"fav_p": 0.379,
+"fav_p": 0.391,
 "fav_side": "2",
-"o15": 0.695,
-"o25": 0.413
+"o15": 0.696,
+"o25": 0.418
 },
 "20261127|T1|Rizespor|Kasimpasa": {
 "date": "2026-11-27",
@@ -3448,10 +3482,10 @@
 "div": "N1",
 "home": "Groningen",
 "away": "Willem II",
-"fav_p": 0.716,
+"fav_p": 0.708,
 "fav_side": "1",
 "o15": 0.908,
-"o25": 0.694
+"o25": 0.692
 },
 "20261127|D1|Werder Bremen|M'gladbach": {
 "date": "2026-11-27",
@@ -3488,30 +3522,30 @@
 "div": "E1",
 "home": "Southampton",
 "away": "Middlesbrough",
-"fav_p": 0.526,
+"fav_p": 0.538,
 "fav_side": "1",
-"o15": 0.858,
-"o25": 0.642
+"o15": 0.859,
+"o25": 0.646
 },
 "20261127|E0|Nott'm Forest|Chelsea": {
 "date": "2026-11-27",
 "div": "E0",
 "home": "Nott'm Forest",
 "away": "Chelsea",
-"fav_p": 0.377,
+"fav_p": 0.374,
 "fav_side": "2",
 "o15": 0.805,
-"o25": 0.548
+"o25": 0.546
 },
 "20261127|P1|Maritimo|Nacional": {
 "date": "2026-11-27",
 "div": "P1",
 "home": "Maritimo",
 "away": "Nacional",
-"fav_p": 0.398,
+"fav_p": 0.404,
 "fav_side": "2",
 "o15": 0.755,
-"o25": 0.552
+"o25": 0.553
 },
 "20261105|UECL|Atalanta|Kairat Almaty": {
 "date": "2026-11-05",
@@ -3521,7 +3555,7 @@
 "fav_p": 0.782,
 "fav_side": "1",
 "o15": 0.868,
-"o25": 0.68
+"o25": 0.681
 },
 "20261105|UEL|Real Sociedad|Lyon": {
 "date": "2026-11-05",
@@ -3578,7 +3612,7 @@
 "div": "UEL",
 "home": "Sparta Prague",
 "away": "AFC Bournemouth",
-"fav_p": 0.734,
+"fav_p": 0.733,
 "fav_side": "2",
 "o15": 0.814,
 "o25": 0.591
@@ -3701,7 +3735,7 @@
 "fav_p": 0.811,
 "fav_side": "1",
 "o15": 0.947,
-"o25": 0.84
+"o25": 0.841
 },
 "20261105|UEL|Benfica|Lech Poznan": {
 "date": "2026-11-05",
@@ -3868,30 +3902,30 @@
 "div": "E1",
 "home": "Preston",
 "away": "Norwich",
-"fav_p": 0.451,
+"fav_p": 0.463,
 "fav_side": "2",
-"o15": 0.727,
-"o25": 0.515
+"o15": 0.728,
+"o25": 0.52
 },
 "20261128|E1|Lincoln|Wolves": {
 "date": "2026-11-28",
 "div": "E1",
 "home": "Lincoln",
 "away": "Wolves",
-"fav_p": 0.474,
+"fav_p": 0.486,
 "fav_side": "2",
-"o15": 0.792,
-"o25": 0.531
+"o15": 0.793,
+"o25": 0.536
 },
 "20261128|E1|Blackburn|Charlton": {
 "date": "2026-11-28",
 "div": "E1",
 "home": "Blackburn",
 "away": "Charlton",
-"fav_p": 0.494,
+"fav_p": 0.506,
 "fav_side": "1",
-"o15": 0.725,
-"o25": 0.447
+"o15": 0.726,
+"o25": 0.452
 },
 "20261128|T1|Samsunspor|Genclerbirligi": {
 "date": "2026-11-28",
@@ -3958,120 +3992,120 @@
 "div": "E1",
 "home": "West Ham",
 "away": "Stoke",
-"fav_p": 0.733,
+"fav_p": 0.745,
 "fav_side": "1",
-"o15": 0.867,
-"o25": 0.662
+"o15": 0.868,
+"o25": 0.666
 },
 "20261128|E0|Man United|Brentford": {
 "date": "2026-11-28",
 "div": "E0",
 "home": "Man United",
 "away": "Brentford",
-"fav_p": 0.425,
+"fav_p": 0.421,
 "fav_side": "1",
 "o15": 0.855,
-"o25": 0.618
+"o25": 0.616
 },
 "20261128|E1|Birmingham|Bolton": {
 "date": "2026-11-28",
 "div": "E1",
 "home": "Birmingham",
 "away": "Bolton",
-"fav_p": 0.587,
+"fav_p": 0.599,
 "fav_side": "1",
-"o15": 0.806,
-"o25": 0.569
+"o15": 0.807,
+"o25": 0.573
 },
 "20261128|E1|Wrexham|Portsmouth": {
 "date": "2026-11-28",
 "div": "E1",
 "home": "Wrexham",
 "away": "Portsmouth",
-"fav_p": 0.51,
+"fav_p": 0.522,
 "fav_side": "1",
-"o15": 0.742,
-"o25": 0.473
+"o15": 0.743,
+"o25": 0.477
 },
 "20261128|E1|QPR|Sheffield United": {
 "date": "2026-11-28",
 "div": "E1",
 "home": "QPR",
 "away": "Sheffield United",
-"fav_p": 0.417,
+"fav_p": 0.428,
 "fav_side": "1",
-"o15": 0.754,
-"o25": 0.494
+"o15": 0.755,
+"o25": 0.498
 },
 "20261128|E0|Leeds|Coventry": {
 "date": "2026-11-28",
 "div": "E0",
 "home": "Leeds",
 "away": "Coventry",
-"fav_p": 0.576,
+"fav_p": 0.573,
 "fav_side": "1",
 "o15": 0.822,
-"o25": 0.556
+"o25": 0.555
 },
 "20261128|E1|Derby|Watford": {
 "date": "2026-11-28",
 "div": "E1",
 "home": "Derby",
 "away": "Watford",
-"fav_p": 0.494,
+"fav_p": 0.506,
 "fav_side": "1",
-"o15": 0.738,
-"o25": 0.529
+"o15": 0.739,
+"o25": 0.534
 },
 "20261128|E1|Millwall|Burnley": {
 "date": "2026-11-28",
 "div": "E1",
 "home": "Millwall",
 "away": "Burnley",
-"fav_p": 0.415,
+"fav_p": 0.427,
 "fav_side": "1",
-"o15": 0.726,
-"o25": 0.474
+"o15": 0.727,
+"o25": 0.479
 },
 "20261128|E1|West Brom|Bristol City": {
 "date": "2026-11-28",
 "div": "E1",
 "home": "West Brom",
 "away": "Bristol City",
-"fav_p": 0.45,
+"fav_p": 0.462,
 "fav_side": "1",
-"o15": 0.694,
-"o25": 0.396
+"o15": 0.695,
+"o25": 0.401
 },
 "20261128|N1|Excelsior|Telstar": {
 "date": "2026-11-28",
 "div": "N1",
 "home": "Excelsior",
 "away": "Telstar",
-"fav_p": 0.421,
+"fav_p": 0.413,
 "fav_side": "1",
 "o15": 0.824,
-"o25": 0.536
+"o25": 0.534
 },
 "20261128|P1|Arouca|Rio Ave": {
 "date": "2026-11-28",
 "div": "P1",
 "home": "Arouca",
 "away": "Rio Ave",
-"fav_p": 0.559,
+"fav_p": 0.565,
 "fav_side": "1",
 "o15": 0.766,
-"o25": 0.578
+"o25": 0.579
 },
 "20261128|P1|Moreirense|Santa Clara": {
 "date": "2026-11-28",
 "div": "P1",
 "home": "Moreirense",
 "away": "Santa Clara",
-"fav_p": 0.391,
+"fav_p": 0.397,
 "fav_side": "2",
-"o15": 0.684,
-"o25": 0.419
+"o15": 0.685,
+"o25": 0.42
 },
 "20261128|T1|Gaziantep|Amedspor": {
 "date": "2026-11-28",
@@ -4118,30 +4152,30 @@
 "div": "E0",
 "home": "Ipswich",
 "away": "Aston Villa",
-"fav_p": 0.541,
+"fav_p": 0.537,
 "fav_side": "2",
 "o15": 0.874,
-"o25": 0.632
+"o25": 0.63
 },
 "20261128|N1|PSV Eindhoven|Go Ahead Eagles": {
 "date": "2026-11-28",
 "div": "N1",
 "home": "PSV Eindhoven",
 "away": "Go Ahead Eagles",
-"fav_p": 0.766,
+"fav_p": 0.758,
 "fav_side": "1",
 "o15": 0.959,
-"o25": 0.796
+"o25": 0.794
 },
 "20261128|P1|Academico Viseu|Alverca": {
 "date": "2026-11-28",
 "div": "P1",
 "home": "Academico Viseu",
 "away": "Alverca",
-"fav_p": 0.557,
+"fav_p": 0.563,
 "fav_side": "1",
-"o15": 0.818,
-"o25": 0.608
+"o15": 0.819,
+"o25": 0.609
 },
 "20261128|I1|Inter|Genoa": {
 "date": "2026-11-28",
@@ -4198,20 +4232,20 @@
 "div": "N1",
 "home": "Cambuur",
 "away": "Sparta Rotterdam",
-"fav_p": 0.467,
+"fav_p": 0.46,
 "fav_side": "1",
 "o15": 0.883,
-"o25": 0.642
+"o25": 0.639
 },
 "20261128|P1|Guimaraes|Estrela": {
 "date": "2026-11-28",
 "div": "P1",
 "home": "Guimaraes",
 "away": "Estrela",
-"fav_p": 0.531,
+"fav_p": 0.537,
 "fav_side": "1",
-"o15": 0.771,
-"o25": 0.549
+"o15": 0.772,
+"o25": 0.551
 },
 "20261101|T1|Buyuksehyr|Samsunspor": {
 "date": "2026-11-01",
@@ -4238,10 +4272,10 @@
 "div": "N1",
 "home": "Den Haag",
 "away": "Utrecht",
-"fav_p": 0.486,
+"fav_p": 0.478,
 "fav_side": "2",
-"o15": 0.879,
-"o25": 0.636
+"o15": 0.88,
+"o25": 0.633
 },
 "20261129|I1|Udinese|Fiorentina": {
 "date": "2026-11-29",
@@ -4258,40 +4292,40 @@
 "div": "E1",
 "home": "Swansea",
 "away": "Cardiff",
-"fav_p": 0.523,
+"fav_p": 0.535,
 "fav_side": "1",
-"o15": 0.791,
-"o25": 0.531
+"o15": 0.792,
+"o25": 0.535
 },
 "20261129|E0|Everton|Liverpool": {
 "date": "2026-11-29",
 "div": "E0",
 "home": "Everton",
 "away": "Liverpool",
-"fav_p": 0.434,
+"fav_p": 0.43,
 "fav_side": "2",
 "o15": 0.84,
-"o25": 0.555
+"o25": 0.553
 },
 "20261129|N1|Feyenoord|Ajax": {
 "date": "2026-11-29",
 "div": "N1",
 "home": "Feyenoord",
 "away": "Ajax",
-"fav_p": 0.488,
+"fav_p": 0.48,
 "fav_side": "1",
 "o15": 0.899,
-"o25": 0.64
+"o25": 0.637
 },
 "20261129|N1|For Sittard|Heerenveen": {
 "date": "2026-11-29",
 "div": "N1",
 "home": "For Sittard",
 "away": "Heerenveen",
-"fav_p": 0.389,
+"fav_p": 0.382,
 "fav_side": "2",
 "o15": 0.848,
-"o25": 0.557
+"o25": 0.555
 },
 "20261129|F1|Auxerre|Marseille": {
 "date": "2026-11-29",
@@ -4318,40 +4352,40 @@
 "div": "E0",
 "home": "Brighton",
 "away": "Newcastle",
-"fav_p": 0.511,
+"fav_p": 0.507,
 "fav_side": "1",
 "o15": 0.882,
-"o25": 0.634
+"o25": 0.633
 },
 "20261129|E0|Fulham|Bournemouth": {
 "date": "2026-11-29",
 "div": "E0",
 "home": "Fulham",
 "away": "Bournemouth",
-"fav_p": 0.368,
+"fav_p": 0.364,
 "fav_side": "2",
 "o15": 0.809,
-"o25": 0.519
+"o25": 0.517
 },
 "20261129|E0|Sunderland|Tottenham": {
 "date": "2026-11-29",
 "div": "E0",
 "home": "Sunderland",
 "away": "Tottenham",
-"fav_p": 0.372,
+"fav_p": 0.368,
 "fav_side": "1",
 "o15": 0.779,
-"o25": 0.493
+"o25": 0.491
 },
 "20261129|E0|Crystal Palace|Hull": {
 "date": "2026-11-29",
 "div": "E0",
 "home": "Crystal Palace",
 "away": "Hull",
-"fav_p": 0.351,
+"fav_p": 0.348,
 "fav_side": "1",
-"o15": 0.768,
-"o25": 0.477
+"o15": 0.767,
+"o25": 0.475
 },
 "20261129|D1|Freiburg|RB Leipzig": {
 "date": "2026-11-29",
@@ -4368,10 +4402,10 @@
 "div": "N1",
 "home": "Zwolle",
 "away": "AZ Alkmaar",
-"fav_p": 0.53,
+"fav_p": 0.522,
 "fav_side": "2",
 "o15": 0.859,
-"o25": 0.61
+"o25": 0.608
 },
 "20261129|T1|Fenerbahce|Erzurumspor": {
 "date": "2026-11-29",
@@ -4408,10 +4442,10 @@
 "div": "E0",
 "home": "Arsenal",
 "away": "Man City",
-"fav_p": 0.452,
+"fav_p": 0.448,
 "fav_side": "1",
 "o15": 0.815,
-"o25": 0.506
+"o25": 0.504
 },
 "20261129|I1|Roma|Monza": {
 "date": "2026-11-29",
@@ -4428,10 +4462,10 @@
 "div": "P1",
 "home": "Gil Vicente",
 "away": "Estoril",
-"fav_p": 0.472,
+"fav_p": 0.479,
 "fav_side": "1",
-"o15": 0.754,
-"o25": 0.547
+"o15": 0.755,
+"o25": 0.549
 },
 "20261129|D1|Dortmund|Leverkusen": {
 "date": "2026-11-29",
@@ -4448,10 +4482,10 @@
 "div": "N1",
 "home": "Nijmegen",
 "away": "Twente",
-"fav_p": 0.379,
+"fav_p": 0.371,
 "fav_side": "2",
 "o15": 0.863,
-"o25": 0.571
+"o25": 0.569
 },
 "20261129|F1|Lyon|Monaco": {
 "date": "2026-11-29",
@@ -4478,219 +4512,219 @@
 "div": "SP1",
 "home": "Levante",
 "away": "Santander",
-"fav_p": 0.644,
+"fav_p": 0.65,
 "fav_side": "1",
 "o15": 0.89,
-"o25": 0.697
+"o25": 0.698
 },
 "20261129|SP1|La Coruna|Barcelona": {
 "date": "2026-11-29",
 "div": "SP1",
 "home": "La Coruna",
 "away": "Barcelona",
-"fav_p": 0.646,
+"fav_p": 0.652,
 "fav_side": "2",
 "o15": 0.851,
-"o25": 0.608
+"o25": 0.61
 },
 "20261129|SP2|Almeria|Sp Gijon": {
 "date": "2026-11-29",
 "div": "SP2",
 "home": "Almeria",
 "away": "Sp Gijon",
-"fav_p": 0.563,
+"fav_p": 0.559,
 "fav_side": "1",
 "o15": 0.78,
-"o25": 0.557
+"o25": 0.556
 },
 "20261129|SP1|Real Madrid|Alaves": {
 "date": "2026-11-29",
 "div": "SP1",
 "home": "Real Madrid",
 "away": "Alaves",
-"fav_p": 0.736,
+"fav_p": 0.742,
 "fav_side": "1",
 "o15": 0.853,
-"o25": 0.611
+"o25": 0.613
 },
 "20261129|SP1|Sociedad|Sevilla": {
 "date": "2026-11-29",
 "div": "SP1",
 "home": "Sociedad",
 "away": "Sevilla",
-"fav_p": 0.514,
+"fav_p": 0.52,
 "fav_side": "1",
-"o15": 0.821,
-"o25": 0.558
+"o15": 0.822,
+"o25": 0.559
 },
 "20261129|SP2|Oviedo|Celta B": {
 "date": "2026-11-29",
 "div": "SP2",
 "home": "Oviedo",
 "away": "Celta B",
-"fav_p": 0.637,
+"fav_p": 0.633,
 "fav_side": "1",
-"o15": 0.808,
-"o25": 0.617
+"o15": 0.809,
+"o25": 0.615
 },
 "20261129|SP1|Celta|Villarreal": {
 "date": "2026-11-29",
 "div": "SP1",
 "home": "Celta",
 "away": "Villarreal",
-"fav_p": 0.387,
+"fav_p": 0.392,
 "fav_side": "1",
-"o15": 0.754,
-"o25": 0.471
+"o15": 0.755,
+"o25": 0.472
 },
 "20261129|SP1|Elche|Ath Madrid": {
 "date": "2026-11-29",
 "div": "SP1",
 "home": "Elche",
 "away": "Ath Madrid",
-"fav_p": 0.462,
+"fav_p": 0.468,
 "fav_side": "2",
-"o15": 0.8,
-"o25": 0.523
+"o15": 0.801,
+"o25": 0.524
 },
 "20261129|SP2|Granada|Ceuta": {
 "date": "2026-11-29",
 "div": "SP2",
 "home": "Granada",
 "away": "Ceuta",
-"fav_p": 0.609,
+"fav_p": 0.605,
 "fav_side": "1",
 "o15": 0.774,
-"o25": 0.597
+"o25": 0.596
 },
 "20261129|SP2|Eldense|Girona": {
 "date": "2026-11-29",
 "div": "SP2",
 "home": "Eldense",
 "away": "Girona",
-"fav_p": 0.498,
+"fav_p": 0.495,
 "fav_side": "2",
-"o15": 0.749,
-"o25": 0.513
+"o15": 0.75,
+"o25": 0.512
 },
 "20261129|SP1|Betis|Vallecano": {
 "date": "2026-11-29",
 "div": "SP1",
 "home": "Betis",
 "away": "Vallecano",
-"fav_p": 0.563,
+"fav_p": 0.569,
 "fav_side": "1",
 "o15": 0.84,
-"o25": 0.59
+"o25": 0.591
 },
 "20261129|SP2|Cadiz|Cordoba": {
 "date": "2026-11-29",
 "div": "SP2",
 "home": "Cadiz",
 "away": "Cordoba",
-"fav_p": 0.411,
+"fav_p": 0.407,
 "fav_side": "1",
 "o15": 0.728,
-"o25": 0.521
+"o25": 0.519
 },
 "20261129|SP2|Las Palmas|Andorra": {
 "date": "2026-11-29",
 "div": "SP2",
 "home": "Las Palmas",
 "away": "Andorra",
-"fav_p": 0.481,
+"fav_p": 0.478,
 "fav_side": "1",
-"o15": 0.705,
-"o25": 0.492
+"o15": 0.706,
+"o25": 0.491
 },
 "20261129|SP2|Valladolid|Sociedad B": {
 "date": "2026-11-29",
 "div": "SP2",
 "home": "Valladolid",
 "away": "Sociedad B",
-"fav_p": 0.497,
+"fav_p": 0.493,
 "fav_side": "1",
-"o15": 0.733,
-"o25": 0.528
+"o15": 0.734,
+"o25": 0.527
 },
 "20261129|SP1|Valencia|Osasuna": {
 "date": "2026-11-29",
 "div": "SP1",
 "home": "Valencia",
 "away": "Osasuna",
-"fav_p": 0.442,
+"fav_p": 0.448,
 "fav_side": "1",
-"o15": 0.719,
-"o25": 0.444
+"o15": 0.72,
+"o25": 0.445
 },
 "20261129|SP1|Malaga|Ath Bilbao": {
 "date": "2026-11-29",
 "div": "SP1",
 "home": "Malaga",
 "away": "Ath Bilbao",
-"fav_p": 0.505,
+"fav_p": 0.511,
 "fav_side": "2",
 "o15": 0.735,
-"o25": 0.462
+"o25": 0.464
 },
 "20261129|SP2|Albacete|Tenerife": {
 "date": "2026-11-29",
 "div": "SP2",
 "home": "Albacete",
 "away": "Tenerife",
-"fav_p": 0.449,
+"fav_p": 0.446,
 "fav_side": "1",
 "o15": 0.634,
-"o25": 0.405
+"o25": 0.403
 },
 "20261129|SP2|Mallorca|Castellon": {
 "date": "2026-11-29",
 "div": "SP2",
 "home": "Mallorca",
 "away": "Castellon",
-"fav_p": 0.43,
+"fav_p": 0.426,
 "fav_side": "1",
-"o15": 0.657,
-"o25": 0.395
+"o15": 0.658,
+"o25": 0.394
 },
 "20261129|SP2|Eibar|Burgos": {
 "date": "2026-11-29",
 "div": "SP2",
 "home": "Eibar",
 "away": "Burgos",
-"fav_p": 0.434,
+"fav_p": 0.43,
 "fav_side": "1",
 "o15": 0.714,
-"o25": 0.455
+"o25": 0.453
 },
 "20261129|SP1|Espanol|Getafe": {
 "date": "2026-11-29",
 "div": "SP1",
 "home": "Espanol",
 "away": "Getafe",
-"fav_p": 0.419,
+"fav_p": 0.424,
 "fav_side": "1",
 "o15": 0.62,
-"o25": 0.361
+"o25": 0.363
 },
 "20261129|SP2|Leganes|Sabadell": {
 "date": "2026-11-29",
 "div": "SP2",
 "home": "Leganes",
 "away": "Sabadell",
-"fav_p": 0.339,
+"fav_p": 0.336,
 "fav_side": "2",
-"o15": 0.593,
-"o25": 0.337
+"o15": 0.594,
+"o25": 0.336
 },
 "20261129|P1|Porto|Sp Lisbon": {
 "date": "2026-11-29",
 "div": "P1",
 "home": "Porto",
 "away": "Sp Lisbon",
-"fav_p": 0.419,
+"fav_p": 0.425,
 "fav_side": "1",
 "o15": 0.769,
-"o25": 0.527
+"o25": 0.528
 }
 }
