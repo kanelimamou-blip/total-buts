@@ -280,7 +280,52 @@ function trajectoryBlock(t) {
   ${part("o15", "+1,5")}${part("o25", "+2,5")}</section>`;
 }
 
-function funnelChart(live, k, g0) {
+// Même logique pour ce que l'appli propose : paris simples (chaque sélection) et coupons, joués ou non
+function cumul(items) {
+  let n = 0, p = 0, y = 0;
+  return items.map((it) => { n++; p += it.p; y += it.y; return { n, o1: y / n, p1: p / n }; });
+}
+function trackPart(lab, items, base, unit = "coupons") {
+  if (!items.length || !base) return "";
+  const live = cumul(items), last = live[live.length - 1];
+  const g0 = (base.obs - base.pred) * 100, gl = (last.o1 - last.p1) * 100;
+  const marg = 196 * Math.sqrt((last.p1 * (1 - last.p1)) / last.n), inside = Math.abs(gl - g0) <= marg;
+  const wl = LIVE_WEIGHT * last.n, mixed = (g0 * base.n + gl * wl) / (base.n + wl);
+  const f = (x) => (x > 0 ? "+" : "") + x.toFixed(1).replace(".", ",");
+  return `<h3>${lab}</h3>${live.length > 1 ? funnelChart(live, "o1", g0, unit) : ""}
+  <div class="kv"><span>Base historique (${base.n.toLocaleString("fr-FR")}) · prévu ${pct(base.pred)} / réel ${pct(base.obs)}</span><b>${f(g0)} pts</b></div>
+  <div class="kv"><span>Live (${last.n}, marge ± ${marg.toFixed(0)}) · prévu ${pct(last.p1)} / réel ${pct(last.o1)}</span><b class="${inside ? "pos" : "neg"}">${f(gl)} pts · ${inside ? "dans le couloir" : "hors couloir"}</b></div>
+  <div class="kv"><span>Base mise à jour par le live</span><b>${f(mixed)} pts</b></div>`;
+}
+function betsTrajectory(d, bt) {
+  const byDate = (a, b) => (a.date < b.date ? -1 : a.date > b.date ? 1 : 0);
+  // paris simples : chaque sélection proposée (une seule fois même si elle figure dans plusieurs coupons)
+  const seen = new Set(), legs = [];
+  for (const c of d.coupons.slice().sort(byDate)) for (const l of c.legs) {
+    const k = l.id + "|" + l.market;
+    if (!l.result || seen.has(k)) continue;
+    seen.add(k); legs.push({ date: l.id.slice(0, 8), p: l.p_win, y: l.result === "won" ? 1 : 0 });
+  }
+  legs.sort(byDate);
+  const bands = bt?.diagnostic?.bands || [];
+  const bn = bands.reduce((a, b) => a + b.n, 0);
+  const legBase = bn ? { n: bn, pred: bands.reduce((a, b) => a + b.pred * b.n, 0) / bn, obs: bands.reduce((a, b) => a + b.obs * b.n, 0) / bn } : null;
+  // coupons : réussite (gagné ou remboursé) contre chance annoncée de ne pas perdre
+  const cps = d.coupons.filter((c) => c.status === "won" || c.status === "lost").sort(byDate);
+  const bc = Object.entries(bt?.coupons || {});
+  const cbase = (list) => { const n = list.reduce((a, [, c]) => a + c.n, 0); return n ? { n, pred: list.reduce((a, [, c]) => a + c.pred_hit * c.n, 0) / n, obs: list.reduce((a, [, c]) => a + c.hit * c.n, 0) / n } : null; };
+  const items = (list) => list.map((c) => ({ p: c.p_not_lose, y: c.status === "won" ? 1 : 0 }));
+  const kinds = [...new Set(cps.map((c) => c.kind))].filter((k) => bt?.coupons?.[k]);
+  if (!legs.length && !cps.length) return "";
+  return `<section class="card"><h2>Trajectoire des paris</h2>
+  <p class="small muted">Même lecture que pour les matchs, appliquée à ce que l'appli propose, joué ou non : chaque sélection seule (pari simple) et chaque coupon. Base figée du passé, live seul, et base mise à jour par le live.</p>
+  ${trackPart("Paris simples (sélections)", legs, legBase, "sélections")}
+  ${trackPart("Tous les coupons", items(cps), cbase(bc.filter(([k]) => kinds.includes(k))))}
+  ${kinds.map((k) => trackPart(esc(d.coupon_kinds[k]?.label || k), items(cps.filter((c) => c.kind === k)), cbase(bc.filter(([kk]) => kk === k)))).join("")}
+  </section>`;
+}
+
+function funnelChart(live, k, g0, unit = "matchs") {
   const W = 320, H = 150, p = 26, lim = 25, pk = "p" + k.slice(1);
   const N = live[live.length - 1].n;
   const x = (n) => p + ((n - 1) / Math.max(N - 1, 1)) * (W - p * 2), y = (v) => H / 2 - (Math.max(-lim, Math.min(lim, v)) / lim) * (H / 2 - 14);
@@ -295,7 +340,7 @@ function funnelChart(live, k, g0) {
     <path d="${line}" fill="none" stroke="${ok ? "var(--accent)" : "var(--lost)"}" stroke-width="2"/>
     <circle cx="${x(lr.n)}" cy="${y(lv)}" r="3.5" fill="${ok ? "var(--accent)" : "var(--lost)"}"/>
     <text x="4" y="${y(lim) + 4}">+${lim}</text><text x="4" y="${y(0) + 3}">0</text><text x="4" y="${y(-lim) + 4}">−${lim}</text>
-    <text x="${W - p}" y="${H - 2}" text-anchor="end">${N} matchs</text></svg>`;
+    <text x="${W - p}" y="${H - 2}" text-anchor="end">${N} ${unit}</text></svg>`;
 }
 
 // Marge d'erreur due au hasard (95 %) : un écart plus petit que la marge ne prouve rien
@@ -374,6 +419,7 @@ function viewTracking() {
     <div class="kv"><span>+2,5 annoncé / observé</span><b>${pct(p.o25_pred)} / ${pct(p.o25_obs)}</b></div>
     ${calibVerdict(p)}</section>`;
   }
+  html += betsTrajectory(d, bt);
   if (d.trajectory?.live?.length && d.trajectory.base) {
     html += trajectoryBlock(d.trajectory);
   }
