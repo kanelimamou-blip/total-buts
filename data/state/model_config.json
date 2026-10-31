@@ -6,46 +6,46 @@
   "markets": {
    "o15": {
     "test_logloss_base": 0.52031,
-    "test_logloss_ctx": 0.51952,
-    "gain": 0.00079,
+    "test_logloss_ctx": 0.51959,
+    "gain": 0.00072,
     "use": true,
     "coef": {
-     "top_top": 0.0824,
-     "top_bottom": -0.1354,
-     "top_mid": 0.057,
-     "mid_bottom": -0.0819,
-     "bottom_bottom": -0.2285,
-     "aug": 0.0218,
-     "nov_dec": 0.0654,
-     "jan_feb": 0.1445,
-     "mar_apr": -0.0523,
-     "may_jun": 0.1016,
-     "post_break": 0.0218,
-     "euro_recent": -0.0265,
-     "short_rest": 0.0552,
-     "congested": -0.0216
+     "top_top": 0.0805,
+     "top_bottom": -0.1358,
+     "top_mid": 0.0567,
+     "mid_bottom": -0.0814,
+     "bottom_bottom": -0.227,
+     "aug": 0.0221,
+     "nov_dec": 0.066,
+     "jan_feb": 0.1447,
+     "mar_apr": -0.0516,
+     "may_jun": 0.1017,
+     "post_break": 0.0198,
+     "euro_recent": 0.0066,
+     "short_rest": 0.0382,
+     "congested": -0.0209
     }
    },
    "o25": {
     "test_logloss_base": 0.6724,
-    "test_logloss_ctx": 0.67257,
-    "gain": -0.00017,
+    "test_logloss_ctx": 0.67253,
+    "gain": -0.00013,
     "use": false,
     "coef": {
-     "top_top": 0.1274,
-     "top_bottom": -0.0653,
-     "top_mid": 0.1026,
-     "mid_bottom": -0.0209,
-     "bottom_bottom": -0.1396,
-     "aug": 0.02,
-     "nov_dec": -0.0017,
-     "jan_feb": 0.0434,
-     "mar_apr": -0.0069,
-     "may_jun": 0.0129,
-     "post_break": 0.0977,
-     "euro_recent": -0.0158,
-     "short_rest": -0.005,
-     "congested": 0.0074
+     "top_top": 0.1282,
+     "top_bottom": -0.0645,
+     "top_mid": 0.1035,
+     "mid_bottom": -0.0202,
+     "bottom_bottom": -0.1388,
+     "aug": 0.0201,
+     "nov_dec": -0.0012,
+     "jan_feb": 0.043,
+     "mar_apr": -0.007,
+     "may_jun": 0.0124,
+     "post_break": 0.0949,
+     "euro_recent": -0.0103,
+     "short_rest": -0.0098,
+     "congested": 0.0112
     }
    }
   },
@@ -77,7 +77,7 @@
    {
     "key": "post_break",
     "label": "Retour de tr\u00eave internationale",
-    "n": 969,
+    "n": 963,
     "pred_o25": 0.53,
     "obs_o25": 0.558,
     "goals": 2.87
@@ -101,10 +101,18 @@
    {
     "key": "congested",
     "label": "4 matchs ou plus en 14 jours",
-    "n": 260,
-    "pred_o25": 0.551,
-    "obs_o25": 0.562,
-    "goals": 2.9
+    "n": 285,
+    "pred_o25": 0.549,
+    "obs_o25": 0.561,
+    "goals": 2.91
+   },
+   {
+    "key": "euro_recent",
+    "label": "Match europ\u00e9en dans les 4 jours avant",
+    "n": 984,
+    "pred_o25": 0.568,
+    "obs_o25": 0.575,
+    "goals": 2.93
    },
    {
     "key": "may_jun",
@@ -113,22 +121,6 @@
     "pred_o25": 0.556,
     "obs_o25": 0.562,
     "goals": 2.93
-   },
-   {
-    "key": "euro_recent",
-    "label": "Match europ\u00e9en dans les 4 jours avant",
-    "n": 829,
-    "pred_o25": 0.567,
-    "obs_o25": 0.573,
-    "goals": 2.91
-   },
-   {
-    "key": "short_rest",
-    "label": "Repos de 3 jours ou moins",
-    "n": 1825,
-    "pred_o25": 0.527,
-    "obs_o25": 0.533,
-    "goals": 2.81
    },
    {
     "key": "aug",
@@ -145,6 +137,14 @@
     "pred_o25": 0.515,
     "obs_o25": 0.52,
     "goals": 2.75
+   },
+   {
+    "key": "short_rest",
+    "label": "Repos de 3 jours ou moins",
+    "n": 1917,
+    "pred_o25": 0.529,
+    "obs_o25": 0.534,
+    "goals": 2.82
    },
    {
     "key": "mar_apr",
@@ -272,5 +272,175 @@
    }
   }
  },
- "blocked": []
+ "blocked": [],
+ "extra": {
+  "ht_share": 0.4434,
+  "markets": {
+   "1X": {
+    "label": "Double chance 1X",
+    "n": 8251,
+    "pred": 0.769,
+    "obs": 0.79,
+    "use": true,
+    "coef": [
+     -0.1425,
+     1.2522
+    ],
+    "logloss_raw": 0.50204,
+    "logloss_cal": 0.50039,
+    "pred_cal": 0.792
+   },
+   "X2": {
+    "label": "Double chance X2",
+    "n": 3683,
+    "pred": 0.743,
+    "obs": 0.769,
+    "use": true,
+    "coef": [
+     -0.2183,
+     1.3707
+    ],
+    "logloss_raw": 0.53078,
+    "logloss_cal": 0.52996,
+    "pred_cal": 0.769
+   },
+   "a05": {
+    "label": "Ext\u00e9rieur marque +0,5",
+    "n": 3683,
+    "pred": 0.796,
+    "obs": 0.824,
+    "use": true,
+    "coef": [
+     0.0893,
+     1.0517
+    ],
+    "logloss_raw": 0.4494,
+    "logloss_cal": 0.44597,
+    "pred_cal": 0.82
+   },
+   "a15": {
+    "label": "Ext\u00e9rieur marque +1,5",
+    "n": 3683,
+    "pred": 0.484,
+    "obs": 0.512,
+    "use": true,
+    "coef": [
+     0.1153,
+     1.0953
+    ],
+    "logloss_raw": 0.68439,
+    "logloss_cal": 0.68364,
+    "pred_cal": 0.51
+   },
+   "dnb1": {
+    "label": "Rembours\u00e9 si nul : domicile",
+    "n": 6106,
+    "pred": 0.694,
+    "obs": 0.716,
+    "use": true,
+    "coef": [
+     -0.0379,
+     1.23
+    ],
+    "logloss_raw": 0.56213,
+    "logloss_cal": 0.55998,
+    "pred_cal": 0.717
+   },
+   "dnb2": {
+    "label": "Rembours\u00e9 si nul : ext\u00e9rieur",
+    "n": 2740,
+    "pred": 0.657,
+    "obs": 0.69,
+    "use": true,
+    "coef": [
+     -0.0404,
+     1.352
+    ],
+    "logloss_raw": 0.59558,
+    "logloss_cal": 0.59471,
+    "pred_cal": 0.689
+   },
+   "h05": {
+    "label": "Domicile marque +0,5",
+    "n": 8251,
+    "pred": 0.804,
+    "obs": 0.829,
+    "use": true,
+    "coef": [
+     -0.0049,
+     1.1225
+    ],
+    "logloss_raw": 0.43173,
+    "logloss_cal": 0.42839,
+    "pred_cal": 0.827
+   },
+   "h15": {
+    "label": "Domicile marque +1,5",
+    "n": 8251,
+    "pred": 0.498,
+    "obs": 0.509,
+    "use": true,
+    "coef": [
+     0.0412,
+     1.118
+    ],
+    "logloss_raw": 0.65832,
+    "logloss_cal": 0.6575,
+    "pred_cal": 0.507
+   },
+   "ht05": {
+    "label": "1re mi-temps +0,5 but",
+    "n": 11931,
+    "pred": 0.703,
+    "obs": 0.709,
+    "use": false,
+    "coef": [
+     -0.3225,
+     1.4283
+    ],
+    "logloss_raw": 0.59727,
+    "logloss_cal": 0.59813
+   },
+   "sh05": {
+    "label": "2e mi-temps +0,5 but",
+    "n": 11931,
+    "pred": 0.781,
+    "obs": 0.793,
+    "use": true,
+    "coef": [
+     -0.1831,
+     1.1938
+    ],
+    "logloss_raw": 0.49282,
+    "logloss_cal": 0.49209,
+    "pred_cal": 0.791
+   },
+   "u35": {
+    "label": "Moins de 3,5 buts",
+    "n": 11934,
+    "pred": 0.696,
+    "obs": 0.692,
+    "use": false,
+    "coef": [
+     -0.1033,
+     1.1113
+    ],
+    "logloss_raw": 0.60421,
+    "logloss_cal": 0.60394
+   },
+   "u45": {
+    "label": "Moins de 4,5 buts",
+    "n": 11934,
+    "pred": 0.846,
+    "obs": 0.852,
+    "use": false,
+    "coef": [
+     -0.0843,
+     1.0773
+    ],
+    "logloss_raw": 0.40961,
+    "logloss_cal": 0.40949
+   }
+  }
+ }
 }
