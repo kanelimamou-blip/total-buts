@@ -265,6 +265,47 @@ function surprisesBlock() {
 }
 
 /* ---------- Suivi ---------- */
+// Coupons à jouer (cote 2 et plus) suivis par type de combinaison : passé, live, et pari qui fait casser
+const SMALL_KINDS = new Set(["sur", "ligue", "favoris", "buts15", "buts25", "mix", "dc", "autres", "value", "tendance"]);
+function legFamily(mk) {
+  return ["o15", "o20", "o25"].includes(mk) ? "buts" : mk === "1" || mk === "2" ? "favori" : ["1X", "X2", "dnb1", "dnb2"].includes(mk) ? "double chance" : ["u35", "u45"].includes(mk) ? "moins de buts" : "autres";
+}
+function signature(c) {
+  const n = c.legs.length;
+  return `${n <= 4 ? n : "5+"} matchs · ${[...new Set(c.legs.map((l) => legFamily(l.market)))].sort().join(" + ")}`;
+}
+function culpritOf(l) {
+  return legFamily(l.market) === "buts" ? { o15: "+1,5", o20: "+2 (asiatique)", o25: "+2,5" }[l.market] : legFamily(l.market);
+}
+function combosBlock(d, bt) {
+  const base = bt?.combos || {}, fac = d.combo_factors || {};
+  const live = {}, cul = {};
+  for (const c of d.coupons) {
+    if (!SMALL_KINDS.has(c.kind) || (c.status !== "won" && c.status !== "lost")) continue;
+    const e = (live[signature(c)] ||= { n: 0, p: 0, w: 0 });
+    e.n++; e.p += c.p_not_lose; e.w += c.status === "won";
+    if (c.status === "lost") for (const l of c.legs) if (l.result === "lost") cul[culpritOf(l)] = (cul[culpritOf(l)] || 0) + 1;
+  }
+  const sigs = [...new Set([...Object.keys(live), ...Object.keys(base)])].sort((a, b) => ((live[b]?.n || 0) - (live[a]?.n || 0)) || ((base[b]?.n || 0) - (base[a]?.n || 0))).slice(0, 14);
+  if (!sigs.length) return "";
+  const bc = {};
+  for (const e of Object.values(base)) for (const [k, v] of Object.entries(e.culprits || {})) bc[k] = (bc[k] || 0) + v;
+  const share = (o) => { const t = Object.values(o).reduce((a, b) => a + b, 0); return Object.entries(o).sort((a, b) => b[1] - a[1]).map(([k, v]) => `${esc(k)} ${Math.round((v / t) * 100)} %`).join(" · "); };
+  const tot = Object.values(live).reduce((a, e) => ({ n: a.n + e.n, w: a.w + e.w, p: a.p + e.p }), { n: 0, w: 0, p: 0 });
+  return `<section class="card"><h2>Mes coupons à cote 2 et plus</h2>
+  <p class="small muted">Ce qui compte pour toi : les coupons entiers, pas les matchs seuls. Chaque type de combinaison est comparé au passé (3 ans rejoués) et au live. Les combinaisons qui passent mieux que prévu remontent en priorité, les autres descendent.</p>
+  ${tot.n ? `<div class="kv"><span>Live : ${tot.n} coupons réglés, annoncé / réel</span><b>${pct(tot.p / tot.n)} / ${pct(tot.w / tot.n)}</b></div>` : `<p class="small">Les premiers coupons du nouveau suivi seront réglés après les matchs de demain.</p>`}
+  <div class="tbl"><table><thead><tr><th>Combinaison</th><th class="n">Passé</th><th class="n">Live</th><th class="n">Priorité</th></tr></thead><tbody>
+  ${sigs.map((sg) => { const b = base[sg], l = live[sg], f = fac[sg];
+    return `<tr><td style="white-space:normal">${esc(sg)}</td><td class="n">${b ? `${pct(b.pred)} / <b class="${b.hit >= b.pred - 0.01 ? "pos" : "neg"}">${pct(b.hit)}</b><br><span class="small muted">${b.n}</span>` : "–"}</td><td class="n">${l ? `${pct(l.p / l.n)} / <b class="${l.w / l.n >= l.p / l.n - 0.01 ? "pos" : "neg"}">${pct(l.w / l.n)}</b><br><span class="small muted">${l.n}</span>` : "–"}</td><td class="n ${f > 1.01 ? "pos" : f < 0.99 ? "neg" : ""}">${f ? (f > 1.01 ? "↑" : f < 0.99 ? "↓" : "=") : "="}</td></tr>`; }).join("")}
+  </tbody></table></div>
+  <p class="small muted">Annoncé / réel, nombre de coupons dessous.</p>
+  <h3>Ce qui fait casser les coupons</h3>
+  <div class="kv"><span>Passé</span><b style="white-space:normal;text-align:right">${share(bc) || "–"}</b></div>
+  <div class="kv"><span>Live</span><b style="white-space:normal;text-align:right">${share(cul) || "pas encore de coupon perdu"}</b></div>
+  </section>`;
+}
+
 // Trajectoire du live dans le couloir de la base historique : tant que la ligne reste dans la zone,
 // le live confirme les 12 000 matchs du passé ; si elle en sort, le modèle a un vrai défaut en conditions réelles
 const LIVE_WEIGHT = 5;
@@ -418,7 +459,7 @@ function viewTracking() {
   const kinds = Object.entries(d.coupon_kinds);
   const live = d.live || {};
   const tot = Object.values(live).reduce((a, s) => ({ n: a.n + s.n, won: a.won + s.won, units: a.units + s.units }), { n: 0, won: 0, units: 0 });
-  let html = `<h1>Suivi</h1>${myBetsBlock()}<h2>Propositions de l'appli</h2>
+  let html = `<h1>Suivi</h1>${myBetsBlock()}${combosBlock(d, bt)}<h2>Propositions de l'appli</h2>
   <div class="stats">
     <div class="stat"><span class="k">Coupons réglés</span><span class="v">${tot.n}</span></div>
     <div class="stat"><span class="k">Gagnés</span><span class="v">${tot.n ? Math.round((tot.won / tot.n) * 100) + " %" : "–"}</span></div>

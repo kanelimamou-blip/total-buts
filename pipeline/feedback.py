@@ -146,3 +146,20 @@ def reliable_markets(backtest: dict | None, coupon_store: dict) -> list[dict]:
         label = GOAL_LABELS.get(mk) or extra.LABELS.get(mk, (mk,))[0]
         out.append({"market": mk, "label": label, "n": n, "gap": round(obs - pred, 3), "live_n": ln, "live_gap": live_gap, "reliable": ok})
     return sorted(out, key=lambda x: (not x["reliable"], abs(x["gap"])))
+
+
+def combo_factors(backtest: dict | None, coupon_store: dict) -> dict:
+    """Facteur de priorité par type de combinaison : réussite réelle / annoncée, sur le passé et en live.
+
+    Le live pèse 3 fois plus qu'un coupon du passé ; le facteur reste entre 0,85 et 1,15.
+    """
+    import coupons as cp
+    acc = {}
+    for sig, e in ((backtest or {}).get("combos") or {}).items():
+        acc[sig] = [e["n"] * e["pred"], e["n"] * e["hit"], e["n"]]
+    for e in coupon_store.values():
+        for c in e.get("coupons", []):
+            if c["kind"] in cp.SMALL_KINDS and c.get("status") in ("won", "lost"):
+                a = acc.setdefault(cp.signature(c), [0.0, 0.0, 0])
+                a[0] += 3 * c["p_not_lose"]; a[1] += 3 * (c["status"] == "won"); a[2] += 3
+    return {sig: float(np.clip(w / p, 0.85, 1.15)) for sig, (p, w, n) in acc.items() if n >= 100 and p > 0}

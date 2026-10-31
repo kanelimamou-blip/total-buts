@@ -252,13 +252,38 @@ def build_day(matches: list[dict], kinds=("sur", "favoris", "buts15", "buts25", 
 KIND_FACTOR: dict = {}  # rempli chaque jour par le retour d'expérience (feedback.build)
 
 
+# Coupons « à jouer » : 2-3 matchs (parfois plus), cote 2 au moins, suivis par combinaison
+SMALL_KINDS = {"sur", "ligue", "favoris", "buts15", "buts25", "mix", "dc", "autres", "value", "tendance"}
+COMBO_FACTOR: dict = {}  # signature -> facteur, rempli chaque jour (feedback.combo_factors)
+
+
+def leg_family(market: str) -> str:
+    if market in ("o15", "o20", "o25"):
+        return "buts"
+    if market in ("1", "2"):
+        return "favori"
+    if market in ("1X", "X2", "dnb1", "dnb2"):
+        return "double chance"
+    if market in ("u35", "u45"):
+        return "moins de buts"
+    return "autres"
+
+
+def signature(c: dict) -> str:
+    """Type de combinaison d'un coupon : nombre de matchs et familles de paris, ex. « 2 matchs · buts + favori »."""
+    n = len(c["legs"])
+    fams = sorted({leg_family(l["market"]) for l in c["legs"]})
+    return f"{n if n <= 4 else '5+'} matchs · {' + '.join(fams)}"
+
+
 def prioritise(coupons: list[dict]) -> list[dict]:
     """Classe les coupons du jour : probabilité, fiabilité des championnats et valeur. Le jackpot reste en dernier."""
     def score(c):
         if c["kind"] in ("jackpot", "jackpot_fiable", "mille"):
             return {"jackpot_fiable": -0.5, "jackpot": -1.0}.get(c["kind"], -2.0)
         kf = KIND_FACTOR.get(c["kind"], {}).get("factor", 1.0)
-        return c["p_not_lose"] * c["reliability"] * kf * (1 + max(min(c["ev"], 0.2), -0.15))
+        cf = COMBO_FACTOR.get(signature(c), 1.0) if c["kind"] in SMALL_KINDS else 1.0
+        return c["p_not_lose"] * c["reliability"] * kf * cf * (1 + max(min(c["ev"], 0.2), -0.15))
     coupons.sort(key=score, reverse=True)
     n = len(coupons)
     for i, c in enumerate(coupons):

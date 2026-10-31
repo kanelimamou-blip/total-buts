@@ -137,6 +137,7 @@ def main():
     coupons_mod.KIND_FACTOR = fb.get("kinds", {})
     reliable = feedback.reliable_markets(bt, store)
     coupons_mod.RELIABLE = {r["market"] for r in reliable if r["reliable"]}
+    coupons_mod.COMBO_FACTOR = feedback.combo_factors(bt, store)
 
     # Notes d'équipes et prédictions des matchs à venir
     espn_ref = {(r.div, r.home, r.away): [r.slug, r.espn_id] for r in far.itertuples()}
@@ -247,7 +248,7 @@ def main():
     for m in matches:
         by_date.setdefault(m["date"], []).append(m)
     for d in sorted(by_date):
-        if d > (today + timedelta(days=COUPON_DAYS)).isoformat():
+        if d > (today + timedelta(days=COUPON_DAYS)).isoformat() or d < TRACKING_START:
             continue
         if d in store and store[d].get("frozen"):
             continue
@@ -275,7 +276,10 @@ def main():
 
     # Tickets sur une période (5 jours à 1 mois), créés une fois par jour avec le jour J
     td = today.isoformat()
-    entry = store.setdefault(td, {"frozen": True, "created": now.isoformat(timespec="minutes"), "coupons": []})
+    if td >= TRACKING_START:
+        entry = store.setdefault(td, {"frozen": True, "created": now.isoformat(timespec="minutes"), "coupons": []})
+    else:  # avant le début du suivi : pas de tickets de période (ils seraient archivés aussitôt)
+        entry = {"periods_done": True, "tendance_done": True, "long_done": True, "coupons": []}
     if not entry.get("periods_done"):
         pool_all = [{"id": m["id"], "div": m["div"], "date": m["date"], "legs": ok_legs(m), "fav": m["fav"],
                      "rel": fb["reliability"].get(m["div"], 0.9 if m["div"] in CUPS else 1.0)}
@@ -439,6 +443,7 @@ def main():
         "trajectory": {"live": traj, "base": base},
         "tracking_start": TRACKING_START,
         "reliable": reliable,
+        "combo_factors": {k: round(v, 3) for k, v in coupons_mod.COMBO_FACTOR.items()},
         "extra_labels": {k: list(v) for k, v in extra.LABELS.items()},
         "last_result_date": results["date"].max().strftime("%Y-%m-%d") if len(results) else None,
     }

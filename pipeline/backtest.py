@@ -11,13 +11,13 @@ import numpy as np
 import pandas as pd
 
 from config import COUPONS, LEAGUES, SITE_DATA, STATE_DIR, VALUE_EDGE
-from coupons import build_day, favorite_leg, legs_for_match, settle_coupon
+from coupons import SMALL_KINDS, build_day, favorite_leg, leg_family, legs_for_match, settle_coupon, signature
 import extra
 import meta
 from coupons import settle_leg
 from model import devig, fit, markets_from_total, predict, result_probs, score_matrix, total_dist
 
-VERSION = 7  # à augmenter quand le test change, pour qu'il soit relancé sans attendre la semaine
+VERSION = 8  # à augmenter quand le test change, pour qu'il soit relancé sans attendre la semaine
 BACKTEST_YEARS = 3.2
 REFIT_DAYS = 7
 
@@ -234,6 +234,7 @@ def run(results: pd.DataFrame, today: date) -> dict:
     bt["fav_leg"] = favs
     stats = {k: {"n": 0, "won": 0, "staked": 0.0, "returned": 0.0, "p_sum": 0.0} for k in COUPONS}
     curve = {k: [] for k in COUPONS}
+    combos = {}  # coupons à jouer (2-3 matchs, cote 2) par type de combinaison, et pari qui les a fait casser
     for d, g in bt.groupby("date"):
         matches = [{"id": i, "div": dv, "legs": l, "fav": f} for i, dv, l, f in zip(g["id"], g["div"], g["legs"], g["fav_leg"])]
         scores = {i: (r.hg, r.ag, match_info(r)) for i, r in zip(g["id"], g.itertuples())}
@@ -246,6 +247,16 @@ def run(results: pd.DataFrame, today: date) -> dict:
             s["returned"] += c["return"]
             s["p_sum"] += c["p_not_lose"]
             curve[c["kind"]].append(round(s["returned"] - s["staked"], 2))
+            if c["kind"] in SMALL_KINDS:
+                e = combos.setdefault(signature(c), {"n": 0, "won": 0, "p": 0.0, "ret": 0.0, "culprits": {}})
+                e["n"] += 1; e["won"] += c["status"] == "won"; e["p"] += c["p_not_lose"]; e["ret"] += c["return"]
+                for l in c["legs"]:
+                    if l.get("result") == "lost":
+                        f = leg_family(l["market"]) if leg_family(l["market"]) != "buts" else MK_LABEL.get(l["market"], l["market"])
+                        e["culprits"][f] = e["culprits"].get(f, 0) + 1
+    report["combos"] = {sig: {"n": e["n"], "pred": round(e["p"] / e["n"], 3), "hit": round(e["won"] / e["n"], 3),
+                              "roi": round(e["ret"] / e["n"] - 1, 3), "culprits": e["culprits"]}
+                        for sig, e in sorted(combos.items(), key=lambda x: -x[1]["n"]) if e["n"] >= 30}
     for k, s in stats.items():
         if s["n"] == 0:
             continue
