@@ -366,6 +366,27 @@ def main():
                  "pf": round(w["pf"] / w["nf"], 3) if w["nf"] else None, "of": round(w["yf"] / w["nf"], 3) if w["nf"] else None}
                 for k, w in sorted(weeks.items())[-12:]]
 
+    # Trajectoire du live : écart cumulé réel − annoncé, match après match, à comparer au couloir de la base historique
+    traj, acc = [], {"n": 0, "p15": 0.0, "y15": 0, "p25": 0.0, "y25": 0}
+    for e in sorted((e for e in log.values() if "goals" in e), key=lambda e: e["date"]):
+        acc["n"] += 1
+        acc["p15"] += e["o15"]; acc["y15"] += e["goals"] >= 2
+        acc["p25"] += e["o25"]; acc["y25"] += e["goals"] >= 3
+        traj.append({"n": acc["n"], "date": e["date"], "p15": round(acc["p15"] / acc["n"], 4), "o15": round(acc["y15"] / acc["n"], 4),
+                     "p25": round(acc["p25"] / acc["n"], 4), "o25": round(acc["y25"] / acc["n"], 4)})
+    if len(traj) > 300:  # on allège en gardant le dernier point
+        step = len(traj) // 300 + 1
+        traj = traj[::step] + ([traj[-1]] if (len(traj) - 1) % step else [])
+    base = None
+    if bt and bt.get("markets"):
+        base = {}
+        for k in ("o15", "o25"):
+            cal = bt["markets"][k].get("calibration") or []
+            n = sum(c["n"] for c in cal)
+            if n:
+                base[k] = {"n": n, "pred": round(sum(c["pred"] * c["n"] for c in cal) / n, 4),
+                           "obs": round(sum(c["obs"] * c["n"] for c in cal) / n, 4)}
+
     match_index = {m["id"]: m for m in matches}
     history = []
     for d in sorted(store, reverse=True)[:60]:
@@ -388,6 +409,7 @@ def main():
         "leagues": {d: {"name": n, "country": c} for d, (n, c) in ALL_COMPETITIONS.items()},
         "matches": matches, "coupons": history, "live": live, "predictions": pred_stats,
         "tips": tip_list, "recent": recent_out, "feedback": fb, "surprises": surprise, "learning": learning,
+        "trajectory": {"live": traj, "base": base},
         "last_result_date": results["date"].max().strftime("%Y-%m-%d") if len(results) else None,
     }
     (SITE_DATA / "app.json").write_text(json.dumps(out, ensure_ascii=False))

@@ -256,6 +256,48 @@ function surprisesBlock() {
 }
 
 /* ---------- Suivi ---------- */
+// Trajectoire du live dans le couloir de la base historique : tant que la ligne reste dans la zone,
+// le live confirme les 12 000 matchs du passé ; si elle en sort, le modèle a un vrai défaut en conditions réelles
+const LIVE_WEIGHT = 5;
+function trajectoryBlock(t) {
+  const last = t.live[t.live.length - 1];
+  const part = (k, lab) => {
+    const b = t.base[k];
+    if (!b) return "";
+    const g0 = (b.obs - b.pred) * 100, gl = (last[k] - last["p" + k.slice(1)]) * 100;
+    const marg = 196 * Math.sqrt((last["p" + k.slice(1)] * (1 - last["p" + k.slice(1)])) / last.n);
+    const inside = Math.abs(gl - g0) <= marg;
+    // base mise à jour : chaque match live pèse LIVE_WEIGHT fois un match du passé (conditions actuelles)
+    const wl = LIVE_WEIGHT * last.n, mixed = (g0 * b.n + gl * wl) / (b.n + wl);
+    const f = (x) => (x > 0 ? "+" : "") + x.toFixed(1).replace(".", ",");
+    return `<h3>${lab}</h3>${funnelChart(t.live, k, g0)}
+    <div class="kv"><span>Base historique (${b.n.toLocaleString("fr-FR")} matchs)</span><b>${f(g0)} pts</b></div>
+    <div class="kv"><span>Live (${last.n} matchs, marge ± ${marg.toFixed(0)})</span><b class="${inside ? "pos" : "neg"}">${f(gl)} pts · ${inside ? "dans le couloir" : "hors couloir"}</b></div>
+    <div class="kv"><span>Base mise à jour par le live</span><b>${f(mixed)} pts</b></div>`;
+  };
+  return `<section class="card"><h2>Trajectoire du live</h2>
+  <p class="small muted">Écart réel − annoncé, cumulé match après match. La ligne pointillée est l'écart de la base historique, la zone verte la marge due au hasard autour d'elle : elle se resserre à mesure que les matchs s'ajoutent. Tant que le live reste dans la zone, il confirme la base. S'il en sort durablement, le modèle a un vrai défaut en conditions réelles. Trois lectures : la base figée, le live seul, et la base mise à jour par le live (un match live compte 5 fois un match du passé).</p>
+  ${part("o15", "+1,5")}${part("o25", "+2,5")}</section>`;
+}
+
+function funnelChart(live, k, g0) {
+  const W = 320, H = 150, p = 26, lim = 25, pk = "p" + k.slice(1);
+  const N = live[live.length - 1].n;
+  const x = (n) => p + ((n - 1) / Math.max(N - 1, 1)) * (W - p * 2), y = (v) => H / 2 - (Math.max(-lim, Math.min(lim, v)) / lim) * (H / 2 - 14);
+  const m = (r) => 196 * Math.sqrt((r[pk] * (1 - r[pk])) / r.n);
+  const up = live.map((r) => `${x(r.n).toFixed(1)},${y(g0 + m(r)).toFixed(1)}`), dn = live.map((r) => `${x(r.n).toFixed(1)},${y(g0 - m(r)).toFixed(1)}`).reverse();
+  const line = live.map((r, i) => `${i ? "L" : "M"}${x(r.n).toFixed(1)},${y((r[k] - r[pk]) * 100).toFixed(1)}`).join("");
+  const lr = live[live.length - 1], lv = (lr[k] - lr[pk]) * 100, ok = Math.abs(lv - g0) <= m(lr);
+  return `<svg class="chart" viewBox="0 0 ${W} ${H}" role="img" aria-label="Trajectoire du live comparée à la base historique">
+    <polygon points="${up.concat(dn).join(" ")}" fill="var(--won)" opacity=".15"/>
+    <line x1="${p}" x2="${W - p}" y1="${y(0)}" y2="${y(0)}" stroke="var(--line)"/>
+    <line x1="${p}" x2="${W - p}" y1="${y(g0)}" y2="${y(g0)}" stroke="var(--muted)" stroke-dasharray="4 4"/>
+    <path d="${line}" fill="none" stroke="${ok ? "var(--accent)" : "var(--lost)"}" stroke-width="2"/>
+    <circle cx="${x(lr.n)}" cy="${y(lv)}" r="3.5" fill="${ok ? "var(--accent)" : "var(--lost)"}"/>
+    <text x="4" y="${y(lim) + 4}">+${lim}</text><text x="4" y="${y(0) + 3}">0</text><text x="4" y="${y(-lim) + 4}">−${lim}</text>
+    <text x="${W - p}" y="${H - 2}" text-anchor="end">${N} matchs</text></svg>`;
+}
+
 // Marge d'erreur due au hasard (95 %) : un écart plus petit que la marge ne prouve rien
 function calibVerdict(p) {
   const marg = (q) => 1.96 * Math.sqrt((q * (1 - q)) / p.n);
@@ -331,6 +373,9 @@ function viewTracking() {
     <div class="kv"><span>+1,5 annoncé / observé</span><b>${pct(p.o15_pred)} / ${pct(p.o15_obs)}</b></div>
     <div class="kv"><span>+2,5 annoncé / observé</span><b>${pct(p.o25_pred)} / ${pct(p.o25_obs)}</b></div>
     ${calibVerdict(p)}</section>`;
+  }
+  if (d.trajectory?.live?.length && d.trajectory.base) {
+    html += trajectoryBlock(d.trajectory);
   }
   if (d.learning?.length) {
     html += `<section class="card"><h2>Apprentissage</h2><p class="small muted">Chaque semaine, ce que l'appli annonçait comparé à ce qui s'est passé. Les écarts corrigent automatiquement les prochaines prédictions, ligue par ligue et pour les favoris.</p>
