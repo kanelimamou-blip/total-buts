@@ -85,7 +85,7 @@ function couponCard(c) {
       </div>
       <div class="big-odds">${odds(c.odds)}<small>cote estimée</small><small class="net">${odds(netOdds(c.odds))} après taxe</small></div>
     </div>
-    ${settled ? `<div><span class="status ${st}">${{ won: "Gagné", lost: "Perdu", void: "Annulé" }[st]}</span>${st === "won" ? ` <span class="small muted">retour ${odds(c.return)} × la mise</span>` : ""}</div>` : `
+    ${settled ? `<div><span class="status ${st}">${{ won: "Gagné", lost: "Perdu", void: "Annulé" }[st]}</span>${st === "won" ? ` <span class="small muted">retour ${odds(c.return)} × la mise</span>` : ""}${st !== "void" ? ` <span class="small muted">· prévu ${pct(c.p_win)} de chances</span>` : ""}</div>` : `
     <div class="kv"><span>Chance de ne pas perdre</span><b>${c.p_not_lose < 0.01 ? "1 sur " + Math.round(1 / Math.max(c.p_not_lose, 1e-6)).toLocaleString("fr-FR") : pct(c.p_not_lose)}</b></div>
     <div class="meter ${meterCls}"><span style="width:${Math.round(c.p_not_lose * 100)}%"></span></div>`}
     <div class="legs">${c.legs.map((l) => legRow(l, settled)).join("")}</div>
@@ -105,7 +105,7 @@ function legRow(l, settled) {
   }
   return `<button class="leg" data-match="${esc(l.id)}">
     <span class="teams">${esc(l.home)} – ${esc(l.away)} ${l._live || ""}</span>
-    <span class="o">${settled && res ? res : odds(l.odds)}</span>
+    <span class="o">${res || odds(l.odds)}</span>
     <span class="meta"><span class="mk">${esc(mkLabel(l))}</span> · ${esc(l.league)}${l.id ? " · " + dayLabel(l.id.slice(0, 4) + "-" + l.id.slice(4, 6) + "-" + l.id.slice(6, 8), state.data.today) : ""}${l.time ? " " + esc(l.time) : ""} · ${pct(l.p_win)}${l.p_push ? ` (+${pct(l.p_push)} remboursé)` : ""}</span>
     <span class="min">${settled ? odds(l.odds) : "min. " + odds(l.min_odds)}</span>
   </button>`;
@@ -256,6 +256,45 @@ function surprisesBlock() {
 }
 
 /* ---------- Suivi ---------- */
+function favOk(r) {
+  const [h, a] = String(r.score).split("-").map(Number);
+  return r.fav_side === "1" ? h > a : a > h;
+}
+
+// Pronostics de l'appli face aux résultats : sélections de tous les coupons proposés, joués ou non
+function propVsReal(d) {
+  const seen = new Set(), legs = [];
+  for (const c of d.coupons) for (const l of c.legs) {
+    const k = l.id + "|" + l.market;
+    if (!l.result || seen.has(k)) continue;
+    seen.add(k); legs.push(l);
+  }
+  const cps = d.coupons.filter((c) => c.status === "won" || c.status === "lost");
+  if (!legs.length) return `<section class="card"><h2>Pronostics contre résultats</h2><p class="small muted">Les premiers matchs proposés seront comparés ici dès leur fin : ce que l'appli annonçait, et ce qui s'est passé.</p></section>`;
+  const bands = [[0.5, 0.6], [0.6, 0.7], [0.7, 0.8], [0.8, 0.9], [0.9, 1.01]].map(([lo, hi]) => {
+    const g = legs.filter((l) => l.p_win >= lo && l.p_win < hi);
+    return { lo, hi, n: g.length, p: g.reduce((a, l) => a + l.p_win, 0) / (g.length || 1), w: g.filter((l) => l.result === "won").length, push: g.filter((l) => l.result === "push").length };
+  }).filter((b) => b.n);
+  const n = legs.length, won = legs.filter((l) => l.result === "won").length, pAvg = legs.reduce((a, l) => a + l.p_win, 0) / n;
+  const gap = won / n - pAvg;
+  const verdict = n < 100 ? `Encore ${100 - n} sélections avant un premier avis fiable.` : Math.abs(gap) <= 0.03 ? "Le réel colle au prévu : les probabilités sont fiables." : gap > 0 ? "L'appli est trop prudente : le réel dépasse le prévu." : "L'appli est trop optimiste : le réel est sous le prévu, les corrections s'appliquent.";
+  const mk = {};
+  for (const l of legs) { const m = (mk[l.market === "1" || l.market === "2" ? "Victoire du favori" : mkLabel(l)] ||= { n: 0, w: 0, p: 0 }); m.n++; m.p += l.p_win; m.w += l.result === "won"; }
+  return `<section class="card"><h2>Pronostics contre résultats</h2>
+  <p class="small muted">Chaque sélection proposée, jouée ou non, est comparée au score final. Le pronostic d'avant-match reste figé.</p>
+  <div class="kv"><span>Sélections réglées</span><b>${n}</b></div>
+  <div class="kv"><span>Passées : prévu / réel</span><b>${pct(pAvg)} / ${pct(won / n)}</b></div>
+  ${cps.length ? `<div class="kv"><span>Coupons complets : prévu / réel</span><b>${pct(cps.reduce((a, c) => a + c.p_win, 0) / cps.length)} / ${pct(cps.filter((c) => c.status === "won").length / cps.length)} (${cps.length})</b></div>` : ""}
+  <p class="small"><b>${verdict}</b></p>
+  <h3>Selon la confiance annoncée</h3>
+  <div class="tbl"><table><thead><tr><th>Annoncé</th><th class="n">Sélections</th><th class="n">Prévu</th><th class="n">Réel</th></tr></thead><tbody>
+  ${bands.map((b) => `<tr><td>${Math.round(b.lo * 100)}–${Math.min(100, Math.round(b.hi * 100))} %</td><td class="n">${b.n}</td><td class="n">${pct(b.p)}</td><td class="n ${b.w / b.n >= b.p - 0.03 ? "pos" : "neg"}">${pct(b.w / b.n)}${b.push ? ` <span class="small muted">+${b.push} remb.</span>` : ""}</td></tr>`).join("")}
+  </tbody></table></div>
+  <h3>Par marché</h3>
+  ${Object.entries(mk).map(([k, m]) => `<div class="kv"><span>${esc(k)} · ${m.n} sélections</span><b>${pct(m.p / m.n)} / ${pct(m.w / m.n)}</b></div>`).join("")}
+  </section>`;
+}
+
 function viewTracking() {
   const d = state.data, bt = state.bt;
   const settled = d.coupons.filter((c) => c.status === "won" || c.status === "lost");
@@ -264,17 +303,18 @@ function viewTracking() {
   const tot = Object.values(live).reduce((a, s) => ({ n: a.n + s.n, won: a.won + s.won, units: a.units + s.units }), { n: 0, won: 0, units: 0 });
   let html = `<h1>Suivi</h1>${myBetsBlock()}<h2>Propositions de l'appli</h2>
   <div class="stats">
-    <div class="stat"><span class="k">Coupons joués</span><span class="v">${tot.n}</span></div>
+    <div class="stat"><span class="k">Coupons réglés</span><span class="v">${tot.n}</span></div>
     <div class="stat"><span class="k">Gagnés</span><span class="v">${tot.n ? Math.round((tot.won / tot.n) * 100) + " %" : "–"}</span></div>
     <div class="stat"><span class="k">Bilan (mises)</span><span class="v ${tot.units >= 0 ? "pos" : "neg"}">${tot.n ? signed(tot.units) : "–"}</span></div>
     <div class="stat"><span class="k">Matchs suivis</span><span class="v">${d.predictions ? d.predictions.n : 0}</span></div>
   </div>
-  <p class="note">Bilan calculé avec une mise de 1 par coupon et la cote estimée. Chaque résultat corrige les probabilités des prochains jours, ligue par ligue.</p>`;
+  <p class="note">Tous les coupons proposés sont suivis, que tu les joues ou non. Bilan calculé avec une mise fictive de 1 par coupon et la cote estimée. Chaque résultat corrige les probabilités des prochains jours, ligue par ligue.</p>`;
   if (Object.keys(live).length) {
-    html += `<section class="card"><h2>Par type de coupon</h2><div class="tbl"><table><thead><tr><th>Type</th><th class="n">Joués</th><th class="n">Gagnés</th><th class="n">Bilan</th></tr></thead><tbody>
+    html += `<section class="card"><h2>Par type de coupon</h2><div class="tbl"><table><thead><tr><th>Type</th><th class="n">Réglés</th><th class="n">Gagnés</th><th class="n">Bilan</th></tr></thead><tbody>
     ${kinds.filter(([k]) => live[k]).map(([k, c]) => `<tr><td>${esc(c.label)}</td><td class="n">${live[k].n}</td><td class="n">${Math.round((live[k].won / live[k].n) * 100)} %</td><td class="n ${live[k].units >= 0 ? "pos" : "neg"}">${signed(live[k].units)}</td></tr>`).join("")}
     </tbody></table></div>${curveChart(settled)}</section>`;
   }
+  html += propVsReal(d);
   if (d.predictions) {
     const p = d.predictions;
     html += `<section class="card"><h2>Fiabilité réelle</h2>
@@ -296,7 +336,7 @@ function viewTracking() {
     ${Object.entries(rel).sort((a, b) => b[1] - a[1]).map(([div, r]) => `<div class="kv"><span>${esc(d.leagues[div]?.name || div)}</span><b>${String(r.toFixed(2)).replace(".", ",")}</b></div><div class="meter ${r < 1 ? "amber" : ""}"><span style="width:${Math.round(((r - 0.7) / 0.5) * 100)}%"></span></div>`).join("")}</section>`;
   }
   if (d.recent?.length) {
-    html += `<section class="card"><h2>Derniers matchs analysés</h2>${d.recent.slice(0, 25).map((r) => `<button class="match" data-match="${esc(r.id)}"><span class="teams">${esc(r.home)} – ${esc(r.away)}<br><span class="small muted">${esc(r.league)} · ${dayLabel(r.date, d.today)}</span></span><span class="res ${r.goals >= 3 ? "won" : r.goals === 2 ? "push" : "lost"}">${esc(r.score)}</span></button>`).join("")}</section>`;
+    html += `<section class="card"><h2>Derniers matchs analysés</h2>${d.recent.slice(0, 25).map((r) => `<button class="match" data-match="${esc(r.id)}"><span class="teams">${esc(r.home)} – ${esc(r.away)}<br><span class="small muted">${esc(r.league)} · ${dayLabel(r.date, d.today)}</span></span><span class="res ${r.goals >= 3 ? "won" : r.goals === 2 ? "push" : "lost"}">${esc(r.score)}</span><span class="meta">Prévu : +1,5 ${pct(r.o15)} ${r.goals >= 2 ? "✓" : "✗"} · +2,5 ${pct(r.o25)} ${r.goals >= 3 ? "✓" : "✗"}${r.fav_p != null ? ` · ${r.fav_side === "1" ? esc(r.home) : esc(r.away)} gagne ${pct(r.fav_p)} ${favOk(r) ? "✓" : "✗"}` : ""}</span></button>`).join("")}</section>`;
   }
   const hist = d.coupons.filter((c) => c.date < d.today).sort((a, b) => (a.date < b.date ? 1 : -1));
   if (hist.length) html += `<h2>Historique des coupons</h2>${hist.slice(0, 40).map(couponCard).join("")}`;

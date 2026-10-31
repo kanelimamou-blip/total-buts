@@ -328,6 +328,13 @@ def settle_coupon(coupon: dict, scores: dict) -> dict | None:
     """scores : id du match -> (buts domicile, buts extérieur). Renvoie None si un match n'est pas encore joué."""
     payout = 1.0
     status = "won"
+    # chaque sélection jouée est notée tout de suite, même si le coupon attend encore un match
+    for leg in coupon["legs"]:
+        if leg["id"] in scores:
+            hg, ag = scores[leg["id"]]
+            leg["result"] = settle_leg(leg["market"], hg + ag, hg, ag)
+            leg["goals"] = int(hg + ag)
+            leg["score"] = f"{int(hg)}-{int(ag)}"
     for leg in coupon["legs"]:
         if leg["id"] not in scores:
             return None

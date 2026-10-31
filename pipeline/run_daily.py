@@ -96,8 +96,20 @@ def main():
     bt = read_json(SITE_DATA / "backtest.json", None)
     store = read_json(STATE_DIR / "coupons.json", {})
     log = read_json(STATE_DIR / "predictions.json", {})
+    # Calendrier à un mois : football-data (avec cotes) prioritaire, ESPN pour le reste
+    try:
+        far = ahead.fixtures(today, results, offline=args.offline)
+    except Exception as exc:  # noqa: BLE001
+        print("Calendrier à un mois indisponible :", exc)
+        far = fixtures.iloc[0:0]
     scores = {match_id(r.date, r.div, r.home, r.away): (int(r.hg), int(r.ag)) for r in results.itertuples()}
     scores.update(euro_scores)
+    # scores ESPN dès la fin du match, sans attendre football-data
+    try:
+        for mid, sc in ahead.scores(results).items():
+            scores.setdefault(mid, sc)
+    except Exception as exc:  # noqa: BLE001
+        print("Scores ESPN indisponibles :", exc)
     for mid, e in log.items():
         if "goals" not in e and mid in scores:
             e["goals"] = sum(scores[mid])
@@ -107,12 +119,6 @@ def main():
     coupons_mod.KIND_FACTOR = fb.get("kinds", {})
 
     # Notes d'équipes et prédictions des matchs à venir
-    # Calendrier à un mois : football-data (avec cotes) prioritaire, ESPN pour le reste
-    try:
-        far = ahead.fixtures(today, results, offline=args.offline)
-    except Exception as exc:  # noqa: BLE001
-        print("Calendrier à un mois indisponible :", exc)
-        far = fixtures.iloc[0:0]
     espn_ref = {(r.div, r.home, r.away): [r.slug, r.espn_id] for r in far.itertuples()}
     known = {(r.div, r.home, r.away) for r in fixtures.itertuples()}
     far = far[[(r.div, r.home, r.away) not in known for r in far.itertuples()]]
@@ -288,6 +294,8 @@ def main():
     # Journal des prédictions (pour mesurer la fiabilité en conditions réelles)
     # la dernière prédiction avant le match fait foi
     for m in matches:
+        if "goals" in log.get(m["id"], {}):
+            continue  # match terminé : le pronostic d'avant-match reste figé
         log[m["id"]] = {"date": m["date"], "div": m["div"], "home": m["home"], "away": m["away"],
                         "fav_p": m["fav"]["p_win"], "fav_side": m["fav"]["market"],
                         "o15": m["p"]["o15"], "o25": m["p"]["o25"]}
@@ -314,7 +322,8 @@ def main():
     recent = sorted(((mid, e) for mid, e in log.items() if "goals" in e), key=lambda x: x[1]["date"], reverse=True)[:400]
     recent_out = [{"id": mid, "date": e["date"], "league": ALL_COMPETITIONS.get(e["div"], (e["div"],))[0], "home": e.get("home", mid.split("|")[2]),
                    "away": e.get("away", mid.split("|")[3]), "score": e.get("score"), "goals": e["goals"],
-                   "o15": e["o15"], "o25": e["o25"]} for mid, e in recent]
+                   "o15": e["o15"], "o25": e["o25"],
+                   "fav_p": e.get("fav_p"), "fav_side": e.get("fav_side")} for mid, e in recent]
 
     # Courbe d'apprentissage : prévu contre réel, semaine par semaine (12 dernières semaines)
     weeks = {}

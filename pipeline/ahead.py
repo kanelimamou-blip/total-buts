@@ -112,3 +112,27 @@ def fixtures(today: date, results: pd.DataFrame, offline: bool = False) -> pd.Da
                      "home": m[r.home], "away": m[r.away], "o25": float("nan"), "u25": float("nan"),
                      "oh": float("nan"), "od": float("nan"), "oa": float("nan"), "slug": r.slug, "espn_id": r.espn_id})
     return pd.DataFrame(rows, columns=cols)
+
+
+def scores(results: pd.DataFrame) -> dict:
+    """Scores ESPN des matchs terminés, au format id de match football-data.
+
+    football-data ne publie les résultats que quelques jours plus tard : ESPN permet de
+    régler les coupons et de mesurer nos prédictions dès la fin du match.
+    """
+    espn = _load()
+    if espn.empty:
+        return {}
+    names = name_map(espn, results)
+    rev = {slug: div for div, slug in FD_TO_ESPN.items()}
+    out = {}
+    for r in espn[espn["completed"]].itertuples():
+        div = rev.get(r.slug)
+        m = names.get(div, {})
+        if div is None or r.home not in m or r.away not in m:
+            continue
+        d = r.dt.date()
+        # la date football-data peut différer d'un jour (heure UTC contre heure locale)
+        for dd in (d, d - timedelta(days=1), d + timedelta(days=1)):
+            out.setdefault(f"{dd:%Y%m%d}|{div}|{m[r.home]}|{m[r.away]}", (int(r.hg), int(r.ag)))
+    return out
