@@ -97,7 +97,7 @@ def apply(pred_final: dict, div: str, fb: dict) -> dict:
     return f
 
 
-GOAL_LABELS = {"o15": "+1,5 but", "o25": "+2,5 buts", "fav": "Victoire du favori"}
+GOAL_LABELS = {"o15": "+1,5 but", "o20": "+2 buts (remboursé à 2)", "o25": "+2,5 buts", "fav": "Victoire du favori"}
 MAX_GAP = 0.02  # optimisme toléré sur le passé (annoncé au-dessus du réel)
 
 

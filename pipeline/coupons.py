@@ -162,8 +162,8 @@ def _virtual(matches: list[dict], markets: set) -> list[dict]:
     return out
 
 
-def build_day(matches: list[dict], kinds=("sur", "favoris", "buts15", "buts20", "mix", "dc", "autres", "ligue", "value", "audace", "jackpot",
-                                          "jackpot_fiable"),
+def build_day(matches: list[dict], kinds=("sur", "favoris", "buts15", "buts20", "mix", "dc", "autres", "ligue", "value", "audace", "large3", "large5",
+                                          "jackpot", "jackpot_fiable"),
               league_names=None) -> list[dict]:
     """Coupons d'une journée. matches : [{"id", "div", "rel", "legs"}].
 
@@ -225,6 +225,14 @@ def build_day(matches: list[dict], kinds=("sur", "favoris", "buts15", "buts20", 
         add(_repeat("value", vm, {"o15", "o20", "o25"}, pool=10, score="ev"))
     if "audace" in kinds:
         add(_repeat("audace", free(matches), {"o15", "o20", "o25"}, pool=9, max_o25=2))
+    # Tickets larges (cote 3 à 8) : seulement les marchés où l'appli est fiable, la meilleure chance pour la cote visée
+    for kind in ("large3", "large5"):
+        if kind in kinds:
+            mk = (RELIABLE | {"o20"}) - COUPON_EXCLUDED
+            if "fav" in mk:
+                mk |= {"1", "2"}
+            lm = [dict(m, legs=m["legs"] + ([m["fav"]] if m.get("fav") and "fav" in mk else [])) for m in free(matches)]
+            add(_repeat(kind, _virtual(lm, mk), {"x1", "x2"}, pool=12, mk_order=["x1", "x2"]))
     if "jackpot_fiable" in kinds:
         out.extend(build_jackpots(matches))
     if "jackpot" in kinds:

@@ -1,6 +1,6 @@
 "use strict";
 const MK = { o15: "+1,5 but", o20: "+2 buts", o25: "+2,5 buts" };
-const KIND_FILTERS = [["all", "Tous"], ["sur", "Sûrs"], ["favoris", "Favoris"], ["mix", "Mix"], ["buts15", "+1,5"], ["buts20", "+2 (remb.)"], ["dc", "Double chance"], ["autres", "Autres paris"], ["periode", "Sur une période"], ["ligue", "Par championnat"], ["tendance", "Tendances"], ["value", "Value"], ["audace", "Audacieux"], ["relais", "Relais"], ["jackpot_fiable", "Jackpots fiables"], ["jackpot", "Jackpot"], ["mille", "Cote 1000"]];
+const KIND_FILTERS = [["all", "Tous"], ["sur", "Sûrs"], ["favoris", "Favoris"], ["mix", "Mix"], ["buts15", "+1,5"], ["buts20", "+2 (remb.)"], ["dc", "Double chance"], ["autres", "Autres paris"], ["periode", "Sur une période"], ["ligue", "Par championnat"], ["tendance", "Tendances"], ["value", "Value"], ["audace", "Audacieux"], ["large3", "Larges 3-5"], ["large5", "Larges 5-8"], ["relais", "Relais"], ["jackpot_fiable", "Jackpots fiables"], ["jackpot", "Jackpot"], ["mille", "Cote 1000"]];
 const kindOf = (c) => (c.kind.startsWith("periode") ? "periode" : c.kind);
 const XL = () => state.data?.extra_labels || {};  // autres paris : [libellé appli, libellé 1xBet]
 const mkLabel = (l) => (l.market === "1" || l.market === "2" ? `Victoire ${l.team || (l.market === "1" ? l.home : l.away)}` : MK[l.market] || XL()[l.market]?.[0] || l.market);
@@ -57,7 +57,7 @@ function couponDays() {
 // Plan du jour : 8 à 10 tickets à cote 2 et plus, à mise égale, choisis par chance de passer
 // et par la réussite passée de leur combinaison. Chaque match apparaît au plus 2 fois dans le plan.
 // Trois étages : une base de tickets autour de 2, quelques tickets plus hauts, un gros ticket fiable
-const PLAN_MAX = 10, PLAN_TIERS = [["base", "Base ~2", 7, 2, 2.6], ["moyen", "Plus haut", 2, 2.6, 8], ["gros", "Gros ticket", 1, 8, 1e9]];
+const PLAN_MAX = 10, PLAN_TIERS = [["base", "Base ~2", 3, 2, 2.6], ["moyen", "Large", 6, 2.6, 8], ["gros", "Gros ticket", 1, 8, 1e9]];
 const PLAN_SKIP = new Set(["jackpot", "mille"]);
 function planScore(c) {
   const f = SMALL_KINDS.has(c.kind) ? state.data.combo_factors?.[signature(c)] || 1 : 1;
@@ -87,7 +87,7 @@ function planBlock(date) {
   const tierLab = Object.fromEntries(PLAN_TIERS.map(([k, l]) => [k, l]));
   const base = state.bt?.combos || {};
   return `<section class="card"><h2>Plan du jour · ${plan.length} tickets à mise égale</h2>
-  <p class="small muted">Trois étages, tous à cote 2 au minimum : une base de tickets autour de 2, deux tickets plus hauts (2,6 à 8) et un gros ticket fiable (8 et plus). Dans chaque étage, ceux qui ont le plus de chances de passer, selon ce que leur combinaison a donné sur 3 ans et en live. Chaque match au plus 2 fois. Les 3 premiers sont à jouer en premier.</p>
+  <p class="small muted">Trois étages, tous à cote 2 au minimum : 3 tickets de base autour de 2, 6 tickets larges (2,6 à 8) construits sur les marchés où l'appli est fiable, et un gros ticket fiable (8 et plus). Dans chaque étage, ceux qui ont le plus de chances de passer, selon ce que leur combinaison a donné sur 3 ans et en live. Chaque match au plus 2 fois. Les 3 premiers sont à jouer en premier.</p>
   <div class="kv"><span>Gagnants attendus</span><b>${String(exp.toFixed(1)).replace(".", ",")} sur ${plan.length} (souvent entre ${lo} et ${hi})</b></div>
   <div class="kv"><span>Retour attendu pour ${plan.length} mises (avant taxe)</span><b>${String(ret.toFixed(1)).replace(".", ",")}</b></div>
   <div class="legs">${plan.map((c, i) => { const b = SMALL_KINDS.has(c.kind) ? base[signature(c)] : null; const idx = d.coupons.indexOf(c);
