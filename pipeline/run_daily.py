@@ -78,7 +78,7 @@ def main():
 
     bt = read_json(SITE_DATA / "backtest.json", None)
     stale = bt is None or (ts_today - pd.Timestamp(bt["generated"])).days >= 7
-    stale = stale or "meta" not in read_json(STATE_DIR / "model_config.json", {})  # nouveau réglage à calculer
+    stale = stale or bt.get("version") != backtest.VERSION  # le test a changé : on le relance tout de suite
     if args.backtest or stale:
         print("Backtest…")
         report = backtest.run(results, today)

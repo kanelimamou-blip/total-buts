@@ -16,6 +16,7 @@ import meta
 from coupons import settle_leg
 from model import devig, fit, markets_from_total, predict, result_probs, score_matrix, total_dist
 
+VERSION = 3  # à augmenter quand le test change, pour qu'il soit relancé sans attendre la semaine
 BACKTEST_YEARS = 3.2
 REFIT_DAYS = 7
 
@@ -152,7 +153,7 @@ def run(results: pd.DataFrame, today: date) -> dict:
     bt["b_o15"] = [b[0] for b in base]
     bt["b_o25"] = [b[1] for b in base]
 
-    report = {"generated": today.strftime("%Y-%m-%d"), "n_matches": int(len(bt)), "blend": blend,
+    report = {"version": VERSION, "generated": today.strftime("%Y-%m-%d"), "n_matches": int(len(bt)), "blend": blend,
               "period": [bt["date"].min().strftime("%Y-%m-%d"), bt["date"].max().strftime("%Y-%m-%d")],
               "blend_scores": scores, "markets": {}, "leagues": [], "value": {}, "coupons": {}}
 
