@@ -20,7 +20,7 @@ import feedback
 import meta
 import tips as tips_mod
 from config import ALL_COMPETITIONS, COUPONS, CUPS, LEAGUES, LONG_PERIODS, LONG_TARGETS, MARKETS, PERIODS, SITE_DATA, STATE_DIR
-from coupons import _repeat, build_day, build_long, build_mille, build_favorites, favorite_leg, legs_for_match, prioritise, settle_coupon
+from coupons import _repeat, build_day, build_jackpots, build_long, build_mille, build_favorites, favorite_leg, legs_for_match, prioritise, settle_coupon
 from fetch import download, load_fixtures, load_results
 from model import fit, predict
 
@@ -121,6 +121,8 @@ def main():
     fb = feedback.build(bt, log, store)
     import coupons as coupons_mod
     coupons_mod.KIND_FACTOR = fb.get("kinds", {})
+    reliable = feedback.reliable_markets(bt, store)
+    coupons_mod.RELIABLE = {r["market"] for r in reliable if r["reliable"]}
 
     # Notes d'équipes et prédictions des matchs à venir
     espn_ref = {(r.div, r.home, r.away): [r.slug, r.espn_id] for r in far.itertuples()}
@@ -251,6 +253,11 @@ def main():
                                  for m in ms if not m.get("provisional")])
             if mille:
                 e["coupons"] = prioritise(e["coupons"] + [mille])
+        if e and e.get("frozen") and not any(c["kind"] == "jackpot_fiable" for c in e["coupons"]):
+            jf = build_jackpots([{"id": m["id"], "div": m["div"], "legs": ok_legs(m), "fav": m["fav"]}
+                                 for m in ms if not m.get("provisional")])
+            if jf:
+                e["coupons"] = prioritise(e["coupons"] + jf)
 
     # Tickets sur une période (5 jours à 1 mois), créés une fois par jour avec le jour J
     td = today.isoformat()
@@ -416,6 +423,7 @@ def main():
         "matches": matches, "coupons": history, "live": live, "predictions": pred_stats,
         "tips": tip_list, "recent": recent_out, "feedback": fb, "surprises": surprise, "learning": learning,
         "trajectory": {"live": traj, "base": base},
+        "reliable": reliable,
         "extra_labels": {k: list(v) for k, v in extra.LABELS.items()},
         "last_result_date": results["date"].max().strftime("%Y-%m-%d") if len(results) else None,
     }

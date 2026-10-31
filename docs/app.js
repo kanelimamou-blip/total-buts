@@ -1,6 +1,6 @@
 "use strict";
 const MK = { o15: "+1,5 but", o20: "+2 buts", o25: "+2,5 buts" };
-const KIND_FILTERS = [["all", "Tous"], ["sur", "Sûrs"], ["favoris", "Favoris"], ["mix", "Mix"], ["buts15", "+1,5"], ["buts25", "+2,5"], ["dc", "Double chance"], ["autres", "Autres paris"], ["periode", "Sur une période"], ["ligue", "Par championnat"], ["tendance", "Tendances"], ["value", "Value"], ["audace", "Audacieux"], ["jackpot", "Jackpot"], ["mille", "Cote 1000"]];
+const KIND_FILTERS = [["all", "Tous"], ["sur", "Sûrs"], ["favoris", "Favoris"], ["mix", "Mix"], ["buts15", "+1,5"], ["buts25", "+2,5"], ["dc", "Double chance"], ["autres", "Autres paris"], ["periode", "Sur une période"], ["ligue", "Par championnat"], ["tendance", "Tendances"], ["value", "Value"], ["audace", "Audacieux"], ["jackpot_fiable", "Jackpots fiables"], ["jackpot", "Jackpot"], ["mille", "Cote 1000"]];
 const kindOf = (c) => (c.kind.startsWith("periode") ? "periode" : c.kind);
 const XL = () => state.data?.extra_labels || {};  // autres paris : [libellé appli, libellé 1xBet]
 const mkLabel = (l) => (l.market === "1" || l.market === "2" ? `Victoire ${l.team || (l.market === "1" ? l.home : l.away)}` : MK[l.market] || XL()[l.market]?.[0] || l.market);
@@ -306,6 +306,17 @@ function trackPart(lab, items, base, unit = "coupons") {
   <div class="kv"><span>Live (${last.n}, marge ± ${marg.toFixed(0)}) · prévu ${pct(last.p1)} / réel ${pct(last.o1)}</span><b class="${inside ? "pos" : "neg"}">${f(gl)} pts · ${inside ? "dans le couloir" : "hors couloir"}</b></div>
   <div class="kv"><span>Base mise à jour par le live</span><b>${f(mixed)} pts</b></div>`;
 }
+// Marchés sur lesquels l'appli est fiable : ce sont eux qui composent les jackpots fiables
+function reliableBlock(d) {
+  const r = d.reliable || [];
+  if (!r.length) return "";
+  const f = (x) => (x > 0 ? "+" : "") + (x * 100).toFixed(1).replace(".", ",");
+  return `<section class="card"><h2>Marchés fiables</h2><p class="small muted">Écart réel − annoncé sur le passé et en live. Un marché n'est écarté que si l'appli y est trop optimiste. Les jackpots fiables (cote 10, 20, 50) ne prennent que les marchés retenus.</p>
+  <div class="tbl"><table><thead><tr><th>Marché</th><th class="n">Passé</th><th class="n">Live</th><th class="n">Retenu</th></tr></thead><tbody>
+  ${r.map((x) => `<tr><td style="white-space:normal">${esc(x.label)}</td><td class="n">${f(x.gap)} pts</td><td class="n">${x.live_n ? f(x.live_gap) + " pts (" + x.live_n + ")" : "–"}</td><td class="n ${x.reliable ? "pos" : "neg"}">${x.reliable ? "oui" : "non"}</td></tr>`).join("")}
+  </tbody></table></div></section>`;
+}
+
 function betsTrajectory(d, bt) {
   const byDate = (a, b) => (a.date < b.date ? -1 : a.date > b.date ? 1 : 0);
   // paris simples : chaque sélection proposée (une seule fois même si elle figure dans plusieurs coupons)
@@ -428,6 +439,7 @@ function viewTracking() {
     <div class="kv"><span>+2,5 annoncé / observé</span><b>${pct(p.o25_pred)} / ${pct(p.o25_obs)}</b></div>
     ${calibVerdict(p)}</section>`;
   }
+  html += reliableBlock(d);
   html += betsTrajectory(d, bt);
   if (d.trajectory?.live?.length && d.trajectory.base) {
     html += trajectoryBlock(d.trajectory);

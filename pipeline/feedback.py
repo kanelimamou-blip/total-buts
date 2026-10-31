@@ -11,6 +11,8 @@ from __future__ import annotations
 
 import numpy as np
 
+import extra
+
 BT_WEIGHT = 0.25
 PRIOR_N = 100
 MAX_SHIFT = 0.06
@@ -93,3 +95,54 @@ def apply(pred_final: dict, div: str, fb: dict) -> dict:
     f["o20_push"] = float(np.clip(f["o15"] - f["o25"], 0.0, 1.0)) if push is not None else 0.0
     f["o20"] = f["o25"] / max(1 - f["o20_push"], 1e-9)
     return f
+
+
+GOAL_LABELS = {"o15": "+1,5 but", "o25": "+2,5 buts", "fav": "Victoire du favori"}
+MAX_GAP = 0.02  # optimisme toléré sur le passé (annoncé au-dessus du réel)
+
+
+def reliable_markets(backtest: dict | None, coupon_store: dict) -> list[dict]:
+    """Marchés où l'appli est fiable : pas trop optimiste sur le passé, et le live ne passe pas sous le couloir.
+
+    Sert à construire les jackpots fiables. Le live n'écarte un marché qu'avec au moins 30 sélections
+    réglées et un écart plus grand que la marge due au hasard.
+    """
+    base = {}
+    if backtest:
+        for k in ("o15", "o25"):
+            cal = (backtest.get("markets") or {}).get(k, {}).get("calibration") or []
+            n = sum(c["n"] for c in cal)
+            if n:
+                base[k] = (n, sum(c["pred"] * c["n"] for c in cal) / n, sum(c["obs"] * c["n"] for c in cal) / n)
+        fv = (backtest.get("coupons") or {}).get("favoris")
+        for code, e in ((backtest.get("extra") or {}).get("markets") or {}).items():
+            base[code] = (e["n"], e.get("pred_cal") or e["pred"], e["obs"])
+        if fv:  # les tickets favoris rejoués : annoncé / réel sur des coupons entiers, plus exigeant qu'une sélection
+            base["fav"] = (fv["n"], fv["pred_hit"], fv["hit"])
+    live = {}
+    seen = set()
+    for e in coupon_store.values():
+        for c in e.get("coupons", []):
+            for l in c["legs"]:
+                k = (l["id"], l["market"])
+                if l.get("result") not in ("won", "lost") or k in seen:
+                    continue
+                seen.add(k)
+                mk = "fav" if l["market"] in ("1", "2") else l["market"]
+                s = live.setdefault(mk, [0, 0.0, 0])
+                s[0] += 1; s[1] += l["p_win"]; s[2] += l["result"] == "won"
+    out = []
+    for mk, (n, pred, obs) in base.items():
+        if mk in ("dnb1", "dnb2"):
+            continue  # remboursement : pas adapté à un jackpot
+        ok = obs - pred >= -MAX_GAP  # un réel au-dessus de l'annoncé ne pose pas de problème : seul l'optimisme écarte
+        ln, lp, lw = live.get(mk, (0, 0.0, 0))
+        live_gap = None
+        if ln:
+            lp, lo = lp / ln, lw / ln
+            live_gap = round(lo - lp, 3)
+            if ln >= 30 and lp - lo > 1.96 * np.sqrt(max(lp * (1 - lp), 1e-6) / ln):
+                ok = False
+        label = GOAL_LABELS.get(mk) or extra.LABELS.get(mk, (mk,))[0]
+        out.append({"market": mk, "label": label, "n": n, "gap": round(obs - pred, 3), "live_n": ln, "live_gap": live_gap, "reliable": ok})
+    return sorted(out, key=lambda x: (not x["reliable"], abs(x["gap"])))

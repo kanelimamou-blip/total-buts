@@ -17,7 +17,7 @@ import meta
 from coupons import settle_leg
 from model import devig, fit, markets_from_total, predict, result_probs, score_matrix, total_dist
 
-VERSION = 4  # à augmenter quand le test change, pour qu'il soit relancé sans attendre la semaine
+VERSION = 7  # à augmenter quand le test change, pour qu'il soit relancé sans attendre la semaine
 BACKTEST_YEARS = 3.2
 REFIT_DAYS = 7
 
@@ -222,6 +222,11 @@ def run(results: pd.DataFrame, today: date) -> dict:
     report["extra"] = {"ht_share": round(ht_share, 4), "markets": xcfg}
     for legs, r, (xh, xa, res) in zip(legs_all, bt.itertuples(), xraw):
         legs += extra.legs(xh, xa, r.rho, res, xcfg, ht_share)
+
+    # Jackpots fiables rejoués avec les marchés bien calibrés sur ce test (+1,5, +2,5, favori, autres paris)
+    import coupons as coupons_mod
+    coupons_mod.RELIABLE = {"o15", "o25", "fav"} | {k for k, e in xcfg.items()
+                                                    if (e.get("pred_cal") or e["pred"]) - e["obs"] <= 0.02 and not k.startswith("dnb")}
 
     # Rejouer les coupons quotidiens (toutes ligues confondues, une journée = une date)
     bt["id"] = [f"{d.strftime('%Y%m%d')}|{dv}|{h}|{a}" for d, dv, h, a in zip(bt["date"], bt["div"], bt["home"], bt["away"])]

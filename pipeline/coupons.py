@@ -161,7 +161,8 @@ def _virtual(matches: list[dict], markets: set) -> list[dict]:
     return out
 
 
-def build_day(matches: list[dict], kinds=("sur", "favoris", "buts15", "buts25", "mix", "dc", "autres", "ligue", "value", "audace", "jackpot"),
+def build_day(matches: list[dict], kinds=("sur", "favoris", "buts15", "buts25", "mix", "dc", "autres", "ligue", "value", "audace", "jackpot",
+                                          "jackpot_fiable"),
               league_names=None) -> list[dict]:
     """Coupons d'une journée. matches : [{"id", "div", "rel", "legs"}].
 
@@ -223,6 +224,8 @@ def build_day(matches: list[dict], kinds=("sur", "favoris", "buts15", "buts25", 
         add(_repeat("value", vm, {"o15", "o20", "o25"}, pool=10, score="ev"))
     if "audace" in kinds:
         add(_repeat("audace", free(matches), {"o15", "o20", "o25"}, pool=9, max_o25=2))
+    if "jackpot_fiable" in kinds:
+        out.extend(build_jackpots(matches))
     if "jackpot" in kinds:
         # Jackpot : base en +2 sur les matchs les plus sûrs, puis passage de quelques sélections en +2,5
         cfg = COUPONS["jackpot"]
@@ -252,15 +255,15 @@ KIND_FACTOR: dict = {}  # rempli chaque jour par le retour d'expérience (feedba
 def prioritise(coupons: list[dict]) -> list[dict]:
     """Classe les coupons du jour : probabilité, fiabilité des championnats et valeur. Le jackpot reste en dernier."""
     def score(c):
-        if c["kind"] in ("jackpot", "mille"):
-            return -1.0 if c["kind"] == "jackpot" else -2.0
+        if c["kind"] in ("jackpot", "jackpot_fiable", "mille"):
+            return {"jackpot_fiable": -0.5, "jackpot": -1.0}.get(c["kind"], -2.0)
         kf = KIND_FACTOR.get(c["kind"], {}).get("factor", 1.0)
         return c["p_not_lose"] * c["reliability"] * kf * (1 + max(min(c["ev"], 0.2), -0.15))
     coupons.sort(key=score, reverse=True)
     n = len(coupons)
     for i, c in enumerate(coupons):
         c["priority"] = i + 1
-        c["level"] = "haute" if c["kind"] not in ("jackpot", "mille") and i < max(1, n // 3) else ("basse" if c["kind"] in ("jackpot", "audace", "mille") or i >= 2 * n // 3 else "moyenne")
+        c["level"] = "haute" if c["kind"] not in ("jackpot", "jackpot_fiable", "mille") and i < max(1, n // 3) else ("basse" if c["kind"] in ("jackpot", "jackpot_fiable", "audace", "mille") or i >= 2 * n // 3 else "moyenne")
     return coupons
 
 
@@ -322,6 +325,45 @@ def build_mille(matches: list[dict]) -> dict | None:
     if odds < cfg["min_odds"] or len(picks) < cfg["legs"][0]:
         return None
     return _pack("mille", p_log, np.log(odds), picks)
+
+
+RELIABLE: set = set()  # marchés jugés fiables chaque jour (feedback.reliable_markets)
+JACKPOT_TARGETS = (10, 20, 50)
+JACKPOT_MIN_P = 0.5  # chaque sélection d'un jackpot fiable passe au moins une fois sur deux (testé : 0,6 coûte plus de marge, plus de matchs)
+
+
+def build_jackpots(matches: list[dict], markets: set | None = None) -> list[dict]:
+    """Jackpots cote 10 / 20 / 50 construits uniquement avec les marchés où l'appli est fiable.
+
+    Comme pour la cote 1000 : pour chaque match, la sélection fiable qui apporte le plus de cote
+    par unité de risque, puis on empile les meilleures jusqu'à la cote visée.
+    """
+    markets = RELIABLE if markets is None else markets
+    if not markets:
+        return []
+    cands = []
+    for m in matches:
+        opts = [l for l in m["legs"] if l["market"] in markets and not l.get("p_push") and l["odds"] >= 1.15
+                and l["p_win"] >= JACKPOT_MIN_P]
+        if "fav" in markets and m.get("fav") and m["fav"]["odds"] >= 1.15 and m["fav"]["p_win"] >= JACKPOT_MIN_P:
+            opts.append(m["fav"])
+        if opts:
+            best = max(opts, key=lambda l: np.log(l["odds"]) / max(-np.log(max(l["p_win"], 1e-6)), 1e-6))
+            cands.append((np.log(best["odds"]) / max(-np.log(max(best["p_win"], 1e-6)), 1e-6), m, best))
+    cands.sort(key=lambda x: -x[0])
+    out = []
+    cfg = COUPONS["jackpot_fiable"]
+    for target in JACKPOT_TARGETS:
+        picks, odds, p_log = [], 1.0, 0.0
+        for _, m, l in cands[:cfg["legs"][1]]:
+            picks.append((m, l["market"]))
+            odds *= l["odds"]
+            p_log += np.log(l["p_win"])
+            if odds >= target:
+                break
+        if odds >= target and len(picks) >= cfg["legs"][0]:
+            out.append(_pack("jackpot_fiable", p_log, np.log(odds), picks, scope=f"Cote {target}"))
+    return out
 
 
 def build_long(matches: list[dict], target: float, scope: str, min_p: float = 0.72) -> dict | None:
