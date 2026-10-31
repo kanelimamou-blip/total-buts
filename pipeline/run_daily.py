@@ -19,7 +19,8 @@ import extra
 import feedback
 import meta
 import tips as tips_mod
-from config import ALL_COMPETITIONS, COUPONS, CUPS, LEAGUES, LONG_PERIODS, LONG_TARGETS, MARKETS, PERIODS, SITE_DATA, STATE_DIR
+from config import (ALL_COMPETITIONS, COUPONS, CUPS, LEAGUES, LONG_PERIODS, LONG_TARGETS, MARKETS, PERIODS, SITE_DATA, STATE_DIR,
+                    TRACKING_START)
 from coupons import _repeat, build_day, build_jackpots, build_long, build_mille, build_favorites, favorite_leg, legs_for_match, prioritise, settle_coupon
 from fetch import download, load_fixtures, load_results
 from model import fit, predict
@@ -99,6 +100,19 @@ def main():
     bt = read_json(SITE_DATA / "backtest.json", None)
     store = read_json(STATE_DIR / "coupons.json", {})
     log = read_json(STATE_DIR / "predictions.json", {})
+    # Remise à zéro du suivi : ce qui précède TRACKING_START part une fois pour toutes dans l'archive
+    old_store = {d: e for d, e in store.items() if d < TRACKING_START}
+    old_log = {k: e for k, e in log.items() if e["date"] < TRACKING_START}
+    if old_store or old_log:
+        arch = STATE_DIR / "archive"
+        arch.mkdir(exist_ok=True)
+        for name, part in (("coupons", old_store), ("predictions", old_log)):
+            path = arch / f"{name}_avant_{TRACKING_START}.json"
+            prev = read_json(path, {})
+            prev.update(part)
+            path.write_text(json.dumps(prev, ensure_ascii=False, indent=0))
+        store = {d: e for d, e in store.items() if d >= TRACKING_START}
+        log = {k: e for k, e in log.items() if e["date"] >= TRACKING_START}
     # Calendrier à un mois : football-data (avec cotes) prioritaire, ESPN pour le reste
     try:
         far = ahead.fixtures(today, results, offline=args.offline)
@@ -423,6 +437,7 @@ def main():
         "matches": matches, "coupons": history, "live": live, "predictions": pred_stats,
         "tips": tip_list, "recent": recent_out, "feedback": fb, "surprises": surprise, "learning": learning,
         "trajectory": {"live": traj, "base": base},
+        "tracking_start": TRACKING_START,
         "reliable": reliable,
         "extra_labels": {k: list(v) for k, v in extra.LABELS.items()},
         "last_result_date": results["date"].max().strftime("%Y-%m-%d") if len(results) else None,

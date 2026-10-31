@@ -425,7 +425,7 @@ function viewTracking() {
     <div class="stat"><span class="k">Bilan (mises)</span><span class="v ${tot.units >= 0 ? "pos" : "neg"}">${tot.n ? signed(tot.units) : "–"}</span></div>
     <div class="stat"><span class="k">Matchs suivis</span><span class="v">${d.predictions ? d.predictions.n : 0}</span></div>
   </div>
-  <p class="note">Tous les coupons proposés sont suivis, que tu les joues ou non. Bilan calculé avec une mise fictive de 1 par coupon et la cote estimée. Chaque résultat corrige les probabilités des prochains jours, ligue par ligue.</p>`;
+  <p class="note">${d.tracking_start ? `Suivi réel depuis le ${new Date(d.tracking_start).toLocaleDateString("fr-FR", { day: "numeric", month: "long" })}, avec le nouveau paramétrage (l'ancien suivi est archivé). ` : ""}Tous les coupons proposés sont suivis, que tu les joues ou non. Bilan calculé avec une mise fictive de 1 par coupon et la cote estimée. Chaque résultat corrige les probabilités des prochains jours, ligue par ligue.</p>`;
   if (Object.keys(live).length) {
     html += `<section class="card"><h2>Par type de coupon</h2><div class="tbl"><table><thead><tr><th>Type</th><th class="n">Réglés</th><th class="n">Gagnés</th><th class="n">Bilan</th></tr></thead><tbody>
     ${kinds.filter(([k]) => live[k]).map(([k, c]) => `<tr><td>${esc(c.label)}</td><td class="n">${live[k].n}</td><td class="n">${Math.round((live[k].won / live[k].n) * 100)} %</td><td class="n ${live[k].units >= 0 ? "pos" : "neg"}">${signed(live[k].units)}</td></tr>`).join("")}

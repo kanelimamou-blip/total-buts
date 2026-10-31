@@ -45,6 +45,10 @@ MARKETS = {"o15": "Plus de 1,5 but", "o20": "Plus de 2 buts", "o25": "Plus de 2,
 # Marge supposée du bookmaker sur les totaux (sert à estimer la cote 1xBet quand on ne l'a pas)
 BOOK_MARGIN = 0.06
 
+# Début du suivi réel (demande d'Est le 31/10/2026, après le nouveau paramétrage) : tout ce qui est
+# antérieur est archivé dans data/state/archive/ et ne compte plus dans le suivi ni dans l'apprentissage
+TRACKING_START = "2026-11-01"
+
 # Taxe sur les gains au Sénégal : 20 % du gain net. Une cote 2 ne rapporte que 1 + (2 - 1) × 0,8 = 1,80.
 TAX = 0.20
 
