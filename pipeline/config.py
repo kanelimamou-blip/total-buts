@@ -58,8 +58,8 @@ def gross_odds(net: float) -> float:
 # (cote affichée entre 2,00 et 2,25) ; les autres visent au moins 2 net.
 COUPONS = {
     # stake_pct : mise conseillée en % de la bankroll (priorité aux petits gains réguliers)
-    "sur": {"label": "Coupon sûr", "min_odds": 2.0, "max_odds": gross_odds(2.0), "legs": (3, 4), "stake_pct": 2.0},
-    "ligue": {"label": "Coupon championnat", "min_odds": 2.0, "max_odds": gross_odds(2.0), "legs": (3, 4), "stake_pct": 1.5},
+    "sur": {"label": "Coupon sûr", "min_odds": 2.0, "max_odds": gross_odds(2.0), "legs": (2, 3), "stake_pct": 2.0},
+    "ligue": {"label": "Coupon championnat", "min_odds": 2.0, "max_odds": gross_odds(2.0), "legs": (2, 3), "stake_pct": 1.5},
     "favoris": {"label": "Ticket favoris", "min_odds": 2.0, "max_odds": gross_odds(2.0), "legs": (3, 4), "stake_pct": 2.0},
     "periode_buts": {"label": "Buts sur la période", "min_odds": gross_odds(2.0), "max_odds": 3.5, "legs": (3, 5), "stake_pct": 1.0},
     "periode_fav": {"label": "Favoris sur la période", "min_odds": gross_odds(2.0), "max_odds": 3.5, "legs": (3, 5), "stake_pct": 1.0},
@@ -72,6 +72,11 @@ COUPONS = {
 }
 VALUE_EDGE = 0.03       # avantage minimum pour une sélection « value »
 MIN_LEG_ODDS = 1.12     # en dessous, la sélection n'apporte rien au coupon
+# Chance minimale (gagné ou remboursé) de chaque sélection, par type de coupon : réglée sur le test du passé
+MIN_LEG_P: dict = {}  # testé de 0,65 à 0,80 : aucun gain de réussite, la cote 2 impose la même chance quelle que soit la sélection
+# Coupons sûrs et championnat à 2-3 matchs : la marge du bookmaker se paie à chaque sélection,
+# test 2023-2026 : 46 % de réussite à 2 matchs contre 43 % à 3-4 matchs, pour la même cote
+MAX_COUPONS_PER_MATCH = 2  # un même match dans au plus 2 coupons du jour (hors jackpot et cote 1000) : un raté ne fait pas tout tomber
 
 # Nombre de coupons par jour : pas de limite fixe, on garde tous ceux qui passent ces seuils
 MIN_P = {"tendance": 0.3, "sur": 0.36, "ligue": 0.34, "value": 0.25, "audace": 0.15, "favoris": 0.36, "periode_buts": 0.3, "periode_fav": 0.3}

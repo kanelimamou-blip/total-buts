@@ -6,11 +6,12 @@ espérée quand on ne perd pas atteigne la cible.
 """
 from __future__ import annotations
 
+from collections import Counter
 from itertools import combinations, product
 
 import numpy as np
 
-from config import BOOK_MARGIN, COUPONS, TAX, MAX_PER_DAY, MIN_LEG_ODDS, MIN_P, VALUE_EDGE
+from config import BOOK_MARGIN, COUPONS, MAX_COUPONS_PER_MATCH, MAX_PER_DAY, MIN_LEG_ODDS, MIN_LEG_P, MIN_P, TAX, VALUE_EDGE
 from model import fair_odds
 
 MKT_ORDER = ["o15", "o20", "o25"]
@@ -47,7 +48,7 @@ def _leg_stats(leg):
     return np.log(max(p_ok, 1e-12)), np.log(cond_odds)
 
 
-def _search(matches: list[dict], k_range, min_odds, allowed, pool, score="safety", max_odds=1e9, max_o25=1, mk_order=None):
+def _search(matches: list[dict], k_range, min_odds, allowed, pool, score="safety", max_odds=1e9, max_o25=1, mk_order=None, min_leg_p=0.0):
     """matches : [{"id":..., "legs":[...]}]. Recherche exhaustive vectorisée."""
     if len(matches) < k_range[0]:
         return None
@@ -62,7 +63,7 @@ def _search(matches: list[dict], k_range, min_odds, allowed, pool, score="safety
     for i, m in enumerate(pool_matches):
         for j, name in enumerate(mk):
             leg = next((l for l in m["legs"] if l["market"] == name), None)
-            if leg is None or leg.get("excluded") or leg["odds"] < MIN_LEG_ODDS:
+            if leg is None or leg.get("excluded") or leg["odds"] < MIN_LEG_ODDS or leg["p_win"] + leg["p_push"] < min_leg_p:
                 continue
             lp[i, j], lo[i, j] = _leg_stats(leg)
             ev[i, j] = leg["ev"]
@@ -125,7 +126,8 @@ def _repeat(kind, matches, allowed, pool, score="safety", scope="Toutes ligues",
     cfg = COUPONS[kind]
     out, rest = [], list(matches)
     while len(out) < MAX_PER_DAY[kind]:
-        r = _search(rest, cfg["legs"], cfg["min_odds"], allowed, pool=pool, score=score, max_odds=cfg["max_odds"], max_o25=max_o25, mk_order=mk_order)
+        r = _search(rest, cfg["legs"], cfg["min_odds"], allowed, pool=pool, score=score, max_odds=cfg["max_odds"], max_o25=max_o25,
+                    mk_order=mk_order, min_leg_p=MIN_LEG_P.get(kind, 0.0))
         if not r or np.exp(r[0]) < MIN_P[kind]:
             break
         out.append(_pack(kind, *r, scope=scope))
@@ -138,30 +140,41 @@ def build_day(matches: list[dict], kinds=("sur", "ligue", "favoris", "value", "a
     """Coupons d'une journée. matches : [{"id", "div", "rel", "legs"}].
 
     Les coupons sûrs toutes ligues ne partagent aucun match entre eux ; les coupons par championnat
-    sont une alternative (ils peuvent reprendre les mêmes matchs), à toi de choisir.
+    peuvent reprendre ces matchs, mais un match ne figure jamais dans plus de MAX_COUPONS_PER_MATCH coupons.
     """
     out = []
+    uses = Counter()
+
+    def add(cs):  # compte l'exposition de chaque match
+        for c in cs:
+            uses.update(l["id"] for l in c["legs"])
+        out.extend(cs)
+
+    def free(ms):
+        return [m for m in ms if uses[m["id"]] < MAX_COUPONS_PER_MATCH]
+
     if "sur" in kinds:
-        out += _repeat("sur", matches, {"o15", "o20", "o25"}, pool=12)
+        add(_repeat("sur", matches, {"o15", "o20", "o25"}, pool=12))
     if "ligue" in kinds:
         by_div = {}
         for m in matches:
             by_div.setdefault(m.get("div"), []).append(m)
         for div, ms in by_div.items():
+            ms = free(ms)
             if len(ms) >= COUPONS["ligue"]["legs"][0]:
                 name = (league_names or {}).get(div, div)
-                out += _repeat("ligue", ms, {"o15", "o20", "o25"}, pool=10, scope=name)[:1]
+                add(_repeat("ligue", ms, {"o15", "o20", "o25"}, pool=10, scope=name)[:1])
     if "favoris" in kinds:
-        out += build_favorites(matches)
+        add(build_favorites(free(matches)))
     if "value" in kinds:
         vm = []
-        for m in matches:
+        for m in free(matches):
             legs = [dict(l, excluded=(l["ev"] < VALUE_EDGE)) for l in m["legs"]]
             if any(not l["excluded"] for l in legs):
                 vm.append(dict(m, legs=legs))
-        out += _repeat("value", vm, {"o15", "o20", "o25"}, pool=10, score="ev")
+        add(_repeat("value", vm, {"o15", "o20", "o25"}, pool=10, score="ev"))
     if "audace" in kinds:
-        out += _repeat("audace", matches, {"o15", "o20", "o25"}, pool=9, max_o25=2)
+        add(_repeat("audace", free(matches), {"o15", "o20", "o25"}, pool=9, max_o25=2))
     if "jackpot" in kinds:
         # Jackpot : base en +2 sur les matchs les plus sûrs, puis passage de quelques sélections en +2,5
         cfg = COUPONS["jackpot"]
