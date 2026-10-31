@@ -489,3 +489,38 @@ def settle_coupon(coupon: dict, scores: dict) -> dict | None:
     coupon["status"] = status
     coupon["return"] = round(payout if status == "won" else 0.0, 3)
     return coupon
+
+
+# Relais : quand un ticket sur plusieurs jours démarre bien (sélections déjà gagnées, aucune perdue),
+# un second ticket reprend ses matchs restants avec un pari plus prudent qui va dans le même sens
+# (favori remboursé si nul, +2 au lieu de +2,5…). Si le favori gagne, les deux tickets passent ;
+# s'il fait nul, le relais est remboursé sur ce match. Il protège sans jamais contredire.
+PROTECT = {"1": ("dnb1", "1X"), "2": ("dnb2", "X2"), "dnb1": ("1X",), "dnb2": ("X2",),
+           "o25": ("o20", "o15"), "o20": ("o15",), "h15": ("h05",), "a15": ("a05",)}
+
+
+def build_relay(parent: dict, by_id: dict) -> dict | None:
+    """parent : ticket en cours ; by_id : matchs à venir (id -> {"legs": [...], ...})."""
+    if parent.get("status") or any(l.get("result") == "lost" for l in parent["legs"]):
+        return None
+    if not any(l.get("result") == "won" for l in parent["legs"]):
+        return None
+    picks = []
+    for l in parent["legs"]:
+        if l.get("result") or l["id"] not in by_id:
+            continue
+        m = by_id[l["id"]]
+        opts = [x for x in m["legs"] if x["market"] in PROTECT.get(l["market"], ())]
+        if not opts:
+            continue
+        best = max(opts, key=lambda x: (x["p_win"] + x["p_push"]) * x["odds"])
+        picks.append((m, best))
+    if len(picks) < 2:
+        return None
+    o = float(np.prod([b["odds"] for _, b in picks]))
+    if o < COUPONS["relais"]["min_odds"]:
+        return None
+    p_ok = float(np.prod([b["p_win"] + b["p_push"] for _, b in picks]))
+    c = _pack("relais", np.log(p_ok), np.log(o), [(m, b["market"]) for m, b in picks],
+              scope=f"protège : {parent['label']}" + (f" · {parent['scope']}" if parent.get("scope") else ""))
+    return c

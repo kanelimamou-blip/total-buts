@@ -343,6 +343,22 @@ def main():
             last = f"{last[:4]}-{last[4:6]}-{last[6:]}"
             if settle_coupon(c, scores) is None and last < (today - timedelta(days=6)).isoformat():
                 c["status"] = "void"  # match reporté ou introuvable
+    # Relais des tickets sur plusieurs jours qui démarrent bien (une seule fois par ticket)
+    if td >= TRACKING_START:
+        upcoming = {m["id"]: {"id": m["id"], "div": m["div"], "legs": ok_legs(m), "fav": m["fav"],
+                              "rel": fb["reliability"].get(m["div"], 0.9 if m["div"] in CUPS else 1.0)}
+                    for m in matches if m["date"] >= td and not m.get("provisional")}
+        relays = []
+        for e in store.values():
+            for c in e["coupons"]:
+                if c["kind"] in ("periode_fav", "periode_buts", "periode_long", "tendance") and not c.get("relay_done"):
+                    r = coupons_mod.build_relay(c, upcoming)
+                    if r:
+                        c["relay_done"] = True
+                        relays.append(r)
+        if relays:
+            today_entry = store.setdefault(td, {"frozen": True, "created": now.isoformat(timespec="minutes"), "coupons": []})
+            today_entry["coupons"] = prioritise(today_entry["coupons"] + relays)
     (STATE_DIR / "coupons.json").write_text(json.dumps(store, ensure_ascii=False, indent=1))
 
     # Journal des prédictions (pour mesurer la fiabilité en conditions réelles)

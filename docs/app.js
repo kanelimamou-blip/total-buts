@@ -1,6 +1,6 @@
 "use strict";
 const MK = { o15: "+1,5 but", o20: "+2 buts", o25: "+2,5 buts" };
-const KIND_FILTERS = [["all", "Tous"], ["sur", "Sûrs"], ["favoris", "Favoris"], ["mix", "Mix"], ["buts15", "+1,5"], ["buts20", "+2 (remb.)"], ["dc", "Double chance"], ["autres", "Autres paris"], ["periode", "Sur une période"], ["ligue", "Par championnat"], ["tendance", "Tendances"], ["value", "Value"], ["audace", "Audacieux"], ["jackpot_fiable", "Jackpots fiables"], ["jackpot", "Jackpot"], ["mille", "Cote 1000"]];
+const KIND_FILTERS = [["all", "Tous"], ["sur", "Sûrs"], ["favoris", "Favoris"], ["mix", "Mix"], ["buts15", "+1,5"], ["buts20", "+2 (remb.)"], ["dc", "Double chance"], ["autres", "Autres paris"], ["periode", "Sur une période"], ["ligue", "Par championnat"], ["tendance", "Tendances"], ["value", "Value"], ["audace", "Audacieux"], ["relais", "Relais"], ["jackpot_fiable", "Jackpots fiables"], ["jackpot", "Jackpot"], ["mille", "Cote 1000"]];
 const kindOf = (c) => (c.kind.startsWith("periode") ? "periode" : c.kind);
 const XL = () => state.data?.extra_labels || {};  // autres paris : [libellé appli, libellé 1xBet]
 const mkLabel = (l) => (l.market === "1" || l.market === "2" ? `Victoire ${l.team || (l.market === "1" ? l.home : l.away)}` : MK[l.market] || XL()[l.market]?.[0] || l.market);
@@ -54,6 +54,53 @@ function couponDays() {
   return days;
 }
 
+// Plan du jour : 8 à 10 tickets à cote 2 et plus, à mise égale, choisis par chance de passer
+// et par la réussite passée de leur combinaison. Chaque match apparaît au plus 2 fois dans le plan.
+const PLAN_MAX = 10, PLAN_SKIP = new Set(["jackpot", "jackpot_fiable", "mille", "periode_long", "audace"]);
+function planScore(c) {
+  const f = SMALL_KINDS.has(c.kind) ? state.data.combo_factors?.[signature(c)] || 1 : 1;
+  return c.p_not_lose * f;
+}
+function dayPlan(date) {
+  const d = state.data, uses = {}, out = [];
+  const pool = d.coupons.filter((c) => c.date === date && !PLAN_SKIP.has(c.kind) && c.odds >= 2 && c.status !== "void").sort((a, b) => planScore(b) - planScore(a));
+  for (const c of pool) {
+    if (out.length >= PLAN_MAX) break;
+    if (c.legs.some((l) => (uses[l.id] || 0) >= 2)) continue;
+    c.legs.forEach((l) => (uses[l.id] = (uses[l.id] || 0) + 1));
+    out.push(c);
+  }
+  return out;
+}
+function planBlock(date) {
+  const d = state.data, plan = dayPlan(date);
+  if (plan.length < 2) return "";
+  const exp = plan.reduce((a, c) => a + c.p_not_lose, 0), sd = Math.sqrt(plan.reduce((a, c) => a + c.p_not_lose * (1 - c.p_not_lose), 0));
+  const lo = Math.max(0, Math.round(exp - sd)), hi = Math.min(plan.length, Math.round(exp + sd));
+  const avgOdds = plan.reduce((a, c) => a + c.odds, 0) / plan.length;
+  const base = state.bt?.combos || {};
+  return `<section class="card"><h2>Plan du jour · ${plan.length} tickets à mise égale</h2>
+  <p class="small muted">Les tickets à cote 2 et plus qui ont le plus de chances de passer, en tenant compte de ce que leur type de combinaison a donné sur 3 ans et en live. Chaque match au plus 2 fois. Les 3 premiers sont à jouer en premier.</p>
+  <div class="kv"><span>Gagnants attendus</span><b>${String(exp.toFixed(1)).replace(".", ",")} sur ${plan.length} (souvent entre ${lo} et ${hi})</b></div>
+  <div class="kv"><span>Cote moyenne</span><b>${odds(avgOdds)}</b></div>
+  <div class="legs">${plan.map((c, i) => { const b = SMALL_KINDS.has(c.kind) ? base[signature(c)] : null; const idx = d.coupons.indexOf(c);
+    return `<button class="leg"${det("cp", idx)}><span class="teams">${i < 3 ? '<span class="tag">en premier</span> ' : ""}${esc(c.label)}${c.scope && c.scope !== "Toutes ligues" ? " · " + esc(c.scope) : ""}</span><span class="o">${c.status ? `<span class="status ${c.status}">${{ won: "Gagné", lost: "Perdu" }[c.status] || ""}</span>` : odds(c.odds)}</span><span class="meta">${c.legs.length} matchs · ${pct(c.p_not_lose)} de chances${b ? ` · passé ${pct(b.hit)} sur ${b.n.toLocaleString("fr-FR")}` : ""}</span><span class="min">›</span></button>`; }).join("")}</div>
+  <p class="small muted">Honnêtement : à cote 2, viser 7 ou 8 sur 10 chaque jour n'est pas réaliste. Le suivi mesure le vrai taux du plan, jour après jour.</p></section>`;
+}
+function planTracking() {
+  const d = state.data;
+  const days = [...new Set(d.coupons.filter((c) => c.status === "won" || c.status === "lost").map((c) => c.date))].sort();
+  const rows = days.map((x) => { const p = dayPlan(x).filter((c) => c.status === "won" || c.status === "lost"); return { x, n: p.length, w: p.filter((c) => c.status === "won").length, e: p.reduce((a, c) => a + c.p_not_lose, 0), u: p.reduce((a, c) => a + (c.status === "won" ? c.odds : 0) - 1, 0) }; }).filter((r) => r.n);
+  if (!rows.length) return `<section class="card"><h2>Plan du jour : suivi</h2><p class="small muted">Le plan de 8 à 10 tickets à mise égale sera mesuré ici dès les premiers jours réglés.</p></section>`;
+  const t = rows.reduce((a, r) => ({ n: a.n + r.n, w: a.w + r.w, e: a.e + r.e, u: a.u + r.u }), { n: 0, w: 0, e: 0, u: 0 });
+  return `<section class="card"><h2>Plan du jour : suivi</h2>
+  <div class="kv"><span>${rows.length} jour${rows.length > 1 ? "s" : ""} · ${t.n} tickets · attendu / réel</span><b>${pct(t.e / t.n)} / ${pct(t.w / t.n)}</b></div>
+  <div class="kv"><span>Bilan à mise égale (1 par ticket, avant taxe)</span><b class="${t.u >= 0 ? "pos" : "neg"}">${signed(t.u)}</b></div>
+  <div class="tbl"><table><thead><tr><th>Jour</th><th class="n">Gagnés</th><th class="n">Attendu</th><th class="n">Bilan</th></tr></thead><tbody>
+  ${rows.slice().reverse().map((r) => `<tr class="tap"${det("plan", r.x)}><td>${new Date(r.x).toLocaleDateString("fr-FR", { weekday: "short", day: "numeric", month: "short" })} ›</td><td class="n">${r.w} / ${r.n}</td><td class="n">${String(r.e.toFixed(1)).replace(".", ",")}</td><td class="n ${r.u >= 0 ? "pos" : "neg"}">${signed(r.u)}</td></tr>`).join("")}
+  </tbody></table></div></section>`;
+}
+
 function viewCoupons() {
   const d = state.data;
   const days = couponDays();
@@ -68,6 +115,7 @@ function viewCoupons() {
   <div class="chips">${days.map((x) => `<button class="chip" data-day="${x}" aria-pressed="${x === state.day}">${dayLabel(x, d.today)}</button>`).join("")}</div>
   <div class="chips">${KIND_FILTERS.filter(([k]) => count(k)).map(([k, l]) => `<button class="chip" data-kind="${k}" aria-pressed="${k === state.kind}">${l}<span class="c">${count(k)}</span></button>`).join("")}</div>
   ${liveBlock()}
+  ${state.kind === "all" ? planBlock(state.day) : ""}
   <p class="small muted">${frozen ? "Coupons du jour figés au premier calcul du matin." : "Coupons provisoires : ils seront affinés quand les cotes du marché seront publiées, puis figés le jour du match."} Classés par priorité.</p>
   ${shown.map(couponCard).join("") || `<div class="empty">Aucun coupon de ce type ce jour-là.</div>`}
   ${pastBlock()}`;
@@ -474,7 +522,9 @@ function openDetail(t, v) {
   const d = state.data, isSet = (c) => c.status === "won" || c.status === "lost";
   const byDate = (a, b) => (a.date < b.date ? 1 : -1);
   let title = "", cps = null, legs = null, rows = null, note = "";
-  if (t === "sig") { title = v; cps = d.coupons.filter((c) => SMALL_KINDS.has(c.kind) && signature(c) === v); }
+  if (t === "cp") { const c = d.coupons[+v]; $("#sheet-body").innerHTML = c ? couponCard(c) : ""; $("#sheet").hidden = false; return; }
+  if (t === "plan") { title = `Plan du ${new Date(v).toLocaleDateString("fr-FR", { weekday: "long", day: "numeric", month: "long" })}`; cps = dayPlan(v); }
+  else if (t === "sig") { title = v; cps = d.coupons.filter((c) => SMALL_KINDS.has(c.kind) && signature(c) === v); }
   else if (t === "kind") { title = d.coupon_kinds[v]?.label || v; cps = d.coupons.filter((c) => c.kind === v); }
   else if (t === "allcoupons") { title = "Tous les coupons"; cps = d.coupons.slice(); }
   else if (t === "won" || t === "lost") { title = t === "won" ? "Coupons gagnés" : "Coupons perdus"; cps = d.coupons.filter((c) => c.status === t); }
@@ -530,7 +580,7 @@ function viewTracking() {
   const kinds = Object.entries(d.coupon_kinds);
   const live = d.live || {};
   const tot = Object.values(live).reduce((a, s) => ({ n: a.n + s.n, won: a.won + s.won, units: a.units + s.units }), { n: 0, won: 0, units: 0 });
-  let html = `<h1>Suivi</h1>${myBetsBlock()}${combosBlock(d, bt)}<h2>Propositions de l'appli</h2>
+  let html = `<h1>Suivi</h1>${myBetsBlock()}${planTracking()}${combosBlock(d, bt)}<h2>Propositions de l'appli</h2>
   <div class="stats">
     <div class="stat tap"${det("allcoupons")}><span class="k">Coupons réglés ›</span><span class="v">${tot.n}</span></div>
     <div class="stat tap"${det("won")}><span class="k">Gagnés ›</span><span class="v">${tot.n ? Math.round((tot.won / tot.n) * 100) + " %" : "–"}</span></div>
