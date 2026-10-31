@@ -19,6 +19,7 @@ COLS = {
     "oh": ["AvgH", "BbAvH", "B365H", "PSH"],
     "od": ["AvgD", "BbAvD", "B365D", "PSD"],
     "oa": ["AvgA", "BbAvA", "B365A", "PSA"],
+    "hs": ["HS"], "as_": ["AS"], "hst": ["HST"], "ast": ["AST"],
 }
 
 

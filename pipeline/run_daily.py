@@ -16,6 +16,7 @@ import backtest
 import context
 import europe
 import feedback
+import meta
 import tips as tips_mod
 from config import ALL_COMPETITIONS, COUPONS, CUPS, LEAGUES, LONG_PERIODS, LONG_TARGETS, MARKETS, PERIODS, SITE_DATA, STATE_DIR
 from coupons import _repeat, build_day, build_long, build_mille, build_favorites, favorite_leg, legs_for_match, prioritise, settle_coupon
@@ -133,6 +134,18 @@ def main():
             ratings[div] = r
             league_tables[div] = r.table()
 
+    # Méta-modèle (tirs cadrés) pour les matchs sans cotes, s'il a battu le modèle seul sur le passé
+    meta_cfg = model_cfg.get("meta")
+    try:
+        _, shots_now = meta.shot_table(results)
+    except Exception as exc:  # noqa: BLE001
+        print("Tirs indisponibles :", exc)
+        shots_now, meta_cfg = None, None
+    blocked = set(model_cfg.get("blocked") or [])
+
+    def ok_legs(m):  # sélections hors des réglages que le diagnostic a jugés trop optimistes
+        return [l for l in m["legs"] if f"{m['div']}|{l['market']}" not in blocked]
+
     matches = []
     for row in fx.itertuples():
         r = ratings.get(row.div)
@@ -145,10 +158,19 @@ def main():
         o1x2 = None if any(pd.isna(x) for x in o1x2) else o1x2
         pr = predict(r, row.home, row.away, o25, u25, blend=blend, odds_1x2=o1x2)
         ctx_on = []
+        if pr["market_o25"] is None and meta_cfg and shots_now is not None:
+            mf = meta.row_features(shots_now(row.div, row.home, row.away), pr["res"], *(o1x2 or (None, None, None)))
+            p15, p25 = meta.apply(meta_cfg, row.div, mf, pr["model"]["o15"], pr["model"]["o25"])
+            if p25 is not None:
+                pr2 = predict(r, row.home, row.away, 1 / p25, 1 / (1 - p25), blend=0.0, odds_1x2=o1x2)
+                pr.update({k: pr2[k] for k in ("final", "xg_home", "xg_away", "top_scores", "total_dist")})
+                ctx_on.append("Tirs cadrés pris en compte")
+            if p15 is not None:
+                pr["final"] = feedback.apply(pr["final"], row.div, {"shifts": {row.div: {"o15": p15 - pr["final"]["o15"]}}})
         if state is not None:
             feats = context.features(row.div, row.date, state(row.div, row.date, row.home), state(row.div, row.date, row.away))
             pr["final"] = context.adjust(pr["final"], feats, model_cfg.get("context"))
-            ctx_on = [context.FEATURES[k] for k, v in feats.items() if v]
+            ctx_on += [context.FEATURES[k] for k, v in feats.items() if v]
         pr["final"] = feedback.apply(pr["final"], row.div, fb)
         mp = predict(r, row.home, row.away, o25, u25, blend=0.0)["final"] if pr["market_o25"] is not None else None
         legs = legs_for_match(pr, mp, o25)
@@ -207,7 +229,7 @@ def main():
         if d in store and store[d].get("frozen"):
             continue
         day = [{"id": m["id"], "div": m["div"], "rel": fb["reliability"].get(m["div"], 0.9 if m["div"] in CUPS else 1.0),
-                "legs": m["legs"], "fav": m["fav"]} for m in by_date[d] if not m.get("provisional")]
+                "legs": ok_legs(m), "fav": m["fav"]} for m in by_date[d] if not m.get("provisional")]
         coupons = build_day(day, league_names={k: v[0] for k, v in ALL_COMPETITIONS.items()})
         mille = build_mille(day)
         if mille:
@@ -218,7 +240,7 @@ def main():
     for d, ms in by_date.items():
         e = store.get(d)
         if e and e.get("frozen") and not any(c["kind"] == "mille" for c in e["coupons"]):
-            mille = build_mille([{"id": m["id"], "div": m["div"], "legs": m["legs"], "fav": m["fav"]}
+            mille = build_mille([{"id": m["id"], "div": m["div"], "legs": ok_legs(m), "fav": m["fav"]}
                                  for m in ms if not m.get("provisional")])
             if mille:
                 e["coupons"] = prioritise(e["coupons"] + [mille])
@@ -227,7 +249,7 @@ def main():
     td = today.isoformat()
     entry = store.setdefault(td, {"frozen": True, "created": now.isoformat(timespec="minutes"), "coupons": []})
     if not entry.get("periods_done"):
-        pool_all = [{"id": m["id"], "div": m["div"], "date": m["date"], "legs": m["legs"], "fav": m["fav"],
+        pool_all = [{"id": m["id"], "div": m["div"], "date": m["date"], "legs": ok_legs(m), "fav": m["fav"],
                      "rel": fb["reliability"].get(m["div"], 0.9 if m["div"] in CUPS else 1.0)}
                     for m in matches if not m.get("provisional")]
         used_b, used_f = set(), set()
@@ -257,7 +279,7 @@ def main():
         form_teams = {r["team"] for r in surprise["over"]}
         end = (today + timedelta(days=7)).isoformat()
         week = [m for m in matches if m["date"] < end and not m.get("provisional")]
-        pool_goals = [{"id": m["id"], "div": m["div"], "legs": m["legs"], "fav": m["fav"]} for m in week
+        pool_goals = [{"id": m["id"], "div": m["div"], "legs": ok_legs(m), "fav": m["fav"]} for m in week
                       if (m["home"] in goal_teams or m["away"] in goal_teams) and not ({m["home"], m["away"]} & closed)]
         pool_form = [{"id": m["id"], "div": m["div"], "legs": [m["fav"]], "fav": m["fav"]} for m in week
                      if m["fav"]["team"] in form_teams]
@@ -266,7 +288,7 @@ def main():
         entry["coupons"] = prioritise(entry["coupons"] + tend)
         entry["tendance_done"] = True
     if not entry.get("long_done"):
-        pool_all = [{"id": m["id"], "div": m["div"], "date": m["date"], "legs": m["legs"], "fav": m["fav"],
+        pool_all = [{"id": m["id"], "div": m["div"], "date": m["date"], "legs": ok_legs(m), "fav": m["fav"],
                      "rel": fb["reliability"].get(m["div"], 0.9 if m["div"] in CUPS else 1.0)}
                     for m in matches if not m.get("provisional")]
         longs = []

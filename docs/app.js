@@ -399,7 +399,34 @@ function backtestBlock(bt) {
   ${bt.context?.factors?.length ? `<h3>Facteurs de contexte</h3><p class="small muted">Écart entre les buts prévus par les cotes et ce qui s'est vraiment passé, selon la situation.${["o15", "o25"].some((k) => bt.context.markets[k]?.use) ? " Les facteurs qui améliorent la précision sur une période de test sont appliqués aux probabilités." : " Aucun n'améliore assez la précision pour être appliqué pour l'instant."}</p>
   <div class="tbl"><table><thead><tr><th>Situation</th><th class="n">Matchs</th><th class="n">+2,5 prévu</th><th class="n">+2,5 réel</th></tr></thead><tbody>
   ${bt.context.factors.map((f) => `<tr><td style="white-space:normal">${esc(f.label)}</td><td class="n">${f.n}</td><td class="n">${pct(f.pred_o25)}</td><td class="n ${f.obs_o25 > f.pred_o25 ? "pos" : "neg"}">${pct(f.obs_o25)}</td></tr>`).join("")}</tbody></table></div>` : ""}
+  ${metaBlock(bt)}${diagBlock(bt)}
   <p class="note">${esc(bt.note)}</p></section>`;
+}
+
+// Méta-modèle : ce que les tirs cadrés apportent, testé sur une année jamais vue
+function metaBlock(bt) {
+  const m = bt.meta;
+  if (!m) return "";
+  const row = (lab, e) => e ? `<tr><td>${lab}</td><td class="n ${e.gain_pct > 0 ? "pos" : "neg"}">${e.gain_pct > 0 ? "+" : ""}${String(e.gain_pct).replace(".", ",")} %</td><td class="n">${e.use ? "oui" : "non"}</td></tr>` : "";
+  return `<h3>Tirs cadrés et méta-modèle</h3><p class="small muted">Un second modèle combine le marché, le modèle de buts, les tirs et tirs cadrés de chaque équipe et l'écart de niveau. Il sert surtout aux matchs lointains, encore sans cotes. Il n'est appliqué que s'il prédit mieux sur une année de matchs qu'il n'a jamais vus.</p>
+  <div class="tbl"><table><thead><tr><th>Cas</th><th class="n">Gain</th><th class="n">Utilisé</th></tr></thead><tbody>
+  ${row("+1,5 avec cotes", m.market?.o15)}${row("+2,5 avec cotes", m.market?.o25)}${row("+1,5 sans cotes", m.no_market?.o15)}${row("+2,5 sans cotes", m.no_market?.o25)}
+  </tbody></table></div>`;
+}
+
+// Diagnostic des réglages : réussite réelle des sélections selon la ligue, le marché, la confiance et la cote
+function diagBlock(bt) {
+  const g = bt.diagnostic;
+  if (!g) return "";
+  const cell = (x) => `<td class="n">${pct(x.pred)}</td><td class="n ${x.obs >= x.pred - 0.02 ? "pos" : "neg"}">${pct(x.obs)}</td>`;
+  const worst = g.segments.slice().sort((a, b) => a.z - b.z);
+  return `<h3>Diagnostic des réglages</h3><p class="small muted">Chaque sélection proposable rejouée sur le passé : prévu contre réel. Une case nettement sous le prévu est retirée automatiquement des coupons.${g.blocked.length ? "" : " Aucune ne l'est pour l'instant."}</p>
+  <div class="tbl"><table><thead><tr><th>Confiance</th><th class="n">Sélections</th><th class="n">Prévu</th><th class="n">Réel</th></tr></thead><tbody>
+  ${g.bands.map((b) => `<tr><td>${esc(b.market)} ${esc(b.band)}</td><td class="n">${b.n}</td>${cell(b)}</tr>`).join("")}</tbody></table></div>
+  <div class="tbl"><table><thead><tr><th>Cote</th><th class="n">Sélections</th><th class="n">Prévu</th><th class="n">Réel</th><th class="n">Rentab.</th></tr></thead><tbody>
+  ${g.odds.map((b) => `<tr><td>${esc(b.range)}</td><td class="n">${b.n}</td>${cell(b)}<td class="n ${b.roi >= 0 ? "pos" : "neg"}">${(b.roi * 100).toFixed(1).replace(".", ",")} %</td></tr>`).join("")}</tbody></table></div>
+  <div class="tbl"><table><thead><tr><th>Ligue · marché</th><th class="n">Sélections</th><th class="n">Prévu</th><th class="n">Réel</th></tr></thead><tbody>
+  ${worst.map((x) => `<tr><td>${esc(x.name)} ${esc(x.market)}${x.blocked ? " ⛔" : ""}</td><td class="n">${x.n}</td>${cell(x)}</tr>`).join("")}</tbody></table></div>`;
 }
 
 /* ---------- Direct (scores ESPN, interrogés depuis le téléphone) ---------- */
