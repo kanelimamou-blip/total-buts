@@ -11,7 +11,7 @@ from itertools import combinations, product
 
 import numpy as np
 
-from config import BOOK_MARGIN, COUPONS, MAX_COUPONS_PER_MATCH, MAX_PER_DAY, MIN_LEG_ODDS, MIN_LEG_P, MIN_P, TAX, VALUE_EDGE
+from config import BOOK_MARGIN, COUPON_EXCLUDED, COUPONS, MAX_COUPONS_PER_MATCH, MAX_PER_DAY, MIN_LEG_ODDS, MIN_LEG_P, MIN_P, TAX, VALUE_EDGE
 import extra
 from model import fair_odds
 
@@ -65,7 +65,8 @@ def _search(matches: list[dict], k_range, min_odds, allowed, pool, score="safety
     for i, m in enumerate(pool_matches):
         for j, name in enumerate(mk):
             leg = next((l for l in m["legs"] if l["market"] == name), None)
-            if leg is None or leg.get("excluded") or leg["odds"] < MIN_LEG_ODDS or leg["p_win"] + leg["p_push"] < min_leg_p:
+            if (leg is None or leg.get("excluded") or leg["odds"] < MIN_LEG_ODDS or leg["p_win"] + leg["p_push"] < min_leg_p
+                    or leg.get("side", leg["market"]) in COUPON_EXCLUDED):
                 continue
             lp[i, j], lo[i, j] = _leg_stats(leg)
             ev[i, j] = leg["ev"]
@@ -161,7 +162,7 @@ def _virtual(matches: list[dict], markets: set) -> list[dict]:
     return out
 
 
-def build_day(matches: list[dict], kinds=("sur", "favoris", "buts15", "buts25", "mix", "dc", "autres", "ligue", "value", "audace", "jackpot",
+def build_day(matches: list[dict], kinds=("sur", "favoris", "buts15", "buts20", "mix", "dc", "autres", "ligue", "value", "audace", "jackpot",
                                           "jackpot_fiable"),
               league_names=None) -> list[dict]:
     """Coupons d'une journée. matches : [{"id", "div", "rel", "legs"}].
@@ -197,8 +198,8 @@ def build_day(matches: list[dict], kinds=("sur", "favoris", "buts15", "buts25", 
         add(build_favorites(free(matches)))
     if "buts15" in kinds:
         add(_repeat("buts15", free(matches), {"o15"}, pool=14))
-    if "buts25" in kinds:
-        add(_repeat("buts25", free(matches), {"o25"}, pool=12, max_o25=3))
+    if "buts20" in kinds:
+        add(_repeat("buts20", free(matches), {"o20"}, pool=12))
     if "mix" in kinds:
         mm = [dict(m, legs=m["legs"] + [dict(m["fav"], market="fav", side=m["fav"]["market"])]) for m in free(matches) if m.get("fav")]
         add(_repeat("mix", mm, {"o15", "o20", "o25", "fav"}, pool=12, mk_order=["o15", "o20", "o25", "fav"], mix=True))
@@ -227,7 +228,7 @@ def build_day(matches: list[dict], kinds=("sur", "favoris", "buts15", "buts25", 
     if "jackpot_fiable" in kinds:
         out.extend(build_jackpots(matches))
     if "jackpot" in kinds:
-        # Jackpot : base en +2 sur les matchs les plus sûrs, puis passage de quelques sélections en +2,5
+        # Jackpot : uniquement des +2 (remboursés à 2 buts) sur les matchs les plus sûrs, jusqu'à la cote visée
         cfg = COUPONS["jackpot"]
 
         def leg(m, mk):
@@ -236,14 +237,13 @@ def build_day(matches: list[dict], kinds=("sur", "favoris", "buts15", "buts25", 
         ranked = [m for m in sorted(matches, key=lambda m: -(leg(m, "o20")["p_win"] + leg(m, "o20")["p_push"]) * m.get("rel", 1))
                   if leg(m, "o20")["odds"] >= MIN_LEG_ODDS][:cfg["legs"][1]]
         if len(ranked) >= cfg["legs"][0]:
-            picks = [[m, "o20"] for m in ranked]
-            odds = lambda: float(np.prod([leg(m, mk)["odds"] for m, mk in picks]))
-            upgrades = sorted(range(len(picks)), key=lambda i: -leg(picks[i][0], "o25")["p_win"])
-            for i in upgrades:
-                if odds() >= cfg["min_odds"]:
+            picks, o = [], 1.0
+            for m in ranked:
+                picks.append([m, "o20"])
+                o *= leg(m, "o20")["odds"]
+                if o >= cfg["min_odds"] and len(picks) >= cfg["legs"][0]:
                     break
-                picks[i][1] = "o25"
-            if odds() >= cfg["min_odds"]:
+            if o >= cfg["min_odds"]:
                 stats = [_leg_stats(leg(m, mk)) for m, mk in picks]
                 out.append(_pack("jackpot", sum(s[0] for s in stats), sum(s[1] for s in stats), [tuple(p) for p in picks]))
     return prioritise(out)
@@ -253,7 +253,7 @@ KIND_FACTOR: dict = {}  # rempli chaque jour par le retour d'expérience (feedba
 
 
 # Coupons « à jouer » : 2-3 matchs (parfois plus), cote 2 au moins, suivis par combinaison
-SMALL_KINDS = {"sur", "ligue", "favoris", "buts15", "buts25", "mix", "dc", "autres", "value", "tendance"}
+SMALL_KINDS = {"sur", "ligue", "favoris", "buts15", "buts20", "mix", "dc", "autres", "value", "tendance"}
 COMBO_FACTOR: dict = {}  # signature -> facteur, rempli chaque jour (feedback.combo_factors)
 
 
@@ -329,7 +329,7 @@ def build_mille(matches: list[dict]) -> dict | None:
     cfg = COUPONS["mille"]
     cands = []
     for m in matches:
-        opts = [l for l in m["legs"] if l["market"] in ("o15", "o25") and l["odds"] >= 1.2]
+        opts = [l for l in m["legs"] if l["market"] in ("o15", "o20") and l["odds"] >= 1.2]
         if m.get("fav") and m["fav"]["odds"] >= 1.2:
             opts.append(m["fav"])
         best = None
@@ -368,8 +368,8 @@ def build_jackpots(matches: list[dict], markets: set | None = None) -> list[dict
         return []
     cands = []
     for m in matches:
-        opts = [l for l in m["legs"] if l["market"] in markets and not l.get("p_push") and l["odds"] >= 1.15
-                and l["p_win"] >= JACKPOT_MIN_P]
+        opts = [l for l in m["legs"] if l["market"] in markets and l["market"] not in COUPON_EXCLUDED and not l.get("p_push")
+                and l["odds"] >= 1.15 and l["p_win"] >= JACKPOT_MIN_P]
         if "fav" in markets and m.get("fav") and m["fav"]["odds"] >= 1.15 and m["fav"]["p_win"] >= JACKPOT_MIN_P:
             opts.append(m["fav"])
         if opts:

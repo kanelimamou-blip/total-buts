@@ -17,7 +17,7 @@ import meta
 from coupons import settle_leg
 from model import devig, fit, markets_from_total, predict, result_probs, score_matrix, total_dist
 
-VERSION = 8  # à augmenter quand le test change, pour qu'il soit relancé sans attendre la semaine
+VERSION = 9  # à augmenter quand le test change, pour qu'il soit relancé sans attendre la semaine
 BACKTEST_YEARS = 3.2
 REFIT_DAYS = 7
 

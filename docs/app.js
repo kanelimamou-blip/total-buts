@@ -1,6 +1,6 @@
 "use strict";
 const MK = { o15: "+1,5 but", o20: "+2 buts", o25: "+2,5 buts" };
-const KIND_FILTERS = [["all", "Tous"], ["sur", "Sûrs"], ["favoris", "Favoris"], ["mix", "Mix"], ["buts15", "+1,5"], ["buts25", "+2,5"], ["dc", "Double chance"], ["autres", "Autres paris"], ["periode", "Sur une période"], ["ligue", "Par championnat"], ["tendance", "Tendances"], ["value", "Value"], ["audace", "Audacieux"], ["jackpot_fiable", "Jackpots fiables"], ["jackpot", "Jackpot"], ["mille", "Cote 1000"]];
+const KIND_FILTERS = [["all", "Tous"], ["sur", "Sûrs"], ["favoris", "Favoris"], ["mix", "Mix"], ["buts15", "+1,5"], ["buts20", "+2 (remb.)"], ["dc", "Double chance"], ["autres", "Autres paris"], ["periode", "Sur une période"], ["ligue", "Par championnat"], ["tendance", "Tendances"], ["value", "Value"], ["audace", "Audacieux"], ["jackpot_fiable", "Jackpots fiables"], ["jackpot", "Jackpot"], ["mille", "Cote 1000"]];
 const kindOf = (c) => (c.kind.startsWith("periode") ? "periode" : c.kind);
 const XL = () => state.data?.extra_labels || {};  // autres paris : [libellé appli, libellé 1xBet]
 const mkLabel = (l) => (l.market === "1" || l.market === "2" ? `Victoire ${l.team || (l.market === "1" ? l.home : l.away)}` : MK[l.market] || XL()[l.market]?.[0] || l.market);
@@ -266,7 +266,7 @@ function surprisesBlock() {
 
 /* ---------- Suivi ---------- */
 // Coupons à jouer (cote 2 et plus) suivis par type de combinaison : passé, live, et pari qui fait casser
-const SMALL_KINDS = new Set(["sur", "ligue", "favoris", "buts15", "buts25", "mix", "dc", "autres", "value", "tendance"]);
+const SMALL_KINDS = new Set(["sur", "ligue", "favoris", "buts15", "buts20", "mix", "dc", "autres", "value", "tendance"]);
 function legFamily(mk) {
   return ["o15", "o20", "o25"].includes(mk) ? "buts" : mk === "1" || mk === "2" ? "favori" : ["1X", "X2", "dnb1", "dnb2"].includes(mk) ? "double chance" : ["u35", "u45"].includes(mk) ? "moins de buts" : "autres";
 }
