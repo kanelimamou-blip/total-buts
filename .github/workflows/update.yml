@@ -31,6 +31,8 @@ jobs:
       url: ${{ steps.deploy.outputs.page_url }}
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: main   # une exécution en file d'attente repart des dernières données, pas du commit qui l'a déclenchée
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
@@ -45,7 +47,7 @@ jobs:
           git add data docs/data
           if ! git diff --cached --quiet; then
             git commit -m "Données du $(date -u +'%Y-%m-%d %H:%M') UTC"
-            git pull --rebase origin main
+            git pull --rebase -X theirs origin main   # en cas de conflit, les données qu'on vient de calculer gagnent
             git push origin HEAD:main
           fi
       - uses: actions/configure-pages@v5
