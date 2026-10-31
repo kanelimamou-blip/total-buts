@@ -11,7 +11,7 @@ import numpy as np
 import pandas as pd
 
 from config import COUPONS, LEAGUES, SITE_DATA, STATE_DIR, VALUE_EDGE
-from coupons import build_day, legs_for_match, settle_coupon
+from coupons import build_day, favorite_leg, legs_for_match, settle_coupon
 import meta
 from coupons import settle_leg
 from model import devig, fit, markets_from_total, predict, result_probs, score_matrix, total_dist
@@ -138,9 +138,11 @@ def run(results: pd.DataFrame, today: date) -> dict:
     scores = {float(w): logloss(w * sub["m_o25"] + (1 - w) * sub["mkt"].astype(float), sub["y25"]) for w in grid}
     blend = min(scores, key=scores.get)
 
-    finals, legs_all, base = [], [], []
+    finals, legs_all, base, favs = [], [], [], []
     for row in bt.itertuples():
-        pr = predict(_R(row.lh, row.la, row.rho), "", "", row.o25, row.u25, blend=blend)
+        o1x2 = None if any(pd.isna(x) for x in (row.oh, row.od, row.oa)) else (row.oh, row.od, row.oa)
+        pr = predict(_R(row.lh, row.la, row.rho), "", "", row.o25, row.u25, blend=blend, odds_1x2=o1x2)
+        favs.append(favorite_leg(pr, "", "", o1x2))
         mp = predict(_R(row.lh, row.la, row.rho), "", "", row.o25, row.u25, blend=0.0)["final"] if row.mkt is not None and not pd.isna(row.mkt) else None
         base.append((mp["o15"], mp["o25"]) if mp else (np.nan, np.nan))
         finals.append((pr["final"]["o15"], pr["final"]["o25"]))
@@ -197,10 +199,11 @@ def run(results: pd.DataFrame, today: date) -> dict:
     # Rejouer les coupons quotidiens (toutes ligues confondues, une journée = une date)
     bt["id"] = [f"{d.strftime('%Y%m%d')}|{dv}|{h}|{a}" for d, dv, h, a in zip(bt["date"], bt["div"], bt["home"], bt["away"])]
     bt["legs"] = legs_all
+    bt["fav_leg"] = favs
     stats = {k: {"n": 0, "won": 0, "staked": 0.0, "returned": 0.0, "p_sum": 0.0} for k in COUPONS}
     curve = {k: [] for k in COUPONS}
     for d, g in bt.groupby("date"):
-        matches = [{"id": i, "div": dv, "legs": l} for i, dv, l in zip(g["id"], g["div"], g["legs"])]
+        matches = [{"id": i, "div": dv, "legs": l, "fav": f} for i, dv, l, f in zip(g["id"], g["div"], g["legs"], g["fav_leg"])]
         scores = dict(zip(g["id"], zip(g["hg"], g["ag"])))
         for c in build_day(matches, league_names={k: v[0] for k, v in LEAGUES.items()}):
             settle_coupon(c, scores)

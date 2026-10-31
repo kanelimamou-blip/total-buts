@@ -48,7 +48,7 @@ def _leg_stats(leg):
     return np.log(max(p_ok, 1e-12)), np.log(cond_odds)
 
 
-def _search(matches: list[dict], k_range, min_odds, allowed, pool, score="safety", max_odds=1e9, max_o25=1, mk_order=None, min_leg_p=0.0):
+def _search(matches: list[dict], k_range, min_odds, allowed, pool, score="safety", max_odds=1e9, max_o25=1, mk_order=None, min_leg_p=0.0, mix=False):
     """matches : [{"id":..., "legs":[...]}]. Recherche exhaustive vectorisée."""
     if len(matches) < k_range[0]:
         return None
@@ -76,6 +76,11 @@ def _search(matches: list[dict], k_range, min_odds, allowed, pool, score="safety
         M = np.array(list(product(range(len(mk)), repeat=k)))
         if "o25" in mk:  # le cœur du coupon reste sur +1,5 / +2 : au plus max_o25 sélections à +2,5
             M = M[(M == mk.index("o25")).sum(1) <= max_o25]
+        if mix and "fav" in mk:  # coupon mix : au moins une victoire de favori et au moins une sélection de buts
+            nf = (M == mk.index("fav")).sum(1)
+            M = M[(nf >= 1) & (nf < k)]
+        if not len(M):
+            continue
         P = lp[C[:, None, :], M[None, :, :]].sum(-1)
         O = lo[C[:, None, :], M[None, :, :]].sum(-1)
         NO = no[C[:, None, :], M[None, :, :]].sum(-1)
@@ -109,7 +114,7 @@ def _pack(kind, p_log, o_log, picks, scope="Toutes ligues"):
         nominal *= leg["odds"]
         p_full *= leg["p_win"]
         rel.append(m.get("rel", 1.0))
-        legs.append({"id": m["id"], "market": name, "team": leg.get("team"), "odds": leg["odds"], "odds_source": leg["odds_source"],
+        legs.append({"id": m["id"], "market": leg.get("side", name), "team": leg.get("team"), "odds": leg["odds"], "odds_source": leg["odds_source"],
                      "p_win": round(leg["p_win"], 3), "p_push": round(leg["p_push"], 3), "min_odds": leg["min_odds"]})
     p_ok = float(np.exp(p_log))
     exp_odds = float(np.exp(o_log))
@@ -121,13 +126,13 @@ def _pack(kind, p_log, o_log, picks, scope="Toutes ligues"):
     }
 
 
-def _repeat(kind, matches, allowed, pool, score="safety", scope="Toutes ligues", max_o25=1, mk_order=None):
+def _repeat(kind, matches, allowed, pool, score="safety", scope="Toutes ligues", max_o25=1, mk_order=None, mix=False):
     """Construit autant de coupons que possible tant qu'ils passent le seuil de probabilité."""
     cfg = COUPONS[kind]
     out, rest = [], list(matches)
     while len(out) < MAX_PER_DAY[kind]:
         r = _search(rest, cfg["legs"], cfg["min_odds"], allowed, pool=pool, score=score, max_odds=cfg["max_odds"], max_o25=max_o25,
-                    mk_order=mk_order, min_leg_p=MIN_LEG_P.get(kind, 0.0))
+                    mk_order=mk_order, min_leg_p=MIN_LEG_P.get(kind, 0.0), mix=mix)
         if not r or np.exp(r[0]) < MIN_P[kind]:
             break
         out.append(_pack(kind, *r, scope=scope))
@@ -136,25 +141,45 @@ def _repeat(kind, matches, allowed, pool, score="safety", scope="Toutes ligues",
     return out
 
 
-def build_day(matches: list[dict], kinds=("sur", "ligue", "favoris", "value", "audace", "jackpot"), league_names=None) -> list[dict]:
+def build_day(matches: list[dict], kinds=("sur", "favoris", "buts15", "buts25", "mix", "ligue", "value", "audace", "jackpot"), league_names=None) -> list[dict]:
     """Coupons d'une journée. matches : [{"id", "div", "rel", "legs"}].
 
     Les coupons sûrs toutes ligues ne partagent aucun match entre eux ; les coupons par championnat
     peuvent reprendre ces matchs, mais un match ne figure jamais dans plus de MAX_COUPONS_PER_MATCH coupons.
     """
     out = []
-    uses = Counter()
+    uses, used_mk = Counter(), {}
 
-    def add(cs):  # compte l'exposition de chaque match
+    def add(cs):  # exposition de chaque match et sélections déjà prises
         for c in cs:
-            uses.update(l["id"] for l in c["legs"])
+            for l in c["legs"]:
+                uses[l["id"]] += 1
+                used_mk.setdefault(l["id"], set()).add(l["market"])
         out.extend(cs)
 
     def free(ms):
-        return [m for m in ms if uses[m["id"]] < MAX_COUPONS_PER_MATCH]
+        """Matchs encore disponibles, sans les sélections déjà jouées ailleurs : seuls d'autres marchés, qui protègent, restent."""
+        res = []
+        for m in ms:
+            if uses[m["id"]] >= MAX_COUPONS_PER_MATCH:
+                continue
+            taken = used_mk.get(m["id"], set())
+            legs = [dict(l, excluded=True) if l.get("side", l["market"]) in taken else l for l in m["legs"]]
+            fav = m.get("fav")
+            res.append(dict(m, legs=legs, fav=None if fav and fav["market"] in taken else fav))
+        return res
 
     if "sur" in kinds:
         add(_repeat("sur", matches, {"o15", "o20", "o25"}, pool=12))
+    if "favoris" in kinds:
+        add(build_favorites(free(matches)))
+    if "buts15" in kinds:
+        add(_repeat("buts15", free(matches), {"o15"}, pool=14))
+    if "buts25" in kinds:
+        add(_repeat("buts25", free(matches), {"o25"}, pool=12, max_o25=3))
+    if "mix" in kinds:
+        mm = [dict(m, legs=m["legs"] + [dict(m["fav"], market="fav", side=m["fav"]["market"])]) for m in free(matches) if m.get("fav")]
+        add(_repeat("mix", mm, {"o15", "o20", "o25", "fav"}, pool=12, mk_order=["o15", "o20", "o25", "fav"], mix=True))
     if "ligue" in kinds:
         by_div = {}
         for m in matches:
@@ -164,8 +189,6 @@ def build_day(matches: list[dict], kinds=("sur", "ligue", "favoris", "value", "a
             if len(ms) >= COUPONS["ligue"]["legs"][0]:
                 name = (league_names or {}).get(div, div)
                 add(_repeat("ligue", ms, {"o15", "o20", "o25"}, pool=10, scope=name)[:1])
-    if "favoris" in kinds:
-        add(build_favorites(free(matches)))
     if "value" in kinds:
         vm = []
         for m in free(matches):

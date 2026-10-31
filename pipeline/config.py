@@ -60,7 +60,10 @@ COUPONS = {
     # stake_pct : mise conseillée en % de la bankroll (priorité aux petits gains réguliers)
     "sur": {"label": "Coupon sûr", "min_odds": 2.0, "max_odds": gross_odds(2.0), "legs": (2, 3), "stake_pct": 2.0},
     "ligue": {"label": "Coupon championnat", "min_odds": 2.0, "max_odds": gross_odds(2.0), "legs": (2, 3), "stake_pct": 1.5},
-    "favoris": {"label": "Ticket favoris", "min_odds": 2.0, "max_odds": gross_odds(2.0), "legs": (3, 4), "stake_pct": 2.0},
+    "favoris": {"label": "Ticket favoris", "min_odds": 2.0, "max_odds": gross_odds(2.0), "legs": (2, 4), "stake_pct": 2.0},
+    "buts15": {"label": "Coupon +1,5", "min_odds": 2.0, "max_odds": gross_odds(2.0), "legs": (3, 5), "stake_pct": 1.5},
+    "buts25": {"label": "Coupon +2,5", "min_odds": 2.0, "max_odds": 4.0, "legs": (2, 3), "stake_pct": 1.0},
+    "mix": {"label": "Coupon mix", "min_odds": 2.0, "max_odds": gross_odds(2.0), "legs": (2, 3), "stake_pct": 1.5},
     "periode_buts": {"label": "Buts sur la période", "min_odds": gross_odds(2.0), "max_odds": 3.5, "legs": (3, 5), "stake_pct": 1.0},
     "periode_fav": {"label": "Favoris sur la période", "min_odds": gross_odds(2.0), "max_odds": 3.5, "legs": (3, 5), "stake_pct": 1.0},
     "periode_long": {"label": "Combiné longue durée", "min_odds": 3.0, "max_odds": 1e9, "legs": (3, 22), "stake_pct": 0.5},
@@ -76,11 +79,13 @@ MIN_LEG_ODDS = 1.12     # en dessous, la sélection n'apporte rien au coupon
 MIN_LEG_P: dict = {}  # testé de 0,65 à 0,80 : aucun gain de réussite, la cote 2 impose la même chance quelle que soit la sélection
 # Coupons sûrs et championnat à 2-3 matchs : la marge du bookmaker se paie à chaque sélection,
 # test 2023-2026 : 46 % de réussite à 2 matchs contre 43 % à 3-4 matchs, pour la même cote
-MAX_COUPONS_PER_MATCH = 2  # un même match dans au plus 2 coupons du jour (hors jackpot et cote 1000) : un raté ne fait pas tout tomber
+# Un même match peut revenir dans plusieurs coupons du jour, mais jamais sur la même sélection :
+# un autre marché qui protège (+1,5 d'un côté, +2,5 de l'autre, ou victoire du favori), et au plus 3 fois
+MAX_COUPONS_PER_MATCH = 3
 
 # Nombre de coupons par jour : pas de limite fixe, on garde tous ceux qui passent ces seuils
-MIN_P = {"tendance": 0.3, "sur": 0.36, "ligue": 0.34, "value": 0.25, "audace": 0.15, "favoris": 0.36, "periode_buts": 0.3, "periode_fav": 0.3}
-MAX_PER_DAY = {"tendance": 2, "sur": 8, "ligue": 10, "value": 4, "audace": 3, "jackpot": 1, "favoris": 4, "periode_buts": 1, "periode_fav": 1}
+MIN_P = {"buts15": 0.36, "buts25": 0.25, "mix": 0.36, "tendance": 0.3, "sur": 0.36, "ligue": 0.34, "value": 0.25, "audace": 0.15, "favoris": 0.36, "periode_buts": 0.3, "periode_fav": 0.3}
+MAX_PER_DAY = {"buts15": 4, "buts25": 3, "mix": 6, "tendance": 2, "sur": 8, "ligue": 10, "value": 4, "audace": 3, "jackpot": 1, "favoris": 4, "periode_buts": 1, "periode_fav": 1}
 
 # Tickets sur une période (en jours), créés chaque jour
 PERIODS = {5: "5 jours", 7: "1 semaine", 15: "15 jours", 21: "3 semaines", 30: "1 mois"}
