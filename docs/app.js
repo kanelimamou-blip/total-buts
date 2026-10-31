@@ -56,7 +56,9 @@ function couponDays() {
 
 // Plan du jour : 8 à 10 tickets à cote 2 et plus, à mise égale, choisis par chance de passer
 // et par la réussite passée de leur combinaison. Chaque match apparaît au plus 2 fois dans le plan.
-const PLAN_MAX = 10, PLAN_SKIP = new Set(["jackpot", "jackpot_fiable", "mille", "periode_long", "audace"]);
+// Trois étages : une base de tickets autour de 2, quelques tickets plus hauts, un gros ticket fiable
+const PLAN_MAX = 10, PLAN_TIERS = [["base", "Base ~2", 7, 2, 2.6], ["moyen", "Plus haut", 2, 2.6, 8], ["gros", "Gros ticket", 1, 8, 1e9]];
+const PLAN_SKIP = new Set(["jackpot", "mille"]);
 function planScore(c) {
   const f = SMALL_KINDS.has(c.kind) ? state.data.combo_factors?.[signature(c)] || 1 : 1;
   return c.p_not_lose * f;
@@ -64,27 +66,32 @@ function planScore(c) {
 function dayPlan(date) {
   const d = state.data, uses = {}, out = [];
   const pool = d.coupons.filter((c) => c.date === date && !PLAN_SKIP.has(c.kind) && c.odds >= 2 && c.status !== "void").sort((a, b) => planScore(b) - planScore(a));
-  for (const c of pool) {
-    if (out.length >= PLAN_MAX) break;
-    if (c.legs.some((l) => (uses[l.id] || 0) >= 2)) continue;
+  const take = (c, tier) => {
+    const cap = tier === "gros" ? 3 : 2;  // le gros ticket a beaucoup de matchs : il peut en partager un peu plus
+    if (out.length >= PLAN_MAX || out.includes(c) || c.legs.some((l) => (uses[l.id] || 0) >= cap)) return false;
     c.legs.forEach((l) => (uses[l.id] = (uses[l.id] || 0) + 1));
-    out.push(c);
-  }
-  return out;
+    out.push(c); c._tier = tier; return true;
+  };
+  // d'abord le quota de chaque étage, puis on complète avec la base si un étage est vide
+  for (const [k, , n, lo, hi] of PLAN_TIERS.slice().reverse()) { let got = 0; for (const c of pool) if (got < n && c.odds >= lo && c.odds < hi && take(c, k)) got++; }
+  for (const c of pool) if (c.odds < 2.6) take(c, "base");
+  const order = Object.fromEntries(PLAN_TIERS.map(([k], i) => [k, i]));
+  return out.sort((a, b) => order[a._tier] - order[b._tier] || planScore(b) - planScore(a));
 }
 function planBlock(date) {
   const d = state.data, plan = dayPlan(date);
   if (plan.length < 2) return "";
   const exp = plan.reduce((a, c) => a + c.p_not_lose, 0), sd = Math.sqrt(plan.reduce((a, c) => a + c.p_not_lose * (1 - c.p_not_lose), 0));
   const lo = Math.max(0, Math.round(exp - sd)), hi = Math.min(plan.length, Math.round(exp + sd));
-  const avgOdds = plan.reduce((a, c) => a + c.odds, 0) / plan.length;
+  const ret = plan.reduce((a, c) => a + c.p_not_lose * c.odds, 0);
+  const tierLab = Object.fromEntries(PLAN_TIERS.map(([k, l]) => [k, l]));
   const base = state.bt?.combos || {};
   return `<section class="card"><h2>Plan du jour · ${plan.length} tickets à mise égale</h2>
-  <p class="small muted">Les tickets à cote 2 et plus qui ont le plus de chances de passer, en tenant compte de ce que leur type de combinaison a donné sur 3 ans et en live. Chaque match au plus 2 fois. Les 3 premiers sont à jouer en premier.</p>
+  <p class="small muted">Trois étages, tous à cote 2 au minimum : une base de tickets autour de 2, deux tickets plus hauts (2,6 à 8) et un gros ticket fiable (8 et plus). Dans chaque étage, ceux qui ont le plus de chances de passer, selon ce que leur combinaison a donné sur 3 ans et en live. Chaque match au plus 2 fois. Les 3 premiers sont à jouer en premier.</p>
   <div class="kv"><span>Gagnants attendus</span><b>${String(exp.toFixed(1)).replace(".", ",")} sur ${plan.length} (souvent entre ${lo} et ${hi})</b></div>
-  <div class="kv"><span>Cote moyenne</span><b>${odds(avgOdds)}</b></div>
+  <div class="kv"><span>Retour attendu pour ${plan.length} mises (avant taxe)</span><b>${String(ret.toFixed(1)).replace(".", ",")}</b></div>
   <div class="legs">${plan.map((c, i) => { const b = SMALL_KINDS.has(c.kind) ? base[signature(c)] : null; const idx = d.coupons.indexOf(c);
-    return `<button class="leg"${det("cp", idx)}><span class="teams">${i < 3 ? '<span class="tag">en premier</span> ' : ""}${esc(c.label)}${c.scope && c.scope !== "Toutes ligues" ? " · " + esc(c.scope) : ""}</span><span class="o">${c.status ? `<span class="status ${c.status}">${{ won: "Gagné", lost: "Perdu" }[c.status] || ""}</span>` : odds(c.odds)}</span><span class="meta">${c.legs.length} matchs · ${pct(c.p_not_lose)} de chances${b ? ` · passé ${pct(b.hit)} sur ${b.n.toLocaleString("fr-FR")}` : ""}</span><span class="min">›</span></button>`; }).join("")}</div>
+    return `<button class="leg"${det("cp", idx)}><span class="teams">${i < 3 ? '<span class="tag">en premier</span> ' : c._tier !== "base" ? `<span class="tag">${tierLab[c._tier]}</span> ` : ""}${esc(c.label)}${c.scope && c.scope !== "Toutes ligues" ? " · " + esc(c.scope) : ""}</span><span class="o">${c.status ? `<span class="status ${c.status}">${{ won: "Gagné", lost: "Perdu" }[c.status] || ""}</span>` : odds(c.odds)}</span><span class="meta">${c.legs.length} matchs · ${pct(c.p_not_lose)} de chances${b ? ` · passé ${pct(b.hit)} sur ${b.n.toLocaleString("fr-FR")}` : ""}</span><span class="min">›</span></button>`; }).join("")}</div>
   <p class="small muted">Honnêtement : à cote 2, viser 7 ou 8 sur 10 chaque jour n'est pas réaliste. Le suivi mesure le vrai taux du plan, jour après jour.</p></section>`;
 }
 function planTracking() {
