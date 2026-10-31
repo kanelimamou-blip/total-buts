@@ -137,3 +137,6 @@ svg.chart text{fill:var(--muted);font-family:var(--f-body);font-size:10px}
 .leg.quick input{width:24px;height:24px;accent-color:var(--accent)}
 .leg.quick:has(input:checked){opacity:.45}
 .big-odds small.net{color:var(--ink);font-weight:600;text-transform:none;letter-spacing:0}
+.tap{cursor:pointer}
+tr.tap:active,.kv.tap:active,.stat.tap:active,h2.tap:active,h3.tap:active,a.tap:active{background:color-mix(in srgb,var(--accent) 12%,transparent)}
+a.tap{text-decoration:underline;color:inherit}

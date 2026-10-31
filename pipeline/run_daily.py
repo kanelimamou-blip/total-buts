@@ -374,7 +374,7 @@ def main():
 
     # Derniers résultats de nos prédictions (journal), pour l'écran Suivi
     recent = sorted(((mid, e) for mid, e in log.items() if "goals" in e), key=lambda x: x[1]["date"], reverse=True)[:400]
-    recent_out = [{"id": mid, "date": e["date"], "league": ALL_COMPETITIONS.get(e["div"], (e["div"],))[0], "home": e.get("home", mid.split("|")[2]),
+    recent_out = [{"id": mid, "date": e["date"], "league": ALL_COMPETITIONS.get(e["div"], (e["div"],))[0], "div": e["div"], "home": e.get("home", mid.split("|")[2]),
                    "away": e.get("away", mid.split("|")[3]), "score": e.get("score"), "goals": e["goals"],
                    "o15": e["o15"], "o25": e["o25"],
                    "fav_p": e.get("fav_p"), "fav_side": e.get("fav_side")} for mid, e in recent]

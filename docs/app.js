@@ -290,19 +290,19 @@ function combosBlock(d, bt) {
   if (!sigs.length) return "";
   const bc = {};
   for (const e of Object.values(base)) for (const [k, v] of Object.entries(e.culprits || {})) bc[k] = (bc[k] || 0) + v;
-  const share = (o) => { const t = Object.values(o).reduce((a, b) => a + b, 0); return Object.entries(o).sort((a, b) => b[1] - a[1]).map(([k, v]) => `${esc(k)} ${Math.round((v / t) * 100)} %`).join(" · "); };
+  const share = (o, tap) => { const t = Object.values(o).reduce((a, b) => a + b, 0); return Object.entries(o).sort((a, b) => b[1] - a[1]).map(([k, v]) => tap ? `<a class="tap"${det("culprit", k)}>${esc(k)} ${Math.round((v / t) * 100)} %</a>` : `${esc(k)} ${Math.round((v / t) * 100)} %`).join(" · "); };
   const tot = Object.values(live).reduce((a, e) => ({ n: a.n + e.n, w: a.w + e.w, p: a.p + e.p }), { n: 0, w: 0, p: 0 });
   return `<section class="card"><h2>Mes coupons à cote 2 et plus</h2>
   <p class="small muted">Ce qui compte pour toi : les coupons entiers, pas les matchs seuls. Chaque type de combinaison est comparé au passé (3 ans rejoués) et au live. Les combinaisons qui passent mieux que prévu remontent en priorité, les autres descendent.</p>
-  ${tot.n ? `<div class="kv"><span>Live : ${tot.n} coupons réglés, annoncé / réel</span><b>${pct(tot.p / tot.n)} / ${pct(tot.w / tot.n)}</b></div>` : `<p class="small">Les premiers coupons du nouveau suivi seront réglés après les matchs de demain.</p>`}
+  ${tot.n ? `<div class="kv tap"${det("allcoupons")}><span>Live : ${tot.n} coupons réglés ›, annoncé / réel</span><b>${pct(tot.p / tot.n)} / ${pct(tot.w / tot.n)}</b></div>` : `<p class="small">Les premiers coupons du nouveau suivi seront réglés après les matchs de demain.</p>`}
   <div class="tbl"><table><thead><tr><th>Combinaison</th><th class="n">Passé</th><th class="n">Live</th><th class="n">Priorité</th></tr></thead><tbody>
   ${sigs.map((sg) => { const b = base[sg], l = live[sg], f = fac[sg];
-    return `<tr><td style="white-space:normal">${esc(sg)}</td><td class="n">${b ? `${pct(b.pred)} / <b class="${b.hit >= b.pred - 0.01 ? "pos" : "neg"}">${pct(b.hit)}</b><br><span class="small muted">${b.n}</span>` : "–"}</td><td class="n">${l ? `${pct(l.p / l.n)} / <b class="${l.w / l.n >= l.p / l.n - 0.01 ? "pos" : "neg"}">${pct(l.w / l.n)}</b><br><span class="small muted">${l.n}</span>` : "–"}</td><td class="n ${f > 1.01 ? "pos" : f < 0.99 ? "neg" : ""}">${f ? (f > 1.01 ? "↑" : f < 0.99 ? "↓" : "=") : "="}</td></tr>`; }).join("")}
+    return `<tr class="tap"${det("sig", sg)}><td style="white-space:normal">${esc(sg)} ›</td><td class="n">${b ? `${pct(b.pred)} / <b class="${b.hit >= b.pred - 0.01 ? "pos" : "neg"}">${pct(b.hit)}</b><br><span class="small muted">${b.n}</span>` : "–"}</td><td class="n">${l ? `${pct(l.p / l.n)} / <b class="${l.w / l.n >= l.p / l.n - 0.01 ? "pos" : "neg"}">${pct(l.w / l.n)}</b><br><span class="small muted">${l.n}</span>` : "–"}</td><td class="n ${f > 1.01 ? "pos" : f < 0.99 ? "neg" : ""}">${f ? (f > 1.01 ? "↑" : f < 0.99 ? "↓" : "=") : "="}</td></tr>`; }).join("")}
   </tbody></table></div>
   <p class="small muted">Annoncé / réel, nombre de coupons dessous.</p>
   <h3>Ce qui fait casser les coupons</h3>
   <div class="kv"><span>Passé</span><b style="white-space:normal;text-align:right">${share(bc) || "–"}</b></div>
-  <div class="kv"><span>Live</span><b style="white-space:normal;text-align:right">${share(cul) || "pas encore de coupon perdu"}</b></div>
+  <div class="kv"><span>Live</span><b style="white-space:normal;text-align:right">${share(cul, true) || "pas encore de coupon perdu"}</b></div>
   </section>`;
 }
 
@@ -335,14 +335,14 @@ function cumul(items) {
   let n = 0, p = 0, y = 0;
   return items.map((it) => { n++; p += it.p; y += it.y; return { n, o1: y / n, p1: p / n }; });
 }
-function trackPart(lab, items, base, unit = "coupons") {
+function trackPart(lab, items, base, unit = "coupons", tap = "") {
   if (!items.length || !base) return "";
   const live = cumul(items), last = live[live.length - 1];
   const g0 = (base.obs - base.pred) * 100, gl = (last.o1 - last.p1) * 100;
   const marg = 196 * Math.sqrt((last.p1 * (1 - last.p1)) / last.n), inside = Math.abs(gl - g0) <= marg;
   const wl = LIVE_WEIGHT * last.n, mixed = (g0 * base.n + gl * wl) / (base.n + wl);
   const f = (x) => (x > 0 ? "+" : "") + x.toFixed(1).replace(".", ",");
-  return `<h3>${lab}</h3>${live.length > 1 ? funnelChart(live, "o1", g0, unit) : ""}
+  return `<h3${tap ? ` class="tap"${tap}` : ""}>${lab}${tap ? ' <span class="small muted">› détail</span>' : ""}</h3>${live.length > 1 ? funnelChart(live, "o1", g0, unit) : ""}
   <div class="kv"><span>Base historique (${base.n.toLocaleString("fr-FR")}) · prévu ${pct(base.pred)} / réel ${pct(base.obs)}</span><b>${f(g0)} pts</b></div>
   <div class="kv"><span>Live (${last.n}, marge ± ${marg.toFixed(0)}) · prévu ${pct(last.p1)} / réel ${pct(last.o1)}</span><b class="${inside ? "pos" : "neg"}">${f(gl)} pts · ${inside ? "dans le couloir" : "hors couloir"}</b></div>
   <div class="kv"><span>Base mise à jour par le live</span><b>${f(mixed)} pts</b></div>`;
@@ -354,7 +354,7 @@ function reliableBlock(d) {
   const f = (x) => (x > 0 ? "+" : "") + (x * 100).toFixed(1).replace(".", ",");
   return `<section class="card"><h2>Marchés fiables</h2><p class="small muted">Écart réel − annoncé sur le passé et en live. Un marché n'est écarté que si l'appli y est trop optimiste. Les jackpots fiables (cote 10, 20, 50) ne prennent que les marchés retenus.</p>
   <div class="tbl"><table><thead><tr><th>Marché</th><th class="n">Passé</th><th class="n">Live</th><th class="n">Retenu</th></tr></thead><tbody>
-  ${r.map((x) => `<tr><td style="white-space:normal">${esc(x.label)}</td><td class="n">${f(x.gap)} pts</td><td class="n">${x.live_n ? f(x.live_gap) + " pts (" + x.live_n + ")" : "–"}</td><td class="n ${x.reliable ? "pos" : "neg"}">${x.reliable ? "oui" : "non"}</td></tr>`).join("")}
+  ${r.map((x) => `<tr class="tap"${det("market", x.market)}><td style="white-space:normal">${esc(x.label)} ›</td><td class="n">${f(x.gap)} pts</td><td class="n">${x.live_n ? f(x.live_gap) + " pts (" + x.live_n + ")" : "–"}</td><td class="n ${x.reliable ? "pos" : "neg"}">${x.reliable ? "oui" : "non"}</td></tr>`).join("")}
   </tbody></table></div></section>`;
 }
 
@@ -380,9 +380,9 @@ function betsTrajectory(d, bt) {
   if (!legs.length && !cps.length) return "";
   return `<section class="card"><h2>Trajectoire des paris</h2>
   <p class="small muted">Même lecture que pour les matchs, appliquée à ce que l'appli propose, joué ou non : chaque sélection seule (pari simple) et chaque coupon. Base figée du passé, live seul, et base mise à jour par le live.</p>
-  ${trackPart("Paris simples (sélections)", legs, legBase, "sélections")}
-  ${trackPart("Tous les coupons", items(cps), cbase(bc.filter(([k]) => kinds.includes(k))))}
-  ${kinds.map((k) => trackPart(esc(d.coupon_kinds[k]?.label || k), items(cps.filter((c) => c.kind === k)), cbase(bc.filter(([kk]) => kk === k)))).join("")}
+  ${trackPart("Paris simples (sélections)", legs, legBase, "sélections", det("legs"))}
+  ${trackPart("Tous les coupons", items(cps), cbase(bc.filter(([k]) => kinds.includes(k))), "coupons", det("allcoupons"))}
+  ${kinds.map((k) => trackPart(esc(d.coupon_kinds[k]?.label || k), items(cps.filter((c) => c.kind === k)), cbase(bc.filter(([kk]) => kk === k)), "coupons", det("kind", k))).join("")}
   </section>`;
 }
 
@@ -437,20 +437,91 @@ function propVsReal(d) {
   const gap = won / n - pAvg;
   const verdict = n < 100 ? `Encore ${100 - n} sélections avant un premier avis fiable.` : Math.abs(gap) <= 0.03 ? "Le réel colle au prévu : les probabilités sont fiables." : gap > 0 ? "L'appli est trop prudente : le réel dépasse le prévu." : "L'appli est trop optimiste : le réel est sous le prévu, les corrections s'appliquent.";
   const mk = {};
-  for (const l of legs) { const m = (mk[l.market === "1" || l.market === "2" ? "Victoire du favori" : mkLabel(l)] ||= { n: 0, w: 0, p: 0 }); m.n++; m.p += l.p_win; m.w += l.result === "won"; }
+  for (const l of legs) { const m = (mk[mkGroup(l)] ||= { n: 0, w: 0, p: 0 }); m.n++; m.p += l.p_win; m.w += l.result === "won"; }
   return `<section class="card"><h2>Pronostics contre résultats</h2>
   <p class="small muted">Chaque sélection proposée, jouée ou non, est comparée au score final. Le pronostic d'avant-match reste figé.</p>
-  <div class="kv"><span>Sélections réglées</span><b>${n}</b></div>
+  <div class="kv tap"${det("legs")}><span>Sélections réglées ›</span><b>${n}</b></div>
   <div class="kv"><span>Passées : prévu / réel</span><b>${pct(pAvg)} / ${pct(won / n)}</b></div>
-  ${cps.length ? `<div class="kv"><span>Coupons complets : prévu / réel</span><b>${pct(cps.reduce((a, c) => a + c.p_win, 0) / cps.length)} / ${pct(cps.filter((c) => c.status === "won").length / cps.length)} (${cps.length})</b></div>` : ""}
+  ${cps.length ? `<div class="kv tap"${det("allcoupons")}><span>Coupons complets › : prévu / réel</span><b>${pct(cps.reduce((a, c) => a + c.p_win, 0) / cps.length)} / ${pct(cps.filter((c) => c.status === "won").length / cps.length)} (${cps.length})</b></div>` : ""}
   <p class="small"><b>${verdict}</b></p>
   <h3>Selon la confiance annoncée</h3>
   <div class="tbl"><table><thead><tr><th>Annoncé</th><th class="n">Sélections</th><th class="n">Prévu</th><th class="n">Réel</th></tr></thead><tbody>
-  ${bands.map((b) => `<tr><td>${Math.round(b.lo * 100)}–${Math.min(100, Math.round(b.hi * 100))} %</td><td class="n">${b.n}</td><td class="n">${pct(b.p)}</td><td class="n ${b.w / b.n >= b.p - 0.03 ? "pos" : "neg"}">${pct(b.w / b.n)}${b.push ? ` <span class="small muted">+${b.push} remb.</span>` : ""}</td></tr>`).join("")}
+  ${bands.map((b) => `<tr class="tap"${det("band", b.lo)}><td>${Math.round(b.lo * 100)}–${Math.min(100, Math.round(b.hi * 100))} % ›</td><td class="n">${b.n}</td><td class="n">${pct(b.p)}</td><td class="n ${b.w / b.n >= b.p - 0.03 ? "pos" : "neg"}">${pct(b.w / b.n)}${b.push ? ` <span class="small muted">+${b.push} remb.</span>` : ""}</td></tr>`).join("")}
   </tbody></table></div>
   <h3>Par marché</h3>
-  ${Object.entries(mk).map(([k, m]) => `<div class="kv"><span>${esc(k)} · ${m.n} sélections</span><b>${pct(m.p / m.n)} / ${pct(m.w / m.n)}</b></div>`).join("")}
+  ${Object.entries(mk).map(([k, m]) => `<div class="kv tap"${det("mk", k)}><span>${esc(k)} · ${m.n} sélections ›</span><b>${pct(m.p / m.n)} / ${pct(m.w / m.n)}</b></div>`).join("")}
   </section>`;
+}
+
+
+// Détail au toucher : chaque ligne du Suivi ouvre la liste des coupons ou sélections qu'elle résume
+const det = (t, v = "") => ` data-detail="${esc(t)}" data-dv="${esc(v)}"`;
+function settledLegs(d) {
+  const seen = new Set(), out = [];
+  for (const c of d.coupons) for (const l of c.legs) {
+    const k = l.id + "|" + l.market;
+    if (!l.result || seen.has(k)) continue;
+    seen.add(k); out.push(l);
+  }
+  return out.sort((a, b) => (a.id < b.id ? 1 : -1));
+}
+const mkGroup = (l) => (l.market === "1" || l.market === "2" ? "Victoire du favori" : mkLabel(l));
+function recentRow(r) {
+  const d = state.data;
+  return `<button class="match" data-match="${esc(r.id)}"><span class="teams">${esc(r.home)} – ${esc(r.away)}<br><span class="small muted">${esc(r.league)} · ${dayLabel(r.date, d.today)}</span></span><span class="res ${r.goals >= 3 ? "won" : r.goals === 2 ? "push" : "lost"}">${esc(r.score)}</span><span class="meta">Prévu : +1,5 ${pct(r.o15)} ${r.goals >= 2 ? "✓" : "✗"} · +2,5 ${pct(r.o25)} ${r.goals >= 3 ? "✓" : "✗"}${r.fav_p != null ? ` · ${r.fav_side === "1" ? esc(r.home) : esc(r.away)} gagne ${pct(r.fav_p)} ${favOk(r) ? "✓" : "✗"}` : ""}</span></button>`;
+}
+function openDetail(t, v) {
+  const d = state.data, isSet = (c) => c.status === "won" || c.status === "lost";
+  const byDate = (a, b) => (a.date < b.date ? 1 : -1);
+  let title = "", cps = null, legs = null, rows = null, note = "";
+  if (t === "sig") { title = v; cps = d.coupons.filter((c) => SMALL_KINDS.has(c.kind) && signature(c) === v); }
+  else if (t === "kind") { title = d.coupon_kinds[v]?.label || v; cps = d.coupons.filter((c) => c.kind === v); }
+  else if (t === "allcoupons") { title = "Tous les coupons"; cps = d.coupons.slice(); }
+  else if (t === "won" || t === "lost") { title = t === "won" ? "Coupons gagnés" : "Coupons perdus"; cps = d.coupons.filter((c) => c.status === t); }
+  else if (t === "culprit") { title = `Coupons cassés par : ${v}`; cps = d.coupons.filter((c) => c.status === "lost" && c.legs.some((l) => l.result === "lost" && culpritOf(l) === v)); }
+  else if (t === "legs") { title = "Toutes les sélections réglées"; legs = settledLegs(d); }
+  else if (t === "band") { const lo = +v, hi = lo >= 0.9 ? 1.01 : lo + 0.1; title = `Sélections annoncées à ${Math.round(lo * 100)}–${Math.min(100, Math.round(hi * 100))} %`; legs = settledLegs(d).filter((l) => l.p_win >= lo && l.p_win < hi); }
+  else if (t === "mk") { title = v; legs = settledLegs(d).filter((l) => mkGroup(l) === v); }
+  else if (t === "market") { title = v; legs = settledLegs(d).filter((l) => (l.side || l.market) === v || mkLabel(l) === v); }
+  else if (t === "matches") { title = "Matchs suivis"; rows = d.recent || []; }
+  else if (t === "week") { const s0 = v, e0 = new Date(new Date(v).getTime() + 7 * 864e5).toISOString().slice(0, 10); title = `Semaine du ${new Date(v).toLocaleDateString("fr-FR", { day: "numeric", month: "long" })}`; rows = (d.recent || []).filter((r) => r.date >= s0 && r.date < e0); }
+  else if (t === "league") { title = d.leagues[v]?.name || v; rows = (d.recent || []).filter((r) => r.div === v); cps = d.coupons.filter((c) => isSet(c) && c.legs.some((l) => l.div === v || l.league === title)); }
+  let html = `<h2>${esc(title)}</h2>`;
+  const pb = t === "sig" ? state.bt?.combos?.[v] : t === "kind" ? state.bt?.coupons?.[v] : null;
+  if (pb) {
+    const ct = Object.values(pb.culprits || {}).reduce((a, b) => a + b, 0);
+    html += `<section class="card"><h3>Sur 3 ans rejoués (${pb.n.toLocaleString("fr-FR")} coupons)</h3>
+    <div class="kv"><span>Annoncé / réel</span><b>${pct(pb.pred ?? pb.pred_hit)} / ${pct(pb.hit)}</b></div>
+    ${pb.roi != null ? `<div class="kv"><span>Bilan moyen par coupon</span><b class="${pb.roi >= 0 ? "pos" : "neg"}">${pb.roi > 0 ? "+" : ""}${Math.round(pb.roi * 100)} %</b></div>` : ""}
+    ${ct ? `<div class="kv"><span>Ce qui l'a fait casser</span><b style="white-space:normal;text-align:right">${Object.entries(pb.culprits).sort((a, b) => b[1] - a[1]).map(([k, n]) => `${esc(k)} ${Math.round((n / ct) * 100)} %`).join(" · ")}</b></div>` : ""}
+    </section><h3>Live (depuis le début du suivi)</h3>`;
+  }
+  if (cps) {
+    const done = cps.filter(isSet).sort(byDate), wait = cps.filter((c) => !isSet(c) && c.status !== "void").sort((a, b) => (a.date > b.date ? 1 : -1));
+    const w = done.filter((c) => c.status === "won").length, p = done.reduce((a, c) => a + c.p_not_lose, 0);
+    const units = done.reduce((a, c) => a + (c.return ?? (c.status === "won" ? c.odds : 0)) - 1, 0);
+    html += done.length ? `<div class="stats"><div class="stat"><span class="k">Réglés</span><span class="v">${done.length}</span></div><div class="stat"><span class="k">Gagnés</span><span class="v">${w}</span></div><div class="stat"><span class="k">Prévu / réel</span><span class="v">${pct(p / done.length)} / ${pct(w / done.length)}</span></div><div class="stat"><span class="k">Bilan (mises)</span><span class="v ${units >= 0 ? "pos" : "neg"}">${signed(units)}</span></div></div>` : `<p class="small muted">Aucun coupon réglé pour l'instant.</p>`;
+    if (done.some((c) => c.status === "lost")) {
+      const cul = {};
+      for (const c of done) if (c.status === "lost") for (const l of c.legs) if (l.result === "lost") cul[culpritOf(l)] = (cul[culpritOf(l)] || 0) + 1;
+      html += `<p class="small"><b>Ce qui a fait perdre :</b> ${Object.entries(cul).sort((a, b) => b[1] - a[1]).map(([k, n]) => `${esc(k)} (${n})`).join(" · ")}</p>`;
+    }
+    html += done.slice(0, 40).map(couponCard).join("");
+    if (wait.length) html += `<h3>En attente (${wait.length})</h3>${wait.slice(0, 20).map(couponCard).join("")}`;
+  }
+  if (legs) {
+    const w = legs.filter((l) => l.result === "won").length, pu = legs.filter((l) => l.result === "push").length, p = legs.reduce((a, l) => a + l.p_win, 0);
+    html += legs.length ? `<div class="stats"><div class="stat"><span class="k">Sélections</span><span class="v">${legs.length}</span></div><div class="stat"><span class="k">Passées</span><span class="v">${w}${pu ? ` <small>+${pu} remb.</small>` : ""}</span></div><div class="stat"><span class="k">Prévu / réel</span><span class="v">${pct(p / legs.length)} / ${pct(w / legs.length)}</span></div></div><p class="small muted">Touche une sélection pour ouvrir la fiche du match.</p><div class="legs">${legs.slice(0, 80).map((l) => legRow(l, true)).join("")}</div>` : `<p class="small muted">Aucune sélection réglée pour l'instant.</p>`;
+  }
+  if (rows) {
+    if (rows.length) {
+      const n = rows.length, f = (k) => rows.reduce((a, r) => a + r[k], 0) / n;
+      html += `<div class="stats"><div class="stat"><span class="k">Matchs</span><span class="v">${n}</span></div><div class="stat"><span class="k">+1,5 prévu / réel</span><span class="v">${pct(f("o15"))} / ${pct(rows.filter((r) => r.goals >= 2).length / n)}</span></div><div class="stat"><span class="k">+2,5 prévu / réel</span><span class="v">${pct(f("o25"))} / ${pct(rows.filter((r) => r.goals >= 3).length / n)}</span></div></div>${rows.slice(0, 80).map(recentRow).join("")}`;
+    } else html += `<p class="small muted">Pas encore de match terminé ici.</p>`;
+  }
+  $("#sheet-body").innerHTML = html + note;
+  $("#sheet").hidden = false;
+  $("#sheet-body").scrollTop = 0;
 }
 
 function viewTracking() {
@@ -461,21 +532,21 @@ function viewTracking() {
   const tot = Object.values(live).reduce((a, s) => ({ n: a.n + s.n, won: a.won + s.won, units: a.units + s.units }), { n: 0, won: 0, units: 0 });
   let html = `<h1>Suivi</h1>${myBetsBlock()}${combosBlock(d, bt)}<h2>Propositions de l'appli</h2>
   <div class="stats">
-    <div class="stat"><span class="k">Coupons réglés</span><span class="v">${tot.n}</span></div>
-    <div class="stat"><span class="k">Gagnés</span><span class="v">${tot.n ? Math.round((tot.won / tot.n) * 100) + " %" : "–"}</span></div>
+    <div class="stat tap"${det("allcoupons")}><span class="k">Coupons réglés ›</span><span class="v">${tot.n}</span></div>
+    <div class="stat tap"${det("won")}><span class="k">Gagnés ›</span><span class="v">${tot.n ? Math.round((tot.won / tot.n) * 100) + " %" : "–"}</span></div>
     <div class="stat"><span class="k">Bilan (mises)</span><span class="v ${tot.units >= 0 ? "pos" : "neg"}">${tot.n ? signed(tot.units) : "–"}</span></div>
-    <div class="stat"><span class="k">Matchs suivis</span><span class="v">${d.predictions ? d.predictions.n : 0}</span></div>
+    <div class="stat tap"${det("matches")}><span class="k">Matchs suivis ›</span><span class="v">${d.predictions ? d.predictions.n : 0}</span></div>
   </div>
   <p class="note">${d.tracking_start ? `Suivi réel depuis le ${new Date(d.tracking_start).toLocaleDateString("fr-FR", { day: "numeric", month: "long" })}, avec le nouveau paramétrage (l'ancien suivi est archivé). ` : ""}Tous les coupons proposés sont suivis, que tu les joues ou non. Bilan calculé avec une mise fictive de 1 par coupon et la cote estimée. Chaque résultat corrige les probabilités des prochains jours, ligue par ligue.</p>`;
   if (Object.keys(live).length) {
     html += `<section class="card"><h2>Par type de coupon</h2><div class="tbl"><table><thead><tr><th>Type</th><th class="n">Réglés</th><th class="n">Gagnés</th><th class="n">Bilan</th></tr></thead><tbody>
-    ${kinds.filter(([k]) => live[k]).map(([k, c]) => `<tr><td>${esc(c.label)}</td><td class="n">${live[k].n}</td><td class="n">${Math.round((live[k].won / live[k].n) * 100)} %</td><td class="n ${live[k].units >= 0 ? "pos" : "neg"}">${signed(live[k].units)}</td></tr>`).join("")}
+    ${kinds.filter(([k]) => live[k]).map(([k, c]) => `<tr class="tap"${det("kind", k)}><td>${esc(c.label)} ›</td><td class="n">${live[k].n}</td><td class="n">${Math.round((live[k].won / live[k].n) * 100)} %</td><td class="n ${live[k].units >= 0 ? "pos" : "neg"}">${signed(live[k].units)}</td></tr>`).join("")}
     </tbody></table></div>${curveChart(settled)}</section>`;
   }
   html += propVsReal(d);
   if (d.predictions) {
     const p = d.predictions;
-    html += `<section class="card"><h2>Fiabilité réelle</h2>
+    html += `<section class="card"><h2 class="tap"${det("matches")}>Fiabilité réelle <span class="small muted">› détail</span></h2>
     <div class="kv"><span>+1,5 annoncé / observé</span><b>${pct(p.o15_pred)} / ${pct(p.o15_obs)}</b></div>
     <div class="kv"><span>+2,5 annoncé / observé</span><b>${pct(p.o25_pred)} / ${pct(p.o25_obs)}</b></div>
     ${calibVerdict(p)}</section>`;
@@ -488,18 +559,18 @@ function viewTracking() {
   if (d.learning?.length) {
     html += `<section class="card"><h2>Apprentissage</h2><p class="small muted">Chaque semaine, ce que l'appli annonçait comparé à ce qui s'est passé. Les écarts corrigent automatiquement les prochaines prédictions, ligue par ligue et pour les favoris.</p>
     <div class="tbl"><table><thead><tr><th>Semaine du</th><th class="n">Matchs</th><th class="n">+1,5 prévu/réel</th><th class="n">+2,5 prévu/réel</th><th class="n">Favoris prévu/réel</th></tr></thead><tbody>
-    ${d.learning.slice().reverse().map((w) => `<tr><td>${new Date(w.week).toLocaleDateString("fr-FR", { day: "numeric", month: "short" })}</td><td class="n">${w.n}</td><td class="n">${pct(w.p15)} / ${pct(w.o15)}</td><td class="n">${pct(w.p25)} / ${pct(w.o25)}</td><td class="n">${w.pf != null ? pct(w.pf) + " / " + pct(w.of) : "–"}</td></tr>`).join("")}
+    ${d.learning.slice().reverse().map((w) => `<tr class="tap"${det("week", w.week)}><td>${new Date(w.week).toLocaleDateString("fr-FR", { day: "numeric", month: "short" })}</td><td class="n">${w.n}</td><td class="n">${pct(w.p15)} / ${pct(w.o15)}</td><td class="n">${pct(w.p25)} / ${pct(w.o25)}</td><td class="n">${w.pf != null ? pct(w.pf) + " / " + pct(w.of) : "–"}</td></tr>`).join("")}
     </tbody></table></div>
-    ${Object.keys(d.feedback?.kinds || {}).length ? `<h3>Par type de coupon</h3>${Object.entries(d.feedback.kinds).map(([k, v]) => `<div class="kv"><span>${esc(d.coupon_kinds[k]?.label || k)} · ${v.won} gagnés sur ${v.n} (prévu ${String(v.pred).replace(".", ",")})</span><b class="${v.factor >= 1 ? "pos" : "neg"}">${v.factor >= 1 ? "mis en avant" : "relégué"}</b></div>`).join("")}` : ""}
+    ${Object.keys(d.feedback?.kinds || {}).length ? `<h3>Par type de coupon</h3>${Object.entries(d.feedback.kinds).map(([k, v]) => `<div class="kv tap"${det("kind", k)}><span>${esc(d.coupon_kinds[k]?.label || k)} · ${v.won} gagnés sur ${v.n} (prévu ${String(v.pred).replace(".", ",")})</span><b class="${v.factor >= 1 ? "pos" : "neg"}">${v.factor >= 1 ? "mis en avant" : "relégué"}</b></div>`).join("")}` : ""}
     </section>`;
   }
   const rel = d.feedback?.reliability || {};
   if (Object.keys(rel).length) {
     html += `<section class="card"><h2>Confiance par championnat</h2><p class="small muted">Les ligues au-dessus de 1 sont mises en avant dans les coupons.</p>
-    ${Object.entries(rel).sort((a, b) => b[1] - a[1]).map(([div, r]) => `<div class="kv"><span>${esc(d.leagues[div]?.name || div)}</span><b>${String(r.toFixed(2)).replace(".", ",")}</b></div><div class="meter ${r < 1 ? "amber" : ""}"><span style="width:${Math.round(((r - 0.7) / 0.5) * 100)}%"></span></div>`).join("")}</section>`;
+    ${Object.entries(rel).sort((a, b) => b[1] - a[1]).map(([div, r]) => `<div class="kv tap"${det("league", div)}><span>${esc(d.leagues[div]?.name || div)} ›</span><b>${String(r.toFixed(2)).replace(".", ",")}</b></div><div class="meter ${r < 1 ? "amber" : ""}"><span style="width:${Math.round(((r - 0.7) / 0.5) * 100)}%"></span></div>`).join("")}</section>`;
   }
   if (d.recent?.length) {
-    html += `<section class="card"><h2>Derniers matchs analysés</h2>${d.recent.slice(0, 25).map((r) => `<button class="match" data-match="${esc(r.id)}"><span class="teams">${esc(r.home)} – ${esc(r.away)}<br><span class="small muted">${esc(r.league)} · ${dayLabel(r.date, d.today)}</span></span><span class="res ${r.goals >= 3 ? "won" : r.goals === 2 ? "push" : "lost"}">${esc(r.score)}</span><span class="meta">Prévu : +1,5 ${pct(r.o15)} ${r.goals >= 2 ? "✓" : "✗"} · +2,5 ${pct(r.o25)} ${r.goals >= 3 ? "✓" : "✗"}${r.fav_p != null ? ` · ${r.fav_side === "1" ? esc(r.home) : esc(r.away)} gagne ${pct(r.fav_p)} ${favOk(r) ? "✓" : "✗"}` : ""}</span></button>`).join("")}</section>`;
+    html += `<section class="card"><h2>Derniers matchs analysés</h2>${d.recent.slice(0, 25).map(recentRow).join("")}</section>`;
   }
   const hist = d.coupons.filter((c) => c.date < d.today).sort((a, b) => (a.date < b.date ? 1 : -1));
   if (hist.length) html += `<h2>Historique des coupons</h2>${hist.slice(0, 40).map(couponCard).join("")}`;
@@ -783,9 +854,10 @@ const fmt = (x) => Math.round(x).toLocaleString("fr-FR");
 
 /* ---------- Événements ---------- */
 document.addEventListener("click", (e) => {
-  const t = e.target.closest("[data-favview],[data-day],[data-mday],[data-kind],[data-league],[data-sort],[data-match],[data-close]");
+  const t = e.target.closest("[data-favview],[data-day],[data-mday],[data-kind],[data-league],[data-sort],[data-match],[data-close],[data-detail]");
   if (!t) return;
   if (t.dataset.close !== undefined) { $("#sheet").hidden = true; return; }
+  if (t.dataset.detail) { openDetail(t.dataset.detail, t.dataset.dv); return; }
   if (t.dataset.match) { openMatch(t.dataset.match); return; }
   if (t.dataset.day) state.day = t.dataset.day;
   if (t.dataset.mday) state.mday = t.dataset.mday;
