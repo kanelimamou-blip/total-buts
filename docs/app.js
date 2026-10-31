@@ -256,6 +256,16 @@ function surprisesBlock() {
 }
 
 /* ---------- Suivi ---------- */
+// Marge d'erreur due au hasard (95 %) : un écart plus petit que la marge ne prouve rien
+function calibVerdict(p) {
+  const marg = (q) => 1.96 * Math.sqrt((q * (1 - q)) / p.n);
+  const m15 = marg(p.o15_pred), m25 = marg(p.o25_pred);
+  const out = (pred, obs, m) => Math.abs(obs - pred) > m;
+  const pts = (x) => Math.round(x * 100);
+  const verdict = p.n < 300 ? `Encore ${300 - p.n} matchs avant une première lecture (300), et 500 à 1 000 pour être sûr.`
+    : out(p.o15_pred, p.o15_obs, m15) || out(p.o25_pred, p.o25_obs, m25) ? "Un écart dépasse la marge : défaut réel, les corrections s'appliquent." : "Écarts dans la marge : le modèle tient en conditions réelles.";
+  return `<p class="small muted">${p.n} matchs suivis. Marge due au hasard : ± ${pts(m15)} pts (+1,5), ± ${pts(m25)} pts (+2,5). Un écart plus petit que la marge ne veut rien dire.</p><p class="small"><b>${verdict}</b></p>`;
+}
 function favOk(r) {
   const [h, a] = String(r.score).split("-").map(Number);
   return r.fav_side === "1" ? h > a : a > h;
@@ -320,7 +330,7 @@ function viewTracking() {
     html += `<section class="card"><h2>Fiabilité réelle</h2>
     <div class="kv"><span>+1,5 annoncé / observé</span><b>${pct(p.o15_pred)} / ${pct(p.o15_obs)}</b></div>
     <div class="kv"><span>+2,5 annoncé / observé</span><b>${pct(p.o25_pred)} / ${pct(p.o25_obs)}</b></div>
-    <p class="small muted">Plus les deux chiffres sont proches, mieux le modèle est calibré.</p></section>`;
+    ${calibVerdict(p)}</section>`;
   }
   if (d.learning?.length) {
     html += `<section class="card"><h2>Apprentissage</h2><p class="small muted">Chaque semaine, ce que l'appli annonçait comparé à ce qui s'est passé. Les écarts corrigent automatiquement les prochaines prédictions, ligue par ligue et pour les favoris.</p>
