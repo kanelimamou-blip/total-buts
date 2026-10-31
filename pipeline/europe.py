@@ -27,8 +27,8 @@ CUPS = {
 }
 # Championnats dont les clubs jouent régulièrement les coupes d'Europe
 DOMESTIC = ["eng.1", "esp.1", "fra.1", "ita.1", "ger.1", "por.1", "tur.1", "ned.1",
-            "bel.1", "sco.1", "aut.1", "sui.1", "gre.1", "den.1", "cze.1", "nor.1", "swe.1", "pol.1",
-            "cro.1", "srb.1", "ukr.1", "isr.1", "cyp.1", "hun.1", "rou.1"]
+            "bel.1", "sco.1", "aut.1", "sui.1", "gre.1", "den.1", "cze.1", "nor.1", "swe.1",
+            "isr.1", "cyp.1", "rou.1"]  # pol.1, cro.1, srb.1, ukr.1, hun.1 : refusés par la source (erreur 400 à chaque appel)
 CACHE = RAW_DIR / "espn"
 HISTORY_DAYS = 760
 MAX_REQUESTS = 3500
