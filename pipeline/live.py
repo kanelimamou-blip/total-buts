@@ -54,7 +54,8 @@ def proposal(m: dict, hg: int, ag: int, minute: int) -> dict | None:
     """La sélection live la plus sûre dont la cote estimée atteint 1,25."""
     pr = probs(m["xg_home"], m["xg_away"], hg, ag, minute)
     fav = "1" if m["res"]["1"] >= m["res"]["2"] else "2"
-    allowed = ["o15", "o25", "u35", "u45", fav, "1X" if fav == "1" else "X2", "h05" if fav == "1" else "a05",
+    # pas de +2,5 dans les coupons (règle d'Est du 31/10/2026)
+    allowed = ["o15", "u35", "u45", fav, "1X" if fav == "1" else "X2", "h05" if fav == "1" else "a05",
                "h15" if fav == "1" else "a15"]
     best = None
     for mk in allowed:
@@ -73,32 +74,34 @@ def proposal(m: dict, hg: int, ag: int, minute: int) -> dict | None:
 
 
 def build(matches: list[dict], live_now: dict, already: set) -> list[dict]:
-    """Une proposition figée par match en cours (la première fois qu'il est vu en direct)."""
-    out = []
+    """Coupons live à cote 2 au moins : la sélection la plus sûre de chaque match en cours, regroupées
+    de la plus sûre à la moins sûre jusqu'à la cote 2 (2 à 4 matchs). Un match n'entre que dans un coupon live."""
+    legs = []
     for m in matches:
         ref = m.get("espn")
         if not ref or m["id"] in already or m.get("provisional"):
             continue
         st = live_now.get(str(ref[1]))
-        if not st or st[2] >= 85:
+        if not st or st[2] >= 80:
             continue
         leg = proposal(m, *st)
-        if not leg:
-            continue
-        out.append({"kind": "live", "label": "Pari live", "scope": f"{st[2]}' · {st[0]}-{st[1]}", "stake_pct": 0.5,
-                    "legs": [leg], "odds": leg["odds"], "p_win": leg["p_win"], "p_not_lose": leg["p_win"],
-                    "ev": round(leg["p_win"] * (1 + (leg["odds"] - 1) * 0.8) - 1, 3), "reliability": 1.0})
-    # Combiné live : les propositions les plus sûres du moment, jusqu'à la cote 2
-    singles = sorted(out, key=lambda c: -c["p_win"])
-    picks, o = [], 1.0
-    for c in singles[:3]:
-        picks.append(c["legs"][0])
-        o *= c["odds"]
+        if leg:
+            legs.append(leg)
+    legs.sort(key=lambda l: -l["p_win"])
+    out, cur, o = [], [], 1.0
+    for leg in legs:
+        cur.append(leg)
+        o *= leg["odds"]
         if o >= 2.0:
-            break
-    if len(picks) >= 2 and o >= 2.0:
-        pw = float(np.prod([l["p_win"] for l in picks]))
-        out.append({"kind": "live_combi", "label": "Combiné live", "scope": f"{len(picks)} matchs en cours",
-                    "stake_pct": 0.5, "legs": [dict(l) for l in picks], "odds": round(o, 2), "p_win": round(pw, 3),
-                    "p_not_lose": round(pw, 3), "ev": round(pw * (1 + (o - 1) * 0.8) - 1, 3), "reliability": 1.0})
+            out.append(_coupon(cur, o))
+            cur, o = [], 1.0
+        elif len(cur) == 4:
+            cur, o = [], 1.0
     return out
+
+
+def _coupon(picks: list[dict], o: float) -> dict:
+    pw = float(np.prod([l["p_win"] for l in picks]))
+    return {"kind": "live_combi", "label": "Coupon live", "scope": f"{len(picks)} matchs en cours", "stake_pct": 0.5,
+            "legs": [dict(l) for l in picks], "odds": round(o, 2), "p_win": round(pw, 3), "p_not_lose": round(pw, 3),
+            "ev": round(pw * (1 + (o - 1) * 0.8) - 1, 3), "reliability": 1.0}

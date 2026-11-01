@@ -365,13 +365,13 @@ def main():
             today_ms = [m for m in matches if m["date"] == td and m.get("espn") and m.get("xg_home") is not None and m.get("res")]
             try:  # le direct ne doit jamais bloquer la mise à jour
                 ln = live_mod.now(sorted({m["espn"][0] for m in today_ms}), today)
-                already = {l["id"] for e in store.values() for c in e["coupons"] if c["kind"] == "live" for l in c["legs"]}
+                already = {l["id"] for e in store.values() for c in e["coupons"] if c["kind"] in ("live", "live_combi") for l in c["legs"]}
                 lv = live_mod.build(today_ms, ln, already)
             except Exception as exc:  # noqa: BLE001
                 print("Direct indisponible :", exc)
                 lv = []
             if lv:
-                print(f"Paris live : {len(lv)} propositions")
+                print(f"Coupons live : {len(lv)}")
                 today_entry = store.setdefault(td, {"frozen": True, "created": now.isoformat(timespec="minutes"), "coupons": []})
                 today_entry["coupons"] = prioritise(today_entry["coupons"] + lv)
     (STATE_DIR / "coupons.json").write_text(json.dumps(store, ensure_ascii=False, indent=1))

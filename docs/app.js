@@ -1,6 +1,6 @@
 "use strict";
 const MK = { o15: "+1,5 but", o20: "+2 buts", o25: "+2,5 buts" };
-const KIND_FILTERS = [["all", "Tous"], ["sur", "Sûrs"], ["favoris", "Favoris"], ["mix", "Mix"], ["buts15", "+1,5"], ["buts20", "+2 (remb.)"], ["dc", "Double chance"], ["autres", "Autres paris"], ["periode", "Sur une période"], ["ligue", "Par championnat"], ["tendance", "Tendances"], ["value", "Value"], ["audace", "Audacieux"], ["large3", "Larges 3-5"], ["large5", "Larges 5-8"], ["live", "Paris live"], ["live_combi", "Combinés live"], ["relais", "Relais"], ["jackpot_fiable", "Jackpots fiables"], ["jackpot", "Jackpot"], ["mille", "Cote 1000"]];
+const KIND_FILTERS = [["all", "Tous"], ["sur", "Sûrs"], ["favoris", "Favoris"], ["mix", "Mix"], ["buts15", "+1,5"], ["buts20", "+2 (remb.)"], ["dc", "Double chance"], ["autres", "Autres paris"], ["periode", "Sur une période"], ["ligue", "Par championnat"], ["tendance", "Tendances"], ["value", "Value"], ["audace", "Audacieux"], ["large3", "Larges 3-5"], ["large5", "Larges 5-8"], ["live_combi", "Coupons live"], ["relais", "Relais"], ["jackpot_fiable", "Jackpots fiables"], ["jackpot", "Jackpot"], ["mille", "Cote 1000"]];
 const kindOf = (c) => (c.kind.startsWith("periode") ? "periode" : c.kind);
 const XL = () => state.data?.extra_labels || {};  // autres paris : [libellé appli, libellé 1xBet]
 const mkLabel = (l) => (l.market === "1" || l.market === "2" ? `Victoire ${l.team || (l.market === "1" ? l.home : l.away)}` : MK[l.market] || XL()[l.market]?.[0] || l.market);
@@ -807,7 +807,6 @@ function liveMarkets(m, lv) {
   const team = fh ? m.home : m.away;
   return [
     ["o15", "+1,5 but", "Total Plus de 1.5", P((H, A, T) => T >= 2)],
-    ["o25", "+2,5 buts", "Total Plus de 2.5", P((H, A, T) => T >= 3)],
     ["u35", "Moins de 3,5 buts", "Total Moins de 3.5", P((H, A, T) => T <= 3)],
     ["u45", "Moins de 4,5 buts", "Total Moins de 4.5", P((H, A, T) => T <= 4)],
     [fav, `Victoire ${team}`, fh ? "V1" : "V2", P((H, A) => (fh ? H > A : A > H))],
@@ -817,6 +816,12 @@ function liveMarkets(m, lv) {
   ].map(([mk, label, xb, p]) => ({ mk, label, xb, p, odds: Math.max(1 / p / (1 + LIVE_MARGIN), 1.05), min: (1 / p) * 1.03 }));
 }
 function liveBest(ms) { return ms.filter((x) => x.p >= LIVE_MIN_P && x.p <= LIVE_MAX_P && x.odds >= LIVE_MIN_ODDS).sort((a, b) => b.p - a.p)[0] || null; }
+function liveCoupons(inPlay) {
+  const picks = inPlay.filter((m) => (liveOf(m).minute || 0) < 80).map((m) => { const b = liveBest(liveMarkets(m, liveOf(m))); return b && { m, ...b }; }).filter(Boolean).sort((a, b) => b.p - a.p);
+  const out = []; let cur = [], o = 1;
+  for (const x of picks) { cur.push(x); o *= x.odds; if (o >= 2) { out.push({ legs: cur, odds: o, p: cur.reduce((a, l) => a * l.p, 1) }); cur = []; o = 1; } else if (cur.length === 4) { cur = []; o = 1; } }
+  return out;
+}
 function viewLive() {
   const d = state.data, now = Date.now();
   const today = d.matches.filter((m) => m.date === d.today && m.espn && m.xg_home != null);
@@ -826,13 +831,14 @@ function viewLive() {
   const settled = d.coupons.filter((c) => (c.kind === "live" || c.kind === "live_combi") && (c.status === "won" || c.status === "lost"));
   const w = settled.filter((c) => c.status === "won").length;
   return `<h1>Paris live</h1>
-  <p class="note">Pour chaque match du jour en cours, l'appli recalcule chaque minute les chances de fin de match avec le score et le temps restant, et propose le pari le plus sûr dont la cote live dépasse 1,25. Elle ne voit ni les cartons rouges ni le jeu : regarde le match avant de jouer. Une proposition par match est figée à chaque mise à jour horaire et suivie dans le Suivi, jouée ou non.</p>
-  ${settled.length ? `<div class="kv tap"${det("kind", "live")}><span>Paris live suivis : annoncé / réel ›</span><b>${pct(settled.reduce((a, c) => a + c.p_not_lose, 0) / settled.length)} / ${pct(w / settled.length)} (${settled.length})</b></div>` : ""}
+  <p class="note">Coupons live à cote 2 au moins. Pour chaque match du jour en cours, l'appli recalcule chaque minute les chances de fin de match avec le score et le temps restant, prend le pari le plus sûr dont la cote live dépasse 1,25, puis assemble ces paris en coupons jusqu'à la cote 2. Elle ne voit ni les cartons rouges ni le jeu : regarde les matchs avant de jouer. À chaque mise à jour horaire, les coupons live du moment sont figés et suivis dans le Suivi, joués ou non.</p>
+  ${settled.length ? `<div class="kv tap"${det("kind", "live_combi")}><span>Coupons live suivis : annoncé / réel ›</span><b>${pct(settled.reduce((a, c) => a + c.p_not_lose, 0) / settled.length)} / ${pct(w / settled.length)} (${settled.length})</b></div>` : ""}
+  ${(() => { const lc = liveCoupons(inPlay); return `<section class="card"><h2>Coupons live du moment · ${lc.length}</h2>${lc.length ? lc.map((c, i) => `<div class="card"><div class="kv"><span><b>Coupon live ${i + 1}</b> · ${c.legs.length} matchs · ${pct(c.p)} de chances</span><b>cote ≈ ${odds(c.odds)}</b></div><div class="legs">${c.legs.map((x) => `<button class="leg" data-match="${esc(x.m.id)}"><span class="teams">${esc(x.m.home)} – ${esc(x.m.away)} ${liveBadge(x.m)}</span><span class="o">${odds(x.odds)}</span><span class="meta"><b>${esc(x.label)}</b> · ${pct(x.p)} · 1xBet : ${esc(x.xb)}</span><span class="min">min. ${odds(x.min)}</span></button>`).join("")}</div></div>`).join("") : `<p class="small muted">Pas assez de matchs en cours avec un pari intéressant pour faire un coupon à cote 2. La liste se met à jour chaque minute.</p>`}</section>`; })()}
   <section class="card"><h2>En cours · ${inPlay.length} match${inPlay.length > 1 ? "s" : ""}</h2>
   ${inPlay.length ? inPlay.map((m) => { const lv = liveOf(m), ms = liveMarkets(m, lv), b = liveBest(ms);
     return `<button class="match" data-match="${esc(m.id)}"><span class="teams">${esc(m.home)} – ${esc(m.away)}<br><span class="small muted">${esc(m.league)}</span></span>${liveBadge(m)}
     <span class="meta">${b ? `<b>${esc(b.label)}</b> · ${pct(b.p)} · cote min. ${odds(b.min)} <span class="small muted">(1xBet : ${esc(b.xb)})</span>` : "Pas de pari live intéressant en ce moment (trop sûr ou trop risqué)."}</span></button>`; }).join("") : `<p class="small muted">Aucun match suivi n'est en cours. Les propositions apparaissent ici dès le coup d'envoi.</p>`}</section>
-  ${tracked.length ? `<h2>Propositions live suivies aujourd'hui</h2>${tracked.map(couponCard).join("")}` : ""}
+  ${tracked.length ? `<h2>Coupons live suivis aujourd'hui</h2>${tracked.map(couponCard).join("")}` : ""}
   ${later.length ? `<section class="card"><h2>Plus tard aujourd'hui</h2>${later.slice(0, 40).map((m) => `<button class="match" data-match="${esc(m.id)}"><span class="teams">${esc(m.home)} – ${esc(m.away)}<br><span class="small muted">${esc(m.league)} · ${esc(m.time)}</span></span></button>`).join("")}</section>` : ""}`;
 }
 
