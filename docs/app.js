@@ -100,7 +100,15 @@ function planTracking() {
   const rows = days.map((x) => { const p = dayPlan(x).filter((c) => c.status === "won" || c.status === "lost"); return { x, n: p.length, w: p.filter((c) => c.status === "won").length, e: p.reduce((a, c) => a + c.p_not_lose, 0), u: p.reduce((a, c) => a + (c.status === "won" ? c.odds : 0) - 1, 0) }; }).filter((r) => r.n);
   if (!rows.length) return `<section class="card"><h2>Plan du jour : suivi</h2><p class="small muted">Le plan de 8 à 10 tickets à mise égale sera mesuré ici dès les premiers jours réglés.</p></section>`;
   const t = rows.reduce((a, r) => ({ n: a.n + r.n, w: a.w + r.w, e: a.e + r.e, u: a.u + r.u }), { n: 0, w: 0, e: 0, u: 0 });
-  return `<section class="card"><h2>Plan du jour : suivi</h2>
+  // Feu vert : gain net (après taxe) sur des mises égales, prouvé au-delà du hasard sur au moins 300 tickets
+  const tickets = days.flatMap((x) => dayPlan(x).filter((c) => c.status === "won" || c.status === "lost"));
+  const net = tickets.map((c) => (c.status === "won" ? netOdds(c.odds) : 0) - 1);
+  const mu = net.reduce((a, b) => a + b, 0) / net.length, sdv = Math.sqrt(net.reduce((a, b) => a + (b - mu) ** 2, 0) / Math.max(net.length - 1, 1));
+  const lo95 = mu - 1.96 * sdv / Math.sqrt(net.length), perDay = net.length / rows.length;
+  const verdict = net.length < 300 ? `Encore ${300 - net.length} tickets avant de juger (environ ${Math.ceil((300 - net.length) / Math.max(perDay, 1) / 7)} semaines). D'ici là, on observe sans jouer.`
+    : lo95 > 0 ? "Feu vert : le plan gagne après taxe, au-delà du hasard." : mu > 0 ? "Positif après taxe, mais pas encore prouvé : on continue d'observer." : "Pas encore rentable après taxe : on continue d'ajuster.";
+  const verdictBlock = `<div class="kv"><span>Pour 10 mises égales, bilan net après taxe</span><b class="${mu >= 0 ? "pos" : "neg"}">${signed(mu * 10)}</b></div><p class="small"><b>${verdict}</b></p>`;
+  return `<section class="card"><h2>Plan du jour : suivi</h2>${verdictBlock}
   <div class="kv"><span>${rows.length} jour${rows.length > 1 ? "s" : ""} · ${t.n} tickets · attendu / réel</span><b>${pct(t.e / t.n)} / ${pct(t.w / t.n)}</b></div>
   <div class="kv"><span>Bilan à mise égale (1 par ticket, avant taxe)</span><b class="${t.u >= 0 ? "pos" : "neg"}">${signed(t.u)}</b></div>
   <div class="tbl"><table><thead><tr><th>Jour</th><th class="n">Gagnés</th><th class="n">Attendu</th><th class="n">Bilan</th></tr></thead><tbody>
