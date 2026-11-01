@@ -407,7 +407,7 @@ function reliableBlock(d) {
   const r = d.reliable || [];
   if (!r.length) return "";
   const f = (x) => (x > 0 ? "+" : "") + (x * 100).toFixed(1).replace(".", ",");
-  return `<section class="card"><h2>Marchés fiables</h2><p class="small muted">Écart réel − annoncé sur le passé et en live. Un marché n'est écarté que si l'appli y est trop optimiste. Les jackpots fiables (cote 10, 20, 50) ne prennent que les marchés retenus.</p>
+  return `<section class="card"><h2>Marchés fiables</h2><p class="small muted">Écart réel − annoncé sur le passé et en live. Un marché n'est écarté que si l'appli y est trop optimiste : plus de 2 points sur le passé, ou en live à partir de 30 sélections. En dessous, le live n'est que du hasard (une sélection perdue suffit à faire −50 pts). Les tickets larges et les jackpots fiables ne prennent que les marchés retenus.</p>
   <div class="tbl"><table><thead><tr><th>Marché</th><th class="n">Passé</th><th class="n">Live</th><th class="n">Retenu</th></tr></thead><tbody>
   ${r.map((x) => `<tr class="tap"${det("market", x.market)}><td style="white-space:normal">${esc(x.label)} ›</td><td class="n">${f(x.gap)} pts</td><td class="n">${x.live_n ? f(x.live_gap) + " pts (" + x.live_n + ")" : "–"}</td><td class="n ${x.reliable ? "pos" : "neg"}">${x.reliable ? "oui" : "non"}</td></tr>`).join("")}
   </tbody></table></div></section>`;
