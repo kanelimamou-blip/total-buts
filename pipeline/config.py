@@ -20,6 +20,16 @@ LEAGUES = {
     "P1": ("Liga Portugal", "Portugal"),
     "T1": ("Süper Lig", "Turquie"),
     "N1": ("Eredivisie", "Pays-Bas"),
+    # Ajoutés le 01/11/2026 pour suivre plus de matchs (mêmes paris, mêmes données gratuites, tous sur 1xBet).
+    # Un championnat mal prédit au backtest est bloqué automatiquement (voir backtest.diagnostic).
+    "E2": ("League One", "Angleterre"),
+    "E3": ("League Two", "Angleterre"),
+    "SC0": ("Premiership", "Écosse"),
+    "D2": ("2. Bundesliga", "Allemagne"),
+    "I2": ("Serie B", "Italie"),
+    "F2": ("Ligue 2", "France"),
+    "B1": ("Pro League", "Belgique"),
+    "G1": ("Super League", "Grèce"),
 }
 
 # Coupes d'Europe (données ESPN, voir europe.py)

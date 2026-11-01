@@ -1,4 +1,4 @@
-"""Calendrier à un mois pour les 10 championnats (source ESPN, gratuite).
+"""Calendrier à un mois pour les championnats suivis (source ESPN, gratuite).
 
 football-data.co.uk ne publie les matchs à venir (avec cotes) que quelques jours avant.
 On complète avec le calendrier ESPN, en traduisant les noms d'équipes ESPN vers ceux
@@ -19,7 +19,9 @@ import europe
 from config import RAW_DIR
 
 FD_TO_ESPN = {"E0": "eng.1", "E1": "eng.2", "F1": "fra.1", "I1": "ita.1", "SP1": "esp.1", "SP2": "esp.2",
-              "D1": "ger.1", "P1": "por.1", "T1": "tur.1", "N1": "ned.1"}
+              "D1": "ger.1", "P1": "por.1", "T1": "tur.1", "N1": "ned.1",
+              "E2": "eng.3", "E3": "eng.4", "SC0": "sco.1", "D2": "ger.2", "I2": "ita.2", "F2": "fra.2",
+              "B1": "bel.1", "G1": "gre.1"}
 CACHE = RAW_DIR / "espn_ahead"
 PAST_DAYS = 45
 AHEAD_DAYS = 30
