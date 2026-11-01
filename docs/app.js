@@ -1,6 +1,6 @@
 "use strict";
 const MK = { o15: "+1,5 but", o20: "+2 buts", o25: "+2,5 buts" };
-const KIND_FILTERS = [["all", "Tous"], ["sur", "Sûrs"], ["favoris", "Favoris"], ["mix", "Mix"], ["buts15", "+1,5"], ["buts20", "+2 (remb.)"], ["dc", "Double chance"], ["autres", "Autres paris"], ["periode", "Sur une période"], ["ligue", "Par championnat"], ["tendance", "Tendances"], ["value", "Value"], ["audace", "Audacieux"], ["large3", "Larges 3-5"], ["large5", "Larges 5-8"], ["relais", "Relais"], ["jackpot_fiable", "Jackpots fiables"], ["jackpot", "Jackpot"], ["mille", "Cote 1000"]];
+const KIND_FILTERS = [["all", "Tous"], ["sur", "Sûrs"], ["favoris", "Favoris"], ["mix", "Mix"], ["buts15", "+1,5"], ["buts20", "+2 (remb.)"], ["dc", "Double chance"], ["autres", "Autres paris"], ["periode", "Sur une période"], ["ligue", "Par championnat"], ["tendance", "Tendances"], ["value", "Value"], ["audace", "Audacieux"], ["large3", "Larges 3-5"], ["large5", "Larges 5-8"], ["live", "Paris live"], ["live_combi", "Combinés live"], ["relais", "Relais"], ["jackpot_fiable", "Jackpots fiables"], ["jackpot", "Jackpot"], ["mille", "Cote 1000"]];
 const kindOf = (c) => (c.kind.startsWith("periode") ? "periode" : c.kind);
 const XL = () => state.data?.extra_labels || {};  // autres paris : [libellé appli, libellé 1xBet]
 const mkLabel = (l) => (l.market === "1" || l.market === "2" ? `Victoire ${l.team || (l.market === "1" ? l.home : l.away)}` : MK[l.market] || XL()[l.market]?.[0] || l.market);
@@ -41,7 +41,7 @@ function route() {
   const tab = (location.hash || "#coupons").slice(1);
   document.querySelectorAll(".tabs a").forEach((a) => (a.dataset.tab === tab ? a.setAttribute("aria-current", "page") : a.removeAttribute("aria-current")));
   if (!state.data) return;
-  const v = { coupons: viewCoupons, matchs: viewMatches, astuces: viewTips, suivi: viewTracking }[tab] || viewCoupons;
+  const v = { coupons: viewCoupons, matchs: viewMatches, live: viewLive, astuces: viewTips, suivi: viewTracking }[tab] || viewCoupons;
   $("#view").innerHTML = v();
   renderBasketBar();
   window.scrollTo(0, 0);
@@ -795,6 +795,46 @@ function liveBlock() {
     <span class="probs">${["o15", "o20", "o25"].map((k) => `<div class="pb"><span class="l">${{ o15: "+1,5", o20: "+2", o25: "+2,5" }[k]}<b>${lp[k] >= 0.999 ? "✓" : pct(lp[k])}</b></span><div class="meter"><span style="width:${Math.round(lp[k] * 100)}%"></span></div></div>`).join("")}</span></button>`; }).join("")}</section>`;
 }
 setInterval(liveTick, 60e3);
+
+// Paris live : même calcul que le serveur (pipeline/live.py), refait chaque minute sur le téléphone
+const LIVE_MARGIN = 0.08, LIVE_MIN_P = 0.62, LIVE_MAX_P = 0.95, LIVE_MIN_ODDS = 1.25;
+function poisPmf(lam, n) { const out = []; let t = Math.exp(-lam); for (let i = 0; i < n; i++) { out.push(t); t *= lam / (i + 1); } return out; }
+function liveMarkets(m, lv) {
+  const rem = Math.max(0, 94 - Math.min(lv.minute || 0, 93)) / 94;
+  const ph = poisPmf(m.xg_home * rem, 11), pa = poisPmf(m.xg_away * rem, 11);
+  const P = (f) => { let s = 0; for (let i = 0; i < 11; i++) for (let j = 0; j < 11; j++) { const H = lv.hg + i, A = lv.ag + j; if (f(H, A, H + A)) s += ph[i] * pa[j]; } return s; };
+  const fav = m.res["1"] >= m.res["2"] ? "1" : "2", fh = fav === "1";
+  const team = fh ? m.home : m.away;
+  return [
+    ["o15", "+1,5 but", "Total Plus de 1.5", P((H, A, T) => T >= 2)],
+    ["o25", "+2,5 buts", "Total Plus de 2.5", P((H, A, T) => T >= 3)],
+    ["u35", "Moins de 3,5 buts", "Total Moins de 3.5", P((H, A, T) => T <= 3)],
+    ["u45", "Moins de 4,5 buts", "Total Moins de 4.5", P((H, A, T) => T <= 4)],
+    [fav, `Victoire ${team}`, fh ? "V1" : "V2", P((H, A) => (fh ? H > A : A > H))],
+    [fh ? "1X" : "X2", `Double chance ${fh ? "1X" : "X2"}`, `Double chance ${fh ? "1X" : "X2"}`, P((H, A) => (fh ? H >= A : A >= H))],
+    [fh ? "h05" : "a05", `${team} marque +0,5`, `Total individuel ${fh ? 1 : 2} Plus de 0.5`, P((H, A) => (fh ? H : A) >= 1)],
+    [fh ? "h15" : "a15", `${team} marque +1,5`, `Total individuel ${fh ? 1 : 2} Plus de 1.5`, P((H, A) => (fh ? H : A) >= 2)],
+  ].map(([mk, label, xb, p]) => ({ mk, label, xb, p, odds: Math.max(1 / p / (1 + LIVE_MARGIN), 1.05), min: (1 / p) * 1.03 }));
+}
+function liveBest(ms) { return ms.filter((x) => x.p >= LIVE_MIN_P && x.p <= LIVE_MAX_P && x.odds >= LIVE_MIN_ODDS).sort((a, b) => b.p - a.p)[0] || null; }
+function viewLive() {
+  const d = state.data, now = Date.now();
+  const today = d.matches.filter((m) => m.date === d.today && m.espn && m.xg_home != null);
+  const inPlay = today.filter((m) => liveOf(m)?.state === "in");
+  const later = today.filter((m) => { const lv = liveOf(m); return (!lv || lv.state === "pre") && m.time && Date.parse(`${m.date}T${m.time}:00Z`) > now - 15 * 60e3; }).sort((a, b) => (a.time > b.time ? 1 : -1));
+  const tracked = d.coupons.filter((c) => (c.kind === "live" || c.kind === "live_combi") && c.date === d.today);
+  const settled = d.coupons.filter((c) => (c.kind === "live" || c.kind === "live_combi") && (c.status === "won" || c.status === "lost"));
+  const w = settled.filter((c) => c.status === "won").length;
+  return `<h1>Paris live</h1>
+  <p class="note">Pour chaque match du jour en cours, l'appli recalcule chaque minute les chances de fin de match avec le score et le temps restant, et propose le pari le plus sûr dont la cote live dépasse 1,25. Elle ne voit ni les cartons rouges ni le jeu : regarde le match avant de jouer. Une proposition par match est figée à chaque mise à jour horaire et suivie dans le Suivi, jouée ou non.</p>
+  ${settled.length ? `<div class="kv tap"${det("kind", "live")}><span>Paris live suivis : annoncé / réel ›</span><b>${pct(settled.reduce((a, c) => a + c.p_not_lose, 0) / settled.length)} / ${pct(w / settled.length)} (${settled.length})</b></div>` : ""}
+  <section class="card"><h2>En cours · ${inPlay.length} match${inPlay.length > 1 ? "s" : ""}</h2>
+  ${inPlay.length ? inPlay.map((m) => { const lv = liveOf(m), ms = liveMarkets(m, lv), b = liveBest(ms);
+    return `<button class="match" data-match="${esc(m.id)}"><span class="teams">${esc(m.home)} – ${esc(m.away)}<br><span class="small muted">${esc(m.league)}</span></span>${liveBadge(m)}
+    <span class="meta">${b ? `<b>${esc(b.label)}</b> · ${pct(b.p)} · cote min. ${odds(b.min)} <span class="small muted">(1xBet : ${esc(b.xb)})</span>` : "Pas de pari live intéressant en ce moment (trop sûr ou trop risqué)."}</span></button>`; }).join("") : `<p class="small muted">Aucun match suivi n'est en cours. Les propositions apparaissent ici dès le coup d'envoi.</p>`}</section>
+  ${tracked.length ? `<h2>Propositions live suivies aujourd'hui</h2>${tracked.map(couponCard).join("")}` : ""}
+  ${later.length ? `<section class="card"><h2>Plus tard aujourd'hui</h2>${later.slice(0, 40).map((m) => `<button class="match" data-match="${esc(m.id)}"><span class="teams">${esc(m.home)} – ${esc(m.away)}<br><span class="small muted">${esc(m.league)} · ${esc(m.time)}</span></span></button>`).join("")}</section>` : ""}`;
+}
 
 /* ---------- Saisie rapide dans 1xBet ---------- */
 // libellés des marchés tels qu'ils apparaissent dans 1xBet

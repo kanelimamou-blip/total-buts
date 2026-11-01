@@ -71,8 +71,12 @@ def _parse(payload, slug):
             row = {"slug": slug, "espn_id": e.get("id"), "dt": dt.isoformat(),
                    "home": teams["home"]["team"]["displayName"], "away": teams["away"]["team"]["displayName"],
                    "completed": bool(st.get("completed")), "state": st.get("state", ""), "hg": None, "ag": None}
-            if row["completed"]:
+            if row["completed"] or row["state"] == "in":
                 row["hg"], row["ag"] = int(float(teams["home"]["score"])), int(float(teams["away"]["score"]))
+            if row["state"] == "in":  # minute en cours, pour les paris live
+                clock = c.get("status", e.get("status", {})).get("displayClock", "") or ""
+                digits = "".join(ch for ch in clock.split("'")[0].split(":")[0] if ch.isdigit())
+                row["minute"] = int(digits) if digits else 0
             rows.append(row)
         except (KeyError, ValueError, TypeError, IndexError):
             continue

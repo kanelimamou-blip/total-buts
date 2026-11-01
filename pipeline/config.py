@@ -88,6 +88,8 @@ COUPONS = {
     "periode_fav": {"label": "Favoris sur la période", "min_odds": gross_odds(2.0), "max_odds": 3.5, "legs": (3, 5), "stake_pct": 1.0},
     "large3": {"label": "Ticket large · cote 3 à 5", "min_odds": 3.0, "max_odds": 5.0, "legs": (2, 5), "stake_pct": 0.5},
     "large5": {"label": "Ticket large · cote 5 à 8", "min_odds": 5.0, "max_odds": 8.0, "legs": (3, 6), "stake_pct": 0.5},
+    "live": {"label": "Pari live", "min_odds": 1.25, "max_odds": 1e9, "legs": (1, 1), "stake_pct": 0.5},
+    "live_combi": {"label": "Combiné live", "min_odds": 2.0, "max_odds": 1e9, "legs": (2, 3), "stake_pct": 0.5},
     "relais": {"label": "Relais (protège un ticket)", "min_odds": 2.0, "max_odds": 1e9, "legs": (2, 22), "stake_pct": 0.5},
     "periode_long": {"label": "Combiné longue durée", "min_odds": 3.0, "max_odds": 1e9, "legs": (3, 22), "stake_pct": 0.5},
     "tendance": {"label": "Coupon tendances", "min_odds": 2.0, "max_odds": 3.0, "legs": (3, 4), "stake_pct": 1.0},

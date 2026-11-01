@@ -95,7 +95,7 @@ svg.chart{width:100%;height:auto;display:block}
 svg.chart text{fill:var(--muted);font-family:var(--f-body);font-size:10px}
 .empty{text-align:center;padding:30px 10px;color:var(--muted);display:flex;flex-direction:column;gap:8px;align-items:center}
 .note{font-size:.8rem;color:var(--muted);background:var(--surface-2);border-radius:10px;padding:10px 12px}
-.tabs{position:fixed;left:0;right:0;bottom:0;z-index:30;display:grid;grid-template-columns:repeat(4,1fr);background:var(--surface);border-top:1px solid var(--line);
+.tabs{position:fixed;left:0;right:0;bottom:0;z-index:30;display:grid;grid-template-columns:repeat(5,1fr);background:var(--surface);border-top:1px solid var(--line);
   padding:0 env(safe-area-inset-right,0px) env(safe-area-inset-bottom,0px) env(safe-area-inset-left,0px);height:calc(var(--tabs-h) + env(safe-area-inset-bottom,0px))}
 .tabs a{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;color:var(--muted);text-decoration:none;font-size:.72rem;font-weight:500}
 .tabs svg{width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
