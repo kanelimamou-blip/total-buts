@@ -1,7 +1,7 @@
 {
  "2026-11-03": {
   "frozen": false,
-  "created": "2026-11-01T10:40+00:00",
+  "created": "2026-11-01T11:36+00:00",
   "coupons": [
    {
     "kind": "buts20",
@@ -218,7 +218,7 @@
       "id": "20261103|UCL|Barcelona|Aston Villa",
       "market": "1",
       "team": "Barcelona",
-      "odds": 1.82,
+      "odds": 1.83,
       "odds_source": "estimée",
       "p_win": 0.517,
       "p_push": 0.0,
@@ -235,10 +235,10 @@
       "min_odds": 1.23
      }
     ],
-    "odds": 2.06,
+    "odds": 2.07,
     "p_win": 0.351,
     "p_not_lose": 0.449,
-    "ev": -0.191,
+    "ev": -0.187,
     "reliability": 0.9,
     "priority": 6,
     "level": "haute"
@@ -550,7 +550,7 @@
       "team": null,
       "odds": 1.72,
       "odds_source": "estimée",
-      "p_win": 0.549,
+      "p_win": 0.55,
       "p_push": 0.0,
       "min_odds": 1.87
      },
@@ -566,9 +566,9 @@
      }
     ],
     "odds": 2.08,
-    "p_win": 0.429,
-    "p_not_lose": 0.429,
-    "ev": -0.199,
+    "p_win": 0.43,
+    "p_not_lose": 0.43,
+    "ev": -0.198,
     "reliability": 0.935,
     "priority": 14,
     "level": "moyenne"
@@ -613,17 +613,17 @@
       "id": "20261103|UCL|Barcelona|Aston Villa",
       "market": "dnb1",
       "team": null,
-      "odds": 1.41,
+      "odds": 1.42,
       "odds_source": "estimée",
       "p_win": 0.535,
       "p_push": 0.198,
-      "min_odds": 1.54
+      "min_odds": 1.55
      }
     ],
-    "odds": 2.2,
+    "odds": 2.21,
     "p_win": 0.288,
     "p_not_lose": 0.394,
-    "ev": -0.283,
+    "ev": -0.279,
     "reliability": 0.917,
     "priority": 15,
     "level": "moyenne"
@@ -780,7 +780,7 @@
       "team": "Manchester United",
       "odds": 1.76,
       "odds_source": "estimée",
-      "p_win": 0.536,
+      "p_win": 0.537,
       "p_push": 0.0,
       "min_odds": 1.92
      },
@@ -798,7 +798,7 @@
     "odds": 3.56,
     "p_win": 0.25,
     "p_not_lose": 0.25,
-    "ev": -0.24,
+    "ev": -0.238,
     "reliability": 0.9,
     "priority": 20,
     "level": "basse"
@@ -905,19 +905,19 @@
       "min_odds": 1.46
      },
      {
-      "id": "20261103|UCL|Shakhtar Donetsk|Sporting CP",
-      "market": "2",
-      "team": "Sporting CP",
-      "odds": 1.79,
+      "id": "20261103|UCL|Barcelona|Aston Villa",
+      "market": "1",
+      "team": "Barcelona",
+      "odds": 1.83,
       "odds_source": "estimée",
-      "p_win": 0.528,
+      "p_win": 0.517,
       "p_push": 0.0,
-      "min_odds": 1.95
+      "min_odds": 1.99
      },
      {
-      "id": "20261103|UCL|Bodo/Glimt|Lille",
-      "market": "u35",
-      "team": null,
+      "id": "20261103|UCL|Manchester United|AS Roma",
+      "market": "1",
+      "team": "Manchester United",
       "odds": 1.76,
       "odds_source": "estimée",
       "p_win": 0.537,
@@ -925,9 +925,9 @@
       "min_odds": 1.92
      }
     ],
-    "odds": 13.85,
-    "p_win": 0.063,
-    "p_not_lose": 0.063,
+    "odds": 14.16,
+    "p_win": 0.062,
+    "p_not_lose": 0.062,
     "ev": -0.285,
     "reliability": 0.95,
     "priority": 22,
@@ -990,14 +990,24 @@
       "min_odds": 1.46
      },
      {
-      "id": "20261103|UCL|Shakhtar Donetsk|Sporting CP",
-      "market": "2",
-      "team": "Sporting CP",
-      "odds": 1.79,
+      "id": "20261103|UCL|Barcelona|Aston Villa",
+      "market": "1",
+      "team": "Barcelona",
+      "odds": 1.83,
       "odds_source": "estimée",
-      "p_win": 0.528,
+      "p_win": 0.517,
       "p_push": 0.0,
-      "min_odds": 1.95
+      "min_odds": 1.99
+     },
+     {
+      "id": "20261103|UCL|Manchester United|AS Roma",
+      "market": "1",
+      "team": "Manchester United",
+      "odds": 1.76,
+      "odds_source": "estimée",
+      "p_win": 0.537,
+      "p_push": 0.0,
+      "min_odds": 1.92
      },
      {
       "id": "20261103|UCL|Bodo/Glimt|Lille",
@@ -1008,22 +1018,12 @@
       "p_win": 0.537,
       "p_push": 0.0,
       "min_odds": 1.92
-     },
-     {
-      "id": "20261103|UCL|Barcelona|Aston Villa",
-      "market": "1",
-      "team": "Barcelona",
-      "odds": 1.82,
-      "odds_source": "estimée",
-      "p_win": 0.517,
-      "p_push": 0.0,
-      "min_odds": 1.99
      }
     ],
-    "odds": 25.2,
+    "odds": 24.92,
     "p_win": 0.033,
     "p_not_lose": 0.033,
-    "ev": -0.333,
+    "ev": -0.329,
     "reliability": 0.944,
     "priority": 23,
     "level": "basse"
@@ -1085,14 +1085,24 @@
       "min_odds": 1.46
      },
      {
-      "id": "20261103|UCL|Shakhtar Donetsk|Sporting CP",
-      "market": "2",
-      "team": "Sporting CP",
-      "odds": 1.79,
+      "id": "20261103|UCL|Barcelona|Aston Villa",
+      "market": "1",
+      "team": "Barcelona",
+      "odds": 1.83,
       "odds_source": "estimée",
-      "p_win": 0.528,
+      "p_win": 0.517,
       "p_push": 0.0,
-      "min_odds": 1.95
+      "min_odds": 1.99
+     },
+     {
+      "id": "20261103|UCL|Manchester United|AS Roma",
+      "market": "1",
+      "team": "Manchester United",
+      "odds": 1.76,
+      "odds_source": "estimée",
+      "p_win": 0.537,
+      "p_push": 0.0,
+      "min_odds": 1.92
      },
      {
       "id": "20261103|UCL|Bodo/Glimt|Lille",
@@ -1105,24 +1115,14 @@
       "min_odds": 1.92
      },
      {
-      "id": "20261103|UCL|Barcelona|Aston Villa",
-      "market": "1",
-      "team": "Barcelona",
-      "odds": 1.82,
+      "id": "20261103|UCL|Shakhtar Donetsk|Sporting CP",
+      "market": "u35",
+      "team": null,
+      "odds": 1.72,
       "odds_source": "estimée",
-      "p_win": 0.517,
+      "p_win": 0.55,
       "p_push": 0.0,
-      "min_odds": 1.99
-     },
-     {
-      "id": "20261103|UCL|Manchester United|AS Roma",
-      "market": "1",
-      "team": "Manchester United",
-      "odds": 1.76,
-      "odds_source": "estimée",
-      "p_win": 0.536,
-      "p_push": 0.0,
-      "min_odds": 1.92
+      "min_odds": 1.87
      },
      {
       "id": "20261103|UCL|Feyenoord Rotterdam|Internazionale",
@@ -1135,10 +1135,10 @@
       "min_odds": 1.83
      }
     ],
-    "odds": 74.52,
+    "odds": 72.0,
     "p_win": 0.01,
     "p_not_lose": 0.01,
-    "ev": -0.409,
+    "ev": -0.405,
     "reliability": 0.935,
     "priority": 24,
     "level": "basse"
@@ -1282,7 +1282,7 @@
  },
  "2026-11-04": {
   "frozen": false,
-  "created": "2026-11-01T10:40+00:00",
+  "created": "2026-11-01T11:36+00:00",
   "coupons": [
    {
     "kind": "favoris",
@@ -1306,15 +1306,15 @@
       "team": "Liverpool",
       "odds": 1.46,
       "odds_source": "estimée",
-      "p_win": 0.644,
+      "p_win": 0.645,
       "p_push": 0.0,
       "min_odds": 1.6
      }
     ],
     "odds": 2.01,
-    "p_win": 0.44,
-    "p_not_lose": 0.44,
-    "ev": -0.203,
+    "p_win": 0.441,
+    "p_not_lose": 0.441,
+    "ev": -0.202,
     "reliability": 0.9,
     "priority": 1,
     "level": "haute"
@@ -1546,7 +1546,7 @@
       "team": null,
       "odds": 1.12,
       "odds_source": "estimée",
-      "p_win": 0.695,
+      "p_win": 0.696,
       "p_push": 0.175,
       "min_odds": 1.22
      },
@@ -1573,8 +1573,8 @@
     ],
     "odds": 2.16,
     "p_win": 0.319,
-    "p_not_lose": 0.399,
-    "ev": -0.244,
+    "p_not_lose": 0.4,
+    "ev": -0.243,
     "reliability": 0.923,
     "priority": 7,
     "level": "moyenne"
@@ -1591,7 +1591,7 @@
       "team": null,
       "odds": 1.14,
       "odds_source": "estimée",
-      "p_win": 0.824,
+      "p_win": 0.825,
       "p_push": 0.0,
       "min_odds": 1.25
      },
@@ -1627,9 +1627,9 @@
      }
     ],
     "odds": 2.03,
-    "p_win": 0.39,
-    "p_not_lose": 0.39,
-    "ev": -0.288,
+    "p_win": 0.391,
+    "p_not_lose": 0.391,
+    "ev": -0.287,
     "reliability": 0.917,
     "priority": 8,
     "level": "moyenne"
@@ -1714,9 +1714,9 @@
       "id": "20261104|UCL|Lens|Como",
       "market": "2",
       "team": "Como",
-      "odds": 2.08,
+      "odds": 2.09,
       "odds_source": "estimée",
-      "p_win": 0.453,
+      "p_win": 0.452,
       "p_push": 0.0,
       "min_odds": 2.28
      },
@@ -1731,10 +1731,10 @@
       "min_odds": 1.66
      }
     ],
-    "odds": 3.16,
-    "p_win": 0.282,
-    "p_not_lose": 0.282,
-    "ev": -0.231,
+    "odds": 3.18,
+    "p_win": 0.281,
+    "p_not_lose": 0.281,
+    "ev": -0.229,
     "reliability": 0.9,
     "priority": 11,
     "level": "moyenne"
@@ -2106,16 +2106,6 @@
     "stake_pct": 0.1,
     "legs": [
      {
-      "id": "20261104|UEL|Stade Rennais|Olympiacos",
-      "market": "1",
-      "team": "Stade Rennais",
-      "odds": 2.51,
-      "odds_source": "estimée",
-      "p_win": 0.377,
-      "p_push": 0.0,
-      "min_odds": 2.74
-     },
-     {
       "id": "20261104|E1|Bristol City|Wolves",
       "market": "1",
       "team": "Bristol City",
@@ -2124,6 +2114,16 @@
       "p_win": 0.368,
       "p_push": 0.0,
       "min_odds": 2.8
+     },
+     {
+      "id": "20261104|UEL|Stade Rennais|Olympiacos",
+      "market": "1",
+      "team": "Stade Rennais",
+      "odds": 2.5,
+      "odds_source": "estimée",
+      "p_win": 0.377,
+      "p_push": 0.0,
+      "min_odds": 2.73
      },
      {
       "id": "20261104|E1|Wrexham|Middlesbrough",
@@ -2141,7 +2141,7 @@
       "team": "PSV Eindhoven",
       "odds": 2.18,
       "odds_source": "estimée",
-      "p_win": 0.432,
+      "p_win": 0.433,
       "p_push": 0.0,
       "min_odds": 2.38
      },
@@ -2149,9 +2149,9 @@
       "id": "20261104|UCL|Lens|Como",
       "market": "2",
       "team": "Como",
-      "odds": 2.08,
+      "odds": 2.09,
       "odds_source": "estimée",
-      "p_win": 0.453,
+      "p_win": 0.452,
       "p_push": 0.0,
       "min_odds": 2.28
      },
@@ -2161,7 +2161,7 @@
       "team": "FC Porto",
       "odds": 1.95,
       "odds_source": "estimée",
-      "p_win": 0.484,
+      "p_win": 0.485,
       "p_push": 0.0,
       "min_odds": 2.13
      },
@@ -2191,7 +2191,7 @@
       "team": "Manchester City",
       "odds": 1.48,
       "odds_source": "estimée",
-      "p_win": 0.637,
+      "p_win": 0.638,
       "p_push": 0.0,
       "min_odds": 1.62
      },
@@ -2201,7 +2201,7 @@
       "team": "Liverpool",
       "odds": 1.46,
       "odds_source": "estimée",
-      "p_win": 0.644,
+      "p_win": 0.645,
       "p_push": 0.0,
       "min_odds": 1.6
      },
@@ -2216,10 +2216,10 @@
       "min_odds": 1.55
      }
     ],
-    "odds": 1080.12,
+    "odds": 1080.98,
     "p_win": 0.0,
     "p_not_lose": 0.0,
-    "ev": -0.582,
+    "ev": -0.579,
     "reliability": 0.919,
     "priority": 18,
     "level": "basse"
@@ -6110,7 +6110,7 @@
  },
  "2026-11-02": {
   "frozen": false,
-  "created": "2026-11-01T10:40+00:00",
+  "created": "2026-11-01T11:36+00:00",
   "coupons": [
    {
     "kind": "sur",
@@ -6896,7 +6896,7 @@
  },
  "2026-11-05": {
   "frozen": false,
-  "created": "2026-11-01T10:40+00:00",
+  "created": "2026-11-01T11:36+00:00",
   "coupons": [
    {
     "kind": "autres",
@@ -7000,15 +7000,15 @@
       "team": "Anderlecht",
       "odds": 1.74,
       "odds_source": "estimée",
-      "p_win": 0.544,
+      "p_win": 0.543,
       "p_push": 0.0,
-      "min_odds": 1.89
+      "min_odds": 1.9
      }
     ],
     "odds": 2.11,
-    "p_win": 0.334,
-    "p_not_lose": 0.452,
-    "ev": -0.184,
+    "p_win": 0.333,
+    "p_not_lose": 0.451,
+    "ev": -0.185,
     "reliability": 0.9,
     "priority": 3,
     "level": "haute"
@@ -7130,7 +7130,7 @@
       "team": "Torreense",
       "odds": 1.17,
       "odds_source": "estimée",
-      "p_win": 0.808,
+      "p_win": 0.809,
       "p_push": 0.0,
       "min_odds": 1.27
      },
@@ -7156,9 +7156,9 @@
      }
     ],
     "odds": 2.15,
-    "p_win": 0.389,
-    "p_not_lose": 0.389,
-    "ev": -0.251,
+    "p_win": 0.39,
+    "p_not_lose": 0.39,
+    "ev": -0.25,
     "reliability": 0.9,
     "priority": 7,
     "level": "haute"
@@ -7255,7 +7255,7 @@
       "team": null,
       "odds": 1.31,
       "odds_source": "estimée",
-      "p_win": 0.72,
+      "p_win": 0.721,
       "p_push": 0.0,
       "min_odds": 1.43
      },
@@ -7271,9 +7271,9 @@
      }
     ],
     "odds": 2.12,
-    "p_win": 0.287,
-    "p_not_lose": 0.426,
-    "ev": -0.231,
+    "p_win": 0.288,
+    "p_not_lose": 0.427,
+    "ev": -0.23,
     "reliability": 0.9,
     "priority": 10,
     "level": "moyenne"
@@ -7290,7 +7290,7 @@
       "team": null,
       "odds": 1.14,
       "odds_source": "estimée",
-      "p_win": 0.661,
+      "p_win": 0.66,
       "p_push": 0.205,
       "min_odds": 1.24
      },
@@ -7318,7 +7318,7 @@
     "odds": 2.06,
     "p_win": 0.325,
     "p_not_lose": 0.426,
-    "ev": -0.232,
+    "ev": -0.233,
     "reliability": 0.9,
     "priority": 11,
     "level": "moyenne"
@@ -7470,15 +7470,15 @@
       "team": null,
       "odds": 1.47,
       "odds_source": "estimée",
-      "p_win": 0.485,
+      "p_win": 0.484,
       "p_push": 0.245,
       "min_odds": 1.61
      }
     ],
     "odds": 2.25,
-    "p_win": 0.299,
-    "p_not_lose": 0.45,
-    "ev": -0.188,
+    "p_win": 0.298,
+    "p_not_lose": 0.449,
+    "ev": -0.189,
     "reliability": 0.9,
     "priority": 15,
     "level": "moyenne"
@@ -7565,7 +7565,7 @@
       "team": null,
       "odds": 1.16,
       "odds_source": "estimée",
-      "p_win": 0.652,
+      "p_win": 0.653,
       "p_push": 0.2,
       "min_odds": 1.26
      },
@@ -7581,9 +7581,9 @@
      }
     ],
     "odds": 2.24,
-    "p_win": 0.319,
-    "p_not_lose": 0.417,
-    "ev": -0.193,
+    "p_win": 0.32,
+    "p_not_lose": 0.418,
+    "ev": -0.192,
     "reliability": 0.9,
     "priority": 18,
     "level": "moyenne"
@@ -7737,7 +7737,7 @@
       "odds_source": "estimée",
       "p_win": 0.367,
       "p_push": 0.276,
-      "min_odds": 2.03
+      "min_odds": 2.04
      }
     ],
     "odds": 3.98,
@@ -7810,9 +7810,9 @@
     "stake_pct": 0.25,
     "legs": [
      {
-      "id": "20261105|UECL|FC Lugano|Kauno Zalgiris",
-      "market": "u45",
-      "team": null,
+      "id": "20261105|UEL|AZ Alkmaar|Juventus",
+      "market": "2",
+      "team": "Juventus",
       "odds": 1.86,
       "odds_source": "estimée",
       "p_win": 0.508,
@@ -7820,12 +7820,22 @@
       "min_odds": 2.03
      },
      {
-      "id": "20261105|UEL|AZ Alkmaar|Juventus",
-      "market": "2",
-      "team": "Juventus",
+      "id": "20261105|UEL|Torreense|Ararat-Armenia",
+      "market": "u45",
+      "team": null,
+      "odds": 1.81,
+      "odds_source": "estimée",
+      "p_win": 0.523,
+      "p_push": 0.0,
+      "min_odds": 1.97
+     },
+     {
+      "id": "20261105|UECL|FC Lugano|Kauno Zalgiris",
+      "market": "u45",
+      "team": null,
       "odds": 1.86,
       "odds_source": "estimée",
-      "p_win": 0.508,
+      "p_win": 0.507,
       "p_push": 0.0,
       "min_odds": 2.03
      },
@@ -7838,22 +7848,12 @@
       "p_win": 0.521,
       "p_push": 0.0,
       "min_odds": 1.98
-     },
-     {
-      "id": "20261105|UEL|Anderlecht|RB Salzburg",
-      "market": "1",
-      "team": "Anderlecht",
-      "odds": 1.74,
-      "odds_source": "estimée",
-      "p_win": 0.544,
-      "p_push": 0.0,
-      "min_odds": 1.89
      }
     ],
-    "odds": 10.9,
-    "p_win": 0.073,
-    "p_not_lose": 0.073,
-    "ev": -0.348,
+    "odds": 11.33,
+    "p_win": 0.07,
+    "p_not_lose": 0.07,
+    "ev": -0.35,
     "reliability": 0.9,
     "priority": 24,
     "level": "basse"
@@ -7865,9 +7865,9 @@
     "stake_pct": 0.25,
     "legs": [
      {
-      "id": "20261105|UECL|FC Lugano|Kauno Zalgiris",
-      "market": "u45",
-      "team": null,
+      "id": "20261105|UEL|AZ Alkmaar|Juventus",
+      "market": "2",
+      "team": "Juventus",
       "odds": 1.86,
       "odds_source": "estimée",
       "p_win": 0.508,
@@ -7875,12 +7875,22 @@
       "min_odds": 2.03
      },
      {
-      "id": "20261105|UEL|AZ Alkmaar|Juventus",
-      "market": "2",
-      "team": "Juventus",
+      "id": "20261105|UEL|Torreense|Ararat-Armenia",
+      "market": "u45",
+      "team": null,
+      "odds": 1.81,
+      "odds_source": "estimée",
+      "p_win": 0.523,
+      "p_push": 0.0,
+      "min_odds": 1.97
+     },
+     {
+      "id": "20261105|UECL|FC Lugano|Kauno Zalgiris",
+      "market": "u45",
+      "team": null,
       "odds": 1.86,
       "odds_source": "estimée",
-      "p_win": 0.508,
+      "p_win": 0.507,
       "p_push": 0.0,
       "min_odds": 2.03
      },
@@ -7895,16 +7905,6 @@
       "min_odds": 1.98
      },
      {
-      "id": "20261105|UEL|Anderlecht|RB Salzburg",
-      "market": "1",
-      "team": "Anderlecht",
-      "odds": 1.74,
-      "odds_source": "estimée",
-      "p_win": 0.544,
-      "p_push": 0.0,
-      "min_odds": 1.89
-     },
-     {
       "id": "20261105|UECL|Getafe|Brighton & Hove Albion",
       "market": "a15",
       "team": null,
@@ -7913,22 +7913,12 @@
       "p_win": 0.53,
       "p_push": 0.0,
       "min_odds": 1.94
-     },
-     {
-      "id": "20261105|UEL|Torreense|Ararat-Armenia",
-      "market": "u45",
-      "team": null,
-      "odds": 1.8,
-      "odds_source": "estimée",
-      "p_win": 0.523,
-      "p_push": 0.0,
-      "min_odds": 1.97
      }
     ],
-    "odds": 34.91,
-    "p_win": 0.02,
-    "p_not_lose": 0.02,
-    "ev": -0.43,
+    "odds": 20.17,
+    "p_win": 0.037,
+    "p_not_lose": 0.037,
+    "ev": -0.392,
     "reliability": 0.9,
     "priority": 25,
     "level": "basse"
@@ -7940,9 +7930,9 @@
     "stake_pct": 0.25,
     "legs": [
      {
-      "id": "20261105|UECL|FC Lugano|Kauno Zalgiris",
-      "market": "u45",
-      "team": null,
+      "id": "20261105|UEL|AZ Alkmaar|Juventus",
+      "market": "2",
+      "team": "Juventus",
       "odds": 1.86,
       "odds_source": "estimée",
       "p_win": 0.508,
@@ -7950,12 +7940,22 @@
       "min_odds": 2.03
      },
      {
-      "id": "20261105|UEL|AZ Alkmaar|Juventus",
-      "market": "2",
-      "team": "Juventus",
+      "id": "20261105|UEL|Torreense|Ararat-Armenia",
+      "market": "u45",
+      "team": null,
+      "odds": 1.81,
+      "odds_source": "estimée",
+      "p_win": 0.523,
+      "p_push": 0.0,
+      "min_odds": 1.97
+     },
+     {
+      "id": "20261105|UECL|FC Lugano|Kauno Zalgiris",
+      "market": "u45",
+      "team": null,
       "odds": 1.86,
       "odds_source": "estimée",
-      "p_win": 0.508,
+      "p_win": 0.507,
       "p_push": 0.0,
       "min_odds": 2.03
      },
@@ -7970,16 +7970,6 @@
       "min_odds": 1.98
      },
      {
-      "id": "20261105|UEL|Anderlecht|RB Salzburg",
-      "market": "1",
-      "team": "Anderlecht",
-      "odds": 1.74,
-      "odds_source": "estimée",
-      "p_win": 0.544,
-      "p_push": 0.0,
-      "min_odds": 1.89
-     },
-     {
       "id": "20261105|UECL|Getafe|Brighton & Hove Albion",
       "market": "a15",
       "team": null,
@@ -7990,30 +7980,30 @@
       "min_odds": 1.94
      },
      {
-      "id": "20261105|UEL|Torreense|Ararat-Armenia",
-      "market": "u45",
+      "id": "20261105|UECL|Trabzonspor|SC Freiburg",
+      "market": "h15",
       "team": null,
-      "odds": 1.8,
+      "odds": 1.72,
       "odds_source": "estimée",
-      "p_win": 0.523,
+      "p_win": 0.55,
       "p_push": 0.0,
-      "min_odds": 1.97
+      "min_odds": 1.87
      },
      {
-      "id": "20261105|UECL|KuPS Kuopio|KAA Gent",
-      "market": "2",
-      "team": "KAA Gent",
-      "odds": 1.79,
+      "id": "20261105|UEL|Anderlecht|RB Salzburg",
+      "market": "1",
+      "team": "Anderlecht",
+      "odds": 1.74,
       "odds_source": "estimée",
-      "p_win": 0.526,
+      "p_win": 0.543,
       "p_push": 0.0,
-      "min_odds": 1.96
+      "min_odds": 1.9
      }
     ],
-    "odds": 62.49,
+    "odds": 60.38,
     "p_win": 0.011,
     "p_not_lose": 0.011,
-    "ev": -0.465,
+    "ev": -0.461,
     "reliability": 0.9,
     "priority": 26,
     "level": "basse"
@@ -8112,7 +8102,7 @@
       "odds_source": "estimée",
       "p_win": 0.453,
       "p_push": 0.0,
-      "min_odds": 2.27
+      "min_odds": 2.28
      }
     ],
     "odds": 1440.26,
@@ -8127,7 +8117,7 @@
  },
  "2026-11-06": {
   "frozen": false,
-  "created": "2026-11-01T10:40+00:00",
+  "created": "2026-11-01T11:36+00:00",
   "coupons": [
    {
     "kind": "buts20",
@@ -8838,7 +8828,7 @@
  },
  "2026-11-07": {
   "frozen": false,
-  "created": "2026-11-01T10:40+00:00",
+  "created": "2026-11-01T11:36+00:00",
   "coupons": [
    {
     "kind": "value",
@@ -10914,7 +10904,7 @@
  },
  "2026-11-08": {
   "frozen": false,
-  "created": "2026-11-01T10:40+00:00",
+  "created": "2026-11-01T11:36+00:00",
   "coupons": [
    {
     "kind": "value",
