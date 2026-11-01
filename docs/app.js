@@ -162,7 +162,7 @@ function legRow(l, settled) {
   return `<button class="leg" data-match="${esc(l.id)}">
     <span class="teams">${esc(l.home)} – ${esc(l.away)} ${l._live || ""}</span>
     <span class="o">${res || odds(l.odds)}</span>
-    <span class="meta"><span class="mk">${esc(mkLabel(l))}</span> · ${esc(l.league)}${l.id ? " · " + dayLabel(l.id.slice(0, 4) + "-" + l.id.slice(4, 6) + "-" + l.id.slice(6, 8), state.data.today) : ""}${l.time ? " " + esc(l.time) : ""} · ${pct(l.p_win)}${l.p_push ? ` (+${pct(l.p_push)} remboursé)` : ""}</span>
+    <span class="meta"><span class="mk">${esc(mkLabel(l))}</span> · ${esc(l.league)}${l.id ? " · " + dayLabel(l.id.slice(0, 4) + "-" + l.id.slice(4, 6) + "-" + l.id.slice(6, 8), state.data.today) : ""}${l.time ? " " + esc(l.time) : ""} · ${l.p_push ? `gagné ${pct(l.p_win)} · remboursé ${pct(l.p_push)} · perdu ${pct(Math.max(0, 1 - l.p_win - l.p_push))}` : pct(l.p_win)}</span>
     <span class="min">${settled ? odds(l.odds) : "min. " + odds(l.min_odds)}</span>
   </button>`;
 }
