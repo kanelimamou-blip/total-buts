@@ -14,7 +14,7 @@
 "div": "UCL",
 "home": "Shakhtar Donetsk",
 "away": "Sporting CP",
-"fav_p": 0.528,
+"fav_p": 0.527,
 "fav_side": "2",
 "o15": 0.861,
 "o25": 0.666
@@ -84,7 +84,7 @@
 "div": "UCL",
 "home": "Manchester United",
 "away": "AS Roma",
-"fav_p": 0.535,
+"fav_p": 0.536,
 "fav_side": "1",
 "o15": 0.896,
 "o25": 0.73
@@ -174,7 +174,7 @@
 "div": "UCL",
 "home": "FC Porto",
 "away": "Napoli",
-"fav_p": 0.478,
+"fav_p": 0.477,
 "fav_side": "1",
 "o15": 0.777,
 "o25": 0.534
@@ -581,7 +581,9 @@
 "fav_p": 0.369,
 "fav_side": "2",
 "o15": 0.708,
-"o25": 0.461
+"o25": 0.461,
+"goals": 5,
+"score": "5-0"
 },
 "20261102|I1|Sassuolo|Fiorentina": {
 "date": "2026-11-02",
@@ -798,10 +800,10 @@
 "div": "T1",
 "home": "Gaziantep",
 "away": "Kasimpasa",
-"fav_p": 0.372,
+"fav_p": 0.368,
 "fav_side": "1",
 "o15": 0.711,
-"o25": 0.489
+"o25": 0.491
 },
 "20261106|N1|Willem II|Zwolle": {
 "date": "2026-11-06",
@@ -898,10 +900,10 @@
 "div": "T1",
 "home": "Eyupspor",
 "away": "Kocaelispor",
-"fav_p": 0.355,
+"fav_p": 0.352,
 "fav_side": "2",
-"o15": 0.641,
-"o25": 0.389
+"o15": 0.642,
+"o25": 0.391
 },
 "20261107|E1|Wrexham|Wolves": {
 "date": "2026-11-07",
@@ -968,10 +970,10 @@
 "div": "T1",
 "home": "Samsunspor",
 "away": "Konyaspor",
-"fav_p": 0.444,
+"fav_p": 0.44,
 "fav_side": "1",
-"o15": 0.709,
-"o25": 0.495
+"o15": 0.71,
+"o25": 0.497
 },
 "20261107|I1|Cagliari|Frosinone": {
 "date": "2026-11-07",
@@ -1178,10 +1180,10 @@
 "div": "T1",
 "home": "Galatasaray",
 "away": "Amedspor",
-"fav_p": 0.595,
+"fav_p": 0.592,
 "fav_side": "1",
-"o15": 0.811,
-"o25": 0.592
+"o15": 0.812,
+"o25": 0.593
 },
 "20261107|F1|Auxerre|Paris FC": {
 "date": "2026-11-07",
@@ -1338,10 +1340,10 @@
 "div": "T1",
 "home": "Rizespor",
 "away": "Erzurumspor",
-"fav_p": 0.503,
+"fav_p": 0.5,
 "fav_side": "1",
-"o15": 0.713,
-"o25": 0.477
+"o15": 0.714,
+"o25": 0.479
 },
 "20261108|N1|Heerenveen|Feyenoord": {
 "date": "2026-11-08",
@@ -1368,10 +1370,10 @@
 "div": "T1",
 "home": "Corum",
 "away": "Fenerbahce",
-"fav_p": 0.484,
+"fav_p": 0.481,
 "fav_side": "2",
-"o15": 0.862,
-"o25": 0.687
+"o15": 0.863,
+"o25": 0.689
 },
 "20261108|SP1|Elche|Betis": {
 "date": "2026-11-08",
@@ -1518,10 +1520,10 @@
 "div": "T1",
 "home": "Alanyaspor",
 "away": "Trabzonspor",
-"fav_p": 0.445,
+"fav_p": 0.441,
 "fav_side": "2",
-"o15": 0.774,
-"o25": 0.533
+"o15": 0.775,
+"o25": 0.534
 },
 "20261108|P1|Santa Clara|Gil Vicente": {
 "date": "2026-11-08",
@@ -1668,10 +1670,10 @@
 "div": "T1",
 "home": "Besiktas",
 "away": "Genclerbirligi",
-"fav_p": 0.664,
+"fav_p": 0.661,
 "fav_side": "1",
-"o15": 0.79,
-"o25": 0.606
+"o15": 0.791,
+"o25": 0.607
 },
 "20261108|P1|Guimaraes|Porto": {
 "date": "2026-11-08",
@@ -1918,10 +1920,10 @@
 "div": "T1",
 "home": "Genclerbirligi",
 "away": "Gaziantep",
-"fav_p": 0.402,
+"fav_p": 0.399,
 "fav_side": "1",
 "o15": 0.735,
-"o25": 0.5
+"o25": 0.502
 },
 "20261121|E1|Norwich|Cardiff": {
 "date": "2026-11-21",
@@ -1968,20 +1970,20 @@
 "div": "T1",
 "home": "Amedspor",
 "away": "Rizespor",
-"fav_p": 0.719,
+"fav_p": 0.715,
 "fav_side": "1",
 "o15": 0.843,
-"o25": 0.646
+"o25": 0.647
 },
 "20261121|T1|Galatasaray|Samsunspor": {
 "date": "2026-11-21",
 "div": "T1",
 "home": "Galatasaray",
 "away": "Samsunspor",
-"fav_p": 0.783,
+"fav_p": 0.779,
 "fav_side": "1",
-"o15": 0.86,
-"o25": 0.706
+"o15": 0.861,
+"o25": 0.707
 },
 "20261121|SP1|Alaves|La Coruna": {
 "date": "2026-11-21",
@@ -2238,10 +2240,10 @@
 "div": "T1",
 "home": "Kocaelispor",
 "away": "Fenerbahce",
-"fav_p": 0.529,
+"fav_p": 0.525,
 "fav_side": "2",
-"o15": 0.772,
-"o25": 0.528
+"o15": 0.773,
+"o25": 0.53
 },
 "20261121|F1|Nice|Paris SG": {
 "date": "2026-11-21",
@@ -2418,10 +2420,10 @@
 "div": "T1",
 "home": "Erzurumspor",
 "away": "Goztep",
-"fav_p": 0.435,
+"fav_p": 0.431,
 "fav_side": "2",
-"o15": 0.724,
-"o25": 0.463
+"o15": 0.725,
+"o25": 0.464
 },
 "20261122|N1|Twente|Willem II": {
 "date": "2026-11-22",
@@ -2478,20 +2480,20 @@
 "div": "T1",
 "home": "Kasimpasa",
 "away": "Alanyaspor",
-"fav_p": 0.428,
+"fav_p": 0.425,
 "fav_side": "1",
-"o15": 0.744,
-"o25": 0.475
+"o15": 0.745,
+"o25": 0.477
 },
 "20261122|T1|Konyaspor|Besiktas": {
 "date": "2026-11-22",
 "div": "T1",
 "home": "Konyaspor",
 "away": "Besiktas",
-"fav_p": 0.455,
+"fav_p": 0.451,
 "fav_side": "2",
-"o15": 0.733,
-"o25": 0.497
+"o15": 0.734,
+"o25": 0.499
 },
 "20261122|N1|Ajax|Den Haag": {
 "date": "2026-11-22",
@@ -2598,10 +2600,10 @@
 "div": "T1",
 "home": "Trabzonspor",
 "away": "Eyupspor",
-"fav_p": 0.752,
+"fav_p": 0.749,
 "fav_side": "1",
-"o15": 0.815,
-"o25": 0.631
+"o15": 0.816,
+"o25": 0.633
 },
 "20261122|F1|Lorient|Rennes": {
 "date": "2026-11-22",
@@ -2878,20 +2880,20 @@
 "div": "T1",
 "home": "Rizespor",
 "away": "Kasimpasa",
-"fav_p": 0.425,
+"fav_p": 0.422,
 "fav_side": "1",
-"o15": 0.781,
-"o25": 0.526
+"o15": 0.782,
+"o25": 0.527
 },
 "20261127|T1|Alanyaspor|Konyaspor": {
 "date": "2026-11-27",
 "div": "T1",
 "home": "Alanyaspor",
 "away": "Konyaspor",
-"fav_p": 0.456,
+"fav_p": 0.452,
 "fav_side": "1",
-"o15": 0.702,
-"o25": 0.448
+"o15": 0.703,
+"o25": 0.449
 },
 "20261127|N1|Groningen|Willem II": {
 "date": "2026-11-27",
@@ -2968,7 +2970,7 @@
 "div": "UECL",
 "home": "Atalanta",
 "away": "Kairat Almaty",
-"fav_p": 0.797,
+"fav_p": 0.798,
 "fav_side": "1",
 "o15": 0.874,
 "o25": 0.692
@@ -3121,7 +3123,7 @@
 "fav_p": 0.526,
 "fav_side": "2",
 "o15": 0.679,
-"o25": 0.408
+"o25": 0.409
 },
 "20261105|UECL|FC Thun|Heart of Midlothian": {
 "date": "2026-11-05",
@@ -3171,14 +3173,14 @@
 "fav_p": 0.466,
 "fav_side": "2",
 "o15": 0.834,
-"o25": 0.619
+"o25": 0.62
 },
 "20261105|UEL|Bayer Leverkusen|Marseille": {
 "date": "2026-11-05",
 "div": "UEL",
 "home": "Bayer Leverkusen",
 "away": "Marseille",
-"fav_p": 0.576,
+"fav_p": 0.575,
 "fav_side": "1",
 "o15": 0.83,
 "o25": 0.615
@@ -3258,7 +3260,7 @@
 "div": "UECL",
 "home": "CSU Craiova",
 "away": "Egnatia",
-"fav_p": 0.426,
+"fav_p": 0.427,
 "fav_side": "1",
 "o15": 0.69,
 "o25": 0.421
@@ -3300,7 +3302,7 @@
 "away": "Union St.-Gilloise",
 "fav_p": 0.387,
 "fav_side": "2",
-"o15": 0.669,
+"o15": 0.668,
 "o25": 0.396
 },
 "20261105|UECL|Riga FC|Jablonec": {
@@ -3308,7 +3310,7 @@
 "div": "UECL",
 "home": "Riga FC",
 "away": "Jablonec",
-"fav_p": 0.381,
+"fav_p": 0.38,
 "fav_side": "2",
 "o15": 0.643,
 "o25": 0.367
@@ -3348,10 +3350,10 @@
 "div": "T1",
 "home": "Samsunspor",
 "away": "Genclerbirligi",
-"fav_p": 0.499,
+"fav_p": 0.496,
 "fav_side": "1",
-"o15": 0.766,
-"o25": 0.547
+"o15": 0.767,
+"o25": 0.549
 },
 "20261128|I1|Frosinone|Parma": {
 "date": "2026-11-28",
@@ -3528,10 +3530,10 @@
 "div": "T1",
 "home": "Gaziantep",
 "away": "Amedspor",
-"fav_p": 0.588,
+"fav_p": 0.585,
 "fav_side": "2",
-"o15": 0.786,
-"o25": 0.585
+"o15": 0.787,
+"o25": 0.587
 },
 "20261128|F1|Angers|Lens": {
 "date": "2026-11-28",
@@ -3680,10 +3682,10 @@
 "div": "T1",
 "home": "Corum",
 "away": "Kocaelispor",
-"fav_p": 0.545,
+"fav_p": 0.541,
 "fav_side": "1",
-"o15": 0.785,
-"o25": 0.549
+"o15": 0.786,
+"o25": 0.55
 },
 "20261129|N1|Den Haag|Utrecht": {
 "date": "2026-11-29",
@@ -3830,10 +3832,10 @@
 "div": "T1",
 "home": "Fenerbahce",
 "away": "Erzurumspor",
-"fav_p": 0.779,
+"fav_p": 0.775,
 "fav_side": "1",
 "o15": 0.816,
-"o25": 0.615
+"o25": 0.616
 },
 "20261129|F1|Toulouse|Rennes": {
 "date": "2026-11-29",
@@ -4150,10 +4152,10 @@
 "div": "T1",
 "home": "Goztep",
 "away": "Trabzonspor",
-"fav_p": 0.387,
+"fav_p": 0.384,
 "fav_side": "2",
-"o15": 0.814,
-"o25": 0.568
+"o15": 0.815,
+"o25": 0.569
 },
 "20261130|I1|Lecce|Atalanta": {
 "date": "2026-11-30",
@@ -4170,10 +4172,10 @@
 "div": "T1",
 "home": "Besiktas",
 "away": "Galatasaray",
-"fav_p": 0.439,
+"fav_p": 0.435,
 "fav_side": "2",
-"o15": 0.817,
-"o25": 0.563
+"o15": 0.818,
+"o25": 0.565
 },
 "20261130|I1|Cagliari|Milan": {
 "date": "2026-11-30",
@@ -6998,10 +7000,10 @@
 "div": "T1",
 "home": "Goztep",
 "away": "Buyuksehyr",
-"fav_p": 0.417,
+"fav_p": 0.414,
 "fav_side": "1",
-"o15": 0.777,
-"o25": 0.55
+"o15": 0.778,
+"o25": 0.552
 },
 "20261108|G1|AEK|Levadeiakos": {
 "date": "2026-11-08",
@@ -7048,10 +7050,10 @@
 "div": "T1",
 "home": "Buyuksehyr",
 "away": "Corum",
-"fav_p": 0.497,
+"fav_p": 0.493,
 "fav_side": "1",
 "o15": 0.842,
-"o25": 0.636
+"o25": 0.638
 },
 "20261128|E2|Wigan|Plymouth": {
 "date": "2026-11-28",
@@ -7068,10 +7070,10 @@
 "div": "T1",
 "home": "Eyupspor",
 "away": "Buyuksehyr",
-"fav_p": 0.541,
+"fav_p": 0.537,
 "fav_side": "2",
-"o15": 0.766,
-"o25": 0.535
+"o15": 0.767,
+"o25": 0.537
 },
 "20261129|G1|AEK|PAOK": {
 "date": "2026-11-29",
