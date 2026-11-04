@@ -17840,7 +17840,7 @@
  },
  "2026-11-05": {
   "frozen": false,
-  "created": "2026-11-04T20:23+00:00",
+  "created": "2026-11-04T20:53+00:00",
   "coupons": [
    {
     "kind": "mix",
@@ -17924,7 +17924,7 @@
       "team": null,
       "odds": 1.44,
       "odds_source": "estimée",
-      "p_win": 0.498,
+      "p_win": 0.497,
       "p_push": 0.239,
       "min_odds": 1.58
      },
@@ -17941,8 +17941,8 @@
     ],
     "odds": 2.23,
     "p_win": 0.303,
-    "p_not_lose": 0.449,
-    "ev": -0.188,
+    "p_not_lose": 0.448,
+    "ev": -0.189,
     "reliability": 0.949,
     "priority": 3,
     "level": "haute"
@@ -18289,15 +18289,15 @@
       "team": "Brighton & Hove Albion",
       "odds": 1.51,
       "odds_source": "estimée",
-      "p_win": 0.625,
+      "p_win": 0.624,
       "p_push": 0.0,
       "min_odds": 1.65
      }
     ],
     "odds": 2.01,
-    "p_win": 0.445,
-    "p_not_lose": 0.445,
-    "ev": -0.196,
+    "p_win": 0.444,
+    "p_not_lose": 0.444,
+    "ev": -0.197,
     "reliability": 0.9,
     "priority": 12,
     "level": "moyenne"
@@ -18324,15 +18324,15 @@
       "team": null,
       "odds": 1.79,
       "odds_source": "estimée",
-      "p_win": 0.527,
+      "p_win": 0.526,
       "p_push": 0.0,
       "min_odds": 1.96
      }
     ],
     "odds": 2.0,
-    "p_win": 0.446,
-    "p_not_lose": 0.446,
-    "ev": -0.196,
+    "p_win": 0.445,
+    "p_not_lose": 0.445,
+    "ev": -0.197,
     "reliability": 0.924,
     "priority": 13,
     "level": "moyenne"
@@ -18654,15 +18654,15 @@
       "team": null,
       "odds": 2.13,
       "odds_source": "estimée",
-      "p_win": 0.443,
+      "p_win": 0.442,
       "p_push": 0.0,
       "min_odds": 2.33
      }
     ],
     "odds": 3.58,
     "p_win": 0.181,
-    "p_not_lose": 0.301,
-    "ev": -0.217,
+    "p_not_lose": 0.3,
+    "ev": -0.219,
     "reliability": 0.924,
     "priority": 21,
     "level": "basse"
@@ -18767,7 +18767,7 @@
       "id": "20261105|UECL|Riga FC|Jablonec",
       "market": "o20",
       "team": null,
-      "odds": 1.87,
+      "odds": 1.88,
       "odds_source": "estimée",
       "p_win": 0.364,
       "p_push": 0.276,
@@ -18787,7 +18787,7 @@
       "id": "20261105|UEL|Sunderland|Dinamo Zagreb",
       "market": "o20",
       "team": null,
-      "odds": 1.27,
+      "odds": 1.26,
       "odds_source": "estimée",
       "p_win": 0.572,
       "p_push": 0.226,
@@ -18804,10 +18804,10 @@
       "min_odds": 1.53
      }
     ],
-    "odds": 4.91,
+    "odds": 4.89,
     "p_win": 0.038,
     "p_not_lose": 0.26,
-    "ev": -0.318,
+    "ev": -0.32,
     "reliability": 0.92,
     "priority": 24,
     "level": "basse"
@@ -18890,14 +18890,14 @@
       "odds": 1.43,
       "odds_source": "estimée",
       "p_win": 0.493,
-      "p_push": 0.254,
+      "p_push": 0.255,
       "min_odds": 1.56
      }
     ],
     "odds": 7.1,
     "p_win": 0.064,
-    "p_not_lose": 0.167,
-    "ev": -0.272,
+    "p_not_lose": 0.168,
+    "ev": -0.271,
     "reliability": 0.916,
     "priority": 26,
     "level": "basse"
@@ -18908,6 +18908,16 @@
     "scope": "Toutes ligues",
     "stake_pct": 0.5,
     "legs": [
+     {
+      "id": "20261105|UECL|AS Monaco|FC Nordsjælland",
+      "market": "o20",
+      "team": null,
+      "odds": 1.2,
+      "odds_source": "estimée",
+      "p_win": 0.617,
+      "p_push": 0.214,
+      "min_odds": 1.31
+     },
      {
       "id": "20261105|UECL|KuPS Kuopio|KAA Gent",
       "market": "a15",
@@ -18926,7 +18936,7 @@
       "odds_source": "estimée",
       "p_win": 0.638,
       "p_push": 0.0,
-      "min_odds": 1.61
+      "min_odds": 1.62
      },
      {
       "id": "20261105|UEL|Levski Sofia|Jagiellonia Bialystok",
@@ -18937,23 +18947,13 @@
       "p_win": 0.374,
       "p_push": 0.272,
       "min_odds": 2.0
-     },
-     {
-      "id": "20261105|UEL|Bayer Leverkusen|Marseille",
-      "market": "o15",
-      "team": null,
-      "odds": 1.14,
-      "odds_source": "estimée",
-      "p_win": 0.819,
-      "p_push": 0.0,
-      "min_odds": 1.26
      }
     ],
-    "odds": 6.17,
-    "p_win": 0.091,
-    "p_not_lose": 0.158,
-    "ev": -0.337,
-    "reliability": 0.937,
+    "odds": 6.49,
+    "p_win": 0.069,
+    "p_not_lose": 0.16,
+    "ev": -0.323,
+    "reliability": 0.924,
     "priority": 27,
     "level": "basse"
    },
@@ -19066,7 +19066,7 @@
       "odds_source": "estimée",
       "p_win": 0.524,
       "p_push": 0.0,
-      "min_odds": 1.96
+      "min_odds": 1.97
      }
     ],
     "odds": 20.73,
@@ -19131,17 +19131,7 @@
       "odds_source": "estimée",
       "p_win": 0.524,
       "p_push": 0.0,
-      "min_odds": 1.96
-     },
-     {
-      "id": "20261105|UECL|Getafe|Brighton & Hove Albion",
-      "market": "a15",
-      "team": null,
-      "odds": 1.79,
-      "odds_source": "estimée",
-      "p_win": 0.527,
-      "p_push": 0.0,
-      "min_odds": 1.96
+      "min_odds": 1.97
      },
      {
       "id": "20261105|UECL|KuPS Kuopio|KAA Gent",
@@ -19152,12 +19142,22 @@
       "p_win": 0.53,
       "p_push": 0.0,
       "min_odds": 1.94
+     },
+     {
+      "id": "20261105|UECL|Atalanta|Kairat Almaty",
+      "market": "u35",
+      "team": null,
+      "odds": 1.81,
+      "odds_source": "estimée",
+      "p_win": 0.52,
+      "p_push": 0.0,
+      "min_odds": 1.98
      }
     ],
-    "odds": 66.04,
+    "odds": 66.78,
     "p_win": 0.01,
     "p_not_lose": 0.01,
-    "ev": -0.465,
+    "ev": -0.466,
     "reliability": 0.921,
     "priority": 30,
     "level": "basse"
@@ -19244,7 +19244,7 @@
       "team": "Braga",
       "odds": 2.11,
       "odds_source": "estimée",
-      "p_win": 0.448,
+      "p_win": 0.447,
       "p_push": 0.0,
       "min_odds": 2.3
      },
@@ -19262,7 +19262,7 @@
     "odds": 1445.09,
     "p_win": 0.0,
     "p_not_lose": 0.0,
-    "ev": -0.526,
+    "ev": -0.527,
     "reliability": 0.927,
     "priority": 31,
     "level": "basse"
@@ -19271,7 +19271,7 @@
  },
  "2026-11-06": {
   "frozen": false,
-  "created": "2026-11-04T20:23+00:00",
+  "created": "2026-11-04T20:53+00:00",
   "coupons": [
    {
     "kind": "buts20",
@@ -20627,7 +20627,7 @@
  },
  "2026-11-07": {
   "frozen": false,
-  "created": "2026-11-04T20:23+00:00",
+  "created": "2026-11-04T20:53+00:00",
   "coupons": [
    {
     "kind": "ligue",
@@ -22598,7 +22598,7 @@
  },
  "2026-11-08": {
   "frozen": false,
-  "created": "2026-11-04T20:23+00:00",
+  "created": "2026-11-04T20:53+00:00",
   "coupons": [
    {
     "kind": "ligue",
@@ -24814,7 +24814,7 @@
  },
  "2026-11-09": {
   "frozen": false,
-  "created": "2026-11-04T20:23+00:00",
+  "created": "2026-11-04T20:53+00:00",
   "coupons": []
  }
 }
