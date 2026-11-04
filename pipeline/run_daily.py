@@ -67,7 +67,7 @@ def main():
     if not args.offline:
         download(today)
     results = load_results()
-    fixtures = load_fixtures()
+    fixtures = ahead.align_names(load_fixtures(), results)  # noms du calendrier alignés sur ceux des résultats
     STATE_DIR.mkdir(parents=True, exist_ok=True)
     SITE_DATA.mkdir(parents=True, exist_ok=True)
 
@@ -143,7 +143,25 @@ def main():
     # Notes d'équipes et prédictions des matchs à venir
     espn_ref = {(r.div, r.home, r.away): [r.slug, r.espn_id] for r in far.itertuples()}
     known = {(r.div, r.home, r.away) for r in fixtures.itertuples()}
-    far = far[[(r.div, r.home, r.away) not in known for r in far.itertuples()]]
+    # Un même match peut arriver des deux sources sous deux noms (« Oxford » / « Oxford Utd ») : même championnat,
+    # même jour (± 1) et une équipe en commun suffisent à le reconnaître, sinon un coupon pourrait jouer les deux camps.
+    by_side = {}
+    for r in fixtures.itertuples():
+        for k in (-1, 0, 1):
+            dd = (pd.Timestamp(r.date) + pd.Timedelta(days=k)).strftime("%Y-%m-%d")
+            by_side[(r.div, dd, "h", r.home)] = (r.home, r.away)
+            by_side[(r.div, dd, "a", r.away)] = (r.home, r.away)
+    keep = []
+    for r in far.itertuples():
+        if (r.div, r.home, r.away) in known:
+            keep.append(False)
+            continue
+        dd = pd.Timestamp(r.date).strftime("%Y-%m-%d")
+        twin = by_side.get((r.div, dd, "h", r.home)) or by_side.get((r.div, dd, "a", r.away))
+        if twin:
+            espn_ref.setdefault((r.div, *twin), [r.slug, r.espn_id])  # scores en direct pour la version football-data
+        keep.append(twin is None)
+    far = far[keep]
     print(f"Calendrier : {len(fixtures)} matchs football-data, {len(far)} ajoutés depuis ESPN.")
     fixtures = pd.concat([fixtures, far], ignore_index=True)
     fx = fixtures[(fixtures["date"] >= ts_today) & (fixtures["date"] < ts_today + pd.Timedelta(days=HORIZON_DAYS))]

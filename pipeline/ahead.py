@@ -93,6 +93,38 @@ def name_map(espn: pd.DataFrame, results: pd.DataFrame) -> dict:
     return out
 
 
+def align_names(fx: pd.DataFrame, results: pd.DataFrame) -> pd.DataFrame:
+    """Le calendrier football-data écrit parfois les équipes autrement que ses résultats
+    (« Oxford Utd » / « Oxford », « KV Mechelen » / « Mechelen ») : on reprend le nom des résultats,
+    sinon le modèle ne reconnaît pas l'équipe."""
+    if fx.empty:
+        return fx
+    fx = fx.copy()
+    for div, g in fx.groupby("div"):
+        r = results[results["div"] == div]
+        teams = sorted(set(r[r["date"] >= r["date"].max() - pd.Timedelta(days=400)][["home", "away"]].stack()))
+        if not teams:
+            continue
+        normed = [_norm(t) for t in teams]
+        fix = {}
+        for name in set(g["home"]) | set(g["away"]):
+            if name in teams:
+                continue
+            n = _norm(name)
+            hit = [t for t, nt in zip(teams, normed) if nt and (nt in n or n in nt)]
+            best = hit[0] if len(hit) == 1 else None
+            if best is None:
+                close = difflib.get_close_matches(n, normed, n=1, cutoff=0.6)
+                best = teams[normed.index(close[0])] if close else None
+            if best:
+                fix[name] = best
+        if fix:
+            idx = fx["div"] == div
+            fx.loc[idx, "home"] = fx.loc[idx, "home"].replace(fix)
+            fx.loc[idx, "away"] = fx.loc[idx, "away"].replace(fix)
+    return fx
+
+
 def fixtures(today: date, results: pd.DataFrame, offline: bool = False) -> pd.DataFrame:
     """Matchs à venir sur AHEAD_DAYS jours, au format de fetch.load_fixtures (sans cotes)."""
     if not offline:
