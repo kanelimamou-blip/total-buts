@@ -59,31 +59,30 @@ function couponDays() {
 // Trois étages : une base de tickets autour de 2, quelques tickets plus hauts, un gros ticket fiable
 const PLAN_MAX = 10, PLAN_TIERS = [["base", "Base ~2", 3, 2, 2.6], ["moyen", "Large", 6, 2.6, 8], ["gros", "Gros ticket", 1, 8, 1e9]];
 const PLAN_SKIP = new Set(["jackpot", "mille"]), PLAN_MULTI_MAX = 2;
-// Veille : un type de coupon n'entre dans le plan que s'il passe au moins aussi bien qu'annoncé, sur 3 ans rejoués
-// et en live (un coupon live compte 3 fois). Sinon il « dort » : toujours proposé dans Coupons et suivi, mais hors du plan.
-// Réévalué à chaque mise à jour, donc un type endormi se réveille dès que ses chiffres repassent au-dessus.
+// Veille : un type de coupon n'entre dans le plan que s'il rapporte réellement, après taxe, à mise égale :
+// réussite réelle × cote, sur 3 ans rejoués aux cotes du marché et en live (un coupon live compte 3 fois).
+// Il faut au moins 100 coupons de recul. Sinon il « dort » : toujours proposé dans Coupons et suivi, mais hors du plan.
+// Réévalué à chaque mise à jour : un type endormi se réveille dès que son résultat repasse au-dessus de zéro.
 function couponStatus(c) {
-  const d = state.data, bt = state.bt || {};
-  if (SMALL_KINDS.has(c.kind)) {
-    const sig = signature(c), f = d.combo_factors?.[sig];
-    if (f == null) return { on: false, key: sig, why: "pas encore assez de recul" };
-    return { on: f >= 1, key: sig, f, why: f >= 1 ? "passe au moins comme annoncé" : "passe moins bien qu'annoncé" };
-  }
-  const b = bt.coupons?.[c.kind];
-  if (!b) return { on: false, key: c.kind, why: "pas encore de test sur 3 ans" };
-  const live = d.coupons.filter((x) => x.kind === c.kind && (x.status === "won" || x.status === "lost"));
-  const lp = live.reduce((a, x) => a + x.p_not_lose, 0), lw = live.filter((x) => x.status === "won").length;
-  const real = (b.hit * b.n + 3 * lw) / (b.n + 3 * live.length), pred = (b.pred_hit * b.n + 3 * lp) / (b.n + 3 * live.length);
-  const f = real / pred;
-  return { on: f >= 1, key: c.kind, f, why: f >= 1 ? "passe au moins comme annoncé" : "passe moins bien qu'annoncé" };
+  const d = state.data, bt = state.bt || {}, small = SMALL_KINDS.has(c.kind);
+  const key = small ? signature(c) : c.kind, b = small ? bt.coupons && bt.combos?.[key] : bt.coupons?.[c.kind];
+  const live = d.coupons.filter((x) => (x.status === "won" || x.status === "lost") && (small ? SMALL_KINDS.has(x.kind) && signature(x) === key : x.kind === c.kind));
+  const lnet = live.reduce((a, x) => a + (x.status === "won" ? netOdds(x.odds) - 1 : -1), 0);
+  let n = 3 * live.length, net = 3 * lnet;
+  if (b && b.hit > 0) { const o = (b.roi + 1) / b.hit; n += b.n; net += b.n * (b.hit * netOdds(o) - 1); }
+  if (n < 100) return { on: false, key, why: "pas encore assez de recul" };
+  const r = net / n;
+  return { on: r >= 0, key, f: 1 + r, why: r >= 0 ? "rapporte après taxe" : "perd après taxe" };
 }
 function planScore(c) {
   const f = SMALL_KINDS.has(c.kind) ? state.data.combo_factors?.[signature(c)] || 1 : 1;
   return c.p_not_lose * f;
 }
-function dayPlan(date) {
+// obs = plan d'observation : quand aucun type ne rapporte encore, on suit quand même les moins perdants (à ne pas jouer)
+const obsScore = (c) => planScore(c) * (couponStatus(c).f ?? 0.75);
+function dayPlan(date, obs = false) {
   const d = state.data, uses = {}, out = [];
-  const pool = d.coupons.filter((c) => c.date === date && !PLAN_SKIP.has(c.kind) && c.odds >= 2 && c.status !== "void" && couponStatus(c).on).sort((a, b) => planScore(b) - planScore(a));
+  const pool = d.coupons.filter((c) => c.date === date && !PLAN_SKIP.has(c.kind) && c.odds >= 2 && c.status !== "void" && (obs || couponStatus(c).on)).sort((a, b) => obs ? obsScore(b) - obsScore(a) : planScore(b) - planScore(a));
   let multi = 0;  // tickets étalés sur plusieurs jours : 2 au plus, le reste se joue sur des matchs du jour
   const take = (c, tier) => {
     const cap = tier === "gros" ? 3 : 2;  // le gros ticket a beaucoup de matchs : il peut en partager un peu plus
@@ -100,20 +99,23 @@ function dayPlan(date) {
   const order = Object.fromEntries(PLAN_TIERS.map(([k], i) => [k, i]));
   return out.sort((a, b) => order[a._tier] - order[b._tier] || planScore(b) - planScore(a));
 }
+// le plan à jouer s'il existe, sinon le plan d'observation
+function planFor(date) { const p = dayPlan(date); return p.length >= 2 ? { plan: p, obs: false } : { plan: dayPlan(date, true), obs: true }; }
 function planBlock(date) {
-  const d = state.data, plan = dayPlan(date);
+  const d = state.data, { plan, obs } = planFor(date);
   if (plan.length < 2) return "";
   const exp = plan.reduce((a, c) => a + c.p_not_lose, 0), sd = Math.sqrt(plan.reduce((a, c) => a + c.p_not_lose * (1 - c.p_not_lose), 0));
   const lo = Math.max(0, Math.round(exp - sd)), hi = Math.min(plan.length, Math.round(exp + sd));
   const ret = plan.reduce((a, c) => a + c.p_not_lose * c.odds, 0);
   const tierLab = Object.fromEntries(PLAN_TIERS.map(([k, l]) => [k, l]));
   const base = state.bt?.combos || {};
-  return `<section class="card"><h2>Plan du jour · ${plan.length} tickets à mise égale</h2>
-  <p class="small muted">Trois étages, tous à cote 2 au minimum : 3 tickets de base autour de 2, 6 tickets larges (2,6 à 8) construits sur les marchés où l'appli est fiable, et un gros ticket fiable (8 et plus). Dans chaque étage, ceux qui ont le plus de chances de passer, selon ce que leur combinaison a donné sur 3 ans et en live. Seuls les types de coupons qui passent au moins aussi bien qu'annoncé entrent dans le plan ; les autres sont en veille (voir Suivi). Chaque match au plus 2 fois, et au plus 2 tickets étalés sur plusieurs jours. Les 3 premiers sont à jouer en premier.</p>
+  return `<section class="card"><h2>${obs ? `Plan d'observation · ${plan.length} tickets, à ne pas jouer` : `Plan du jour · ${plan.length} tickets à mise égale`}</h2>
+  ${obs ? `<p class="small"><b>Aucun type de coupon ne rapporte encore après taxe (voir « Actifs et en veille » dans Suivi), donc rien n'est à jouer aujourd'hui.</b> Ces tickets sont les moins perdants : l'appli les suit pour apprendre, et un vrai plan réapparaîtra ici dès qu'un type deviendra rentable.</p>` : ""}
+  <p class="small muted">Trois étages, tous à cote 2 au minimum : 3 tickets de base autour de 2, 6 tickets larges (2,6 à 8) construits sur les marchés où l'appli est fiable, et un gros ticket fiable (8 et plus). Dans chaque étage, ceux qui ont le plus de chances de passer, selon ce que leur combinaison a donné sur 3 ans et en live. Seuls les types de coupons qui rapportent réellement après taxe entrent dans le plan ; les autres sont en veille (voir Suivi). Certains jours, il peut n'y avoir aucun ticket. Chaque match au plus 2 fois, et au plus 2 tickets étalés sur plusieurs jours.${obs ? "" : " Les 3 premiers sont à jouer en premier."}</p>
   <div class="kv"><span>Gagnants attendus</span><b>${String(exp.toFixed(1)).replace(".", ",")} sur ${plan.length} (souvent entre ${lo} et ${hi})</b></div>
   <div class="kv"><span>Retour attendu pour ${plan.length} mises (avant taxe)</span><b>${String(ret.toFixed(1)).replace(".", ",")}</b></div>
   <div class="legs">${plan.map((c, i) => { const b = SMALL_KINDS.has(c.kind) ? base[signature(c)] : null; const idx = d.coupons.indexOf(c);
-    return `<button class="leg"${det("cp", idx)}><span class="teams">${i < 3 ? '<span class="tag">en premier</span> ' : c._tier !== "base" ? `<span class="tag">${tierLab[c._tier]}</span> ` : ""}${esc(c.label)}${c.scope && c.scope !== "Toutes ligues" ? " · " + esc(c.scope) : ""}</span><span class="o">${c.status ? `<span class="status ${c.status}">${{ won: "Gagné", lost: "Perdu" }[c.status] || ""}</span>` : odds(c.odds)}</span><span class="meta">${c.legs.length} matchs · ${pct(c.p_not_lose)} de chances${b ? ` · passé ${pct(b.hit)} sur ${b.n.toLocaleString("fr-FR")}` : ""}</span><span class="min">›</span></button>`; }).join("")}</div>
+    return `<button class="leg"${det("cp", idx)}><span class="teams">${i < 3 && !obs ? '<span class="tag">en premier</span> ' : c._tier !== "base" ? `<span class="tag">${tierLab[c._tier]}</span> ` : ""}${esc(c.label)}${c.scope && c.scope !== "Toutes ligues" ? " · " + esc(c.scope) : ""}</span><span class="o">${c.status ? `<span class="status ${c.status}">${{ won: "Gagné", lost: "Perdu" }[c.status] || ""}</span>` : odds(c.odds)}</span><span class="meta">${c.legs.length} matchs · ${pct(c.p_not_lose)} de chances${b ? ` · passé ${pct(b.hit)} sur ${b.n.toLocaleString("fr-FR")}` : ""}</span><span class="min">›</span></button>`; }).join("")}</div>
   <p class="small muted">Honnêtement : à cote 2, viser 7 ou 8 sur 10 chaque jour n'est pas réaliste. Le suivi mesure le vrai taux du plan, jour après jour.</p></section>`;
 }
 function veilleBlock() {
@@ -127,19 +129,19 @@ function veilleBlock() {
   if (!rows.length) return "";
   const f = (x) => (x == null ? "–" : (x > 1 ? "+" : "") + Math.round((x - 1) * 100) + " %");
   return `<section class="card"><h2>Actifs et en veille</h2>
-  <p class="small muted">Réévalué à chaque mise à jour. Un type actif passe au moins aussi bien qu'annoncé (3 ans rejoués + live, un coupon live compte 3 fois) : il peut entrer dans le plan du jour. Un type en veille reste proposé et suivi, mais hors du plan, jusqu'à ce que ses chiffres repassent au-dessus.</p>
-  <div class="tbl"><table><thead><tr><th>Type</th><th class="n">Réel vs annoncé</th><th class="n">État</th></tr></thead><tbody>
+  <p class="small muted">Réévalué à chaque mise à jour. La colonne donne le résultat net après taxe pour une mise de 1 (réussite réelle × cote), sur 3 ans rejoués aux cotes du marché et en live (un coupon live compte 3 fois), avec au moins 100 coupons de recul. Seul un type qui rapporte entre dans le plan du jour. Un type en veille reste proposé et suivi, mais hors du plan, jusqu'à ce que ses chiffres repassent au-dessus.</p>
+  <div class="tbl"><table><thead><tr><th>Type</th><th class="n">Net après taxe</th><th class="n">État</th></tr></thead><tbody>
   ${rows.map(([k, st]) => `<tr><td style="white-space:normal">${esc(k)}<br><span class="small muted">${esc(st.why)}</span></td><td class="n ${st.f >= 1 ? "pos" : st.f ? "neg" : ""}">${f(st.f)}</td><td class="n ${st.on ? "pos" : "neg"}">${st.on ? "actif" : "en veille"}</td></tr>`).join("")}
   </tbody></table></div></section>`;
 }
 function planTracking() {
   const d = state.data;
   const days = [...new Set(d.coupons.filter((c) => c.status === "won" || c.status === "lost").map((c) => c.date))].sort();
-  const rows = days.map((x) => { const p = dayPlan(x).filter((c) => c.status === "won" || c.status === "lost"); return { x, n: p.length, w: p.filter((c) => c.status === "won").length, e: p.reduce((a, c) => a + c.p_not_lose, 0), u: p.reduce((a, c) => a + (c.status === "won" ? c.odds : 0) - 1, 0) }; }).filter((r) => r.n);
+  const rows = days.map((x) => { const p = planFor(x).plan.filter((c) => c.status === "won" || c.status === "lost"); return { x, n: p.length, w: p.filter((c) => c.status === "won").length, e: p.reduce((a, c) => a + c.p_not_lose, 0), u: p.reduce((a, c) => a + (c.status === "won" ? c.odds : 0) - 1, 0) }; }).filter((r) => r.n);
   if (!rows.length) return `<section class="card"><h2>Plan du jour : suivi</h2><p class="small muted">Le plan de 8 à 10 tickets à mise égale sera mesuré ici dès les premiers jours réglés.</p></section>`;
   const t = rows.reduce((a, r) => ({ n: a.n + r.n, w: a.w + r.w, e: a.e + r.e, u: a.u + r.u }), { n: 0, w: 0, e: 0, u: 0 });
   // Feu vert : gain net (après taxe) sur des mises égales, prouvé au-delà du hasard sur au moins 300 tickets
-  const tickets = days.flatMap((x) => dayPlan(x).filter((c) => c.status === "won" || c.status === "lost"));
+  const tickets = days.flatMap((x) => planFor(x).plan.filter((c) => c.status === "won" || c.status === "lost"));
   const net = tickets.map((c) => (c.status === "won" ? netOdds(c.odds) : 0) - 1);
   const mu = net.reduce((a, b) => a + b, 0) / net.length, sdv = Math.sqrt(net.reduce((a, b) => a + (b - mu) ** 2, 0) / Math.max(net.length - 1, 1));
   const lo95 = mu - 1.96 * sdv / Math.sqrt(net.length), perDay = net.length / rows.length;
@@ -576,7 +578,7 @@ function openDetail(t, v) {
   const byDate = (a, b) => (a.date < b.date ? 1 : -1);
   let title = "", cps = null, legs = null, rows = null, note = "";
   if (t === "cp") { const c = d.coupons[+v]; $("#sheet-body").innerHTML = c ? couponCard(c) : ""; $("#sheet").hidden = false; return; }
-  if (t === "plan") { title = `Plan du ${new Date(v).toLocaleDateString("fr-FR", { weekday: "long", day: "numeric", month: "long" })}`; cps = dayPlan(v); }
+  if (t === "plan") { title = `Plan du ${new Date(v).toLocaleDateString("fr-FR", { weekday: "long", day: "numeric", month: "long" })}`; cps = planFor(v).plan; }
   else if (t === "sig") { title = v; cps = d.coupons.filter((c) => SMALL_KINDS.has(c.kind) && signature(c) === v); }
   else if (t === "kind") { title = d.coupon_kinds[v]?.label || v; cps = d.coupons.filter((c) => c.kind === v); }
   else if (t === "allcoupons") { title = "Tous les coupons"; cps = d.coupons.slice(); }
