@@ -3093,14 +3093,14 @@
 "fav_p": 0.436,
 "fav_side": "2",
 "o15": 0.824,
-"o25": 0.61
+"o25": 0.611
 },
 "20261105|UECL|Lincoln Red Imps|Hajduk Split": {
 "date": "2026-11-05",
 "div": "UECL",
 "home": "Lincoln Red Imps",
 "away": "Hajduk Split",
-"fav_p": 0.677,
+"fav_p": 0.676,
 "fav_side": "2",
 "o15": 0.857,
 "o25": 0.66
@@ -3140,7 +3140,7 @@
 "div": "UECL",
 "home": "Red Star Belgrade",
 "away": "Inter D'Escaldes",
-"fav_p": 0.779,
+"fav_p": 0.778,
 "fav_side": "1",
 "o15": 0.842,
 "o25": 0.636
@@ -3152,7 +3152,7 @@
 "away": "Ajax Amsterdam",
 "fav_p": 0.477,
 "fav_side": "1",
-"o15": 0.811,
+"o15": 0.81,
 "o25": 0.583
 },
 "20261105|UECL|AGF|Braga": {
@@ -3223,7 +3223,7 @@
 "fav_p": 0.795,
 "fav_side": "1",
 "o15": 0.948,
-"o25": 0.844
+"o25": 0.843
 },
 "20261105|UEL|Torreense|Ararat-Armenia": {
 "date": "2026-11-05",
@@ -3233,7 +3233,7 @@
 "fav_p": 0.804,
 "fav_side": "1",
 "o15": 0.935,
-"o25": 0.824
+"o25": 0.823
 },
 "20261105|UEL|Benfica|Lech Poznan": {
 "date": "2026-11-05",
@@ -3290,7 +3290,7 @@
 "div": "UEL",
 "home": "Sunderland",
 "away": "Dinamo Zagreb",
-"fav_p": 0.734,
+"fav_p": 0.733,
 "fav_side": "1",
 "o15": 0.802,
 "o25": 0.578
@@ -3310,7 +3310,7 @@
 "div": "UECL",
 "home": "FC Twente",
 "away": "Pafos",
-"fav_p": 0.493,
+"fav_p": 0.492,
 "fav_side": "1",
 "o15": 0.756,
 "o25": 0.505
@@ -3343,7 +3343,7 @@
 "fav_p": 0.427,
 "fav_side": "1",
 "o15": 0.69,
-"o25": 0.42
+"o25": 0.421
 },
 "20261105|UEL|SK Sturm Graz|NK Celje": {
 "date": "2026-11-05",
@@ -3393,7 +3393,7 @@
 "fav_p": 0.381,
 "fav_side": "2",
 "o15": 0.642,
-"o25": 0.366
+"o25": 0.367
 },
 "20261128|E1|Preston|Norwich": {
 "date": "2026-11-28",
@@ -7506,5 +7506,35 @@
 "fav_side": "1",
 "o15": 0.875,
 "o25": 0.776
+},
+"20261204|D2|Cottbus|Osnabruck": {
+"date": "2026-12-04",
+"div": "D2",
+"home": "Cottbus",
+"away": "Osnabruck",
+"fav_p": 0.529,
+"fav_side": "1",
+"o15": 0.841,
+"o25": 0.669
+},
+"20261204|D2|Bielefeld|Dresden": {
+"date": "2026-12-04",
+"div": "D2",
+"home": "Bielefeld",
+"away": "Dresden",
+"fav_p": 0.516,
+"fav_side": "1",
+"o15": 0.767,
+"o25": 0.566
+},
+"20261204|D1|Bayern Munich|Paderborn": {
+"date": "2026-12-04",
+"div": "D1",
+"home": "Bayern Munich",
+"away": "Paderborn",
+"fav_p": 0.826,
+"fav_side": "1",
+"o15": 0.894,
+"o25": 0.753
 }
 }
