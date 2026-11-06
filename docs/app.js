@@ -56,8 +56,8 @@ function couponDays() {
 
 // Plan du jour : 8 à 10 tickets à cote 2 et plus, à mise égale, choisis par chance de passer
 // et par la réussite passée de leur combinaison. Chaque match apparaît au plus 2 fois dans le plan.
-// Trois étages : une base de tickets autour de 2, quelques tickets plus hauts, un gros ticket fiable
-const PLAN_MAX = 10, PLAN_TIERS = [["base", "Base ~2", 3, 2, 2.6], ["moyen", "Large", 6, 2.6, 8], ["gros", "Gros ticket", 1, 8, 1e9]];
+// Deux étages : une base de tickets autour de 2, quelques tickets plus hauts, un gros ticket fiable
+const PLAN_MAX = 10, PLAN_TIERS = [["base", "Base ~2", 3, 2, 2.6], ["moyen", "Large", 7, 2.6, 8]]  // le gros ticket (jackpot) est sorti du plan le 2026-11-06 : trop rarement gagnant;
 const PLAN_SKIP = new Set(["jackpot", "mille"]), PLAN_MULTI_MAX = 2;
 // Veille : un type de coupon n'entre dans le plan que s'il passe au moins aussi bien qu'annoncé, sur 3 ans rejoués
 // et en live (un coupon live compte 3 fois). Sinon il « dort » : toujours proposé dans Coupons et suivi, mais hors du plan.
@@ -109,7 +109,7 @@ function planBlock(date) {
   const tierLab = Object.fromEntries(PLAN_TIERS.map(([k, l]) => [k, l]));
   const base = state.bt?.combos || {};
   return `<section class="card"><h2>Plan du jour · ${plan.length} tickets à mise égale</h2>
-  <p class="small muted">Trois étages, tous à cote 2 au minimum : 3 tickets de base autour de 2, 6 tickets larges (2,6 à 8) construits sur les marchés où l'appli est fiable, et un gros ticket fiable (8 et plus). Dans chaque étage, ceux qui ont le plus de chances de passer, selon ce que leur combinaison a donné sur 3 ans et en live. Seuls les types de coupons qui passent au moins aussi bien qu'annoncé entrent dans le plan ; les autres sont en veille (voir Suivi). Chaque match au plus 2 fois, et au plus 2 tickets étalés sur plusieurs jours. Les 3 premiers sont à jouer en premier.</p>
+  <p class="small muted">Deux étages, tous à cote 2 au minimum : 3 tickets de base autour de 2 et 7 tickets larges (2,6 à 8) construits sur les marchés où l'appli est fiable. Le jackpot reste proposé dans Coupons, mais hors du plan. Dans chaque étage, ceux qui ont le plus de chances de passer, selon ce que leur combinaison a donné sur 3 ans et en live. Seuls les types de coupons qui passent au moins aussi bien qu'annoncé entrent dans le plan ; les autres sont en veille (voir Suivi). Chaque match au plus 2 fois, et au plus 2 tickets étalés sur plusieurs jours. Les 3 premiers sont à jouer en premier.</p>
   <div class="kv"><span>Gagnants attendus</span><b>${String(exp.toFixed(1)).replace(".", ",")} sur ${plan.length} (souvent entre ${lo} et ${hi})</b></div>
   <div class="kv"><span>Retour attendu pour ${plan.length} mises (avant taxe)</span><b>${String(ret.toFixed(1)).replace(".", ",")}</b></div>
   <div class="legs">${plan.map((c, i) => { const b = SMALL_KINDS.has(c.kind) ? base[signature(c)] : null; const idx = d.coupons.indexOf(c);
