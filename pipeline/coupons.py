@@ -168,7 +168,7 @@ def _virtual(matches: list[dict], markets: set) -> list[dict]:
 
 
 def build_day(matches: list[dict], kinds=("sur", "favoris", "buts15", "buts20", "mix", "dc", "autres", "ligue", "value", "audace", "large3", "large5",
-                                          "large_dom", "jackpot", "jackpot_fiable"),
+                                          "large_dom", "mt2", "jackpot", "jackpot_fiable"),
               league_names=None) -> list[dict]:
     """Coupons d'une journée. matches : [{"id", "div", "rel", "legs"}].
 
@@ -243,6 +243,27 @@ def build_day(matches: list[dict], kinds=("sur", "favoris", "buts15", "buts20", 
     if "large_dom" in kinds:
         hm = [dict(m, legs=[m["fav"]]) for m in free(matches) if m.get("fav") and m["fav"]["market"] == "1"]
         add(_repeat("large_dom", _virtual(hm, {"1"}), {"x1", "x2"}, pool=12, mk_order=["x1", "x2"]))
+    # Ticket 2e mi-temps (demande d'Est, 2026-11-06) : « au moins un but en 2e mi-temps » sur les matchs les plus sûrs,
+    # jusqu'à la cote 5. Étude sur 48 000 matchs : aucune équipe ne marque durablement plus en 2e mi-temps que les autres
+    # (part stable à 55 %) ; ce qui compte, c'est le nombre total de buts attendus, que le modèle prend déjà en compte.
+    if "mt2" in kinds:
+        cfg = COUPONS["mt2"]
+        cand = []
+        for m in matches:
+            l = next((x for x in m["legs"] if x["market"] == "sh05" and not x.get("excluded")), None)
+            if l and l["odds"] >= 1.05 and l["p_win"] >= 0.72:
+                cand.append((l["p_win"] * m.get("rel", 1.0), m, l))
+        # on vise la cote 5 avec le plus de chances : d'abord les sélections qui apportent le plus de cote par risque pris
+        cand.sort(key=lambda x: -np.log(x[2]["odds"]) / max(-np.log(max(x[0], 1e-6)), 1e-6))
+        picks, o = [], 1.0
+        for _, m, l in cand[:cfg["legs"][1]]:
+            picks.append([dict(m, legs=[l]), "sh05"])
+            o *= l["odds"]
+            if o >= cfg["min_odds"] and len(picks) >= cfg["legs"][0]:
+                break
+        if o >= cfg["min_odds"] and len(picks) >= cfg["legs"][0]:
+            stats = [_leg_stats(l) for _, _, l in cand[:len(picks)]]
+            out.append(_pack("mt2", sum(x[0] for x in stats), sum(x[1] for x in stats), [tuple(p) for p in picks]))
     if "jackpot_fiable" in kinds:
         out.extend(build_jackpots(matches))
     if "jackpot" in kinds:
@@ -297,8 +318,8 @@ def signature(c: dict) -> str:
 def prioritise(coupons: list[dict]) -> list[dict]:
     """Classe les coupons du jour : probabilité, fiabilité des championnats et valeur. Le jackpot reste en dernier."""
     def score(c):
-        if c["kind"] in ("jackpot", "jackpot_fiable", "mille"):
-            return {"jackpot_fiable": -0.5, "jackpot": -1.0}.get(c["kind"], -2.0)
+        if c["kind"] in ("jackpot", "jackpot_fiable", "mille", "mt2"):
+            return {"mt2": -0.4, "jackpot_fiable": -0.5, "jackpot": -1.0}.get(c["kind"], -2.0)
         kf = KIND_FACTOR.get(c["kind"], {}).get("factor", 1.0)
         cf = COMBO_FACTOR.get(signature(c), 1.0) if c["kind"] in SMALL_KINDS else 1.0
         return c["p_not_lose"] * c["reliability"] * kf * cf * (1 + max(min(c["ev"], 0.2), -0.15))

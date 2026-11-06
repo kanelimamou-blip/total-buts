@@ -98,6 +98,7 @@ COUPONS = {
     "audace": {"label": "Coupon audacieux", "min_odds": 4.0, "max_odds": 9.0, "legs": (3, 4), "stake_pct": 0.5},
     "mille": {"label": "Cote 1000", "min_odds": 1000.0, "max_odds": 1e9, "legs": (8, 22), "stake_pct": 0.1},
     "jackpot_fiable": {"label": "Jackpot fiable", "min_odds": 10.0, "max_odds": 1e9, "legs": (3, 15), "stake_pct": 0.25},
+    "mt2": {"label": "Ticket 2e mi-temps · cote 5", "min_odds": 5.0, "max_odds": 1e9, "legs": (8, 14), "stake_pct": 0.25},
     "jackpot": {"label": "Jackpot", "min_odds": 15.0, "max_odds": 1e9, "legs": (6, 8), "stake_pct": 0.25},
 }
 VALUE_EDGE = 0.03       # avantage minimum pour une sélection « value »

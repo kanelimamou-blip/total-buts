@@ -1,6 +1,6 @@
 "use strict";
 const MK = { o15: "+1,5 but", o20: "+2 buts", o25: "+2,5 buts" };
-const KIND_FILTERS = [["all", "Tous"], ["sur", "Sûrs"], ["favoris", "Favoris"], ["mix", "Mix"], ["buts15", "+1,5"], ["buts20", "+2 (remb.)"], ["dc", "Double chance"], ["autres", "Autres paris"], ["periode", "Sur une période"], ["ligue", "Par championnat"], ["tendance", "Tendances"], ["value", "Value"], ["audace", "Audacieux"], ["large3", "Larges 3-5"], ["large5", "Larges 5-8"], ["large_dom", "Larges favoris domicile"], ["live_combi", "Coupons live"], ["relais", "Relais"], ["jackpot_fiable", "Jackpots fiables"], ["jackpot", "Jackpot"], ["mille", "Cote 1000"]];
+const KIND_FILTERS = [["all", "Tous"], ["sur", "Sûrs"], ["favoris", "Favoris"], ["mix", "Mix"], ["buts15", "+1,5"], ["buts20", "+2 (remb.)"], ["dc", "Double chance"], ["autres", "Autres paris"], ["periode", "Sur une période"], ["ligue", "Par championnat"], ["tendance", "Tendances"], ["value", "Value"], ["audace", "Audacieux"], ["large3", "Larges 3-5"], ["large5", "Larges 5-8"], ["large_dom", "Larges favoris domicile"], ["live_combi", "Coupons live"], ["relais", "Relais"], ["mt2", "2e mi-temps"], ["jackpot_fiable", "Jackpots fiables"], ["jackpot", "Jackpot"], ["mille", "Cote 1000"]];
 const kindOf = (c) => (c.kind.startsWith("periode") ? "periode" : c.kind);
 const XL = () => state.data?.extra_labels || {};  // autres paris : [libellé appli, libellé 1xBet]
 const mkLabel = (l) => (l.market === "1" || l.market === "2" ? `Victoire ${l.team || (l.market === "1" ? l.home : l.away)}` : MK[l.market] || XL()[l.market]?.[0] || l.market);
@@ -58,7 +58,7 @@ function couponDays() {
 // et par la réussite passée de leur combinaison. Chaque match apparaît au plus 2 fois dans le plan.
 // Deux étages : une base de tickets autour de 2, quelques tickets plus hauts, un gros ticket fiable
 const PLAN_MAX = 10, PLAN_TIERS = [["base", "Base ~2", 3, 2, 2.6], ["moyen", "Large", 7, 2.6, 8]]  // le gros ticket (jackpot) est sorti du plan le 2026-11-06 : trop rarement gagnant;
-const PLAN_SKIP = new Set(["jackpot", "mille"]), PLAN_MULTI_MAX = 2;
+const PLAN_SKIP = new Set(["jackpot", "mille", "mt2"]), PLAN_MULTI_MAX = 2;
 // Veille : un type de coupon n'entre dans le plan que s'il passe au moins aussi bien qu'annoncé, sur 3 ans rejoués
 // et en live (un coupon live compte 3 fois). Sinon il « dort » : toujours proposé dans Coupons et suivi, mais hors du plan.
 // Réévalué à chaque mise à jour, donc un type endormi se réveille dès que ses chiffres repassent au-dessus.
