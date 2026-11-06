@@ -26754,6 +26754,111 @@
     "reliability": 1.029,
     "priority": 48,
     "level": "basse"
+   },
+   {
+    "kind": "mt2",
+    "label": "Ticket 2e mi-temps · cote 5",
+    "scope": "Toutes ligues",
+    "stake_pct": 0.25,
+    "legs": [
+     {
+      "id": "20261106|F2|Boulogne|Annecy",
+      "market": "sh05",
+      "team": null,
+      "odds": 1.29,
+      "odds_source": "estimée",
+      "p_win": 0.733,
+      "p_push": 0.0,
+      "min_odds": 1.4
+     },
+     {
+      "id": "20261106|F2|Grenoble|Reims",
+      "market": "sh05",
+      "team": null,
+      "odds": 1.21,
+      "odds_source": "estimée",
+      "p_win": 0.781,
+      "p_push": 0.0,
+      "min_odds": 1.32
+     },
+     {
+      "id": "20261106|F2|Nancy|Sochaux",
+      "market": "sh05",
+      "team": null,
+      "odds": 1.21,
+      "odds_source": "estimée",
+      "p_win": 0.78,
+      "p_push": 0.0,
+      "min_odds": 1.32
+     },
+     {
+      "id": "20261106|F2|Montpellier|Metz",
+      "market": "sh05",
+      "team": null,
+      "odds": 1.16,
+      "odds_source": "estimée",
+      "p_win": 0.816,
+      "p_push": 0.0,
+      "min_odds": 1.26
+     },
+     {
+      "id": "20261106|I1|Venezia|Udinese",
+      "market": "sh05",
+      "team": null,
+      "odds": 1.18,
+      "odds_source": "estimée",
+      "p_win": 0.797,
+      "p_push": 0.0,
+      "min_odds": 1.29
+     },
+     {
+      "id": "20261106|B1|Standard|Beveren",
+      "market": "sh05",
+      "team": null,
+      "odds": 1.15,
+      "odds_source": "estimée",
+      "p_win": 0.824,
+      "p_push": 0.0,
+      "min_odds": 1.25
+     },
+     {
+      "id": "20261106|SP1|Sevilla|Alaves",
+      "market": "sh05",
+      "team": null,
+      "odds": 1.27,
+      "odds_source": "estimée",
+      "p_win": 0.743,
+      "p_push": 0.0,
+      "min_odds": 1.39
+     },
+     {
+      "id": "20261106|E1|Derby|Bolton",
+      "market": "sh05",
+      "team": null,
+      "odds": 1.16,
+      "odds_source": "estimée",
+      "p_win": 0.813,
+      "p_push": 0.0,
+      "min_odds": 1.27
+     },
+     {
+      "id": "20261106|P1|Famalicao|Arouca",
+      "market": "sh05",
+      "team": null,
+      "odds": 1.26,
+      "odds_source": "estimée",
+      "p_win": 0.748,
+      "p_push": 0.0,
+      "min_odds": 1.38
+     }
+    ],
+    "odds": 5.52,
+    "p_win": 0.108,
+    "p_not_lose": 0.108,
+    "ev": -0.501,
+    "reliability": 1.0,
+    "priority": 49,
+    "level": "basse"
    }
   ],
   "periods_done": true,
@@ -26764,7 +26869,7 @@
  },
  "2026-11-07": {
   "frozen": false,
-  "created": "2026-11-06T17:32+00:00",
+  "created": "2026-11-06T17:42+00:00",
   "coupons": [
    {
     "kind": "ligue",
@@ -28496,7 +28601,7 @@
  },
  "2026-11-08": {
   "frozen": false,
-  "created": "2026-11-06T17:32+00:00",
+  "created": "2026-11-06T17:42+00:00",
   "coupons": [
    {
     "kind": "autres",
@@ -30443,13 +30548,13 @@
  },
  "2026-11-09": {
   "frozen": false,
-  "created": "2026-11-06T17:32+00:00",
+  "created": "2026-11-06T17:42+00:00",
   "coupons": [],
   "odds_fixed": true
  },
  "2026-11-13": {
   "frozen": false,
-  "created": "2026-11-06T17:32+00:00",
+  "created": "2026-11-06T17:42+00:00",
   "coupons": [],
   "odds_fixed": true
  }
