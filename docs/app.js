@@ -1,6 +1,6 @@
 "use strict";
 const MK = { o15: "+1,5 but", o20: "+2 buts", o25: "+2,5 buts" };
-const KIND_FILTERS = [["all", "Tous"], ["sur", "Sûrs"], ["favoris", "Favoris"], ["mix", "Mix"], ["buts15", "+1,5"], ["buts20", "+2 (remb.)"], ["dc", "Double chance"], ["autres", "Autres paris"], ["periode", "Sur une période"], ["ligue", "Par championnat"], ["tendance", "Tendances"], ["value", "Value"], ["audace", "Audacieux"], ["large3", "Larges 3-5"], ["large5", "Larges 5-8"], ["live_combi", "Coupons live"], ["relais", "Relais"], ["jackpot_fiable", "Jackpots fiables"], ["jackpot", "Jackpot"], ["mille", "Cote 1000"]];
+const KIND_FILTERS = [["all", "Tous"], ["sur", "Sûrs"], ["favoris", "Favoris"], ["mix", "Mix"], ["buts15", "+1,5"], ["buts20", "+2 (remb.)"], ["dc", "Double chance"], ["autres", "Autres paris"], ["periode", "Sur une période"], ["ligue", "Par championnat"], ["tendance", "Tendances"], ["value", "Value"], ["audace", "Audacieux"], ["large3", "Larges 3-5"], ["large5", "Larges 5-8"], ["large_dom", "Larges favoris domicile"], ["live_combi", "Coupons live"], ["relais", "Relais"], ["jackpot_fiable", "Jackpots fiables"], ["jackpot", "Jackpot"], ["mille", "Cote 1000"]];
 const kindOf = (c) => (c.kind.startsWith("periode") ? "periode" : c.kind);
 const XL = () => state.data?.extra_labels || {};  // autres paris : [libellé appli, libellé 1xBet]
 const mkLabel = (l) => (l.market === "1" || l.market === "2" ? `Victoire ${l.team || (l.market === "1" ? l.home : l.away)}` : MK[l.market] || XL()[l.market]?.[0] || l.market);

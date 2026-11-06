@@ -163,7 +163,7 @@ def _virtual(matches: list[dict], markets: set) -> list[dict]:
 
 
 def build_day(matches: list[dict], kinds=("sur", "favoris", "buts15", "buts20", "mix", "dc", "autres", "ligue", "value", "audace", "large3", "large5",
-                                          "jackpot", "jackpot_fiable"),
+                                          "large_dom", "jackpot", "jackpot_fiable"),
               league_names=None) -> list[dict]:
     """Coupons d'une journée. matches : [{"id", "div", "rel", "legs"}].
 
@@ -233,6 +233,11 @@ def build_day(matches: list[dict], kinds=("sur", "favoris", "buts15", "buts20", 
                 mk |= {"1", "2"}
             lm = [dict(m, legs=m["legs"] + ([m["fav"]] if m.get("fav") and "fav" in mk else [])) for m in free(matches)]
             add(_repeat(kind, _virtual(lm, mk), {"x1", "x2"}, pool=12, mk_order=["x1", "x2"]))
+    # Large favoris à domicile (demande d'Est, 2026-11-06) : uniquement des victoires de favoris qui reçoivent, cote 3 à 8.
+    # En observation : il n'entre dans le plan que quand ses résultats le prouvent (règle de veille).
+    if "large_dom" in kinds:
+        hm = [dict(m, legs=[m["fav"]]) for m in free(matches) if m.get("fav") and m["fav"]["market"] == "1"]
+        add(_repeat("large_dom", _virtual(hm, {"1"}), {"x1", "x2"}, pool=12, mk_order=["x1", "x2"]))
     if "jackpot_fiable" in kinds:
         out.extend(build_jackpots(matches))
     if "jackpot" in kinds:
