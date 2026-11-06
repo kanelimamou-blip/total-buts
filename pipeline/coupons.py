@@ -35,6 +35,11 @@ def legs_for_match(pred: dict, market_pred: dict | None, real_o25: float | None)
             ref = market_pred if market_pred is not None else pred["model"]
             odds, source = max(fair_odds(m, ref) / (1 + BOOK_MARGIN), 1.05), "estimée"  # 1,05 : plus petite cote proposée en pratique
         fair = fair_odds(m, f)
+        if source == "estimée":
+            # Les bookmakers donnent au +1,5 plus de chances que la loi de Poisson du marché (relevé 1xBet du 2026-11-06 :
+            # Everton–Coventry 1,22 et Nancy–Sochaux 1,23, contre 1,34 et 1,51 estimés). On garde la plus basse des deux
+            # estimations, celle tirée de notre probabilité calibrée, pour ne jamais promettre une cote introuvable.
+            odds = max(min(odds, fair / (1 + BOOK_MARGIN)), 1.05)
         out.append({
             "market": m, "p_win": p_win, "p_push": p_push, "p_lose": 1 - p_win - p_push,
             "odds": round(max(odds, 1.01), 2), "odds_source": source,
