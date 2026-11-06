@@ -26927,7 +26927,7 @@
  },
  "2026-11-07": {
   "frozen": false,
-  "created": "2026-11-06T01:47+00:00",
+  "created": "2026-11-06T02:02+00:00",
   "coupons": [
    {
     "kind": "ligue",
@@ -27532,7 +27532,7 @@
     "ev": -0.272,
     "reliability": 1.081,
     "priority": 15,
-    "level": "moyenne"
+    "level": "haute"
    },
    {
     "kind": "dc",
@@ -28132,7 +28132,7 @@
     "ev": -0.202,
     "reliability": 1.036,
     "priority": 29,
-    "level": "basse"
+    "level": "moyenne"
    },
    {
     "kind": "dc",
@@ -28207,7 +28207,7 @@
     "ev": -0.339,
     "reliability": 1.05,
     "priority": 30,
-    "level": "basse"
+    "level": "moyenne"
    },
    {
     "kind": "favoris",
@@ -28455,6 +28455,111 @@
     "level": "basse"
    },
    {
+    "kind": "large_dom",
+    "label": "Large favoris à domicile · cote 3 à 8",
+    "scope": "Toutes ligues",
+    "stake_pct": 0.5,
+    "legs": [
+     {
+      "id": "20261107|I2|Juve Stabia|Arezzo",
+      "market": "1",
+      "team": "Juve Stabia",
+      "odds": 1.63,
+      "odds_source": "estimée",
+      "p_win": 0.58,
+      "p_push": 0.0,
+      "min_odds": 1.77
+     },
+     {
+      "id": "20261107|F2|Pau FC|Nantes",
+      "market": "1",
+      "team": "Pau FC",
+      "odds": 1.85,
+      "odds_source": "estimée",
+      "p_win": 0.509,
+      "p_push": 0.0,
+      "min_odds": 2.03
+     }
+    ],
+    "odds": 3.02,
+    "p_win": 0.295,
+    "p_not_lose": 0.295,
+    "ev": -0.229,
+    "reliability": 1.001,
+    "priority": 36,
+    "level": "basse"
+   },
+   {
+    "kind": "large_dom",
+    "label": "Large favoris à domicile · cote 3 à 8",
+    "scope": "Toutes ligues",
+    "stake_pct": 0.5,
+    "legs": [
+     {
+      "id": "20261107|SP2|Granada|Tenerife",
+      "market": "1",
+      "team": "Granada",
+      "odds": 1.83,
+      "odds_source": "estimée",
+      "p_win": 0.514,
+      "p_push": 0.0,
+      "min_odds": 2.0
+     },
+     {
+      "id": "20261107|E1|Birmingham|Swansea",
+      "market": "1",
+      "team": "Birmingham",
+      "odds": 1.96,
+      "odds_source": "estimée",
+      "p_win": 0.481,
+      "p_push": 0.0,
+      "min_odds": 2.14
+     }
+    ],
+    "odds": 3.59,
+    "p_win": 0.247,
+    "p_not_lose": 0.247,
+    "ev": -0.241,
+    "reliability": 1.036,
+    "priority": 37,
+    "level": "basse"
+   },
+   {
+    "kind": "large_dom",
+    "label": "Large favoris à domicile · cote 3 à 8",
+    "scope": "Toutes ligues",
+    "stake_pct": 0.5,
+    "legs": [
+     {
+      "id": "20261107|SP1|Malaga|Santander",
+      "market": "1",
+      "team": "Malaga",
+      "odds": 2.12,
+      "odds_source": "estimée",
+      "p_win": 0.445,
+      "p_push": 0.0,
+      "min_odds": 2.32
+     },
+     {
+      "id": "20261107|T1|Samsunspor|Konyaspor",
+      "market": "1",
+      "team": "Samsunspor",
+      "odds": 2.14,
+      "odds_source": "estimée",
+      "p_win": 0.441,
+      "p_push": 0.0,
+      "min_odds": 2.33
+     }
+    ],
+    "odds": 4.54,
+    "p_win": 0.196,
+    "p_not_lose": 0.196,
+    "ev": -0.248,
+    "reliability": 1.079,
+    "priority": 38,
+    "level": "basse"
+   },
+   {
     "kind": "large5",
     "label": "Ticket large · cote 5 à 8",
     "scope": "Toutes ligues",
@@ -28506,7 +28611,7 @@
     "p_not_lose": 0.17,
     "ev": -0.269,
     "reliability": 1.033,
-    "priority": 36,
+    "priority": 39,
     "level": "basse"
    },
    {
@@ -28551,7 +28656,7 @@
     "p_not_lose": 0.167,
     "ev": -0.295,
     "reliability": 1.036,
-    "priority": 37,
+    "priority": 40,
     "level": "basse"
    },
    {
@@ -28596,7 +28701,7 @@
     "p_not_lose": 0.181,
     "ev": -0.239,
     "reliability": 0.922,
-    "priority": 38,
+    "priority": 41,
     "level": "basse"
    },
    {
@@ -28681,7 +28786,7 @@
     "p_not_lose": 0.151,
     "ev": 0.379,
     "reliability": 0.975,
-    "priority": 39,
+    "priority": 42,
     "level": "basse"
    },
    {
@@ -28786,7 +28891,7 @@
     "p_not_lose": 0.082,
     "ev": 0.422,
     "reliability": 1.006,
-    "priority": 40,
+    "priority": 43,
     "level": "basse"
    },
    {
@@ -28921,7 +29026,7 @@
     "p_not_lose": 0.036,
     "ev": 0.461,
     "reliability": 1.007,
-    "priority": 41,
+    "priority": 44,
     "level": "basse"
    },
    {
@@ -29156,14 +29261,14 @@
     "p_not_lose": 0.001,
     "ev": 0.318,
     "reliability": 0.991,
-    "priority": 42,
+    "priority": 45,
     "level": "basse"
    }
   ]
  },
  "2026-11-08": {
   "frozen": false,
-  "created": "2026-11-06T01:47+00:00",
+  "created": "2026-11-06T02:02+00:00",
   "coupons": [
    {
     "kind": "buts15",
@@ -29788,7 +29893,7 @@
     "ev": -0.261,
     "reliability": 1.083,
     "priority": 15,
-    "level": "moyenne"
+    "level": "haute"
    },
    {
     "kind": "value",
@@ -30418,7 +30523,7 @@
     "ev": -0.2,
     "reliability": 0.952,
     "priority": 29,
-    "level": "basse"
+    "level": "moyenne"
    },
    {
     "kind": "favoris",
@@ -30453,7 +30558,7 @@
     "ev": -0.202,
     "reliability": 1.03,
     "priority": 30,
-    "level": "basse"
+    "level": "moyenne"
    },
    {
     "kind": "buts15",
@@ -30756,6 +30861,111 @@
     "level": "basse"
    },
    {
+    "kind": "large_dom",
+    "label": "Large favoris à domicile · cote 3 à 8",
+    "scope": "Toutes ligues",
+    "stake_pct": 0.5,
+    "legs": [
+     {
+      "id": "20261108|B1|St. Gilloise|Genk",
+      "market": "1",
+      "team": "St. Gilloise",
+      "odds": 1.45,
+      "odds_source": "estimée",
+      "p_win": 0.652,
+      "p_push": 0.0,
+      "min_odds": 1.58
+     },
+     {
+      "id": "20261108|I1|Napoli|Lazio",
+      "market": "1",
+      "team": "Napoli",
+      "odds": 2.11,
+      "odds_source": "estimée",
+      "p_win": 0.448,
+      "p_push": 0.0,
+      "min_odds": 2.3
+     }
+    ],
+    "odds": 3.06,
+    "p_win": 0.292,
+    "p_not_lose": 0.292,
+    "ev": -0.227,
+    "reliability": 1.042,
+    "priority": 37,
+    "level": "basse"
+   },
+   {
+    "kind": "large_dom",
+    "label": "Large favoris à domicile · cote 3 à 8",
+    "scope": "Toutes ligues",
+    "stake_pct": 0.5,
+    "legs": [
+     {
+      "id": "20261108|D1|Hoffenheim|Schalke 04",
+      "market": "1",
+      "team": "Hoffenheim",
+      "odds": 1.76,
+      "odds_source": "estimée",
+      "p_win": 0.537,
+      "p_push": 0.0,
+      "min_odds": 1.92
+     },
+     {
+      "id": "20261108|I1|Inter|Como",
+      "market": "1",
+      "team": "Inter",
+      "odds": 1.81,
+      "odds_source": "estimée",
+      "p_win": 0.52,
+      "p_push": 0.0,
+      "min_odds": 1.98
+     }
+    ],
+    "odds": 3.19,
+    "p_win": 0.279,
+    "p_not_lose": 0.279,
+    "ev": -0.233,
+    "reliability": 1.059,
+    "priority": 38,
+    "level": "basse"
+   },
+   {
+    "kind": "large_dom",
+    "label": "Large favoris à domicile · cote 3 à 8",
+    "scope": "Toutes ligues",
+    "stake_pct": 0.5,
+    "legs": [
+     {
+      "id": "20261108|SP1|Villarreal|Getafe",
+      "market": "1",
+      "team": "Villarreal",
+      "odds": 1.56,
+      "odds_source": "estimée",
+      "p_win": 0.603,
+      "p_push": 0.0,
+      "min_odds": 1.71
+     },
+     {
+      "id": "20261108|D2|Bochum|Karlsruhe",
+      "market": "1",
+      "team": "Bochum",
+      "odds": 1.96,
+      "odds_source": "estimée",
+      "p_win": 0.481,
+      "p_push": 0.0,
+      "min_odds": 2.14
+     }
+    ],
+    "odds": 3.06,
+    "p_win": 0.29,
+    "p_not_lose": 0.29,
+    "ev": -0.233,
+    "reliability": 1.014,
+    "priority": 39,
+    "level": "basse"
+   },
+   {
     "kind": "large5",
     "label": "Ticket large · cote 5 à 8",
     "scope": "Toutes ligues",
@@ -30807,7 +31017,7 @@
     "p_not_lose": 0.162,
     "ev": -0.312,
     "reliability": 1.072,
-    "priority": 37,
+    "priority": 40,
     "level": "basse"
    },
    {
@@ -30862,7 +31072,7 @@
     "p_not_lose": 0.155,
     "ev": -0.331,
     "reliability": 1.044,
-    "priority": 38,
+    "priority": 41,
     "level": "basse"
    },
    {
@@ -30907,7 +31117,7 @@
     "p_not_lose": 0.165,
     "ev": -0.306,
     "reliability": 0.943,
-    "priority": 39,
+    "priority": 42,
     "level": "basse"
    },
    {
@@ -31002,7 +31212,7 @@
     "p_not_lose": 0.134,
     "ev": 0.425,
     "reliability": 1.065,
-    "priority": 40,
+    "priority": 43,
     "level": "basse"
    },
    {
@@ -31127,7 +31337,7 @@
     "p_not_lose": 0.074,
     "ev": 0.421,
     "reliability": 1.039,
-    "priority": 41,
+    "priority": 44,
     "level": "basse"
    },
    {
@@ -31282,7 +31492,7 @@
     "p_not_lose": 0.034,
     "ev": 0.378,
     "reliability": 1.023,
-    "priority": 42,
+    "priority": 45,
     "level": "basse"
    },
    {
@@ -31467,19 +31677,19 @@
     "p_not_lose": 0.001,
     "ev": 0.084,
     "reliability": 1.047,
-    "priority": 43,
+    "priority": 46,
     "level": "basse"
    }
   ]
  },
  "2026-11-09": {
   "frozen": false,
-  "created": "2026-11-06T01:47+00:00",
+  "created": "2026-11-06T02:02+00:00",
   "coupons": []
  },
  "2026-11-13": {
   "frozen": false,
-  "created": "2026-11-06T01:47+00:00",
+  "created": "2026-11-06T02:02+00:00",
   "coupons": []
  }
 }
