@@ -279,6 +279,28 @@ def main():
             coupons = prioritise(coupons + [mille])
         store[d] = {"frozen": d == today.isoformat(), "created": now.isoformat(timespec="minutes"), "coupons": coupons}
 
+    # Refonte d'une journée déjà figée (cotes corrigées le 2026-11-06, demande d'Est) : seuls les coupons du jour dont
+    # aucun match n'a commencé sont refaits, sur les matchs pas encore commencés ; les autres restent tels quels.
+    REBUILD_DAYS = {"2026-11-06"}
+    td = today.isoformat()
+    if td in REBUILD_DAYS and store.get(td, {}).get("frozen") and not store[td].get("rebuilt") and td in by_date:
+        def kickoff(m):
+            try:
+                return datetime.fromisoformat(f"{m['date']}T{m['time'] or '00:00'}").replace(tzinfo=timezone.utc)
+            except ValueError:
+                return now
+        started = {m["id"] for m in by_date[td] if kickoff(m) <= now + timedelta(minutes=10)}
+        day_kinds = set(COUPONS) - {"periode_buts", "periode_fav", "periode_long", "tendance", "relais", "live", "live_combi"}
+        old = store[td]["coupons"]
+        keep = [c for c in old if c["kind"] not in day_kinds or c.get("status") or any(l["id"] in started for l in c["legs"])]
+        day = [{"id": m["id"], "div": m["div"], "rel": fb["reliability"].get(m["div"], 0.9 if m["div"] in CUPS else 1.0),
+                "legs": ok_legs(m), "fav": m["fav"]} for m in by_date[td] if not m.get("provisional") and m["id"] not in started]
+        new = build_day(day, league_names={k: v[0] for k, v in ALL_COMPETITIONS.items()})
+        mille = build_mille(day) if not any(c["kind"] == "mille" for c in keep) else None
+        store[td]["coupons"] = prioritise(keep + new + ([mille] if mille else []))
+        store[td]["rebuilt"] = now.isoformat(timespec="minutes")
+        print(f"Refonte du {td} : {len(old) - len(keep)} coupons refaits en {len(new) + bool(mille)}, {len(keep)} gardés, {len(started)} matchs déjà commencés.")
+
     # Ticket « cote 1000 » : ajouté aussi aux journées déjà figées qui n'en ont pas encore
     for d, ms in by_date.items():
         e = store.get(d)
