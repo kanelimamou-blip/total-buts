@@ -77,6 +77,9 @@ function couponStatus(c) {
   const f = real / pred;
   return { on: f >= 1, key: c.kind, f, why: f >= 1 ? "passe au moins comme annoncé" : "passe moins bien qu'annoncé" };
 }
+// Niveau de confiance absolu (et non plus le tiers du classement) : haute à 50 % de chances ou plus, moyenne de 40 à 50 %, basse en dessous.
+// Un jour où rien n'atteint 50 %, aucun coupon n'est affiché en confiance haute.
+const confLevel = (c) => (c.p_not_lose >= 0.5 ? "haute" : c.p_not_lose >= 0.4 ? "moyenne" : "basse");
 function planScore(c) {
   const f = SMALL_KINDS.has(c.kind) ? state.data.combo_factors?.[signature(c)] || 1 : 1;
   return c.p_not_lose * f;
@@ -181,7 +184,7 @@ function couponCard(c) {
   return `<article class="card">
     <div class="coupon-head">
       <div class="t">
-        <span class="prio ${c.level}"><i></i>Priorité ${c.priority} · ${c.level}${!PLAN_SKIP.has(c.kind) && c.odds >= 2 && !couponStatus(c).on ? ' · <span class="tag">en veille</span>' : ""}</span>
+        <span class="prio ${confLevel(c)}"><i></i>Priorité ${c.priority} · confiance ${confLevel(c)}${!PLAN_SKIP.has(c.kind) && c.odds >= 2 && !couponStatus(c).on ? ' · <span class="tag">en veille</span>' : ""}</span>
         <h3>${esc(c.label)}${c.scope && c.scope !== "Toutes ligues" ? " · " + esc(c.scope) : ""}</h3>
         <span class="small muted">${c.legs.length} sélections${c.kind.startsWith("periode") ? " · ticket du " + dayLabel(c.date, state.data.today).toLowerCase() : settled ? "" : " · " + dayLabel(c.date, state.data.today)}</span>
       </div>

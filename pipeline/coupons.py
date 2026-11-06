@@ -306,7 +306,7 @@ def prioritise(coupons: list[dict]) -> list[dict]:
     n = len(coupons)
     for i, c in enumerate(coupons):
         c["priority"] = i + 1
-        c["level"] = "haute" if c["kind"] not in ("jackpot", "jackpot_fiable", "mille") and i < max(1, n // 3) else ("basse" if c["kind"] in ("jackpot", "jackpot_fiable", "audace", "mille") or i >= 2 * n // 3 else "moyenne")
+        c["level"] = "haute" if c["p_not_lose"] >= 0.5 else "moyenne" if c["p_not_lose"] >= 0.4 else "basse"  # confiance absolue
     return coupons
 
 
