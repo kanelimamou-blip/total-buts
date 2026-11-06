@@ -21,7 +21,7 @@ import live as live_mod
 import meta
 import tips as tips_mod
 from config import (ALL_COMPETITIONS, COUPONS, CUPS, LEAGUES, LONG_PERIODS, LONG_TARGETS, MARKETS, PERIODS, SITE_DATA, STATE_DIR,
-                    TRACKING_START)
+                    TAX, TRACKING_START)
 from coupons import _repeat, build_day, build_jackpots, build_long, build_mille, build_favorites, favorite_leg, legs_for_match, prioritise, settle_coupon
 from fetch import download, load_fixtures, load_results
 from model import fit, predict
@@ -300,6 +300,45 @@ def main():
         store[td]["coupons"] = prioritise(keep + new + ([mille] if mille else []))
         store[td]["rebuilt"] = now.isoformat(timespec="minutes")
         print(f"Refonte du {td} : {len(old) - len(keep)} coupons refaits en {len(new) + bool(mille)}, {len(keep)} gardés, {len(started)} matchs déjà commencés.")
+
+    # Même correction pour les coupons encore en cours (combinés sur plusieurs jours, tendances…) : chaque sélection
+    # +1,5 / +2 / +2,5 dont le match n'a pas commencé reprend la cote corrigée, et la cote du coupon est recalculée.
+    # Une seule fois par journée enregistrée ; les sélections déjà jouées et les coupons réglés ne bougent pas.
+    by_id = {m["id"]: m for m in matches}
+
+    def not_started(mid):
+        m = by_id.get(mid)
+        if not m:
+            return False
+        try:
+            k = datetime.fromisoformat(f"{m['date']}T{m['time'] or '00:00'}").replace(tzinfo=timezone.utc)
+        except ValueError:
+            return False
+        return k > now + timedelta(minutes=10)
+
+    fixed = 0
+    for d, e in store.items():
+        if not isinstance(e, dict) or e.get("odds_fixed"):
+            continue
+        for c in e.get("coupons", []):
+            if c.get("status"):
+                continue
+            changed = False
+            for l in c["legs"]:
+                if l["market"] in ("o15", "o20", "o25") and not l.get("result") and not_started(l["id"]):
+                    cur = next((x for x in by_id[l["id"]]["legs"] if x["market"] == l["market"]), None)
+                    if cur and abs(cur["odds"] - l["odds"]) >= 0.01:
+                        l["odds"], l["odds_source"], changed = cur["odds"], cur.get("odds_source", l.get("odds_source")), True
+            if changed:
+                o = 1.0
+                for l in c["legs"]:
+                    o *= l["odds"]
+                c["odds"] = round(o, 2)
+                c["ev"] = round(c["p_not_lose"] * (1 + (c["odds"] - 1) * (1 - TAX)) - 1, 3)
+                fixed += 1
+        e["odds_fixed"] = True
+    if fixed:
+        print(f"Cotes corrigées sur {fixed} coupons encore en cours.")
 
     # Ticket « cote 1000 » : ajouté aussi aux journées déjà figées qui n'en ont pas encore
     for d, ms in by_date.items():
