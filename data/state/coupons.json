@@ -26764,7 +26764,7 @@
  },
  "2026-11-07": {
   "frozen": false,
-  "created": "2026-11-06T17:14+00:00",
+  "created": "2026-11-06T17:32+00:00",
   "coupons": [
    {
     "kind": "ligue",
@@ -28027,6 +28027,151 @@
     "level": "basse"
    },
    {
+    "kind": "mt2",
+    "label": "Ticket 2e mi-temps · cote 5",
+    "scope": "Toutes ligues",
+    "stake_pct": 0.25,
+    "legs": [
+     {
+      "id": "20261107|P1|Sp Lisbon|Moreirense",
+      "market": "sh05",
+      "team": null,
+      "odds": 1.09,
+      "odds_source": "estimée",
+      "p_win": 0.862,
+      "p_push": 0.0,
+      "min_odds": 1.19
+     },
+     {
+      "id": "20261107|F1|Paris SG|Troyes",
+      "market": "sh05",
+      "team": null,
+      "odds": 1.05,
+      "odds_source": "estimée",
+      "p_win": 0.899,
+      "p_push": 0.0,
+      "min_odds": 1.15
+     },
+     {
+      "id": "20261107|P1|Alverca|Casa Pia",
+      "market": "sh05",
+      "team": null,
+      "odds": 1.21,
+      "odds_source": "estimée",
+      "p_win": 0.78,
+      "p_push": 0.0,
+      "min_odds": 1.32
+     },
+     {
+      "id": "20261107|SP2|Cordoba|Ceuta",
+      "market": "sh05",
+      "team": null,
+      "odds": 1.1,
+      "odds_source": "estimée",
+      "p_win": 0.86,
+      "p_push": 0.0,
+      "min_odds": 1.2
+     },
+     {
+      "id": "20261107|P1|Nacional|Academico Viseu",
+      "market": "sh05",
+      "team": null,
+      "odds": 1.23,
+      "odds_source": "estimée",
+      "p_win": 0.767,
+      "p_push": 0.0,
+      "min_odds": 1.34
+     },
+     {
+      "id": "20261107|I1|Roma|Sassuolo",
+      "market": "sh05",
+      "team": null,
+      "odds": 1.08,
+      "odds_source": "estimée",
+      "p_win": 0.877,
+      "p_push": 0.0,
+      "min_odds": 1.17
+     },
+     {
+      "id": "20261107|T1|Galatasaray|Amedspor",
+      "market": "sh05",
+      "team": null,
+      "odds": 1.1,
+      "odds_source": "estimée",
+      "p_win": 0.86,
+      "p_push": 0.0,
+      "min_odds": 1.2
+     },
+     {
+      "id": "20261107|T1|Goztep|Buyuksehyr",
+      "market": "sh05",
+      "team": null,
+      "odds": 1.14,
+      "odds_source": "estimée",
+      "p_win": 0.83,
+      "p_push": 0.0,
+      "min_odds": 1.24
+     },
+     {
+      "id": "20261107|F1|Auxerre|Paris FC",
+      "market": "sh05",
+      "team": null,
+      "odds": 1.16,
+      "odds_source": "estimée",
+      "p_win": 0.813,
+      "p_push": 0.0,
+      "min_odds": 1.27
+     },
+     {
+      "id": "20261107|SP2|Burgos|Celta B",
+      "market": "sh05",
+      "team": null,
+      "odds": 1.19,
+      "odds_source": "estimée",
+      "p_win": 0.793,
+      "p_push": 0.0,
+      "min_odds": 1.3
+     },
+     {
+      "id": "20261107|SP2|Leganes|Albacete",
+      "market": "sh05",
+      "team": null,
+      "odds": 1.21,
+      "odds_source": "estimée",
+      "p_win": 0.781,
+      "p_push": 0.0,
+      "min_odds": 1.32
+     },
+     {
+      "id": "20261107|I1|Cagliari|Frosinone",
+      "market": "sh05",
+      "team": null,
+      "odds": 1.12,
+      "odds_source": "estimée",
+      "p_win": 0.841,
+      "p_push": 0.0,
+      "min_odds": 1.22
+     },
+     {
+      "id": "20261107|SP2|Cadiz|Oviedo",
+      "market": "sh05",
+      "team": null,
+      "odds": 1.24,
+      "odds_source": "estimée",
+      "p_win": 0.761,
+      "p_push": 0.0,
+      "min_odds": 1.35
+     }
+    ],
+    "odds": 5.89,
+    "p_win": 0.08,
+    "p_not_lose": 0.08,
+    "ev": -0.605,
+    "reliability": 1.103,
+    "priority": 29,
+    "level": "basse"
+   },
+   {
     "kind": "jackpot_fiable",
     "label": "Jackpot fiable",
     "scope": "Cote 10",
@@ -28078,7 +28223,7 @@
     "p_not_lose": 0.085,
     "ev": -0.299,
     "reliability": 1.059,
-    "priority": 29,
+    "priority": 30,
     "level": "basse"
    },
    {
@@ -28153,7 +28298,7 @@
     "p_not_lose": 0.024,
     "ev": -0.38,
     "reliability": 1.077,
-    "priority": 30,
+    "priority": 31,
     "level": "basse"
    },
    {
@@ -28238,7 +28383,7 @@
     "p_not_lose": 0.013,
     "ev": -0.416,
     "reliability": 1.053,
-    "priority": 31,
+    "priority": 32,
     "level": "basse"
    },
    {
@@ -28343,7 +28488,7 @@
     "p_not_lose": 0.001,
     "ev": -0.281,
     "reliability": 1.033,
-    "priority": 32,
+    "priority": 33,
     "level": "basse"
    }
   ],
@@ -28351,7 +28496,7 @@
  },
  "2026-11-08": {
   "frozen": false,
-  "created": "2026-11-06T17:14+00:00",
+  "created": "2026-11-06T17:32+00:00",
   "coupons": [
    {
     "kind": "autres",
@@ -29819,6 +29964,141 @@
     "level": "basse"
    },
    {
+    "kind": "mt2",
+    "label": "Ticket 2e mi-temps · cote 5",
+    "scope": "Toutes ligues",
+    "stake_pct": 0.25,
+    "legs": [
+     {
+      "id": "20261108|P1|Estrela|Benfica",
+      "market": "sh05",
+      "team": null,
+      "odds": 1.09,
+      "odds_source": "estimée",
+      "p_win": 0.862,
+      "p_push": 0.0,
+      "min_odds": 1.19
+     },
+     {
+      "id": "20261108|P1|Rio Ave|Sp Braga",
+      "market": "sh05",
+      "team": null,
+      "odds": 1.18,
+      "odds_source": "estimée",
+      "p_win": 0.799,
+      "p_push": 0.0,
+      "min_odds": 1.29
+     },
+     {
+      "id": "20261108|P1|Guimaraes|Porto",
+      "market": "sh05",
+      "team": null,
+      "odds": 1.19,
+      "odds_source": "estimée",
+      "p_win": 0.792,
+      "p_push": 0.0,
+      "min_odds": 1.3
+     },
+     {
+      "id": "20261108|P1|Estoril|Maritimo",
+      "market": "sh05",
+      "team": null,
+      "odds": 1.2,
+      "odds_source": "estimée",
+      "p_win": 0.788,
+      "p_push": 0.0,
+      "min_odds": 1.31
+     },
+     {
+      "id": "20261108|F1|Lens|Marseille",
+      "market": "sh05",
+      "team": null,
+      "odds": 1.11,
+      "odds_source": "estimée",
+      "p_win": 0.853,
+      "p_push": 0.0,
+      "min_odds": 1.21
+     },
+     {
+      "id": "20261108|T1|Besiktas|Genclerbirligi",
+      "market": "sh05",
+      "team": null,
+      "odds": 1.08,
+      "odds_source": "estimée",
+      "p_win": 0.871,
+      "p_push": 0.0,
+      "min_odds": 1.18
+     },
+     {
+      "id": "20261108|F1|Le Mans|Monaco",
+      "market": "sh05",
+      "team": null,
+      "odds": 1.14,
+      "odds_source": "estimée",
+      "p_win": 0.831,
+      "p_push": 0.0,
+      "min_odds": 1.24
+     },
+     {
+      "id": "20261108|F1|Rennes|Lille",
+      "market": "sh05",
+      "team": null,
+      "odds": 1.14,
+      "odds_source": "estimée",
+      "p_win": 0.83,
+      "p_push": 0.0,
+      "min_odds": 1.24
+     },
+     {
+      "id": "20261108|SP2|Girona|Almeria",
+      "market": "sh05",
+      "team": null,
+      "odds": 1.18,
+      "odds_source": "estimée",
+      "p_win": 0.803,
+      "p_push": 0.0,
+      "min_odds": 1.28
+     },
+     {
+      "id": "20261108|T1|Corum|Fenerbahce",
+      "market": "sh05",
+      "team": null,
+      "odds": 1.14,
+      "odds_source": "estimée",
+      "p_win": 0.829,
+      "p_push": 0.0,
+      "min_odds": 1.24
+     },
+     {
+      "id": "20261108|I1|Monza|Atalanta",
+      "market": "sh05",
+      "team": null,
+      "odds": 1.13,
+      "odds_source": "estimée",
+      "p_win": 0.838,
+      "p_push": 0.0,
+      "min_odds": 1.23
+     },
+     {
+      "id": "20261108|SP2|Las Palmas|Eldense",
+      "market": "sh05",
+      "team": null,
+      "odds": 1.18,
+      "odds_source": "estimée",
+      "p_win": 0.798,
+      "p_push": 0.0,
+      "min_odds": 1.29
+     }
+    ],
+    "odds": 5.13,
+    "p_win": 0.098,
+    "p_not_lose": 0.098,
+    "ev": -0.578,
+    "reliability": 1.108,
+    "priority": 34,
+    "level": "basse"
+   },
+   {
     "kind": "jackpot_fiable",
     "label": "Jackpot fiable",
     "scope": "Cote 10",
@@ -29880,7 +30160,7 @@
     "p_not_lose": 0.054,
     "ev": -0.215,
     "reliability": 1.079,
-    "priority": 34,
+    "priority": 35,
     "level": "basse"
    },
    {
@@ -29955,7 +30235,7 @@
     "p_not_lose": 0.028,
     "ev": -0.253,
     "reliability": 1.077,
-    "priority": 35,
+    "priority": 36,
     "level": "basse"
    },
    {
@@ -30040,7 +30320,7 @@
     "p_not_lose": 0.014,
     "ev": -0.288,
     "reliability": 1.042,
-    "priority": 36,
+    "priority": 37,
     "level": "basse"
    },
    {
@@ -30155,7 +30435,7 @@
     "p_not_lose": 0.001,
     "ev": -0.233,
     "reliability": 1.099,
-    "priority": 37,
+    "priority": 38,
     "level": "basse"
    }
   ],
@@ -30163,13 +30443,13 @@
  },
  "2026-11-09": {
   "frozen": false,
-  "created": "2026-11-06T17:14+00:00",
+  "created": "2026-11-06T17:32+00:00",
   "coupons": [],
   "odds_fixed": true
  },
  "2026-11-13": {
   "frozen": false,
-  "created": "2026-11-06T17:14+00:00",
+  "created": "2026-11-06T17:32+00:00",
   "coupons": [],
   "odds_fixed": true
  }
