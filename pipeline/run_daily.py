@@ -340,6 +340,26 @@ def main():
     if fixed:
         print(f"Cotes corrigées sur {fixed} coupons encore en cours.")
 
+    # Ticket 2e mi-temps joué par Est le 2026-11-06 (9 matchs donnés à la main) : ajouté tel quel pour être suivi
+    from coupons import _leg_stats, _pack
+    MANUAL = {"2026-11-06": ("mt2", ["20261106|F2|Boulogne|Annecy", "20261106|F2|Grenoble|Reims", "20261106|F2|Nancy|Sochaux",
+                                     "20261106|F2|Montpellier|Metz", "20261106|I1|Venezia|Udinese", "20261106|B1|Standard|Beveren",
+                                     "20261106|SP1|Sevilla|Alaves", "20261106|E1|Derby|Bolton", "20261106|P1|Famalicao|Arouca"])}
+    for d, (kind, ids) in MANUAL.items():
+        e = store.get(d)
+        if not e or any(c["kind"] == kind for c in e["coupons"]) or not all(i in by_id for i in ids):
+            continue
+        picks, stats = [], []
+        for i in ids:
+            l = next(x for x in by_id[i]["legs"] if x["market"] == "sh05")
+            picks.append((dict(by_id[i], legs=[l]), "sh05"))
+            stats.append(_leg_stats(l))
+        c = _pack(kind, sum(x[0] for x in stats), sum(x[1] for x in stats), picks)
+        c["priority"] = len(e["coupons"]) + 1
+        c["level"] = "haute" if c["p_not_lose"] >= 0.5 else "moyenne" if c["p_not_lose"] >= 0.4 else "basse"
+        e["coupons"].append(c)
+        print(f"Ticket {kind} ajouté au {d} : cote {c['odds']}, {c['p_not_lose']:.0%}.")
+
     # Ticket « cote 1000 » : ajouté aussi aux journées déjà figées qui n'en ont pas encore
     for d, ms in by_date.items():
         e = store.get(d)
