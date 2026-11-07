@@ -240,6 +240,8 @@ def run(results: pd.DataFrame, today: date) -> dict:
         scores = {i: (r.hg, r.ag, match_info(r)) for i, r in zip(g["id"], g.itertuples())}
         for c in build_day(matches, league_names={k: v[0] for k, v in LEAGUES.items()}):
             settle_coupon(c, scores)
+            if "status" not in c:  # score de mi-temps manquant pour un pari de mi-temps : coupon non jugé
+                continue
             s = stats[c["kind"]]
             s["n"] += 1
             s["won"] += c["status"] == "won"
