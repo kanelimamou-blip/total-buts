@@ -31757,7 +31757,7 @@
  },
  "2026-11-08": {
   "frozen": false,
-  "created": "2026-11-07T02:34+00:00",
+  "created": "2026-11-07T02:38+00:00",
   "coupons": [
    {
     "kind": "mix",
@@ -33734,19 +33734,152 @@
  },
  "2026-11-09": {
   "frozen": false,
-  "created": "2026-11-07T02:34+00:00",
+  "created": "2026-11-07T02:38+00:00",
   "coupons": [],
   "odds_fixed": true
  },
  "2026-11-13": {
   "frozen": false,
-  "created": "2026-11-07T02:34+00:00",
-  "coupons": [],
+  "created": "2026-11-07T02:38+00:00",
+  "coupons": [
+   {
+    "kind": "nations",
+    "label": "Coupon sélections européennes",
+    "scope": "Sélections européennes",
+    "stake_pct": 0.5,
+    "legs": [
+     {
+      "id": "20261113|NAT|Netherlands|Greece",
+      "market": "1",
+      "team": "Netherlands",
+      "odds": 1.56,
+      "odds_source": "estimée",
+      "p_win": 0.604,
+      "p_push": 0.0,
+      "min_odds": 1.71
+     },
+     {
+      "id": "20261113|NAT|Scotland|North Macedonia",
+      "market": "o20",
+      "team": null,
+      "odds": 1.44,
+      "odds_source": "estimée",
+      "p_win": 0.491,
+      "p_push": 0.249,
+      "min_odds": 1.58
+     }
+    ],
+    "odds": 2.25,
+    "p_win": 0.297,
+    "p_not_lose": 0.447,
+    "ev": -0.19,
+    "reliability": 1.0
+   },
+   {
+    "kind": "nations",
+    "label": "Coupon sélections européennes",
+    "scope": "Sélections européennes",
+    "stake_pct": 0.5,
+    "legs": [
+     {
+      "id": "20261113|NAT|Slovakia|Faroe Islands",
+      "market": "o20",
+      "team": null,
+      "odds": 1.59,
+      "odds_source": "estimée",
+      "p_win": 0.439,
+      "p_push": 0.26,
+      "min_odds": 1.74
+     },
+     {
+      "id": "20261113|NAT|Liechtenstein|Azerbaijan",
+      "market": "o15",
+      "team": null,
+      "odds": 1.48,
+      "odds_source": "estimée",
+      "p_win": 0.638,
+      "p_push": 0.0,
+      "min_odds": 1.61
+     }
+    ],
+    "odds": 2.35,
+    "p_win": 0.28,
+    "p_not_lose": 0.446,
+    "ev": -0.187,
+    "reliability": 1.0
+   },
+   {
+    "kind": "nations",
+    "label": "Coupon sélections européennes",
+    "scope": "Sélections européennes",
+    "stake_pct": 0.5,
+    "legs": [
+     {
+      "id": "20261113|NAT|Serbia|Germany",
+      "market": "o15",
+      "team": null,
+      "odds": 1.19,
+      "odds_source": "estimée",
+      "p_win": 0.796,
+      "p_push": 0.0,
+      "min_odds": 1.29
+     },
+     {
+      "id": "20261113|NAT|Luxembourg|Estonia",
+      "market": "o15",
+      "team": null,
+      "odds": 1.71,
+      "odds_source": "estimée",
+      "p_win": 0.553,
+      "p_push": 0.0,
+      "min_odds": 1.86
+     }
+    ],
+    "odds": 2.03,
+    "p_win": 0.44,
+    "p_not_lose": 0.44,
+    "ev": -0.195,
+    "reliability": 1.0
+   },
+   {
+    "kind": "nations",
+    "label": "Coupon sélections européennes",
+    "scope": "Sélections européennes",
+    "stake_pct": 0.5,
+    "legs": [
+     {
+      "id": "20261113|NAT|Bulgaria|Iceland",
+      "market": "o15",
+      "team": null,
+      "odds": 1.19,
+      "odds_source": "estimée",
+      "p_win": 0.795,
+      "p_push": 0.0,
+      "min_odds": 1.29
+     },
+     {
+      "id": "20261113|NAT|Andorra|Gibraltar",
+      "market": "o15",
+      "team": null,
+      "odds": 1.85,
+      "odds_source": "estimée",
+      "p_win": 0.509,
+      "p_push": 0.0,
+      "min_odds": 2.02
+     }
+    ],
+    "odds": 2.2,
+    "p_win": 0.405,
+    "p_not_lose": 0.405,
+    "ev": -0.206,
+    "reliability": 1.0
+   }
+  ],
   "odds_fixed": true
  },
  "2026-11-14": {
   "frozen": false,
-  "created": "2026-11-07T02:34+00:00",
+  "created": "2026-11-07T02:38+00:00",
   "coupons": [
    {
     "kind": "mix",
@@ -35397,6 +35530,244 @@
     "reliability": 1.009,
     "priority": 34,
     "level": "basse"
+   },
+   {
+    "kind": "nations",
+    "label": "Coupon sélections européennes",
+    "scope": "Sélections européennes",
+    "stake_pct": 0.5,
+    "legs": [
+     {
+      "id": "20261114|NAT|Norway|Wales",
+      "market": "1",
+      "team": "Norway",
+      "odds": 1.37,
+      "odds_source": "estimée",
+      "p_win": 0.688,
+      "p_push": 0.0,
+      "min_odds": 1.5
+     },
+     {
+      "id": "20261114|NAT|Northern Ireland|Ukraine",
+      "market": "o15",
+      "team": null,
+      "odds": 1.46,
+      "odds_source": "estimée",
+      "p_win": 0.646,
+      "p_push": 0.0,
+      "min_odds": 1.59
+     }
+    ],
+    "odds": 2.0,
+    "p_win": 0.444,
+    "p_not_lose": 0.444,
+    "ev": -0.2,
+    "reliability": 1.0
+   },
+   {
+    "kind": "nations",
+    "label": "Coupon sélections européennes",
+    "scope": "Sélections européennes",
+    "stake_pct": 0.5,
+    "legs": [
+     {
+      "id": "20261114|NAT|Sweden|Bosnia and Herzegovina",
+      "market": "o15",
+      "team": null,
+      "odds": 1.14,
+      "odds_source": "estimée",
+      "p_win": 0.827,
+      "p_push": 0.0,
+      "min_odds": 1.25
+     },
+     {
+      "id": "20261114|NAT|Kosovo|Israel",
+      "market": "1",
+      "team": "Kosovo",
+      "odds": 1.77,
+      "odds_source": "estimée",
+      "p_win": 0.532,
+      "p_push": 0.0,
+      "min_odds": 1.93
+     }
+    ],
+    "odds": 2.02,
+    "p_win": 0.44,
+    "p_not_lose": 0.44,
+    "ev": -0.202,
+    "reliability": 1.0
+   },
+   {
+    "kind": "nations",
+    "label": "Coupon sélections européennes",
+    "scope": "Sélections européennes",
+    "stake_pct": 0.5,
+    "legs": [
+     {
+      "id": "20261114|NAT|Romania|Poland",
+      "market": "o15",
+      "team": null,
+      "odds": 1.23,
+      "odds_source": "estimée",
+      "p_win": 0.77,
+      "p_push": 0.0,
+      "min_odds": 1.34
+     },
+     {
+      "id": "20261114|NAT|Austria|Republic of Ireland",
+      "market": "1",
+      "team": "Austria",
+      "odds": 1.66,
+      "odds_source": "estimée",
+      "p_win": 0.569,
+      "p_push": 0.0,
+      "min_odds": 1.81
+     }
+    ],
+    "odds": 2.04,
+    "p_win": 0.438,
+    "p_not_lose": 0.438,
+    "ev": -0.197,
+    "reliability": 1.0
+   },
+   {
+    "kind": "nations",
+    "label": "Coupon sélections européennes",
+    "scope": "Sélections européennes",
+    "stake_pct": 0.5,
+    "legs": [
+     {
+      "id": "20261114|NAT|Portugal|Denmark",
+      "market": "1",
+      "team": "Portugal",
+      "odds": 1.5,
+      "odds_source": "estimée",
+      "p_win": 0.631,
+      "p_push": 0.0,
+      "min_odds": 1.63
+     },
+     {
+      "id": "20261114|NAT|Georgia|Hungary",
+      "market": "o15",
+      "team": null,
+      "odds": 1.43,
+      "odds_source": "estimée",
+      "p_win": 0.661,
+      "p_push": 0.0,
+      "min_odds": 1.56
+     }
+    ],
+    "odds": 2.15,
+    "p_win": 0.417,
+    "p_not_lose": 0.417,
+    "ev": -0.201,
+    "reliability": 1.0
+   }
+  ],
+  "odds_fixed": true
+ },
+ "2026-11-12": {
+  "frozen": false,
+  "created": "2026-11-07T02:38+00:00",
+  "coupons": [
+   {
+    "kind": "nations",
+    "label": "Coupon sélections européennes",
+    "scope": "Sélections européennes",
+    "stake_pct": 0.5,
+    "legs": [
+     {
+      "id": "20261112|NAT|Armenia|Cyprus",
+      "market": "o20",
+      "team": null,
+      "odds": 1.34,
+      "odds_source": "estimée",
+      "p_win": 0.54,
+      "p_push": 0.236,
+      "min_odds": 1.46
+     },
+     {
+      "id": "20261112|NAT|Montenegro|Latvia",
+      "market": "1",
+      "team": "Montenegro",
+      "odds": 1.62,
+      "odds_source": "estimée",
+      "p_win": 0.584,
+      "p_push": 0.0,
+      "min_odds": 1.76
+     }
+    ],
+    "odds": 2.17,
+    "p_win": 0.315,
+    "p_not_lose": 0.453,
+    "ev": -0.183,
+    "reliability": 1.0
+   },
+   {
+    "kind": "nations",
+    "label": "Coupon sélections européennes",
+    "scope": "Sélections européennes",
+    "stake_pct": 0.5,
+    "legs": [
+     {
+      "id": "20261112|NAT|Italy|France",
+      "market": "o20",
+      "team": null,
+      "odds": 1.31,
+      "odds_source": "estimée",
+      "p_win": 0.556,
+      "p_push": 0.231,
+      "min_odds": 1.42
+     },
+     {
+      "id": "20261112|NAT|Albania|Finland",
+      "market": "o20",
+      "team": null,
+      "odds": 2.25,
+      "odds_source": "estimée",
+      "p_win": 0.306,
+      "p_push": 0.27,
+      "min_odds": 2.46
+     }
+    ],
+    "odds": 2.95,
+    "p_win": 0.17,
+    "p_not_lose": 0.453,
+    "ev": -0.174,
+    "reliability": 1.0
+   },
+   {
+    "kind": "nations",
+    "label": "Coupon sélections européennes",
+    "scope": "Sélections européennes",
+    "stake_pct": 0.5,
+    "legs": [
+     {
+      "id": "20261112|NAT|Turkey|Belgium",
+      "market": "2",
+      "team": "Belgium",
+      "odds": 1.75,
+      "odds_source": "estimée",
+      "p_win": 0.539,
+      "p_push": 0.0,
+      "min_odds": 1.91
+     },
+     {
+      "id": "20261112|NAT|Czech Republic|Spain",
+      "market": "2",
+      "team": "Spain",
+      "odds": 1.22,
+      "odds_source": "estimée",
+      "p_win": 0.77,
+      "p_push": 0.0,
+      "min_odds": 1.34
+     }
+    ],
+    "odds": 2.13,
+    "p_win": 0.415,
+    "p_not_lose": 0.415,
+    "ev": -0.208,
+    "reliability": 1.0
    }
   ],
   "odds_fixed": true
