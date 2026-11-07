@@ -28,9 +28,11 @@ LABELS = {
     "a15": ("Extérieur marque +1,5", "Total individuel 2 Plus de 1.5"),
     "ht05": ("1re mi-temps +0,5 but", "1re mi-temps Total Plus de 0.5"),
     "sh05": ("2e mi-temps +0,5 but", "2e mi-temps Total Plus de 0.5"),
+    "wh1": ("Domicile gagne au moins une mi-temps", "Équipe 1 gagne au moins une mi-temps : Oui"),
+    "wh2": ("Extérieur gagne au moins une mi-temps", "Équipe 2 gagne au moins une mi-temps : Oui"),
 }
 EXTRA = set(LABELS)
-HALF = {"ht05", "sh05"}
+HALF = {"ht05", "sh05", "wh1", "wh2"}
 
 HT_SHARE = 0.44   # part des buts marqués en 1re mi-temps (recalculée sur l'historique dans le backtest)
 TEST_DAYS = 365
@@ -54,6 +56,15 @@ def raw_probs(xg_h: float, xg_a: float, rho: float, res: dict, ht_share: float =
         out["h05"], out["h15"] = (float(1 - ph[0]), 0.0), (float(1 - ph[:2].sum()), 0.0)
     else:
         out["a05"], out["a15"] = (float(1 - pa[0]), 0.0), (float(1 - pa[:2].sum()), 0.0)
+    # le favori gagne au moins une mi-temps : chaque mi-temps est un petit match à part (buts répartis selon ht_share)
+    def half_win(share):
+        g = np.arange(8)
+        from scipy.stats import poisson
+        ph_, pa_ = poisson.pmf(g, xg_h * share), poisson.pmf(g, xg_a * share)
+        m = np.outer(ph_, pa_)
+        return float(np.tril(m, -1).sum()) if fav == "1" else float(np.triu(m, 1).sum())
+    w1, w2 = half_win(ht_share), half_win(1 - ht_share)
+    out["wh1" if fav == "1" else "wh2"] = (1 - (1 - w1) * (1 - w2), 0.0)
     out["ht05"] = (float(1 - np.exp(-lam * ht_share)), 0.0)
     out["sh05"] = (float(1 - np.exp(-lam * (1 - ht_share))), 0.0)
     return out
@@ -98,6 +109,10 @@ def settle(market: str, hg: int, ag: int, info: dict | None = None) -> str | Non
         ht = info.get("ht")
         if ht is None:
             return None
+        if market in ("wh1", "wh2"):
+            (a1, b1), (a2, b2) = ht, (hg - ht[0], ag - ht[1])
+            ok = (a1 > b1 or a2 > b2) if market == "wh1" else (b1 > a1 or b2 > a2)
+            return "won" if ok else "lost"
         h1 = ht[0] + ht[1]
         return "won" if (h1 if market == "ht05" else t - h1) >= 1 else "lost"
     raise ValueError(market)

@@ -16,7 +16,7 @@ import extra
 from model import fair_odds
 
 MKT_ORDER = ["o15", "o20", "o25"]
-EXTRA_ORDER = ["u45", "1X", "X2", "h05", "a05", "sh05", "dnb1", "dnb2", "ht05", "u35", "h15", "a15"]
+EXTRA_ORDER = ["u45", "1X", "X2", "h05", "a05", "sh05", "wh1", "wh2", "dnb1", "dnb2", "ht05", "u35", "h15", "a15"]
 
 
 def legs_for_match(pred: dict, market_pred: dict | None, real_o25: float | None) -> list[dict]:
@@ -168,7 +168,7 @@ def _virtual(matches: list[dict], markets: set) -> list[dict]:
 
 
 def build_day(matches: list[dict], kinds=("sur", "favoris", "buts15", "buts20", "mix", "dc", "autres", "ligue", "value", "audace", "large3", "large5",
-                                          "large_dom", "mt2", "jackpot", "jackpot_fiable"),
+                                          "large_dom", "mt2", "favplus", "jackpot", "jackpot_fiable"),
               league_names=None) -> list[dict]:
     """Coupons d'une journée. matches : [{"id", "div", "rel", "legs"}].
 
@@ -208,6 +208,20 @@ def build_day(matches: list[dict], kinds=("sur", "favoris", "buts15", "buts20", 
     if "mix" in kinds:
         mm = [dict(m, legs=m["legs"] + [dict(m["fav"], market="fav", side=m["fav"]["market"])]) for m in free(matches) if m.get("fav")]
         add(_repeat("mix", mm, {"o15", "o20", "o25", "fav"}, pool=12, mk_order=["o15", "o20", "o25", "fav"], mix=True))
+    # Favoris malins (façon de jouer d'Est) : pour chaque favori, la meilleure option entre la victoire,
+    # « gagne au moins une mi-temps » et « marque +0,5 / +1,5 », combinées jusqu'à la cote 2
+    if "favplus" in kinds:
+        FP = ["1", "2", "wh1", "wh2", "h05", "a05", "h15", "a15"]
+        fm = []
+        for m in free(matches):
+            # favoris entre 1,35 et 1,80 environ : les très gros favoris (1,20-1,30) cassent plus souvent qu'on ne croit
+            if not m.get("fav") or not (1.35 <= m["fav"]["odds"] <= 1.8):
+                continue
+            side = m["fav"]["market"]
+            own = {"wh1", "h05", "h15"} if side == "1" else {"wh2", "a05", "a15"}
+            legs = [l for l in m["legs"] if l["market"] in own] + [m["fav"]]
+            fm.append(dict(m, legs=legs))
+        add(_repeat("favplus", _virtual(fm, set(FP)), {"x1", "x2"}, pool=12, mk_order=["x1", "x2"]))
     if "ligue" in kinds:
         by_div = {}
         for m in matches:

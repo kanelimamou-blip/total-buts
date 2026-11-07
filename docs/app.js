@@ -1,6 +1,6 @@
 "use strict";
 const MK = { o15: "+1,5 but", o20: "+2 buts", o25: "+2,5 buts" };
-const KIND_FILTERS = [["all", "Tous"], ["sur", "Sûrs"], ["favoris", "Favoris"], ["mix", "Mix"], ["buts15", "+1,5"], ["buts20", "+2 (remb.)"], ["dc", "Double chance"], ["autres", "Autres paris"], ["periode", "Sur une période"], ["ligue", "Par championnat"], ["tendance", "Tendances"], ["value", "Value"], ["audace", "Audacieux"], ["large3", "Larges 3-5"], ["large5", "Larges 5-8"], ["large_dom", "Larges favoris domicile"], ["live_combi", "Coupons live"], ["relais", "Relais"], ["mt2", "2e mi-temps"], ["nations", "Sélections"], ["jackpot_fiable", "Jackpots fiables"], ["jackpot", "Jackpot"], ["mille", "Cote 1000"]];
+const KIND_FILTERS = [["all", "Tous"], ["sur", "Sûrs"], ["favoris", "Favoris"], ["mix", "Mix"], ["favplus", "Favoris malins"], ["buts15", "+1,5"], ["buts20", "+2 (remb.)"], ["dc", "Double chance"], ["autres", "Autres paris"], ["periode", "Sur une période"], ["ligue", "Par championnat"], ["tendance", "Tendances"], ["value", "Value"], ["audace", "Audacieux"], ["large3", "Larges 3-5"], ["large5", "Larges 5-8"], ["large_dom", "Larges favoris domicile"], ["live_combi", "Coupons live"], ["relais", "Relais"], ["mt2", "2e mi-temps"], ["nations", "Sélections"], ["jackpot_fiable", "Jackpots fiables"], ["jackpot", "Jackpot"], ["mille", "Cote 1000"]];
 const kindOf = (c) => (c.kind.startsWith("periode") ? "periode" : c.kind);
 const XL = () => state.data?.extra_labels || {};  // autres paris : [libellé appli, libellé 1xBet]
 const mkLabel = (l) => (l.market === "1" || l.market === "2" ? `Victoire ${l.team || (l.market === "1" ? l.home : l.away)}` : MK[l.market] || XL()[l.market]?.[0] || l.market);
@@ -235,7 +235,7 @@ function viewMatches() {
   ms.filter((m) => m.date === state.mday).forEach((m) => (byDay[m.date] ||= []).push(m));
   const sortKey = state.sort;
   return `<h1>Matchs</h1>
-  <div class="chips"><button class="chip" data-league="all" aria-pressed="${state.league === "all"}">Toutes ligues</button>${leagues.map((l) => `<button class="chip" data-league="${l}" aria-pressed="${state.league === l}">${esc(d.leagues[l].name)}</button>`).join("")}</div>
+  <div class="chips"><button class="chip" data-league="all" aria-pressed="${state.league === "all"}">Toutes ligues</button>${leagues.map((l) => `<button class="chip" data-league="${l}" aria-pressed="${state.league === l}">${esc(d.leagues[l]?.name || (l === "NAT" ? "Sélections" : l))}</button>`).join("")}</div>
   <div class="chips">${mdays.map((x) => `<button class="chip" data-mday="${x}" aria-pressed="${x === state.mday}">${dayLabel(x, d.today)}<span class="c">${ms.filter((m) => m.date === x).length}</span></button>`).join("")}</div>
   <div class="chips"><button class="chip" data-favview="1" aria-pressed="${!!state.favView}">Favoris ≤ 1,40</button>${["o15", "o20", "o25"].map((k) => `<button class="chip" data-sort="${k}" aria-pressed="${sortKey === k}">Trier par ${MK[k]}</button>`).join("")}<button class="chip" data-sort="time" aria-pressed="${sortKey === "time"}">Par heure</button></div>
   ${state.favView ? favList(ms.filter((m) => m.date === state.mday)) : Object.keys(byDay).sort().map((day) => {
@@ -244,10 +244,17 @@ function viewMatches() {
   }).join("")}`;
 }
 
+// Les autres façons de jouer un favori (demande d'Est) : gagne au moins une mi-temps, marque +0,5, marque +1,5
+function favOptions(m) {
+  const h = m.fav.market === "1", want = h ? [["wh1", "gagne une mi-temps"], ["h05", "marque 1 but"], ["h15", "marque 2 buts"]] : [["wh2", "gagne une mi-temps"], ["a05", "marque 1 but"], ["a15", "marque 2 buts"]];
+  const opts = want.map(([k, l]) => { const g = (m.legs || []).find((x) => x.market === k); return g ? `${l} ${odds(g.odds)} · ${pct(g.p_win)}` : ""; }).filter(Boolean);
+  return opts.length ? `<p class="small muted" style="margin:-4px 0 10px 12px">Ou : ${opts.join(" — ")}</p>` : "";
+}
 function favList(ms) {
   const all = ms.filter((m) => m.fav && !m.provisional).sort((a, b) => b.fav.p_win - a.fav.p_win);
   const favs = all.filter((m) => m.fav.odds <= 1.4).slice(0, 50);
   const more = all.filter((m) => m.fav.odds > 1.4 && m.fav.odds <= 1.6).slice(0, Math.max(0, 50 - favs.length));
+  const big = all.filter((m) => m.fav.odds > 1.6 && m.fav.odds <= 2.5).slice(0, 30);
   if (!favs.length && !more.length) return `<div class="empty">Aucun favori net ce jour-là.</div>`;
   // suggestions : tickets de 3 favoris consécutifs (les plus sûrs ensemble), cote visée autour de 2
   const tickets = [];
@@ -264,9 +271,9 @@ function favList(ms) {
       return `<div class="kv"><span>Ticket ${k + 1} : ${t.map((m) => esc(m.fav.team)).join(", ")}</span><b>${odds(o)} (net ${odds(netOdds(o))}) · ${pct(p)}</b></div>
       <button class="btn-copy" data-play='${esc(JSON.stringify({ label: "Favoris ≤ 1,40", odds: +o.toFixed(2), legs }))}'>Je l'ai joué</button>`; }).join("")}
   </section>
-  ${[[favs, `${favs.length} favori${favs.length > 1 ? "s" : ""} à 1,40 max`], [more, "Un peu plus risqués (1,41 à 1,60)"]].filter(([l]) => l.length).map(([l, title]) => `<section class="card"><h2>${title}</h2>
+  ${[[favs, `${favs.length} favori${favs.length > 1 ? "s" : ""} à 1,40 max`], [more, "Un peu plus risqués (1,41 à 1,60)"], [big, "Favoris à grosse cote (1,61 à 2,50) : plutôt « une mi-temps » ou « marque »"]].filter(([l]) => l.length).map(([l, title]) => `<section class="card"><h2>${title}</h2>
     ${l.map((m) => `<button class="match" data-match="${esc(m.id)}"><span class="teams">${esc(m.fav.team)} <span class="small muted">gagne</span><br><span class="small muted">${esc(m.home)} – ${esc(m.away)} · ${esc(m.league)} ${esc(m.time || "")}</span></span>
-      <span class="time">${odds(m.fav.odds)}<br><span class="small">${pct(m.fav.p_win)}</span></span></button>`).join("")}
+      <span class="time">${odds(m.fav.odds)}<br><span class="small">${pct(m.fav.p_win)}</span></span></button>${favOptions(m)}`).join("")}
   </section>`).join("")}
   <p class="note">Les cotes sans marché publié sont estimées. Sur 1xBet, ne garde un favori que si sa cote est au moins la cote juste de la fiche du match.</p>`;
 }
