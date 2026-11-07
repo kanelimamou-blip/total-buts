@@ -265,7 +265,7 @@ def build_day(matches: list[dict], kinds=("sur", "favoris", "buts15", "buts20", 
         cand = []
         for m in matches:
             l = next((x for x in m["legs"] if x["market"] == "sh05" and not x.get("excluded")), None)
-            if l and l["odds"] >= 1.05 and l["p_win"] >= 0.72:
+            if l and l["odds"] >= 1.05 and l["p_win"] >= 0.77:  # 2026-11-06 : le ticket a cassé sur le match le moins sûr (74 %)
                 cand.append((l["p_win"] * m.get("rel", 1.0), m, l))
         # on vise la cote 5 avec le plus de chances : d'abord les sélections qui apportent le plus de cote par risque pris
         cand.sort(key=lambda x: -np.log(x[2]["odds"]) / max(-np.log(max(x[0], 1e-6)), 1e-6))
