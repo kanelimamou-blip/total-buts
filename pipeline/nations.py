@@ -223,7 +223,7 @@ def update(today, cache_dir, offline=False):
         if x.get("completed") and x.get("hg") is not None:
             scores[mid] = (int(x["hg"]), int(x["ag"]))
             continue
-        if x.get("state") or dt < now or r is None or not (r.known(h) and r.known(a)):
+        if x.get("state") in ("in", "post") or dt < now or r is None or not (r.known(h) and r.known(a)):
             continue
         lh, la = r.rates(h, a, neutral=False)  # Ligue des nations, qualifications, amicaux : presque toujours chez l'équipe qui reçoit
         mat = score_matrix(lh, la, 0.0)
