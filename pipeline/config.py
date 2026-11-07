@@ -98,6 +98,7 @@ COUPONS = {
     "audace": {"label": "Coupon audacieux", "min_odds": 4.0, "max_odds": 9.0, "legs": (3, 4), "stake_pct": 0.5},
     "mille": {"label": "Cote 1000", "min_odds": 1000.0, "max_odds": 1e9, "legs": (8, 22), "stake_pct": 0.1},
     "jackpot_fiable": {"label": "Jackpot fiable", "min_odds": 10.0, "max_odds": 1e9, "legs": (3, 15), "stake_pct": 0.25},
+    "nations": {"label": "Coupon sélections européennes", "min_odds": 2.0, "max_odds": 3.0, "legs": (2, 4), "stake_pct": 0.5},
     "mt2": {"label": "Ticket 2e mi-temps · cote 5", "min_odds": 5.0, "max_odds": 1e9, "legs": (8, 14), "stake_pct": 0.25},
     "jackpot": {"label": "Jackpot", "min_odds": 15.0, "max_odds": 1e9, "legs": (6, 8), "stake_pct": 0.25},
 }
@@ -112,8 +113,8 @@ MIN_LEG_P: dict = {}  # testé de 0,65 à 0,80 : aucun gain de réussite, la cot
 MAX_COUPONS_PER_MATCH = 3
 
 # Nombre de coupons par jour : pas de limite fixe, on garde tous ceux qui passent ces seuils
-MIN_P = {"large_dom": 0.12, "large3": 0.2, "large5": 0.12, "dc": 0.36, "autres": 0.36, "buts15": 0.36, "buts20": 0.3, "mix": 0.36, "tendance": 0.3, "sur": 0.36, "ligue": 0.34, "value": 0.25, "audace": 0.15, "favoris": 0.36, "periode_buts": 0.3, "periode_fav": 0.3}
-MAX_PER_DAY = {"large_dom": 3, "large3": 4, "large5": 3, "dc": 4, "autres": 6, "buts15": 4, "buts20": 3, "mix": 6, "tendance": 2, "sur": 8, "ligue": 10, "value": 4, "audace": 3, "jackpot": 1, "favoris": 4, "periode_buts": 1, "periode_fav": 1}
+MIN_P = {"nations": 0.36, "large_dom": 0.12, "large3": 0.2, "large5": 0.12, "dc": 0.36, "autres": 0.36, "buts15": 0.36, "buts20": 0.3, "mix": 0.36, "tendance": 0.3, "sur": 0.36, "ligue": 0.34, "value": 0.25, "audace": 0.15, "favoris": 0.36, "periode_buts": 0.3, "periode_fav": 0.3}
+MAX_PER_DAY = {"nations": 4, "large_dom": 3, "large3": 4, "large5": 3, "dc": 4, "autres": 6, "buts15": 4, "buts20": 3, "mix": 6, "tendance": 2, "sur": 8, "ligue": 10, "value": 4, "audace": 3, "jackpot": 1, "favoris": 4, "periode_buts": 1, "periode_fav": 1}
 
 # Tickets sur une période (en jours), créés chaque jour
 PERIODS = {5: "5 jours", 7: "1 semaine", 15: "15 jours", 21: "3 semaines", 30: "1 mois"}

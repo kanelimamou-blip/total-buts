@@ -15,12 +15,13 @@ import ahead
 import backtest
 import context
 import europe
+import nations
 import extra
 import feedback
 import live as live_mod
 import meta
 import tips as tips_mod
-from config import (ALL_COMPETITIONS, COUPONS, CUPS, LEAGUES, LONG_PERIODS, LONG_TARGETS, MARKETS, PERIODS, SITE_DATA, STATE_DIR,
+from config import (ALL_COMPETITIONS, COUPONS, CUPS, LEAGUES, LONG_PERIODS, LONG_TARGETS, MARKETS, PERIODS, RAW_DIR, SITE_DATA, STATE_DIR,
                     TAX, TRACKING_START)
 from coupons import _repeat, build_day, build_jackpots, build_long, build_mille, build_favorites, favorite_leg, legs_for_match, prioritise, settle_coupon
 from fetch import download, load_fixtures, load_results
@@ -78,6 +79,15 @@ def main():
         print("Coupes d'Europe indisponibles :", exc)
         euro_matches, euro_scores, euro_df = [], {}, None
     print(f"Coupes d'Europe : {len(euro_matches)} matchs à venir, {len(euro_scores)} résultats.")
+    # Sélections européennes (modèle à part, en observation) : une panne ne doit rien bloquer
+    nat_df = None
+    try:
+        nat_matches, nat_scores, nat_df = nations.update(today, RAW_DIR / "nations", offline=args.offline)
+        euro_matches += nat_matches
+        euro_scores.update(nat_scores)
+        print(f"Sélections européennes : {len(nat_matches)} matchs à venir, {len(nat_scores)} résultats récents.")
+    except Exception as exc:  # noqa: BLE001
+        print("Sélections européennes indisponibles :", exc)
 
     bt = read_json(SITE_DATA / "backtest.json", None)
     stale = bt is None or (ts_today - pd.Timestamp(bt["generated"])).days >= 7
@@ -256,7 +266,7 @@ def main():
             "legs": [{k: (round(v, 3) if isinstance(v, float) else v) for k, v in l.items()} for l in legs],
             "top_scores": e["top_scores"], "total_dist": e["total_dist"],
             "form_home": e["form_home"], "form_away": e["form_away"],
-            "provisional": e.get("provisional", False), "espn": e.get("espn"),
+            "provisional": e.get("provisional", False), "nations": e.get("nations", False), "espn": e.get("espn"),
             "res": {k: round(v, 3) for k, v in e["res"].items()},
             "fav": {k: (round(v, 3) if isinstance(v, float) else v) for k, v in fav.items()},
         })
@@ -272,12 +282,26 @@ def main():
         if d in store and store[d].get("frozen"):
             continue
         day = [{"id": m["id"], "div": m["div"], "rel": fb["reliability"].get(m["div"], 0.9 if m["div"] in CUPS else 1.0),
-                "legs": ok_legs(m), "fav": m["fav"]} for m in by_date[d] if not m.get("provisional")]
+                "legs": ok_legs(m), "fav": m["fav"]} for m in by_date[d] if not (m.get("provisional") or m.get("nations"))]
         coupons = build_day(day, league_names={k: v[0] for k, v in ALL_COMPETITIONS.items()})
         mille = build_mille(day)
         if mille:
             coupons = prioritise(coupons + [mille])
         store[d] = {"frozen": d == today.isoformat(), "created": now.isoformat(timespec="minutes"), "coupons": coupons}
+
+    # Coupons sélections européennes : à part, sur leurs seuls matchs, en observation (hors plan tant qu'ils n'ont pas fait leurs preuves)
+    nat_by_date = {}
+    for m in matches:
+        if m.get("nations") and m["date"] >= today.isoformat():
+            nat_by_date.setdefault(m["date"], []).append(m)
+    for d, ms in nat_by_date.items():
+        e = store.get(d)
+        if e is None or any(c["kind"] == "nations" for c in e["coupons"]):
+            continue
+        day = [{"id": m["id"], "div": m["div"], "rel": 1.0, "fav": m["fav"],
+                "legs": ok_legs(m) + [dict(m["fav"], market="fav", side=m["fav"]["market"])]} for m in ms]
+        e["coupons"] += _repeat("nations", day, {"o15", "o20", "fav"}, pool=12, mk_order=["o15", "o20", "fav"],
+                                scope="Sélections européennes")
 
     # Refonte d'une journée déjà figée (cotes corrigées le 2026-11-06, demande d'Est) : seuls les coupons du jour dont
     # aucun match n'a commencé sont refaits, sur les matchs pas encore commencés ; les autres restent tels quels.
@@ -294,7 +318,7 @@ def main():
         old = store[td]["coupons"]
         keep = [c for c in old if c["kind"] not in day_kinds or c.get("status") or any(l["id"] in started for l in c["legs"])]
         day = [{"id": m["id"], "div": m["div"], "rel": fb["reliability"].get(m["div"], 0.9 if m["div"] in CUPS else 1.0),
-                "legs": ok_legs(m), "fav": m["fav"]} for m in by_date[td] if not m.get("provisional") and m["id"] not in started]
+                "legs": ok_legs(m), "fav": m["fav"]} for m in by_date[td] if not (m.get("provisional") or m.get("nations")) and m["id"] not in started]
         new = build_day(day, league_names={k: v[0] for k, v in ALL_COMPETITIONS.items()})
         mille = build_mille(day) if not any(c["kind"] == "mille" for c in keep) else None
         store[td]["coupons"] = prioritise(keep + new + ([mille] if mille else []))
@@ -365,12 +389,12 @@ def main():
         e = store.get(d)
         if e and e.get("frozen") and not any(c["kind"] == "mille" for c in e["coupons"]):
             mille = build_mille([{"id": m["id"], "div": m["div"], "legs": ok_legs(m), "fav": m["fav"]}
-                                 for m in ms if not m.get("provisional")])
+                                 for m in ms if not (m.get("provisional") or m.get("nations"))])
             if mille:
                 e["coupons"] = prioritise(e["coupons"] + [mille])
         if e and e.get("frozen") and not any(c["kind"] == "jackpot_fiable" for c in e["coupons"]):
             jf = build_jackpots([{"id": m["id"], "div": m["div"], "legs": ok_legs(m), "fav": m["fav"]}
-                                 for m in ms if not m.get("provisional")])
+                                 for m in ms if not (m.get("provisional") or m.get("nations"))])
             if jf:
                 e["coupons"] = prioritise(e["coupons"] + jf)
 
@@ -383,7 +407,7 @@ def main():
     if not entry.get("periods_done"):
         pool_all = [{"id": m["id"], "div": m["div"], "date": m["date"], "legs": ok_legs(m), "fav": m["fav"],
                      "rel": fb["reliability"].get(m["div"], 0.9 if m["div"] in CUPS else 1.0)}
-                    for m in matches if not m.get("provisional")]
+                    for m in matches if not (m.get("provisional") or m.get("nations"))]
         used_b, used_f = set(), set()
         period_coupons = []
         for days, label in sorted(PERIODS.items()):
@@ -410,7 +434,7 @@ def main():
         closed = {r["team"] for r in surprise["closed"]}
         form_teams = {r["team"] for r in surprise["over"]}
         end = (today + timedelta(days=7)).isoformat()
-        week = [m for m in matches if m["date"] < end and not m.get("provisional")]
+        week = [m for m in matches if m["date"] < end and not (m.get("provisional") or m.get("nations"))]
         pool_goals = [{"id": m["id"], "div": m["div"], "legs": ok_legs(m), "fav": m["fav"]} for m in week
                       if (m["home"] in goal_teams or m["away"] in goal_teams) and not ({m["home"], m["away"]} & closed)]
         pool_form = [{"id": m["id"], "div": m["div"], "legs": [m["fav"]], "fav": m["fav"]} for m in week
@@ -422,7 +446,7 @@ def main():
     if not entry.get("long_done"):
         pool_all = [{"id": m["id"], "div": m["div"], "date": m["date"], "legs": ok_legs(m), "fav": m["fav"],
                      "rel": fb["reliability"].get(m["div"], 0.9 if m["div"] in CUPS else 1.0)}
-                    for m in matches if not m.get("provisional")]
+                    for m in matches if not (m.get("provisional") or m.get("nations"))]
         longs = []
         for days, label in sorted(LONG_PERIODS.items()):
             end = (today + timedelta(days=days)).isoformat()
@@ -447,7 +471,7 @@ def main():
     if td >= TRACKING_START:
         upcoming = {m["id"]: {"id": m["id"], "div": m["div"], "legs": ok_legs(m), "fav": m["fav"],
                               "rel": fb["reliability"].get(m["div"], 0.9 if m["div"] in CUPS else 1.0)}
-                    for m in matches if m["date"] >= td and not m.get("provisional")}
+                    for m in matches if m["date"] >= td and not (m.get("provisional") or m.get("nations"))}
         relays = []
         for e in store.values():
             for c in e["coupons"]:

@@ -1,6 +1,6 @@
 "use strict";
 const MK = { o15: "+1,5 but", o20: "+2 buts", o25: "+2,5 buts" };
-const KIND_FILTERS = [["all", "Tous"], ["sur", "Sûrs"], ["favoris", "Favoris"], ["mix", "Mix"], ["buts15", "+1,5"], ["buts20", "+2 (remb.)"], ["dc", "Double chance"], ["autres", "Autres paris"], ["periode", "Sur une période"], ["ligue", "Par championnat"], ["tendance", "Tendances"], ["value", "Value"], ["audace", "Audacieux"], ["large3", "Larges 3-5"], ["large5", "Larges 5-8"], ["large_dom", "Larges favoris domicile"], ["live_combi", "Coupons live"], ["relais", "Relais"], ["mt2", "2e mi-temps"], ["jackpot_fiable", "Jackpots fiables"], ["jackpot", "Jackpot"], ["mille", "Cote 1000"]];
+const KIND_FILTERS = [["all", "Tous"], ["sur", "Sûrs"], ["favoris", "Favoris"], ["mix", "Mix"], ["buts15", "+1,5"], ["buts20", "+2 (remb.)"], ["dc", "Double chance"], ["autres", "Autres paris"], ["periode", "Sur une période"], ["ligue", "Par championnat"], ["tendance", "Tendances"], ["value", "Value"], ["audace", "Audacieux"], ["large3", "Larges 3-5"], ["large5", "Larges 5-8"], ["large_dom", "Larges favoris domicile"], ["live_combi", "Coupons live"], ["relais", "Relais"], ["mt2", "2e mi-temps"], ["nations", "Sélections"], ["jackpot_fiable", "Jackpots fiables"], ["jackpot", "Jackpot"], ["mille", "Cote 1000"]];
 const kindOf = (c) => (c.kind.startsWith("periode") ? "periode" : c.kind);
 const XL = () => state.data?.extra_labels || {};  // autres paris : [libellé appli, libellé 1xBet]
 const mkLabel = (l) => (l.market === "1" || l.market === "2" ? `Victoire ${l.team || (l.market === "1" ? l.home : l.away)}` : MK[l.market] || XL()[l.market]?.[0] || l.market);
@@ -307,6 +307,7 @@ function openMatch(id) {
     ${m.res ? `<div class="mk-grid"><div class="mk-box"><span class="s">Victoire ${esc(m.home)}</span><span class="p">${pct(m.res["1"])}</span>${addBtn(m, "1")}</div><div class="mk-box"><span class="s">Nul</span><span class="p">${pct(m.res.X)}</span></div><div class="mk-box"><span class="s">Victoire ${esc(m.away)}</span><span class="p">${pct(m.res["2"])}</span>${addBtn(m, "2")}</div></div>` : ""}
     ${extraGrid(m)}
     ${m.p.o20_push ? `<p class="small muted">+2 buts : remboursé si le match finit à 2 buts (${pct(m.p.o20_push)}).</p>` : ""}
+    ${m.div === "NAT" ? `<p class="note">Sélections européennes : modèle à part, sans cotes du marché, en observation. Ces matchs n'entrent que dans les « Coupons sélections », hors du plan, tant que leurs résultats n'ont pas fait leurs preuves.</p>` : ""}
     ${m.provisional ? `<p class="note">Coupe d'Europe en rodage : l'historique des matchs européens se charge encore. Ce match n'entre pas dans les coupons pour l'instant.</p>` : ""}
     ${m.market_o25 != null ? `<p class="small">Marché sur +2,5 : <b>${pct(m.market_o25)}</b> (cote moyenne ${odds(m.odds_o25)}). Modèle seul : ${pct(m.p_model.o25)}.</p>` : `<p class="small muted">Cotes du marché pas encore publiées dans nos sources : probabilités du modèle seul, affinées à l'approche du match.</p>`}
     ${m.context?.length ? `<div class="form">${m.context.map((c) => `<span>${esc(c)}</span>`).join("")}</div>` : ""}
