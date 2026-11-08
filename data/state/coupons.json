@@ -11722,7 +11722,10 @@
       "odds_source": "estimée",
       "p_win": 0.869,
       "p_push": 0.0,
-      "min_odds": 1.19
+      "min_odds": 1.19,
+      "goals": 4,
+      "score": "2-2",
+      "result": "won"
      }
     ],
     "odds": 11.76,
@@ -12219,7 +12222,10 @@
       "odds_source": "estimée",
       "p_win": 0.869,
       "p_push": 0.0,
-      "min_odds": 1.19
+      "min_odds": 1.19,
+      "goals": 4,
+      "score": "2-2",
+      "result": "won"
      },
      {
       "id": "20261107|E1|Charlton|Sheffield United",
@@ -28192,7 +28198,10 @@
       "odds_source": "estimée",
       "p_win": 0.875,
       "p_push": 0.0,
-      "min_odds": 1.18
+      "min_odds": 1.18,
+      "goals": 4,
+      "score": "2-2",
+      "result": "won"
      },
      {
       "id": "20261107|B1|Antwerp|Lommel SK",
@@ -28347,7 +28356,10 @@
       "odds_source": "estimée",
       "p_win": 0.875,
       "p_push": 0.0,
-      "min_odds": 1.18
+      "min_odds": 1.18,
+      "goals": 4,
+      "score": "2-2",
+      "result": "won"
      },
      {
       "id": "20261107|B1|Antwerp|Lommel SK",
@@ -36086,7 +36098,10 @@
       "odds_source": "estimée",
       "p_win": 0.783,
       "p_push": 0.0,
-      "min_odds": 1.32
+      "min_odds": 1.32,
+      "goals": 5,
+      "score": "0-5",
+      "result": "won"
      }
     ],
     "odds": 2.23,
@@ -36124,7 +36139,10 @@
       "odds_source": "estimée",
       "p_win": 0.809,
       "p_push": 0.0,
-      "min_odds": 1.27
+      "min_odds": 1.27,
+      "goals": 5,
+      "score": "0-5",
+      "result": "won"
      }
     ],
     "odds": 2.06,
@@ -36133,7 +36151,9 @@
     "ev": -0.217,
     "reliability": 1.039,
     "priority": 19,
-    "level": "moyenne"
+    "level": "moyenne",
+    "status": "won",
+    "return": 2.058
    },
    {
     "kind": "dc",
@@ -36574,7 +36594,10 @@
       "p_push": 0.0,
       "min_odds": 1.4,
       "live_minute": 63,
-      "live_score": "0-0"
+      "live_score": "0-0",
+      "goals": 2,
+      "score": "0-2",
+      "result": "won"
      },
      {
       "id": "20261108|E0|Brighton|Brentford",
@@ -36665,6 +36688,57 @@
     "level": "basse"
    },
    {
+    "kind": "live_combi",
+    "label": "Coupon live",
+    "scope": "3 matchs en cours",
+    "stake_pct": 0.5,
+    "legs": [
+     {
+      "id": "20261108|P1|Santa Clara|Gil Vicente",
+      "market": "1X",
+      "team": null,
+      "odds": 1.29,
+      "odds_source": "estimée",
+      "p_win": 0.718,
+      "p_push": 0.0,
+      "min_odds": 1.44,
+      "live_minute": 9,
+      "live_score": "0-0"
+     },
+     {
+      "id": "20261108|G1|Asteras Tripolis|Kalamata",
+      "market": "1X",
+      "team": null,
+      "odds": 1.29,
+      "odds_source": "estimée",
+      "p_win": 0.716,
+      "p_push": 0.0,
+      "min_odds": 1.44,
+      "live_minute": 41,
+      "live_score": "0-0"
+     },
+     {
+      "id": "20261108|SC0|Hearts|Falkirk",
+      "market": "h05",
+      "team": "Hearts",
+      "odds": 1.29,
+      "odds_source": "estimée",
+      "p_win": 0.715,
+      "p_push": 0.0,
+      "min_odds": 1.44,
+      "live_minute": 38,
+      "live_score": "0-3"
+     }
+    ],
+    "odds": 2.15,
+    "p_win": 0.368,
+    "p_not_lose": 0.368,
+    "ev": -0.295,
+    "reliability": 1.0,
+    "priority": 30,
+    "level": "basse"
+   },
+   {
     "kind": "periode_fav",
     "label": "Favoris sur la période",
     "scope": "1 mois",
@@ -36726,7 +36800,7 @@
     "p_not_lose": 0.326,
     "ev": -0.339,
     "reliability": 1.07,
-    "priority": 30,
+    "priority": 31,
     "level": "basse"
    },
    {
@@ -36757,7 +36831,10 @@
       "p_push": 0.0,
       "min_odds": 1.45,
       "live_minute": 61,
-      "live_score": "0-3"
+      "live_score": "0-3",
+      "goals": 5,
+      "score": "0-5",
+      "result": "lost"
      },
      {
       "id": "20261108|E0|Crystal Palace|Liverpool",
@@ -36777,7 +36854,7 @@
     "p_not_lose": 0.358,
     "ev": -0.294,
     "reliability": 1.0,
-    "priority": 31,
+    "priority": 32,
     "level": "basse"
    },
    {
@@ -36828,7 +36905,7 @@
     "p_not_lose": 0.325,
     "ev": -0.297,
     "reliability": 1.0,
-    "priority": 32,
+    "priority": 33,
     "level": "basse"
    },
    {
@@ -36889,7 +36966,7 @@
     "p_not_lose": 0.268,
     "ev": -0.292,
     "reliability": 1.092,
-    "priority": 33,
+    "priority": 34,
     "level": "basse"
    },
    {
@@ -36924,7 +37001,7 @@
     "p_not_lose": 0.301,
     "ev": -0.211,
     "reliability": 1.038,
-    "priority": 34,
+    "priority": 35,
     "level": "basse"
    },
    {
@@ -36982,7 +37059,7 @@
     "p_not_lose": 0.267,
     "ev": -0.301,
     "reliability": 1.044,
-    "priority": 35,
+    "priority": 36,
     "level": "basse"
    },
    {
@@ -37053,7 +37130,7 @@
     "p_not_lose": 0.259,
     "ev": -0.325,
     "reliability": 1.069,
-    "priority": 36,
+    "priority": 37,
     "level": "basse"
    },
    {
@@ -37110,7 +37187,7 @@
     "p_not_lose": 0.265,
     "ev": -0.308,
     "reliability": 1.038,
-    "priority": 37,
+    "priority": 38,
     "level": "basse"
    },
    {
@@ -37145,7 +37222,70 @@
     "p_not_lose": 0.294,
     "ev": -0.212,
     "reliability": 0.992,
-    "priority": 38,
+    "priority": 39,
+    "level": "basse"
+   },
+   {
+    "kind": "live_combi",
+    "label": "Coupon live",
+    "scope": "4 matchs en cours",
+    "stake_pct": 0.5,
+    "legs": [
+     {
+      "id": "20261108|G1|Iraklis|Panathinaikos",
+      "market": "o15",
+      "team": null,
+      "odds": 1.25,
+      "odds_source": "estimée",
+      "p_win": 0.739,
+      "p_push": 0.0,
+      "min_odds": 1.39,
+      "live_minute": 9,
+      "live_score": "0-0"
+     },
+     {
+      "id": "20261108|T1|Alanyaspor|Trabzonspor",
+      "market": "o15",
+      "team": null,
+      "odds": 1.26,
+      "odds_source": "estimée",
+      "p_win": 0.734,
+      "p_push": 0.0,
+      "min_odds": 1.4,
+      "live_minute": 10,
+      "live_score": "0-0"
+     },
+     {
+      "id": "20261108|G1|AEK|Levadeiakos",
+      "market": "h05",
+      "team": "AEK",
+      "odds": 1.26,
+      "odds_source": "estimée",
+      "p_win": 0.733,
+      "p_push": 0.0,
+      "min_odds": 1.4,
+      "live_minute": 40,
+      "live_score": "0-1"
+     },
+     {
+      "id": "20261108|B1|Gent|Kortrijk",
+      "market": "h15",
+      "team": "Gent",
+      "odds": 1.29,
+      "odds_source": "estimée",
+      "p_win": 0.719,
+      "p_push": 0.0,
+      "min_odds": 1.43,
+      "live_minute": 39,
+      "live_score": "1-0"
+     }
+    ],
+    "odds": 2.56,
+    "p_win": 0.286,
+    "p_not_lose": 0.286,
+    "ev": -0.357,
+    "reliability": 1.0,
+    "priority": 40,
     "level": "basse"
    },
    {
@@ -37162,7 +37302,10 @@
       "odds_source": "estimée",
       "p_win": 0.835,
       "p_push": 0.0,
-      "min_odds": 1.23
+      "min_odds": 1.23,
+      "goals": 5,
+      "score": "0-5",
+      "result": "won"
      },
      {
       "id": "20261108|SC0|Hearts|Falkirk",
@@ -37190,7 +37333,7 @@
     "p_not_lose": 0.284,
     "ev": -0.254,
     "reliability": 1.092,
-    "priority": 39,
+    "priority": 41,
     "level": "basse"
    },
    {
@@ -37246,7 +37389,7 @@
     "ev": -0.286,
     "reliability": 1.056,
     "target": 3.0,
-    "priority": 40,
+    "priority": 42,
     "level": "basse"
    },
    {
@@ -37301,7 +37444,7 @@
     "p_not_lose": 0.263,
     "ev": -0.295,
     "reliability": 1.088,
-    "priority": 41,
+    "priority": 43,
     "level": "basse"
    },
    {
@@ -37357,7 +37500,7 @@
     "ev": -0.288,
     "reliability": 1.056,
     "target": 3.0,
-    "priority": 42,
+    "priority": 44,
     "level": "basse"
    },
    {
@@ -37413,7 +37556,7 @@
     "ev": -0.302,
     "reliability": 1.069,
     "target": 3.0,
-    "priority": 43,
+    "priority": 45,
     "level": "basse"
    },
    {
@@ -37448,7 +37591,7 @@
     "p_not_lose": 0.231,
     "ev": -0.275,
     "reliability": 1.03,
-    "priority": 44,
+    "priority": 46,
     "level": "basse"
    },
    {
@@ -37493,7 +37636,7 @@
     "p_not_lose": 0.277,
     "ev": -0.272,
     "reliability": 0.889,
-    "priority": 45,
+    "priority": 47,
     "level": "basse"
    },
    {
@@ -37541,7 +37684,7 @@
     "p_not_lose": 0.177,
     "ev": -0.233,
     "reliability": 1.081,
-    "priority": 46,
+    "priority": 48,
     "level": "basse"
    },
    {
@@ -37586,7 +37729,7 @@
     "p_not_lose": 0.175,
     "ev": -0.24,
     "reliability": 1.078,
-    "priority": 47,
+    "priority": 49,
     "level": "basse"
    },
    {
@@ -37634,7 +37777,7 @@
     "p_not_lose": 0.17,
     "ev": -0.26,
     "reliability": 1.012,
-    "priority": 48,
+    "priority": 50,
     "level": "basse"
    },
    {
@@ -37710,7 +37853,7 @@
     "ev": -0.367,
     "reliability": 1.065,
     "target": 5.0,
-    "priority": 49,
+    "priority": 51,
     "level": "basse"
    },
    {
@@ -37786,7 +37929,7 @@
     "ev": -0.37,
     "reliability": 1.065,
     "target": 5.0,
-    "priority": 50,
+    "priority": 52,
     "level": "basse"
    },
    {
@@ -37862,7 +38005,7 @@
     "ev": -0.383,
     "reliability": 1.073,
     "target": 5.0,
-    "priority": 51,
+    "priority": 53,
     "level": "basse"
    },
    {
@@ -37968,7 +38111,7 @@
     "ev": -0.496,
     "reliability": 1.053,
     "target": 10.0,
-    "priority": 52,
+    "priority": 54,
     "level": "basse"
    },
    {
@@ -38074,7 +38217,7 @@
     "ev": -0.482,
     "reliability": 1.048,
     "target": 10.0,
-    "priority": 53,
+    "priority": 55,
     "level": "basse"
    },
    {
@@ -38180,7 +38323,7 @@
     "ev": -0.483,
     "reliability": 1.018,
     "target": 10.0,
-    "priority": 54,
+    "priority": 56,
     "level": "basse"
    },
    {
@@ -38296,7 +38439,7 @@
     "ev": -0.498,
     "reliability": 1.053,
     "target": 20.0,
-    "priority": 55,
+    "priority": 57,
     "level": "basse"
    },
    {
@@ -38412,7 +38555,7 @@
     "ev": -0.5,
     "reliability": 1.041,
     "target": 20.0,
-    "priority": 56,
+    "priority": 58,
     "level": "basse"
    },
    {
@@ -38528,7 +38671,7 @@
     "ev": -0.523,
     "reliability": 1.055,
     "target": 20.0,
-    "priority": 57,
+    "priority": 59,
     "level": "basse"
    },
    {
@@ -38674,7 +38817,7 @@
     "ev": -0.568,
     "reliability": 1.043,
     "target": 50.0,
-    "priority": 58,
+    "priority": 60,
     "level": "basse"
    },
    {
@@ -38820,7 +38963,7 @@
     "ev": -0.57,
     "reliability": 1.048,
     "target": 50.0,
-    "priority": 59,
+    "priority": 61,
     "level": "basse"
    },
    {
@@ -38976,7 +39119,7 @@
     "ev": -0.62,
     "reliability": 1.053,
     "target": 50.0,
-    "priority": 60,
+    "priority": 62,
     "level": "basse"
    },
    {
@@ -39152,7 +39295,7 @@
     "ev": -0.638,
     "reliability": 1.027,
     "target": 100.0,
-    "priority": 61,
+    "priority": 63,
     "level": "basse"
    },
    {
@@ -39328,7 +39471,7 @@
     "ev": -0.636,
     "reliability": 1.019,
     "target": 100.0,
-    "priority": 62,
+    "priority": 64,
     "level": "basse"
    },
    {
@@ -39514,7 +39657,7 @@
     "ev": -0.683,
     "reliability": 1.059,
     "target": 100.0,
-    "priority": 63,
+    "priority": 65,
     "level": "basse"
    },
    {
@@ -39591,7 +39734,9 @@
       "odds_source": "estimée",
       "p_win": 0.829,
       "p_push": 0.0,
-      "min_odds": 1.24
+      "min_odds": 1.24,
+      "goals": 5,
+      "score": "0-5"
      },
      {
       "id": "20261108|P1|Estoril|Maritimo",
@@ -39619,7 +39764,7 @@
     "p_not_lose": 0.189,
     "ev": -0.49,
     "reliability": 1.128,
-    "priority": 64,
+    "priority": 66,
     "level": "basse"
    },
    {
@@ -39687,7 +39832,7 @@
     "p_not_lose": 0.068,
     "ev": -0.181,
     "reliability": 1.093,
-    "priority": 65,
+    "priority": 67,
     "level": "basse"
    },
    {
@@ -39765,7 +39910,7 @@
     "p_not_lose": 0.047,
     "ev": -0.199,
     "reliability": 1.092,
-    "priority": 66,
+    "priority": 68,
     "level": "basse"
    },
    {
@@ -39863,7 +40008,7 @@
     "p_not_lose": 0.014,
     "ev": -0.253,
     "reliability": 1.097,
-    "priority": 67,
+    "priority": 69,
     "level": "basse"
    },
    {
@@ -39984,7 +40129,7 @@
     "p_not_lose": 0.001,
     "ev": -0.144,
     "reliability": 1.077,
-    "priority": 68,
+    "priority": 70,
     "level": "basse"
    }
   ],
@@ -39995,13 +40140,13 @@
  },
  "2026-11-09": {
   "frozen": false,
-  "created": "2026-11-08T14:40+00:00",
+  "created": "2026-11-08T15:37+00:00",
   "coupons": [],
   "odds_fixed": true
  },
  "2026-11-13": {
   "frozen": false,
-  "created": "2026-11-08T14:40+00:00",
+  "created": "2026-11-08T15:37+00:00",
   "coupons": [
    {
     "kind": "nations",
@@ -40140,7 +40285,7 @@
  },
  "2026-11-14": {
   "frozen": false,
-  "created": "2026-11-08T14:40+00:00",
+  "created": "2026-11-08T15:37+00:00",
   "coupons": [
    {
     "kind": "autres",
@@ -41949,7 +42094,7 @@
  },
  "2026-11-12": {
   "frozen": false,
-  "created": "2026-11-08T14:40+00:00",
+  "created": "2026-11-08T15:37+00:00",
   "coupons": [
    {
     "kind": "nations",
@@ -42055,7 +42200,7 @@
  },
  "2026-11-15": {
   "frozen": false,
-  "created": "2026-11-08T14:40+00:00",
+  "created": "2026-11-08T15:37+00:00",
   "coupons": [
    {
     "kind": "buts20",
