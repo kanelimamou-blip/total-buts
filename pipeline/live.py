@@ -60,6 +60,8 @@ def proposal(m: dict, hg: int, ag: int, minute: int) -> dict | None:
     best = None
     for mk in allowed:
         q = pr[mk]
+        if q <= 0:  # pari déjà perdu au score actuel
+            continue
         odds = (1 / q) / (1 + LIVE_MARGIN)
         # la plus forte chance dont la cote live vaut encore le coup (1,25 au moins)
         if MIN_P <= q <= MAX_P and odds >= MIN_LIVE_ODDS and (best is None or q > best[0]):

@@ -35,7 +35,7 @@ def build(results: pd.DataFrame, matches: list[dict], season_start: pd.Timestamp
         for side in ("home", "away"):
             team = m[side]
             f = m[f"form_{side}"]
-            if team in seen or not f["games"] or len(f["games"]) < 6:
+            if team in seen or not f or not f.get("games") or len(f["games"]) < 6:  # sélections : pas de forme
                 continue
             seen.add(team)
             n3 = sum(g["gf"] + g["ga"] >= 3 for g in f["games"])
