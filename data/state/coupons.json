@@ -46129,7 +46129,7 @@
  },
  "2026-11-13": {
   "frozen": false,
-  "created": "2026-11-09T10:58+00:00",
+  "created": "2026-11-09T11:57+00:00",
   "coupons": [
    {
     "kind": "nations",
@@ -46268,7 +46268,7 @@
  },
  "2026-11-14": {
   "frozen": false,
-  "created": "2026-11-09T10:58+00:00",
+  "created": "2026-11-09T11:57+00:00",
   "coupons": [
    {
     "kind": "buts20",
@@ -47441,6 +47441,41 @@
     "level": "basse"
    },
    {
+    "kind": "large_dom",
+    "label": "Large favoris à domicile · cote 3 à 8",
+    "scope": "Toutes ligues",
+    "stake_pct": 0.5,
+    "legs": [
+     {
+      "id": "20261114|E3|Salford|Northampton",
+      "market": "1",
+      "team": "Salford",
+      "odds": 1.98,
+      "odds_source": "estimée",
+      "p_win": 0.477,
+      "p_push": 0.0,
+      "min_odds": 2.16
+     },
+     {
+      "id": "20261114|E3|Swindon|Grimsby",
+      "market": "1",
+      "team": "Swindon",
+      "odds": 2.38,
+      "odds_source": "estimée",
+      "p_win": 0.397,
+      "p_push": 0.0,
+      "min_odds": 2.59
+     }
+    ],
+    "odds": 4.71,
+    "p_win": 0.189,
+    "p_not_lose": 0.189,
+    "ev": -0.248,
+    "reliability": 0.869,
+    "priority": 27,
+    "level": "basse"
+   },
+   {
     "kind": "large5",
     "label": "Ticket large · cote 5 à 8",
     "scope": "Toutes ligues",
@@ -47492,41 +47527,6 @@
     "p_not_lose": 0.164,
     "ev": -0.311,
     "reliability": 0.928,
-    "priority": 27,
-    "level": "basse"
-   },
-   {
-    "kind": "large_dom",
-    "label": "Large favoris à domicile · cote 3 à 8",
-    "scope": "Toutes ligues",
-    "stake_pct": 0.5,
-    "legs": [
-     {
-      "id": "20261114|E3|Salford|Northampton",
-      "market": "1",
-      "team": "Salford",
-      "odds": 1.98,
-      "odds_source": "estimée",
-      "p_win": 0.477,
-      "p_push": 0.0,
-      "min_odds": 2.16
-     },
-     {
-      "id": "20261114|E3|Swindon|Grimsby",
-      "market": "1",
-      "team": "Swindon",
-      "odds": 2.38,
-      "odds_source": "estimée",
-      "p_win": 0.397,
-      "p_push": 0.0,
-      "min_odds": 2.59
-     }
-    ],
-    "odds": 4.71,
-    "p_win": 0.189,
-    "p_not_lose": 0.189,
-    "ev": -0.248,
-    "reliability": 0.869,
     "priority": 28,
     "level": "basse"
    },
@@ -48097,7 +48097,7 @@
  },
  "2026-11-12": {
   "frozen": false,
-  "created": "2026-11-09T10:58+00:00",
+  "created": "2026-11-09T11:57+00:00",
   "coupons": [
    {
     "kind": "nations",
@@ -48203,7 +48203,7 @@
  },
  "2026-11-15": {
   "frozen": false,
-  "created": "2026-11-09T10:58+00:00",
+  "created": "2026-11-09T11:57+00:00",
   "coupons": [
    {
     "kind": "mix",
@@ -48494,7 +48494,7 @@
  },
  "2026-11-16": {
   "frozen": false,
-  "created": "2026-11-09T10:58+00:00",
+  "created": "2026-11-09T11:57+00:00",
   "coupons": [
    {
     "kind": "nations",
