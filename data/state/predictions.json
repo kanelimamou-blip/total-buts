@@ -9509,7 +9509,9 @@
 "fav_p": 0.382,
 "fav_side": "2",
 "o15": 0.729,
-"o25": 0.479
+"o25": 0.479,
+"goals": 5,
+"score": "1-4"
 },
 "20261115|NAT|Latvia|Armenia": {
 "date": "2026-11-15",
@@ -9519,36 +9521,38 @@
 "fav_p": 0.388,
 "fav_side": "1",
 "o15": 0.697,
-"o25": 0.439
+"o25": 0.439,
+"goals": 0,
+"score": "0-0"
 },
 "20261115|NAT|Finland|San Marino": {
 "date": "2026-11-15",
 "div": "NAT",
 "home": "Finland",
 "away": "San Marino",
-"fav_p": 0.976,
+"fav_p": 0.977,
 "fav_side": "1",
-"o15": 0.938,
-"o25": 0.822
+"o15": 0.934,
+"o25": 0.823
 },
 "20261115|NAT|Belarus|Albania": {
 "date": "2026-11-15",
 "div": "NAT",
 "home": "Belarus",
 "away": "Albania",
-"fav_p": 0.369,
+"fav_p": 0.37,
 "fav_side": "2",
-"o15": 0.59,
-"o25": 0.323
+"o15": 0.587,
+"o25": 0.324
 },
 "20261115|NAT|France|Turkey": {
 "date": "2026-11-15",
 "div": "NAT",
 "home": "France",
 "away": "Turkey",
-"fav_p": 0.802,
+"fav_p": 0.804,
 "fav_side": "1",
-"o15": 0.89,
+"o15": 0.887,
 "o25": 0.727
 },
 "20261115|NAT|Croatia|Czech Republic": {
@@ -9556,39 +9560,39 @@
 "div": "NAT",
 "home": "Croatia",
 "away": "Czech Republic",
-"fav_p": 0.616,
+"fav_p": 0.618,
 "fav_side": "1",
-"o15": 0.833,
-"o25": 0.627
+"o15": 0.829,
+"o25": 0.628
 },
 "20261115|NAT|Belgium|Italy": {
 "date": "2026-11-15",
 "div": "NAT",
 "home": "Belgium",
 "away": "Italy",
-"fav_p": 0.556,
+"fav_p": 0.557,
 "fav_side": "1",
-"o15": 0.811,
-"o25": 0.593
+"o15": 0.807,
+"o25": 0.594
 },
 "20261115|NAT|Spain|England": {
 "date": "2026-11-15",
 "div": "NAT",
 "home": "Spain",
 "away": "England",
-"fav_p": 0.556,
+"fav_p": 0.557,
 "fav_side": "1",
-"o15": 0.801,
-"o25": 0.579
+"o15": 0.798,
+"o25": 0.58
 },
 "20261116|NAT|Kazakhstan|Slovakia": {
 "date": "2026-11-16",
 "div": "NAT",
 "home": "Kazakhstan",
 "away": "Slovakia",
-"fav_p": 0.532,
+"fav_p": 0.534,
 "fav_side": "2",
-"o15": 0.719,
+"o15": 0.716,
 "o25": 0.467
 },
 "20261116|NAT|Faroe Islands|Moldova": {
@@ -9596,19 +9600,19 @@
 "div": "NAT",
 "home": "Faroe Islands",
 "away": "Moldova",
-"fav_p": 0.575,
+"fav_p": 0.576,
 "fav_side": "1",
-"o15": 0.699,
-"o25": 0.442
+"o15": 0.696,
+"o25": 0.443
 },
 "20261116|NAT|Iceland|Luxembourg": {
 "date": "2026-11-16",
 "div": "NAT",
 "home": "Iceland",
 "away": "Luxembourg",
-"fav_p": 0.707,
+"fav_p": 0.708,
 "fav_side": "1",
-"o15": 0.754,
+"o15": 0.751,
 "o25": 0.513
 },
 "20261116|NAT|Estonia|Bulgaria": {
@@ -9616,19 +9620,19 @@
 "div": "NAT",
 "home": "Estonia",
 "away": "Bulgaria",
-"fav_p": 0.369,
+"fav_p": 0.37,
 "fav_side": "2",
-"o15": 0.673,
-"o25": 0.411
+"o15": 0.67,
+"o25": 0.412
 },
 "20261116|NAT|Lithuania|Liechtenstein": {
 "date": "2026-11-16",
 "div": "NAT",
 "home": "Lithuania",
 "away": "Liechtenstein",
-"fav_p": 0.761,
+"fav_p": 0.762,
 "fav_side": "1",
-"o15": 0.66,
+"o15": 0.657,
 "o25": 0.397
 },
 "20261116|NAT|Andorra|Azerbaijan": {
@@ -9636,29 +9640,29 @@
 "div": "NAT",
 "home": "Andorra",
 "away": "Azerbaijan",
-"fav_p": 0.443,
+"fav_p": 0.445,
 "fav_side": "2",
-"o15": 0.508,
-"o25": 0.248
+"o15": 0.505,
+"o25": 0.249
 },
 "20261116|NAT|Germany|Netherlands": {
 "date": "2026-11-16",
 "div": "NAT",
 "home": "Germany",
 "away": "Netherlands",
-"fav_p": 0.493,
+"fav_p": 0.495,
 "fav_side": "1",
-"o15": 0.874,
-"o25": 0.697
+"o15": 0.871,
+"o25": 0.698
 },
 "20261116|NAT|Switzerland|Scotland": {
 "date": "2026-11-16",
 "div": "NAT",
 "home": "Switzerland",
 "away": "Scotland",
-"fav_p": 0.678,
+"fav_p": 0.68,
 "fav_side": "1",
-"o15": 0.794,
+"o15": 0.791,
 "o25": 0.569
 },
 "20261116|NAT|Greece|Serbia": {
@@ -9666,9 +9670,9 @@
 "div": "NAT",
 "home": "Greece",
 "away": "Serbia",
-"fav_p": 0.542,
+"fav_p": 0.543,
 "fav_side": "1",
-"o15": 0.675,
+"o15": 0.672,
 "o25": 0.414
 },
 "20261116|NAT|Gibraltar|Malta": {
@@ -9676,49 +9680,49 @@
 "div": "NAT",
 "home": "Gibraltar",
 "away": "Malta",
-"fav_p": 0.503,
+"fav_p": 0.504,
 "fav_side": "2",
-"o15": 0.664,
-"o25": 0.401
+"o15": 0.661,
+"o25": 0.402
 },
 "20261116|NAT|North Macedonia|Slovenia": {
 "date": "2026-11-16",
 "div": "NAT",
 "home": "North Macedonia",
 "away": "Slovenia",
-"fav_p": 0.455,
+"fav_p": 0.457,
 "fav_side": "2",
-"o15": 0.592,
-"o25": 0.325
+"o15": 0.589,
+"o25": 0.326
 },
 "20261117|NAT|Israel|Austria": {
 "date": "2026-11-17",
 "div": "NAT",
 "home": "Israel",
 "away": "Austria",
-"fav_p": 0.557,
+"fav_p": 0.558,
 "fav_side": "2",
-"o15": 0.864,
-"o25": 0.679
+"o15": 0.861,
+"o25": 0.68
 },
 "20261117|NAT|Denmark|Norway": {
 "date": "2026-11-17",
 "div": "NAT",
 "home": "Denmark",
 "away": "Norway",
-"fav_p": 0.455,
+"fav_p": 0.456,
 "fav_side": "1",
-"o15": 0.862,
-"o25": 0.676
+"o15": 0.859,
+"o25": 0.677
 },
 "20261117|NAT|Poland|Sweden": {
 "date": "2026-11-17",
 "div": "NAT",
 "home": "Poland",
 "away": "Sweden",
-"fav_p": 0.435,
+"fav_p": 0.437,
 "fav_side": "1",
-"o15": 0.845,
+"o15": 0.841,
 "o25": 0.647
 },
 "20261117|NAT|Ukraine|Georgia": {
@@ -9726,9 +9730,9 @@
 "div": "NAT",
 "home": "Ukraine",
 "away": "Georgia",
-"fav_p": 0.51,
+"fav_p": 0.512,
 "fav_side": "1",
-"o15": 0.749,
+"o15": 0.746,
 "o25": 0.506
 },
 "20261117|NAT|Wales|Portugal": {
@@ -9736,29 +9740,29 @@
 "div": "NAT",
 "home": "Wales",
 "away": "Portugal",
-"fav_p": 0.644,
+"fav_p": 0.645,
 "fav_side": "2",
-"o15": 0.748,
-"o25": 0.504
+"o15": 0.745,
+"o25": 0.505
 },
 "20261117|NAT|Bosnia and Herzegovina|Romania": {
 "date": "2026-11-17",
 "div": "NAT",
 "home": "Bosnia and Herzegovina",
 "away": "Romania",
-"fav_p": 0.444,
+"fav_p": 0.446,
 "fav_side": "1",
-"o15": 0.732,
-"o25": 0.483
+"o15": 0.729,
+"o25": 0.484
 },
 "20261117|NAT|Republic of Ireland|Kosovo": {
 "date": "2026-11-17",
 "div": "NAT",
 "home": "Republic of Ireland",
 "away": "Kosovo",
-"fav_p": 0.426,
+"fav_p": 0.427,
 "fav_side": "1",
-"o15": 0.622,
+"o15": 0.619,
 "o25": 0.356
 },
 "20261117|NAT|Hungary|Northern Ireland": {
@@ -9766,10 +9770,10 @@
 "div": "NAT",
 "home": "Hungary",
 "away": "Northern Ireland",
-"fav_p": 0.438,
+"fav_p": 0.439,
 "fav_side": "1",
-"o15": 0.58,
-"o25": 0.313
+"o15": 0.577,
+"o25": 0.314
 },
 "20261207|T1|Kasimpasa|Goztep": {
 "date": "2026-12-07",
