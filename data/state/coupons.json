@@ -63042,7 +63042,7 @@
  },
  "2026-11-17": {
   "frozen": false,
-  "created": "2026-11-16T19:37+00:00",
+  "created": "2026-11-16T19:57+00:00",
   "coupons": [
    {
     "kind": "nations",
@@ -63052,29 +63052,29 @@
     "legs": [
      {
       "id": "20261117|NAT|Ukraine|Georgia",
-      "market": "o15",
+      "market": "o20",
       "team": null,
-      "odds": 1.25,
+      "odds": 1.37,
       "odds_source": "estimée",
-      "p_win": 0.758,
-      "p_push": 0.0,
-      "min_odds": 1.36
+      "p_win": 0.533,
+      "p_push": 0.228,
+      "min_odds": 1.49
      },
      {
       "id": "20261117|NAT|Hungary|Northern Ireland",
       "market": "o15",
       "team": null,
-      "odds": 1.6,
+      "odds": 1.59,
       "odds_source": "estimée",
-      "p_win": 0.588,
+      "p_win": 0.592,
       "p_push": 0.0,
-      "min_odds": 1.75
+      "min_odds": 1.74
      }
     ],
-    "odds": 2.0,
-    "p_win": 0.446,
-    "p_not_lose": 0.446,
-    "ev": -0.198,
+    "odds": 2.18,
+    "p_win": 0.316,
+    "p_not_lose": 0.451,
+    "ev": -0.188,
     "reliability": 1.0
    },
    {
@@ -63087,26 +63087,26 @@
       "id": "20261117|NAT|Israel|Austria",
       "market": "2",
       "team": "Austria",
-      "odds": 1.67,
+      "odds": 1.66,
       "odds_source": "estimée",
-      "p_win": 0.565,
+      "p_win": 0.569,
       "p_push": 0.0,
-      "min_odds": 1.82
+      "min_odds": 1.81
      },
      {
       "id": "20261117|NAT|Wales|Portugal",
       "market": "o15",
       "team": null,
-      "odds": 1.25,
+      "odds": 1.24,
       "odds_source": "estimée",
-      "p_win": 0.756,
+      "p_win": 0.76,
       "p_push": 0.0,
       "min_odds": 1.36
      }
     ],
-    "odds": 2.09,
-    "p_win": 0.427,
-    "p_not_lose": 0.427,
+    "odds": 2.06,
+    "p_win": 0.432,
+    "p_not_lose": 0.432,
     "ev": -0.201,
     "reliability": 1.0
    },
@@ -63118,39 +63118,29 @@
     "legs": [
      {
       "id": "20261117|NAT|Denmark|Norway",
+      "market": "1",
+      "team": "Denmark",
+      "odds": 2.02,
+      "odds_source": "estimée",
+      "p_win": 0.467,
+      "p_push": 0.0,
+      "min_odds": 2.2
+     },
+     {
+      "id": "20261117|NAT|Poland|Sweden",
       "market": "o20",
       "team": null,
-      "odds": 1.12,
+      "odds": 1.14,
       "odds_source": "estimée",
-      "p_win": 0.698,
-      "p_push": 0.173,
-      "min_odds": 1.22
-     },
-     {
-      "id": "20261117|NAT|Bosnia and Herzegovina|Romania",
-      "market": "o15",
-      "team": null,
-      "odds": 1.27,
-      "odds_source": "estimée",
-      "p_win": 0.741,
-      "p_push": 0.0,
-      "min_odds": 1.39
-     },
-     {
-      "id": "20261117|NAT|Republic of Ireland|Kosovo",
-      "market": "o15",
-      "team": null,
-      "odds": 1.5,
-      "odds_source": "estimée",
-      "p_win": 0.631,
-      "p_push": 0.0,
-      "min_odds": 1.63
+      "p_win": 0.674,
+      "p_push": 0.183,
+      "min_odds": 1.25
      }
     ],
-    "odds": 2.13,
-    "p_win": 0.326,
-    "p_not_lose": 0.407,
-    "ev": -0.238,
+    "odds": 2.3,
+    "p_win": 0.315,
+    "p_not_lose": 0.4,
+    "ev": -0.202,
     "reliability": 1.0
    }
   ],
@@ -67765,7 +67755,7 @@
  },
  "2026-11-20": {
   "frozen": false,
-  "created": "2026-11-16T19:37+00:00",
+  "created": "2026-11-16T19:57+00:00",
   "coupons": [
    {
     "kind": "mix",
@@ -68832,7 +68822,7 @@
  },
  "2026-11-21": {
   "frozen": false,
-  "created": "2026-11-16T19:37+00:00",
+  "created": "2026-11-16T19:57+00:00",
   "coupons": [
    {
     "kind": "favoris",
@@ -71029,7 +71019,7 @@
  },
  "2026-11-22": {
   "frozen": false,
-  "created": "2026-11-16T19:37+00:00",
+  "created": "2026-11-16T19:57+00:00",
   "coupons": [
    {
     "kind": "mix",
@@ -72871,7 +72861,7 @@
  },
  "2026-11-23": {
   "frozen": false,
-  "created": "2026-11-16T19:37+00:00",
+  "created": "2026-11-16T19:57+00:00",
   "coupons": [
    {
     "kind": "dc",
