@@ -60726,7 +60726,10 @@
       "odds_source": "estimée",
       "p_win": 0.541,
       "p_push": 0.0,
-      "min_odds": 1.9
+      "min_odds": 1.9,
+      "goals": 4,
+      "score": "2-2",
+      "result": "lost"
      }
     ],
     "odds": 2.05,
@@ -63028,7 +63031,7 @@
  },
  "2026-11-17": {
   "frozen": false,
-  "created": "2026-11-16T15:06+00:00",
+  "created": "2026-11-16T17:13+00:00",
   "coupons": [
    {
     "kind": "nations",
@@ -63037,13 +63040,13 @@
     "stake_pct": 0.5,
     "legs": [
      {
-      "id": "20261117|NAT|Denmark|Norway",
+      "id": "20261117|NAT|Israel|Austria",
       "market": "o20",
       "team": null,
       "odds": 1.13,
       "odds_source": "estimée",
-      "p_win": 0.686,
-      "p_push": 0.181,
+      "p_win": 0.689,
+      "p_push": 0.176,
       "min_odds": 1.23
      },
      {
@@ -63052,15 +63055,15 @@
       "team": "Ukraine",
       "odds": 1.82,
       "odds_source": "estimée",
-      "p_win": 0.519,
+      "p_win": 0.518,
       "p_push": 0.0,
-      "min_odds": 1.98
+      "min_odds": 1.99
      }
     ],
     "odds": 2.06,
-    "p_win": 0.356,
-    "p_not_lose": 0.45,
-    "ev": -0.187,
+    "p_win": 0.357,
+    "p_not_lose": 0.448,
+    "ev": -0.19,
     "reliability": 1.0
    },
    {
@@ -63073,9 +63076,9 @@
       "id": "20261117|NAT|Wales|Portugal",
       "market": "o15",
       "team": null,
-      "odds": 1.25,
+      "odds": 1.26,
       "odds_source": "estimée",
-      "p_win": 0.753,
+      "p_win": 0.75,
       "p_push": 0.0,
       "min_odds": 1.37
      },
@@ -63083,17 +63086,17 @@
       "id": "20261117|NAT|Hungary|Northern Ireland",
       "market": "o15",
       "team": null,
-      "odds": 1.61,
+      "odds": 1.62,
       "odds_source": "estimée",
-      "p_win": 0.585,
+      "p_win": 0.582,
       "p_push": 0.0,
-      "min_odds": 1.76
+      "min_odds": 1.77
      }
     ],
-    "odds": 2.01,
-    "p_win": 0.441,
-    "p_not_lose": 0.441,
-    "ev": -0.203,
+    "odds": 2.04,
+    "p_win": 0.436,
+    "p_not_lose": 0.436,
+    "ev": -0.2,
     "reliability": 1.0
    },
    {
@@ -63103,38 +63106,15 @@
     "stake_pct": 0.5,
     "legs": [
      {
-      "id": "20261117|NAT|Israel|Austria",
-      "market": "2",
-      "team": "Austria",
-      "odds": 1.67,
+      "id": "20261117|NAT|Denmark|Norway",
+      "market": "1",
+      "team": "Denmark",
+      "odds": 2.04,
       "odds_source": "estimée",
-      "p_win": 0.566,
+      "p_win": 0.463,
       "p_push": 0.0,
-      "min_odds": 1.82
+      "min_odds": 2.22
      },
-     {
-      "id": "20261117|NAT|Bosnia and Herzegovina|Romania",
-      "market": "o15",
-      "team": null,
-      "odds": 1.28,
-      "odds_source": "estimée",
-      "p_win": 0.738,
-      "p_push": 0.0,
-      "min_odds": 1.4
-     }
-    ],
-    "odds": 2.14,
-    "p_win": 0.418,
-    "p_not_lose": 0.418,
-    "ev": -0.202,
-    "reliability": 1.0
-   },
-   {
-    "kind": "nations",
-    "label": "Coupon sélections européennes",
-    "scope": "Sélections européennes",
-    "stake_pct": 0.5,
-    "legs": [
      {
       "id": "20261117|NAT|Poland|Sweden",
       "market": "o20",
@@ -63142,24 +63122,14 @@
       "odds": 1.16,
       "odds_source": "estimée",
       "p_win": 0.657,
-      "p_push": 0.193,
+      "p_push": 0.19,
       "min_odds": 1.27
-     },
-     {
-      "id": "20261117|NAT|Republic of Ireland|Kosovo",
-      "market": "1",
-      "team": "Republic of Ireland",
-      "odds": 2.17,
-      "odds_source": "estimée",
-      "p_win": 0.435,
-      "p_push": 0.0,
-      "min_odds": 2.37
      }
     ],
-    "odds": 2.52,
-    "p_win": 0.286,
-    "p_not_lose": 0.37,
-    "ev": -0.205,
+    "odds": 2.37,
+    "p_win": 0.304,
+    "p_not_lose": 0.392,
+    "ev": -0.202,
     "reliability": 1.0
    }
   ],
@@ -67774,7 +67744,7 @@
  },
  "2026-11-20": {
   "frozen": false,
-  "created": "2026-11-16T15:06+00:00",
+  "created": "2026-11-16T17:13+00:00",
   "coupons": [
    {
     "kind": "buts20",
@@ -67842,7 +67812,7 @@
     "p_win": 0.425,
     "p_not_lose": 0.425,
     "ev": -0.232,
-    "reliability": 1.058,
+    "reliability": 1.055,
     "priority": 2,
     "level": "moyenne"
    },
@@ -67877,7 +67847,7 @@
     "p_win": 0.426,
     "p_not_lose": 0.426,
     "ev": -0.202,
-    "reliability": 1.029,
+    "reliability": 1.031,
     "priority": 3,
     "level": "moyenne"
    },
@@ -67933,6 +67903,16 @@
     "stake_pct": 1.5,
     "legs": [
      {
+      "id": "20261120|I2|Verona|Cesena",
+      "market": "dnb1",
+      "team": null,
+      "odds": 1.2,
+      "odds_source": "estimée",
+      "p_win": 0.589,
+      "p_push": 0.251,
+      "min_odds": 1.31
+     },
+     {
       "id": "20261120|F2|Annecy|Clermont",
       "market": "1X",
       "team": null,
@@ -67943,31 +67923,21 @@
       "min_odds": 1.33
      },
      {
-      "id": "20261120|E2|Barnsley|Sheffield Weds",
-      "market": "X2",
-      "team": null,
-      "odds": 1.28,
-      "odds_source": "estimée",
-      "p_win": 0.734,
-      "p_push": 0.0,
-      "min_odds": 1.4
-     },
-     {
-      "id": "20261120|F2|Red Star|Pau FC",
+      "id": "20261120|F2|Guingamp|Rodez",
       "market": "1X",
       "team": null,
-      "odds": 1.32,
+      "odds": 1.46,
       "odds_source": "estimée",
-      "p_win": 0.714,
+      "p_win": 0.646,
       "p_push": 0.0,
-      "min_odds": 1.44
+      "min_odds": 1.59
      }
     ],
-    "odds": 2.06,
-    "p_win": 0.406,
-    "p_not_lose": 0.406,
-    "ev": -0.249,
-    "reliability": 1.06,
+    "odds": 2.14,
+    "p_win": 0.295,
+    "p_not_lose": 0.421,
+    "ev": -0.233,
+    "reliability": 1.035,
     "priority": 5,
     "level": "moyenne"
    },
@@ -68092,7 +68062,7 @@
     "p_win": 0.267,
     "p_not_lose": 0.381,
     "ev": -0.311,
-    "reliability": 1.072,
+    "reliability": 1.074,
     "priority": 8,
     "level": "basse"
    },
@@ -68129,116 +68099,6 @@
     "ev": -0.242,
     "reliability": 0.999,
     "priority": 9,
-    "level": "basse"
-   },
-   {
-    "kind": "dc",
-    "label": "Double chance",
-    "scope": "Toutes ligues",
-    "stake_pct": 1.5,
-    "legs": [
-     {
-      "id": "20261120|I2|Verona|Cesena",
-      "market": "1X",
-      "team": null,
-      "odds": 1.12,
-      "odds_source": "estimée",
-      "p_win": 0.842,
-      "p_push": 0.0,
-      "min_odds": 1.22
-     },
-     {
-      "id": "20261120|B1|Cercle Brugge|Westerlo",
-      "market": "1X",
-      "team": null,
-      "odds": 1.4,
-      "odds_source": "estimée",
-      "p_win": 0.673,
-      "p_push": 0.0,
-      "min_odds": 1.53
-     },
-     {
-      "id": "20261120|F1|Troyes|Le Havre",
-      "market": "1X",
-      "team": null,
-      "odds": 1.41,
-      "odds_source": "estimée",
-      "p_win": 0.671,
-      "p_push": 0.0,
-      "min_odds": 1.53
-     }
-    ],
-    "odds": 2.21,
-    "p_win": 0.38,
-    "p_not_lose": 0.38,
-    "ev": -0.251,
-    "reliability": 1.036,
-    "priority": 10,
-    "level": "basse"
-   },
-   {
-    "kind": "autres",
-    "label": "Autres paris",
-    "scope": "Toutes ligues",
-    "stake_pct": 1.0,
-    "legs": [
-     {
-      "id": "20261120|D1|Bayern Munich|FC Koln",
-      "market": "ht05",
-      "team": null,
-      "odds": 1.12,
-      "odds_source": "estimée",
-      "p_win": 0.845,
-      "p_push": 0.0,
-      "min_odds": 1.22
-     },
-     {
-      "id": "20261120|B1|Cercle Brugge|Westerlo",
-      "market": "sh05",
-      "team": null,
-      "odds": 1.13,
-      "odds_source": "estimée",
-      "p_win": 0.834,
-      "p_push": 0.0,
-      "min_odds": 1.24
-     },
-     {
-      "id": "20261120|F2|Guingamp|Rodez",
-      "market": "u45",
-      "team": null,
-      "odds": 1.13,
-      "odds_source": "estimée",
-      "p_win": 0.833,
-      "p_push": 0.0,
-      "min_odds": 1.24
-     },
-     {
-      "id": "20261120|F2|Red Star|Pau FC",
-      "market": "h05",
-      "team": null,
-      "odds": 1.18,
-      "odds_source": "estimée",
-      "p_win": 0.802,
-      "p_push": 0.0,
-      "min_odds": 1.28
-     },
-     {
-      "id": "20261120|F2|Nancy|Dijon",
-      "market": "sh05",
-      "team": null,
-      "odds": 1.2,
-      "odds_source": "estimée",
-      "p_win": 0.785,
-      "p_push": 0.0,
-      "min_odds": 1.31
-     }
-    ],
-    "odds": 2.03,
-    "p_win": 0.37,
-    "p_not_lose": 0.37,
-    "ev": -0.327,
-    "reliability": 1.08,
-    "priority": 11,
     "level": "basse"
    },
    {
@@ -68293,7 +68153,7 @@
     "p_not_lose": 0.368,
     "ev": -0.294,
     "reliability": 0.998,
-    "priority": 12,
+    "priority": 10,
     "level": "basse"
    },
    {
@@ -68328,7 +68188,62 @@
     "p_not_lose": 0.362,
     "ev": -0.281,
     "reliability": 1.043,
-    "priority": 13,
+    "priority": 11,
+    "level": "basse"
+   },
+   {
+    "kind": "autres",
+    "label": "Autres paris",
+    "scope": "Toutes ligues",
+    "stake_pct": 1.0,
+    "legs": [
+     {
+      "id": "20261120|E2|Barnsley|Sheffield Weds",
+      "market": "dnb2",
+      "team": null,
+      "odds": 1.45,
+      "odds_source": "estimée",
+      "p_win": 0.495,
+      "p_push": 0.239,
+      "min_odds": 1.58
+     },
+     {
+      "id": "20261120|D1|Bayern Munich|FC Koln",
+      "market": "ht05",
+      "team": null,
+      "odds": 1.12,
+      "odds_source": "estimée",
+      "p_win": 0.845,
+      "p_push": 0.0,
+      "min_odds": 1.22
+     },
+     {
+      "id": "20261120|B1|Cercle Brugge|Westerlo",
+      "market": "sh05",
+      "team": null,
+      "odds": 1.13,
+      "odds_source": "estimée",
+      "p_win": 0.834,
+      "p_push": 0.0,
+      "min_odds": 1.24
+     },
+     {
+      "id": "20261120|F1|Troyes|Le Havre",
+      "market": "u35",
+      "team": null,
+      "odds": 1.22,
+      "odds_source": "estimée",
+      "p_win": 0.77,
+      "p_push": 0.0,
+      "min_odds": 1.34
+     }
+    ],
+    "odds": 2.24,
+    "p_win": 0.269,
+    "p_not_lose": 0.398,
+    "ev": -0.279,
+    "reliability": 1.08,
+    "priority": 12,
     "level": "basse"
    },
    {
@@ -68363,6 +68278,51 @@
     "p_not_lose": 0.282,
     "ev": -0.234,
     "reliability": 1.102,
+    "priority": 13,
+    "level": "basse"
+   },
+   {
+    "kind": "large3",
+    "label": "Ticket large · cote 3 à 5",
+    "scope": "Toutes ligues",
+    "stake_pct": 0.5,
+    "legs": [
+     {
+      "id": "20261120|D2|Bielefeld|Magdeburg",
+      "market": "u45",
+      "team": null,
+      "odds": 1.13,
+      "odds_source": "estimée",
+      "p_win": 0.832,
+      "p_push": 0.0,
+      "min_odds": 1.24
+     },
+     {
+      "id": "20261120|F2|Red Star|Pau FC",
+      "market": "h05",
+      "team": null,
+      "odds": 1.18,
+      "odds_source": "estimée",
+      "p_win": 0.802,
+      "p_push": 0.0,
+      "min_odds": 1.28
+     },
+     {
+      "id": "20261120|F2|Nancy|Dijon",
+      "market": "2",
+      "team": "Dijon",
+      "odds": 2.42,
+      "odds_source": "estimée",
+      "p_win": 0.39,
+      "p_push": 0.0,
+      "min_odds": 2.64
+     }
+    ],
+    "odds": 3.23,
+    "p_win": 0.26,
+    "p_not_lose": 0.26,
+    "ev": -0.276,
+    "reliability": 1.051,
     "priority": 14,
     "level": "basse"
    },
@@ -68373,41 +68333,41 @@
     "stake_pct": 0.5,
     "legs": [
      {
-      "id": "20261120|D2|Bielefeld|Magdeburg",
+      "id": "20261120|B1|Cercle Brugge|Westerlo",
       "market": "h15",
       "team": null,
-      "odds": 2.03,
+      "odds": 1.9,
       "odds_source": "estimée",
-      "p_win": 0.465,
+      "p_win": 0.497,
       "p_push": 0.0,
-      "min_odds": 2.21
+      "min_odds": 2.07
+     },
+     {
+      "id": "20261120|D2|Bielefeld|Magdeburg",
+      "market": "h05",
+      "team": null,
+      "odds": 1.16,
+      "odds_source": "estimée",
+      "p_win": 0.814,
+      "p_push": 0.0,
+      "min_odds": 1.27
      },
      {
       "id": "20261120|F2|Nancy|Dijon",
-      "market": "a05",
+      "market": "a15",
       "team": null,
-      "odds": 1.23,
+      "odds": 2.28,
       "odds_source": "estimée",
-      "p_win": 0.766,
+      "p_win": 0.414,
       "p_push": 0.0,
-      "min_odds": 1.35
-     },
-     {
-      "id": "20261120|D1|Bayern Munich|FC Koln",
-      "market": "u35",
-      "team": null,
-      "odds": 2.37,
-      "odds_source": "estimée",
-      "p_win": 0.398,
-      "p_push": 0.0,
-      "min_odds": 2.59
+      "min_odds": 2.49
      }
     ],
-    "odds": 5.92,
-    "p_win": 0.142,
-    "p_not_lose": 0.142,
-    "ev": -0.301,
-    "reliability": 1.076,
+    "odds": 5.03,
+    "p_win": 0.167,
+    "p_not_lose": 0.167,
+    "ev": -0.293,
+    "reliability": 1.05,
     "priority": 15,
     "level": "basse"
    },
@@ -68557,7 +68517,7 @@
     "p_win": 0.076,
     "p_not_lose": 0.076,
     "ev": -0.351,
-    "reliability": 1.026,
+    "reliability": 1.027,
     "priority": 17,
     "level": "basse"
    },
@@ -68851,8 +68811,43 @@
  },
  "2026-11-21": {
   "frozen": false,
-  "created": "2026-11-16T15:06+00:00",
+  "created": "2026-11-16T17:13+00:00",
   "coupons": [
+   {
+    "kind": "favoris",
+    "label": "Ticket favoris",
+    "scope": "Toutes ligues",
+    "stake_pct": 2.0,
+    "legs": [
+     {
+      "id": "20261121|D1|Leverkusen|Paderborn",
+      "market": "1",
+      "team": "Leverkusen",
+      "odds": 1.42,
+      "odds_source": "estimée",
+      "p_win": 0.665,
+      "p_push": 0.0,
+      "min_odds": 1.55
+     },
+     {
+      "id": "20261121|SP2|Castellon|Eldense",
+      "market": "1",
+      "team": "Castellon",
+      "odds": 1.43,
+      "odds_source": "estimée",
+      "p_win": 0.659,
+      "p_push": 0.0,
+      "min_odds": 1.56
+     }
+    ],
+    "odds": 2.03,
+    "p_win": 0.438,
+    "p_not_lose": 0.438,
+    "ev": -0.2,
+    "reliability": 1.115,
+    "priority": 1,
+    "level": "moyenne"
+   },
    {
     "kind": "favoris",
     "label": "Ticket favoris",
@@ -68895,41 +68890,6 @@
     "p_not_lose": 0.415,
     "ev": -0.248,
     "reliability": 1.099,
-    "priority": 1,
-    "level": "moyenne"
-   },
-   {
-    "kind": "favoris",
-    "label": "Ticket favoris",
-    "scope": "Toutes ligues",
-    "stake_pct": 2.0,
-    "legs": [
-     {
-      "id": "20261121|D1|Leverkusen|Paderborn",
-      "market": "1",
-      "team": "Leverkusen",
-      "odds": 1.42,
-      "odds_source": "estimée",
-      "p_win": 0.665,
-      "p_push": 0.0,
-      "min_odds": 1.55
-     },
-     {
-      "id": "20261121|SP2|Castellon|Eldense",
-      "market": "1",
-      "team": "Castellon",
-      "odds": 1.43,
-      "odds_source": "estimée",
-      "p_win": 0.659,
-      "p_push": 0.0,
-      "min_odds": 1.56
-     }
-    ],
-    "odds": 2.03,
-    "p_win": 0.438,
-    "p_not_lose": 0.438,
-    "ev": -0.2,
-    "reliability": 1.113,
     "priority": 2,
     "level": "moyenne"
    },
@@ -68964,7 +68924,7 @@
     "p_win": 0.305,
     "p_not_lose": 0.442,
     "ev": -0.19,
-    "reliability": 1.06,
+    "reliability": 1.058,
     "priority": 3,
     "level": "moyenne"
    },
@@ -69079,7 +69039,7 @@
     "p_win": 0.445,
     "p_not_lose": 0.445,
     "ev": -0.199,
-    "reliability": 1.036,
+    "reliability": 1.037,
     "priority": 6,
     "level": "moyenne"
    },
@@ -69159,7 +69119,7 @@
     "p_win": 0.28,
     "p_not_lose": 0.42,
     "ev": -0.234,
-    "reliability": 1.068,
+    "reliability": 1.07,
     "priority": 8,
     "level": "moyenne"
    },
@@ -69429,7 +69389,7 @@
     "p_win": 0.26,
     "p_not_lose": 0.375,
     "ev": -0.323,
-    "reliability": 1.028,
+    "reliability": 1.027,
     "priority": 14,
     "level": "basse"
    },
@@ -69474,7 +69434,7 @@
     "p_win": 0.305,
     "p_not_lose": 0.417,
     "ev": -0.232,
-    "reliability": 0.976,
+    "reliability": 0.973,
     "priority": 15,
     "level": "moyenne"
    },
@@ -69609,7 +69569,7 @@
     "p_win": 0.308,
     "p_not_lose": 0.42,
     "ev": -0.23,
-    "reliability": 1.085,
+    "reliability": 1.089,
     "priority": 18,
     "level": "moyenne"
    },
@@ -69729,7 +69689,7 @@
     "p_win": 0.289,
     "p_not_lose": 0.415,
     "ev": -0.248,
-    "reliability": 1.049,
+    "reliability": 1.045,
     "priority": 20,
     "level": "moyenne"
    },
@@ -69794,7 +69754,7 @@
     "p_win": 0.205,
     "p_not_lose": 0.374,
     "ev": -0.312,
-    "reliability": 1.045,
+    "reliability": 1.043,
     "priority": 21,
     "level": "basse"
    },
@@ -69839,7 +69799,7 @@
     "p_win": 0.297,
     "p_not_lose": 0.425,
     "ev": -0.234,
-    "reliability": 0.991,
+    "reliability": 0.992,
     "priority": 22,
     "level": "moyenne"
    },
@@ -69914,7 +69874,7 @@
     "p_win": 0.153,
     "p_not_lose": 0.364,
     "ev": -0.344,
-    "reliability": 1.04,
+    "reliability": 1.039,
     "priority": 23,
     "level": "basse"
    },
@@ -70074,7 +70034,7 @@
     "p_win": 0.291,
     "p_not_lose": 0.291,
     "ev": -0.231,
-    "reliability": 1.071,
+    "reliability": 1.069,
     "priority": 27,
     "level": "basse"
    },
@@ -70289,7 +70249,7 @@
     "p_win": 0.277,
     "p_not_lose": 0.277,
     "ev": -0.275,
-    "reliability": 1.064,
+    "reliability": 1.063,
     "priority": 32,
     "level": "basse"
    },
@@ -70369,7 +70329,7 @@
     "p_win": 0.275,
     "p_not_lose": 0.275,
     "ev": -0.273,
-    "reliability": 1.049,
+    "reliability": 1.048,
     "priority": 34,
     "level": "basse"
    },
@@ -70434,7 +70394,7 @@
     "p_win": 0.193,
     "p_not_lose": 0.254,
     "ev": -0.339,
-    "reliability": 1.097,
+    "reliability": 1.096,
     "priority": 35,
     "level": "basse"
    },
@@ -70524,7 +70484,7 @@
     "p_win": 0.166,
     "p_not_lose": 0.166,
     "ev": -0.295,
-    "reliability": 1.014,
+    "reliability": 1.013,
     "priority": 37,
     "level": "basse"
    },
@@ -70579,7 +70539,7 @@
     "p_win": 0.119,
     "p_not_lose": 0.154,
     "ev": -0.327,
-    "reliability": 1.071,
+    "reliability": 1.069,
     "priority": 38,
     "level": "basse"
    },
@@ -70644,7 +70604,7 @@
     "p_win": 0.082,
     "p_not_lose": 0.147,
     "ev": -0.358,
-    "reliability": 1.051,
+    "reliability": 1.052,
     "priority": 39,
     "level": "basse"
    },
@@ -70953,7 +70913,7 @@
  },
  "2026-11-22": {
   "frozen": false,
-  "created": "2026-11-16T15:06+00:00",
+  "created": "2026-11-16T17:13+00:00",
   "coupons": [
    {
     "kind": "autres",
@@ -71422,61 +71382,6 @@
     "stake_pct": 1.5,
     "legs": [
      {
-      "id": "20261122|SP1|Osasuna|Malaga",
-      "market": "dnb1",
-      "team": null,
-      "odds": 1.14,
-      "odds_source": "estimée",
-      "p_win": 0.634,
-      "p_push": 0.236,
-      "min_odds": 1.24
-     },
-     {
-      "id": "20261122|I1|Atalanta|Inter",
-      "market": "dnb2",
-      "team": null,
-      "odds": 1.32,
-      "odds_source": "estimée",
-      "p_win": 0.554,
-      "p_push": 0.223,
-      "min_odds": 1.44
-     },
-     {
-      "id": "20261122|SP2|Girona|Eibar",
-      "market": "1X",
-      "team": null,
-      "odds": 1.22,
-      "odds_source": "estimée",
-      "p_win": 0.776,
-      "p_push": 0.0,
-      "min_odds": 1.33
-     },
-     {
-      "id": "20261122|T1|Konyaspor|Besiktas",
-      "market": "X2",
-      "team": null,
-      "odds": 1.22,
-      "odds_source": "estimée",
-      "p_win": 0.774,
-      "p_push": 0.0,
-      "min_odds": 1.33
-     }
-    ],
-    "odds": 2.24,
-    "p_win": 0.211,
-    "p_not_lose": 0.406,
-    "ev": -0.264,
-    "reliability": 1.056,
-    "priority": 13,
-    "level": "moyenne"
-   },
-   {
-    "kind": "dc",
-    "label": "Double chance",
-    "scope": "Toutes ligues",
-    "stake_pct": 1.5,
-    "legs": [
-     {
       "id": "20261122|G1|Levadeiakos|Atromitos",
       "market": "1X",
       "team": null,
@@ -71512,6 +71417,61 @@
     "p_not_lose": 0.423,
     "ev": -0.237,
     "reliability": 1.096,
+    "priority": 13,
+    "level": "moyenne"
+   },
+   {
+    "kind": "dc",
+    "label": "Double chance",
+    "scope": "Toutes ligues",
+    "stake_pct": 1.5,
+    "legs": [
+     {
+      "id": "20261122|SP1|Osasuna|Malaga",
+      "market": "dnb1",
+      "team": null,
+      "odds": 1.14,
+      "odds_source": "estimée",
+      "p_win": 0.634,
+      "p_push": 0.236,
+      "min_odds": 1.24
+     },
+     {
+      "id": "20261122|B1|Beveren|Gent",
+      "market": "X2",
+      "team": null,
+      "odds": 1.21,
+      "odds_source": "estimée",
+      "p_win": 0.778,
+      "p_push": 0.0,
+      "min_odds": 1.32
+     },
+     {
+      "id": "20261122|I1|Atalanta|Inter",
+      "market": "dnb2",
+      "team": null,
+      "odds": 1.32,
+      "odds_source": "estimée",
+      "p_win": 0.554,
+      "p_push": 0.223,
+      "min_odds": 1.44
+     },
+     {
+      "id": "20261122|T1|Kasimpasa|Alanyaspor",
+      "market": "1X",
+      "team": null,
+      "odds": 1.23,
+      "odds_source": "estimée",
+      "p_win": 0.765,
+      "p_push": 0.0,
+      "min_odds": 1.35
+     }
+    ],
+    "odds": 2.24,
+    "p_win": 0.209,
+    "p_not_lose": 0.402,
+    "ev": -0.271,
+    "reliability": 1.051,
     "priority": 14,
     "level": "moyenne"
    },
@@ -71596,6 +71556,61 @@
     "level": "moyenne"
    },
    {
+    "kind": "dc",
+    "label": "Double chance",
+    "scope": "Toutes ligues",
+    "stake_pct": 1.5,
+    "legs": [
+     {
+      "id": "20261122|I1|Bologna|Udinese",
+      "market": "1X",
+      "team": null,
+      "odds": 1.19,
+      "odds_source": "estimée",
+      "p_win": 0.794,
+      "p_push": 0.0,
+      "min_odds": 1.3
+     },
+     {
+      "id": "20261122|SP2|Burgos|Albacete",
+      "market": "1X",
+      "team": null,
+      "odds": 1.19,
+      "odds_source": "estimée",
+      "p_win": 0.793,
+      "p_push": 0.0,
+      "min_odds": 1.3
+     },
+     {
+      "id": "20261122|SP2|Girona|Eibar",
+      "market": "1X",
+      "team": null,
+      "odds": 1.22,
+      "odds_source": "estimée",
+      "p_win": 0.776,
+      "p_push": 0.0,
+      "min_odds": 1.33
+     },
+     {
+      "id": "20261122|T1|Konyaspor|Besiktas",
+      "market": "X2",
+      "team": null,
+      "odds": 1.22,
+      "odds_source": "estimée",
+      "p_win": 0.774,
+      "p_push": 0.0,
+      "min_odds": 1.33
+     }
+    ],
+    "odds": 2.11,
+    "p_win": 0.378,
+    "p_not_lose": 0.378,
+    "ev": -0.287,
+    "reliability": 1.097,
+    "priority": 17,
+    "level": "basse"
+   },
+   {
     "kind": "favoris",
     "label": "Ticket favoris",
     "scope": "Toutes ligues",
@@ -71637,63 +71652,8 @@
     "p_not_lose": 0.414,
     "ev": -0.245,
     "reliability": 0.969,
-    "priority": 17,
-    "level": "moyenne"
-   },
-   {
-    "kind": "dc",
-    "label": "Double chance",
-    "scope": "Toutes ligues",
-    "stake_pct": 1.5,
-    "legs": [
-     {
-      "id": "20261122|I1|Bologna|Udinese",
-      "market": "1X",
-      "team": null,
-      "odds": 1.19,
-      "odds_source": "estimée",
-      "p_win": 0.794,
-      "p_push": 0.0,
-      "min_odds": 1.3
-     },
-     {
-      "id": "20261122|SP2|Burgos|Albacete",
-      "market": "1X",
-      "team": null,
-      "odds": 1.19,
-      "odds_source": "estimée",
-      "p_win": 0.793,
-      "p_push": 0.0,
-      "min_odds": 1.3
-     },
-     {
-      "id": "20261122|B1|Beveren|Gent",
-      "market": "X2",
-      "team": null,
-      "odds": 1.21,
-      "odds_source": "estimée",
-      "p_win": 0.778,
-      "p_push": 0.0,
-      "min_odds": 1.32
-     },
-     {
-      "id": "20261122|T1|Kasimpasa|Alanyaspor",
-      "market": "1X",
-      "team": null,
-      "odds": 1.23,
-      "odds_source": "estimée",
-      "p_win": 0.765,
-      "p_push": 0.0,
-      "min_odds": 1.35
-     }
-    ],
-    "odds": 2.11,
-    "p_win": 0.375,
-    "p_not_lose": 0.375,
-    "ev": -0.293,
-    "reliability": 1.089,
     "priority": 18,
-    "level": "basse"
+    "level": "moyenne"
    },
    {
     "kind": "autres",
@@ -71771,7 +71731,7 @@
     "p_win": 0.447,
     "p_not_lose": 0.447,
     "ev": -0.194,
-    "reliability": 1.083,
+    "reliability": 1.086,
     "priority": 20,
     "level": "moyenne"
    },
@@ -71861,7 +71821,7 @@
     "p_win": 0.375,
     "p_not_lose": 0.375,
     "ev": -0.292,
-    "reliability": 1.085,
+    "reliability": 1.089,
     "priority": 22,
     "level": "basse"
    },
@@ -72041,7 +72001,7 @@
     "p_win": 0.112,
     "p_not_lose": 0.27,
     "ev": -0.294,
-    "reliability": 1.064,
+    "reliability": 1.065,
     "priority": 26,
     "level": "basse"
    },
@@ -72201,7 +72161,7 @@
     "p_win": 0.193,
     "p_not_lose": 0.193,
     "ev": -0.25,
-    "reliability": 1.081,
+    "reliability": 1.083,
     "priority": 30,
     "level": "basse"
    },
@@ -72301,7 +72261,7 @@
     "p_win": 0.061,
     "p_not_lose": 0.165,
     "ev": -0.308,
-    "reliability": 1.052,
+    "reliability": 1.054,
     "priority": 32,
     "level": "basse"
    },
@@ -72427,31 +72387,31 @@
       "min_odds": 1.33
      },
      {
-      "id": "20261122|I1|Atalanta|Inter",
+      "id": "20261122|SP2|Cordoba|Oviedo",
       "market": "sh05",
       "team": null,
-      "odds": 1.15,
+      "odds": 1.17,
       "odds_source": "estimée",
-      "p_win": 0.823,
+      "p_win": 0.807,
       "p_push": 0.0,
-      "min_odds": 1.25
+      "min_odds": 1.28
      },
      {
-      "id": "20261122|G1|Panathinaikos|OFI Crete",
+      "id": "20261122|SP2|Celta B|Valladolid",
       "market": "sh05",
       "team": null,
-      "odds": 1.12,
+      "odds": 1.19,
       "odds_source": "estimée",
-      "p_win": 0.844,
+      "p_win": 0.795,
       "p_push": 0.0,
-      "min_odds": 1.22
+      "min_odds": 1.3
      }
     ],
-    "odds": 3.2,
-    "p_win": 0.199,
-    "p_not_lose": 0.199,
-    "ev": -0.45,
-    "reliability": 1.119,
+    "odds": 3.46,
+    "p_win": 0.184,
+    "p_not_lose": 0.184,
+    "ev": -0.454,
+    "reliability": 1.121,
     "priority": 34,
     "level": "basse"
    },
@@ -72761,7 +72721,7 @@
     "p_win": 0.0,
     "p_not_lose": 0.0,
     "ev": -0.526,
-    "reliability": 1.029,
+    "reliability": 1.03,
     "priority": 38,
     "level": "basse"
    }
@@ -72770,7 +72730,7 @@
  },
  "2026-11-23": {
   "frozen": false,
-  "created": "2026-11-16T15:06+00:00",
+  "created": "2026-11-16T17:13+00:00",
   "coupons": [
    {
     "kind": "autres",
@@ -72858,7 +72818,7 @@
     "p_win": 0.283,
     "p_not_lose": 0.378,
     "ev": -0.285,
-    "reliability": 1.089,
+    "reliability": 1.09,
     "priority": 2,
     "level": "basse"
    },
@@ -72948,7 +72908,7 @@
     "p_win": 0.369,
     "p_not_lose": 0.369,
     "ev": -0.334,
-    "reliability": 1.098,
+    "reliability": 1.1,
     "priority": 4,
     "level": "basse"
    },
@@ -73083,7 +73043,7 @@
     "p_win": 0.405,
     "p_not_lose": 0.405,
     "ev": -0.242,
-    "reliability": 0.949,
+    "reliability": 0.95,
     "priority": 7,
     "level": "moyenne"
    },
@@ -73233,7 +73193,7 @@
     "p_win": 0.026,
     "p_not_lose": 0.026,
     "ev": -0.46,
-    "reliability": 1.028,
+    "reliability": 1.029,
     "priority": 9,
     "level": "basse"
    }
