@@ -60646,7 +60646,10 @@
       "odds_source": "estimée",
       "p_win": 0.523,
       "p_push": 0.237,
-      "min_odds": 1.5
+      "min_odds": 1.5,
+      "goals": 3,
+      "score": "3-0",
+      "result": "won"
      },
      {
       "id": "20261116|NAT|North Macedonia|Slovenia",
@@ -60681,7 +60684,10 @@
       "odds_source": "estimée",
       "p_win": 0.407,
       "p_push": 0.259,
-      "min_odds": 1.88
+      "min_odds": 1.88,
+      "goals": 3,
+      "score": "2-1",
+      "result": "won"
      },
      {
       "id": "20261116|NAT|Estonia|Bulgaria",
@@ -60691,7 +60697,10 @@
       "odds_source": "estimée",
       "p_win": 0.679,
       "p_push": 0.0,
-      "min_odds": 1.52
+      "min_odds": 1.52,
+      "goals": 3,
+      "score": "2-1",
+      "result": "won"
      }
     ],
     "odds": 2.39,
@@ -60700,7 +60709,9 @@
     "ev": -0.185,
     "reliability": 1.0,
     "priority": 3,
-    "level": "moyenne"
+    "level": "moyenne",
+    "status": "won",
+    "return": 2.391
    },
    {
     "kind": "nations",
@@ -63031,7 +63042,7 @@
  },
  "2026-11-17": {
   "frozen": false,
-  "created": "2026-11-16T17:13+00:00",
+  "created": "2026-11-16T18:56+00:00",
   "coupons": [
    {
     "kind": "nations",
@@ -63040,30 +63051,30 @@
     "stake_pct": 0.5,
     "legs": [
      {
-      "id": "20261117|NAT|Israel|Austria",
-      "market": "o20",
+      "id": "20261117|NAT|Ukraine|Georgia",
+      "market": "o15",
       "team": null,
-      "odds": 1.13,
+      "odds": 1.25,
       "odds_source": "estimée",
-      "p_win": 0.689,
-      "p_push": 0.176,
-      "min_odds": 1.23
+      "p_win": 0.758,
+      "p_push": 0.0,
+      "min_odds": 1.36
      },
      {
-      "id": "20261117|NAT|Ukraine|Georgia",
-      "market": "1",
-      "team": "Ukraine",
-      "odds": 1.82,
+      "id": "20261117|NAT|Hungary|Northern Ireland",
+      "market": "o15",
+      "team": null,
+      "odds": 1.6,
       "odds_source": "estimée",
-      "p_win": 0.518,
+      "p_win": 0.588,
       "p_push": 0.0,
-      "min_odds": 1.99
+      "min_odds": 1.75
      }
     ],
-    "odds": 2.06,
-    "p_win": 0.357,
-    "p_not_lose": 0.448,
-    "ev": -0.19,
+    "odds": 2.0,
+    "p_win": 0.446,
+    "p_not_lose": 0.446,
+    "ev": -0.198,
     "reliability": 1.0
    },
    {
@@ -63073,30 +63084,30 @@
     "stake_pct": 0.5,
     "legs": [
      {
+      "id": "20261117|NAT|Israel|Austria",
+      "market": "2",
+      "team": "Austria",
+      "odds": 1.67,
+      "odds_source": "estimée",
+      "p_win": 0.565,
+      "p_push": 0.0,
+      "min_odds": 1.82
+     },
+     {
       "id": "20261117|NAT|Wales|Portugal",
       "market": "o15",
       "team": null,
-      "odds": 1.26,
+      "odds": 1.25,
       "odds_source": "estimée",
-      "p_win": 0.75,
+      "p_win": 0.756,
       "p_push": 0.0,
-      "min_odds": 1.37
-     },
-     {
-      "id": "20261117|NAT|Hungary|Northern Ireland",
-      "market": "o15",
-      "team": null,
-      "odds": 1.62,
-      "odds_source": "estimée",
-      "p_win": 0.582,
-      "p_push": 0.0,
-      "min_odds": 1.77
+      "min_odds": 1.36
      }
     ],
-    "odds": 2.04,
-    "p_win": 0.436,
-    "p_not_lose": 0.436,
-    "ev": -0.2,
+    "odds": 2.09,
+    "p_win": 0.427,
+    "p_not_lose": 0.427,
+    "ev": -0.201,
     "reliability": 1.0
    },
    {
@@ -63107,29 +63118,39 @@
     "legs": [
      {
       "id": "20261117|NAT|Denmark|Norway",
-      "market": "1",
-      "team": "Denmark",
-      "odds": 2.04,
-      "odds_source": "estimée",
-      "p_win": 0.463,
-      "p_push": 0.0,
-      "min_odds": 2.22
-     },
-     {
-      "id": "20261117|NAT|Poland|Sweden",
       "market": "o20",
       "team": null,
-      "odds": 1.16,
+      "odds": 1.12,
       "odds_source": "estimée",
-      "p_win": 0.657,
-      "p_push": 0.19,
-      "min_odds": 1.27
+      "p_win": 0.698,
+      "p_push": 0.173,
+      "min_odds": 1.22
+     },
+     {
+      "id": "20261117|NAT|Bosnia and Herzegovina|Romania",
+      "market": "o15",
+      "team": null,
+      "odds": 1.27,
+      "odds_source": "estimée",
+      "p_win": 0.741,
+      "p_push": 0.0,
+      "min_odds": 1.39
+     },
+     {
+      "id": "20261117|NAT|Republic of Ireland|Kosovo",
+      "market": "o15",
+      "team": null,
+      "odds": 1.5,
+      "odds_source": "estimée",
+      "p_win": 0.631,
+      "p_push": 0.0,
+      "min_odds": 1.63
      }
     ],
-    "odds": 2.37,
-    "p_win": 0.304,
-    "p_not_lose": 0.392,
-    "ev": -0.202,
+    "odds": 2.13,
+    "p_win": 0.326,
+    "p_not_lose": 0.407,
+    "ev": -0.238,
     "reliability": 1.0
    }
   ],
@@ -67744,7 +67765,7 @@
  },
  "2026-11-20": {
   "frozen": false,
-  "created": "2026-11-16T17:13+00:00",
+  "created": "2026-11-16T18:56+00:00",
   "coupons": [
    {
     "kind": "buts20",
@@ -68811,7 +68832,7 @@
  },
  "2026-11-21": {
   "frozen": false,
-  "created": "2026-11-16T17:13+00:00",
+  "created": "2026-11-16T18:56+00:00",
   "coupons": [
    {
     "kind": "favoris",
@@ -70913,7 +70934,7 @@
  },
  "2026-11-22": {
   "frozen": false,
-  "created": "2026-11-16T17:13+00:00",
+  "created": "2026-11-16T18:56+00:00",
   "coupons": [
    {
     "kind": "autres",
@@ -72730,7 +72751,7 @@
  },
  "2026-11-23": {
   "frozen": false,
-  "created": "2026-11-16T17:13+00:00",
+  "created": "2026-11-16T18:56+00:00",
   "coupons": [
    {
     "kind": "autres",
