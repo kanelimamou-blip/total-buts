@@ -175,11 +175,27 @@ function viewCoupons() {
   <div class="chips">${days.map((x) => `<button class="chip" data-day="${x}" aria-pressed="${x === state.day}">${dayLabel(x, d.today)}</button>`).join("")}</div>
   <div class="chips">${KIND_FILTERS.filter(([k]) => count(k)).map(([k, l]) => `<button class="chip" data-kind="${k}" aria-pressed="${k === state.kind}">${l}<span class="c">${count(k)}</span></button>`).join("")}</div>
   ${liveBlock()}
-  ${state.kind === "all" ? planBlock(state.day) : ""}
+  ${state.kind === "all" ? jumeauBlock(state.day) + planBlock(state.day) : ""}
   <p class="small muted">${frozen ? "Coupons du jour figés au premier calcul du matin." : "Coupons provisoires : ils seront affinés quand les cotes du marché seront publiées, puis figés le jour du match."} Classés par priorité.</p>
   ${state.kind === "obs" ? `<p class="note">En observation : jackpots, cote 1000, relais et combinés longue durée ont beaucoup perdu en réel (bilan du 16 novembre). Ils restent suivis pour voir s’ils se redressent, mais ne sont plus conseillés.</p>` : ""}
   ${shown.map(couponCard).join("") || `<div class="empty">Aucun coupon de ce type ce jour-là.</div>`}
   ${pastBlock()}`;
+}
+
+// Jumeau : la même appli réduite à la seule règle qui a gagné après taxe sur 3 ans (pipeline/jumeau.py)
+function jumeauBlock(date) {
+  const d = state.data, j = d.jumeau, bt = state.bt?.jumeau;
+  if (!j) return "";
+  const r = (x) => (x >= 0 ? "+" : "") + Math.round(x * 100) + " %";
+  const start = j.start.split("-").reverse().slice(0, 2).join("/");
+  const btLine = bt && bt.n ? `Sur 3 ans rejoués : <b>${bt.n} tickets, ${pct(bt.won / bt.n)} gagnés, ${r(bt.roi)} par mise après taxe</b> (avant août 2025 : ${r(bt.avant.roi)}, après : ${r(bt.apres.roi)} ; pire série : ${String(bt.pire_baisse).replace(".", ",")} mises).` : "";
+  const lv = j.live || { n: 0 };
+  const liveLine = lv.n ? `En réel depuis le ${start} : <b>${lv.won} gagnés sur ${lv.n}, ${signed(lv.net)} mises</b> après taxe.` : `Suivi réel à partir du ${start}.`;
+  const list = date ? d.coupons.filter((c) => c.jumeau && c.date === date) : [];
+  return `<section class="card"><h2>Jumeau</h2>
+    <p class="small">Le jumeau est la version disciplinée de l'appli. Il ne garde qu'une règle : coupons mix de 2 ou 3 matchs, cote 2 à 2,6, au plus 2 par jour. C'est la règle qui perd le moins sur 3 ans, la même chose chaque année. ${btLine} ${liveLine}</p>
+    <p class="note">Le jumeau perd moins que l'appli entière (environ −23 % par mise sur 3 ans), mais il ne gagne pas encore : la taxe de 20 % et la marge du bookmaker restent plus fortes. Chaque match ajouté à un ticket coûte cette marge une fois de plus.</p>
+    ${date ? list.map(couponCard).join("") || `<p class="small muted">Pas de ticket jumeau ce jour-là : aucun coupon ne remplit la règle.</p>` : ""}</section>`;
 }
 
 function couponCard(c) {
@@ -649,7 +665,7 @@ function viewTracking() {
   const kinds = Object.entries(d.coupon_kinds);
   const live = d.live || {};
   const tot = Object.values(live).reduce((a, s) => ({ n: a.n + s.n, won: a.won + s.won, units: a.units + s.units }), { n: 0, won: 0, units: 0 });
-  let html = `<h1>Suivi</h1>${myBetsBlock()}${planTracking()}${veilleBlock()}${combosBlock(d, bt)}<h2>Propositions de l'appli</h2>
+  let html = `<h1>Suivi</h1>${myBetsBlock()}${jumeauBlock(null)}${planTracking()}${veilleBlock()}${combosBlock(d, bt)}<h2>Propositions de l'appli</h2>
   <div class="stats">
     <div class="stat tap"${det("allcoupons")}><span class="k">Coupons réglés ›</span><span class="v">${tot.n}</span></div>
     <div class="stat tap"${det("won")}><span class="k">Gagnés ›</span><span class="v">${tot.n ? Math.round((tot.won / tot.n) * 100) + " %" : "–"}</span></div>

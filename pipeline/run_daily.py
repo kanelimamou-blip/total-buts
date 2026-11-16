@@ -13,6 +13,7 @@ import pandas as pd
 
 import ahead
 import backtest
+import jumeau
 import context
 import europe
 import nations
@@ -574,9 +575,13 @@ def main():
 
     match_index = {m["id"]: m for m in matches}
     history = []
+    jum_live = []
     for d in sorted(store, reverse=True)[:60]:
+        picked = {id(c) for c in jumeau.select(store[d]["coupons"])} if d >= jumeau.START else set()
         for c in store[d]["coupons"]:
-            history.append(dict(c, date=d, frozen=store[d].get("frozen", False)))
+            history.append(dict(c, date=d, frozen=store[d].get("frozen", False), jumeau=id(c) in picked))
+            if id(c) in picked:
+                jum_live.append(c)
     # infos de match lisibles pour les coupons passés
     def describe(mid):
         _, div, home, away = mid.split("|")
@@ -596,6 +601,7 @@ def main():
         "tips": tip_list, "recent": recent_out, "feedback": fb, "surprises": surprise, "learning": learning,
         "trajectory": {"live": traj, "base": base},
         "tracking_start": TRACKING_START,
+        "jumeau": {"start": jumeau.START, "rule": jumeau.RULE, "live": jumeau.summary(jum_live)},
         "reliable": reliable,
         "combo_factors": {k: round(v, 3) for k, v in coupons_mod.COMBO_FACTOR.items()},
         "extra_labels": {k: list(v) for k, v in extra.LABELS.items()},

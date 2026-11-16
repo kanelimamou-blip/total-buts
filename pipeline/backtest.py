@@ -10,6 +10,8 @@ from datetime import date
 import numpy as np
 import pandas as pd
 
+import jumeau
+
 from config import COUPONS, LEAGUES, SITE_DATA, STATE_DIR, VALUE_EDGE
 from coupons import SMALL_KINDS, build_day, favorite_leg, leg_family, legs_for_match, settle_coupon, signature
 import extra
@@ -17,7 +19,8 @@ import meta
 from coupons import settle_leg
 from model import devig, fit, markets_from_total, predict, result_probs, score_matrix, total_dist
 
-VERSION = 13  # à augmenter quand le test change, pour qu'il soit relancé sans attendre la semaine
+VERSION = 14  # à augmenter quand le test change, pour qu'il soit relancé sans attendre la semaine
+DUMP: list | None = None  # rempli seulement pour une étude hors ligne
 BACKTEST_YEARS = 3.2
 REFIT_DAYS = 7
 
@@ -133,6 +136,20 @@ class _R:  # notes figées pour rejouer predict() sur une ligne du backtest
         return self._lh, self._la
 
 
+def _jumeau_report(jum: list[dict]) -> dict:
+    """Résultat du jumeau sur les 3 ans rejoués, en tout, par année et avant/après août 2025 (taxe déduite)."""
+    rep = jumeau.summary(jum)
+    rep["years"] = {y: jumeau.summary([c for c in jum if c["date"][:4] == y]) for y in sorted({c["date"][:4] for c in jum})}
+    rep["avant"] = jumeau.summary([c for c in jum if c["date"] < "2025-08-01"])
+    rep["apres"] = jumeau.summary([c for c in jum if c["date"] >= "2025-08-01"])
+    run_, worst, cur = 0.0, 0.0, 0.0
+    for c in sorted(jum, key=lambda c: c["date"]):
+        cur += jumeau.net(c); run_ = max(run_, cur); worst = min(worst, cur - run_)
+    rep["pire_baisse"] = round(worst, 1)
+    rep["rule"] = jumeau.RULE
+    return rep
+
+
 def run(results: pd.DataFrame, today: date) -> dict:
     today = pd.Timestamp(today)
     bt = walk_forward(results, today)
@@ -234,14 +251,21 @@ def run(results: pd.DataFrame, today: date) -> dict:
     bt["fav_leg"] = favs
     stats = {k: {"n": 0, "won": 0, "staked": 0.0, "returned": 0.0, "p_sum": 0.0} for k in COUPONS}
     curve = {k: [] for k in COUPONS}
+    jum = []  # coupons que le jumeau aurait joués, avec leur date
     combos = {}  # coupons à jouer (2-3 matchs, cote 2) par type de combinaison, et pari qui les a fait casser
     for d, g in bt.groupby("date"):
         matches = [{"id": i, "div": dv, "legs": l, "fav": f} for i, dv, l, f in zip(g["id"], g["div"], g["legs"], g["fav_leg"])]
         scores = {i: (r.hg, r.ag, match_info(r)) for i, r in zip(g["id"], g.itertuples())}
+        day_done = []
         for c in build_day(matches, league_names={k: v[0] for k, v in LEAGUES.items()}):
             settle_coupon(c, scores)
             if "status" not in c:  # score de mi-temps manquant pour un pari de mi-temps : coupon non jugé
                 continue
+            day_done.append(c)
+            if DUMP is not None:
+                DUMP.append({"date": str(d)[:10], "kind": c["kind"], "sig": signature(c), "odds": c["odds"], "p": c["p_not_lose"],
+                             "won": c["status"] == "won", "ret": c["return"], "ids": [l["id"] for l in c["legs"]],
+                             "mk": [l["market"] for l in c["legs"]], "lp": [l["p_win"] for l in c["legs"]], "lo": [l["odds"] for l in c["legs"]]})
             s = stats[c["kind"]]
             s["n"] += 1
             s["won"] += c["status"] == "won"
@@ -256,6 +280,8 @@ def run(results: pd.DataFrame, today: date) -> dict:
                     if l.get("result") == "lost":
                         f = leg_family(l["market"]) if leg_family(l["market"]) != "buts" else MK_LABEL.get(l["market"], l["market"])
                         e["culprits"][f] = e["culprits"].get(f, 0) + 1
+        jum += [dict(c, date=str(d)[:10]) for c in jumeau.select(day_done)]
+    report["jumeau"] = _jumeau_report(jum)
     report["combos"] = {sig: {"n": e["n"], "pred": round(e["p"] / e["n"], 3), "hit": round(e["won"] / e["n"], 3),
                               "roi": round(e["ret"] / e["n"] - 1, 3), "culprits": e["culprits"]}
                         for sig, e in sorted(combos.items(), key=lambda x: -x[1]["n"]) if e["n"] >= 30}
