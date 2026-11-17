@@ -63084,7 +63084,10 @@
       "odds_source": "estimée",
       "p_win": 0.533,
       "p_push": 0.229,
-      "min_odds": 1.49
+      "min_odds": 1.49,
+      "goals": 5,
+      "score": "2-3",
+      "result": "won"
      },
      {
       "id": "20261117|NAT|Hungary|Northern Ireland",
@@ -63094,7 +63097,10 @@
       "odds_source": "estimée",
       "p_win": 0.594,
       "p_push": 0.0,
-      "min_odds": 1.74
+      "min_odds": 1.74,
+      "goals": 2,
+      "score": "1-1",
+      "result": "won"
      }
     ],
     "odds": 2.18,
@@ -63103,7 +63109,9 @@
     "ev": -0.185,
     "reliability": 1.0,
     "priority": 1,
-    "level": "moyenne"
+    "level": "moyenne",
+    "status": "won",
+    "return": 2.178
    },
    {
     "kind": "nations",
@@ -63119,7 +63127,10 @@
       "odds_source": "estimée",
       "p_win": 0.577,
       "p_push": 0.0,
-      "min_odds": 1.79
+      "min_odds": 1.79,
+      "goals": 2,
+      "score": "1-1",
+      "result": "lost"
      },
      {
       "id": "20261117|NAT|Ukraine|Georgia",
@@ -63129,7 +63140,10 @@
       "odds_source": "estimée",
       "p_win": 0.763,
       "p_push": 0.0,
-      "min_odds": 1.35
+      "min_odds": 1.35,
+      "goals": 1,
+      "score": "1-0",
+      "result": "lost"
      }
     ],
     "odds": 2.03,
@@ -63138,7 +63152,9 @@
     "ev": -0.196,
     "reliability": 1.0,
     "priority": 2,
-    "level": "moyenne"
+    "level": "moyenne",
+    "status": "lost",
+    "return": 0.0
    },
    {
     "kind": "nations",
@@ -63154,7 +63170,10 @@
       "odds_source": "estimée",
       "p_win": 0.476,
       "p_push": 0.0,
-      "min_odds": 2.17
+      "min_odds": 2.17,
+      "goals": 5,
+      "score": "2-3",
+      "result": "lost"
      },
      {
       "id": "20261117|NAT|Poland|Sweden",
@@ -63164,7 +63183,10 @@
       "odds_source": "estimée",
       "p_win": 0.676,
       "p_push": 0.183,
-      "min_odds": 1.25
+      "min_odds": 1.25,
+      "goals": 2,
+      "score": "1-1",
+      "result": "push"
      }
     ],
     "odds": 2.26,
@@ -63173,7 +63195,9 @@
     "ev": -0.199,
     "reliability": 1.0,
     "priority": 3,
-    "level": "moyenne"
+    "level": "moyenne",
+    "status": "lost",
+    "return": 0.0
    },
    {
     "kind": "tendance",
@@ -70183,7 +70207,7 @@
  },
  "2026-11-20": {
   "frozen": false,
-  "created": "2026-11-17T20:10+00:00",
+  "created": "2026-11-17T21:55+00:00",
   "coupons": [
    {
     "kind": "mix",
@@ -71250,7 +71274,7 @@
  },
  "2026-11-21": {
   "frozen": false,
-  "created": "2026-11-17T20:10+00:00",
+  "created": "2026-11-17T21:55+00:00",
   "coupons": [
    {
     "kind": "favoris",
@@ -73407,7 +73431,7 @@
  },
  "2026-11-22": {
   "frozen": false,
-  "created": "2026-11-17T20:10+00:00",
+  "created": "2026-11-17T21:55+00:00",
   "coupons": [
    {
     "kind": "mix",
@@ -75299,7 +75323,7 @@
  },
  "2026-11-23": {
   "frozen": false,
-  "created": "2026-11-17T20:10+00:00",
+  "created": "2026-11-17T21:55+00:00",
   "coupons": [
    {
     "kind": "dc",
@@ -75771,7 +75795,7 @@
  },
  "2026-11-24": {
   "frozen": false,
-  "created": "2026-11-17T20:10+00:00",
+  "created": "2026-11-17T21:55+00:00",
   "coupons": [
    {
     "kind": "autres",
