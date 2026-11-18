@@ -70207,7 +70207,7 @@
  },
  "2026-11-20": {
   "frozen": false,
-  "created": "2026-11-18T14:56+00:00",
+  "created": "2026-11-18T16:00+00:00",
   "coupons": [
    {
     "kind": "mix",
@@ -71274,7 +71274,7 @@
  },
  "2026-11-21": {
   "frozen": false,
-  "created": "2026-11-18T14:56+00:00",
+  "created": "2026-11-18T16:00+00:00",
   "coupons": [
    {
     "kind": "favoris",
@@ -73431,7 +73431,7 @@
  },
  "2026-11-22": {
   "frozen": false,
-  "created": "2026-11-18T14:56+00:00",
+  "created": "2026-11-18T16:00+00:00",
   "coupons": [
    {
     "kind": "mix",
@@ -75323,7 +75323,7 @@
  },
  "2026-11-23": {
   "frozen": false,
-  "created": "2026-11-18T14:56+00:00",
+  "created": "2026-11-18T16:00+00:00",
   "coupons": [
    {
     "kind": "dc",
@@ -75835,7 +75835,7 @@
  },
  "2026-11-24": {
   "frozen": false,
-  "created": "2026-11-18T14:56+00:00",
+  "created": "2026-11-18T16:00+00:00",
   "coupons": [
    {
     "kind": "favoris",
@@ -75964,7 +75964,7 @@
       "team": "FC Porto",
       "odds": 1.85,
       "odds_source": "estimée",
-      "p_win": 0.51,
+      "p_win": 0.509,
       "p_push": 0.0,
       "min_odds": 2.02
      },
@@ -75980,9 +75980,9 @@
      }
     ],
     "odds": 2.16,
-    "p_win": 0.336,
+    "p_win": 0.335,
     "p_not_lose": 0.427,
-    "ev": -0.197,
+    "ev": -0.199,
     "reliability": 1.096,
     "priority": 4,
     "level": "moyenne"
@@ -77089,16 +77089,6 @@
       "min_odds": 2.02
      },
      {
-      "id": "20261124|UCL|Feyenoord Rotterdam|FC Porto",
-      "market": "2",
-      "team": "FC Porto",
-      "odds": 1.85,
-      "odds_source": "estimée",
-      "p_win": 0.51,
-      "p_push": 0.0,
-      "min_odds": 2.02
-     },
-     {
       "id": "20261124|I2|Benevento|Empoli",
       "market": "1",
       "team": "Benevento",
@@ -77107,13 +77097,23 @@
       "p_win": 0.519,
       "p_push": 0.0,
       "min_odds": 1.99
+     },
+     {
+      "id": "20261124|E1|Norwich|QPR",
+      "market": "h15",
+      "team": null,
+      "odds": 1.81,
+      "odds_source": "estimée",
+      "p_win": 0.522,
+      "p_push": 0.0,
+      "min_odds": 1.97
      }
     ],
-    "odds": 11.71,
-    "p_win": 0.068,
-    "p_not_lose": 0.068,
-    "ev": -0.35,
-    "reliability": 1.055,
+    "odds": 11.46,
+    "p_win": 0.069,
+    "p_not_lose": 0.069,
+    "ev": -0.349,
+    "reliability": 1.034,
     "priority": 30,
     "level": "basse"
    },
@@ -77144,16 +77144,6 @@
       "min_odds": 2.02
      },
      {
-      "id": "20261124|UCL|Feyenoord Rotterdam|FC Porto",
-      "market": "2",
-      "team": "FC Porto",
-      "odds": 1.85,
-      "odds_source": "estimée",
-      "p_win": 0.51,
-      "p_push": 0.0,
-      "min_odds": 2.02
-     },
-     {
       "id": "20261124|I2|Benevento|Empoli",
       "market": "1",
       "team": "Benevento",
@@ -77172,13 +77162,23 @@
       "p_win": 0.522,
       "p_push": 0.0,
       "min_odds": 1.97
+     },
+     {
+      "id": "20261124|E1|Middlesbrough|Swansea",
+      "market": "h15",
+      "team": null,
+      "odds": 1.8,
+      "odds_source": "estimée",
+      "p_win": 0.525,
+      "p_push": 0.0,
+      "min_odds": 1.96
      }
     ],
-    "odds": 21.2,
-    "p_win": 0.035,
-    "p_not_lose": 0.035,
-    "ev": -0.392,
-    "reliability": 1.047,
+    "odds": 20.62,
+    "p_win": 0.036,
+    "p_not_lose": 0.036,
+    "ev": -0.391,
+    "reliability": 1.031,
     "priority": 31,
     "level": "basse"
    },
@@ -77202,16 +77202,6 @@
       "id": "20261124|E2|Bradford|Barnsley",
       "market": "1",
       "team": "Bradford",
-      "odds": 1.85,
-      "odds_source": "estimée",
-      "p_win": 0.51,
-      "p_push": 0.0,
-      "min_odds": 2.02
-     },
-     {
-      "id": "20261124|UCL|Feyenoord Rotterdam|FC Porto",
-      "market": "2",
-      "team": "FC Porto",
       "odds": 1.85,
       "odds_source": "estimée",
       "p_win": 0.51,
@@ -77249,6 +77239,16 @@
       "min_odds": 1.96
      },
      {
+      "id": "20261124|UCL|Feyenoord Rotterdam|FC Porto",
+      "market": "2",
+      "team": "FC Porto",
+      "odds": 1.85,
+      "odds_source": "estimée",
+      "p_win": 0.509,
+      "p_push": 0.0,
+      "min_odds": 2.02
+     },
+     {
       "id": "20261124|UCL|RB Leipzig|Lens",
       "market": "u45",
       "team": null,
@@ -77262,7 +77262,7 @@
     "odds": 68.67,
     "p_win": 0.01,
     "p_not_lose": 0.01,
-    "ev": -0.462,
+    "ev": -0.463,
     "reliability": 1.05,
     "priority": 32,
     "level": "basse"
@@ -77377,7 +77377,7 @@
  },
  "2026-11-25": {
   "frozen": false,
-  "created": "2026-11-18T14:56+00:00",
+  "created": "2026-11-18T16:00+00:00",
   "coupons": [
    {
     "kind": "dc",
