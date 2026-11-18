@@ -70207,7 +70207,7 @@
  },
  "2026-11-20": {
   "frozen": false,
-  "created": "2026-11-18T08:21+00:00",
+  "created": "2026-11-18T10:03+00:00",
   "coupons": [
    {
     "kind": "mix",
@@ -71274,7 +71274,7 @@
  },
  "2026-11-21": {
   "frozen": false,
-  "created": "2026-11-18T08:21+00:00",
+  "created": "2026-11-18T10:03+00:00",
   "coupons": [
    {
     "kind": "favoris",
@@ -73431,7 +73431,7 @@
  },
  "2026-11-22": {
   "frozen": false,
-  "created": "2026-11-18T08:21+00:00",
+  "created": "2026-11-18T10:03+00:00",
   "coupons": [
    {
     "kind": "mix",
@@ -75323,7 +75323,7 @@
  },
  "2026-11-23": {
   "frozen": false,
-  "created": "2026-11-18T08:21+00:00",
+  "created": "2026-11-18T10:03+00:00",
   "coupons": [
    {
     "kind": "dc",
@@ -75387,39 +75387,29 @@
       "min_odds": 1.7
      },
      {
-      "id": "20261123|I1|Monza|Fiorentina",
+      "id": "20261123|F2|Nantes|Grenoble",
       "market": "o15",
       "team": null,
-      "odds": 1.14,
+      "odds": 1.36,
       "odds_source": "estimée",
-      "p_win": 0.797,
+      "p_win": 0.646,
       "p_push": 0.0,
-      "min_odds": 1.29
-     },
-     {
-      "id": "20261123|SP2|Ceuta|Almeria",
-      "market": "o20",
-      "team": null,
-      "odds": 1.18,
-      "odds_source": "estimée",
-      "p_win": 0.601,
-      "p_push": 0.161,
-      "min_odds": 1.44
+      "min_odds": 1.59
      }
     ],
-    "odds": 2.09,
-    "p_win": 0.291,
-    "p_not_lose": 0.369,
-    "ev": -0.331,
-    "reliability": 1.096,
+    "odds": 2.11,
+    "p_win": 0.392,
+    "p_not_lose": 0.392,
+    "ev": -0.26,
+    "reliability": 1.098,
     "priority": 2,
     "level": "basse"
    },
    {
-    "kind": "buts20",
-    "label": "Coupon +2 (remboursé à 2 buts)",
+    "kind": "mix",
+    "label": "Coupon mix",
     "scope": "Toutes ligues",
-    "stake_pct": 1.0,
+    "stake_pct": 1.5,
     "legs": [
      {
       "id": "20261123|E0|Brentford|Everton",
@@ -75432,6 +75422,121 @@
       "min_odds": 1.37
      },
      {
+      "id": "20261123|I1|Monza|Fiorentina",
+      "market": "2",
+      "team": "Fiorentina",
+      "odds": 1.75,
+      "odds_source": "estimée",
+      "p_win": 0.54,
+      "p_push": 0.0,
+      "min_odds": 1.91
+     }
+    ],
+    "odds": 2.19,
+    "p_win": 0.291,
+    "p_not_lose": 0.446,
+    "ev": -0.185,
+    "reliability": 0.956,
+    "priority": 3,
+    "level": "moyenne"
+   },
+   {
+    "kind": "autres",
+    "label": "Autres paris",
+    "scope": "Toutes ligues",
+    "stake_pct": 1.0,
+    "legs": [
+     {
+      "id": "20261123|SP2|Ceuta|Almeria",
+      "market": "sh05",
+      "team": null,
+      "odds": 1.14,
+      "odds_source": "estimée",
+      "p_win": 0.827,
+      "p_push": 0.0,
+      "min_odds": 1.25
+     },
+     {
+      "id": "20261123|F2|Sochaux|Dunkerque",
+      "market": "a15",
+      "team": null,
+      "odds": 1.96,
+      "odds_source": "estimée",
+      "p_win": 0.481,
+      "p_push": 0.0,
+      "min_odds": 2.14
+     }
+    ],
+    "odds": 2.23,
+    "p_win": 0.398,
+    "p_not_lose": 0.398,
+    "ev": -0.209,
+    "reliability": 1.073,
+    "priority": 4,
+    "level": "basse"
+   },
+   {
+    "kind": "dc",
+    "label": "Double chance",
+    "scope": "Toutes ligues",
+    "stake_pct": 1.5,
+    "legs": [
+     {
+      "id": "20261123|T1|Buyuksehyr|Corum",
+      "market": "1X",
+      "team": null,
+      "odds": 1.16,
+      "odds_source": "estimée",
+      "p_win": 0.813,
+      "p_push": 0.0,
+      "min_odds": 1.27
+     },
+     {
+      "id": "20261123|SP1|Levante|Elche",
+      "market": "1X",
+      "team": null,
+      "odds": 1.3,
+      "odds_source": "estimée",
+      "p_win": 0.726,
+      "p_push": 0.0,
+      "min_odds": 1.42
+     },
+     {
+      "id": "20261123|F2|Nantes|Grenoble",
+      "market": "1X",
+      "team": null,
+      "odds": 1.4,
+      "odds_source": "estimée",
+      "p_win": 0.674,
+      "p_push": 0.0,
+      "min_odds": 1.53
+     }
+    ],
+    "odds": 2.11,
+    "p_win": 0.398,
+    "p_not_lose": 0.398,
+    "ev": -0.249,
+    "reliability": 1.042,
+    "priority": 5,
+    "level": "basse"
+   },
+   {
+    "kind": "buts20",
+    "label": "Coupon +2 (remboursé à 2 buts)",
+    "scope": "Toutes ligues",
+    "stake_pct": 1.0,
+    "legs": [
+     {
+      "id": "20261123|I1|Monza|Fiorentina",
+      "market": "o20",
+      "team": null,
+      "odds": 1.21,
+      "odds_source": "estimée",
+      "p_win": 0.564,
+      "p_push": 0.232,
+      "min_odds": 1.4
+     },
+     {
       "id": "20261123|G1|Asteras Tripolis|Aris",
       "market": "o20",
       "team": null,
@@ -75442,23 +75547,23 @@
       "min_odds": 1.54
      },
      {
-      "id": "20261123|F2|Sochaux|Dunkerque",
+      "id": "20261123|F2|Nantes|Grenoble",
       "market": "o20",
       "team": null,
-      "odds": 1.53,
+      "odds": 1.6,
       "odds_source": "estimée",
-      "p_win": 0.489,
-      "p_push": 0.207,
-      "min_odds": 1.67
+      "p_win": 0.456,
+      "p_push": 0.191,
+      "min_odds": 1.83
      }
     ],
-    "odds": 2.7,
-    "p_win": 0.13,
-    "p_not_lose": 0.436,
-    "ev": -0.208,
-    "reliability": 0.991,
-    "priority": 3,
-    "level": "moyenne"
+    "odds": 2.73,
+    "p_win": 0.127,
+    "p_not_lose": 0.391,
+    "ev": -0.275,
+    "reliability": 1.074,
+    "priority": 6,
+    "level": "basse"
    },
    {
     "kind": "sur",
@@ -75502,72 +75607,7 @@
     "p_not_lose": 0.397,
     "ev": -0.284,
     "reliability": 1.024,
-    "priority": 4,
-    "level": "basse"
-   },
-   {
-    "kind": "autres",
-    "label": "Autres paris",
-    "scope": "Toutes ligues",
-    "stake_pct": 1.0,
-    "legs": [
-     {
-      "id": "20261123|I1|Monza|Fiorentina",
-      "market": "a05",
-      "team": null,
-      "odds": 1.12,
-      "odds_source": "estimée",
-      "p_win": 0.842,
-      "p_push": 0.0,
-      "min_odds": 1.22
-     },
-     {
-      "id": "20261123|E0|Brentford|Everton",
-      "market": "u45",
-      "team": null,
-      "odds": 1.12,
-      "odds_source": "estimée",
-      "p_win": 0.84,
-      "p_push": 0.0,
-      "min_odds": 1.23
-     },
-     {
-      "id": "20261123|SP2|Ceuta|Almeria",
-      "market": "dnb2",
-      "team": null,
-      "odds": 1.22,
-      "odds_source": "estimée",
-      "p_win": 0.616,
-      "p_push": 0.205,
-      "min_odds": 1.33
-     },
-     {
-      "id": "20261123|T1|Buyuksehyr|Corum",
-      "market": "dnb1",
-      "team": null,
-      "odds": 1.23,
-      "odds_source": "estimée",
-      "p_win": 0.609,
-      "p_push": 0.203,
-      "min_odds": 1.35
-     },
-     {
-      "id": "20261123|SP1|Levante|Elche",
-      "market": "h05",
-      "team": null,
-      "odds": 1.17,
-      "odds_source": "estimée",
-      "p_win": 0.809,
-      "p_push": 0.0,
-      "min_odds": 1.27
-     }
-    ],
-    "odds": 2.2,
-    "p_win": 0.215,
-    "p_not_lose": 0.381,
-    "ev": -0.312,
-    "reliability": 1.01,
-    "priority": 5,
+    "priority": 7,
     "level": "basse"
    },
    {
@@ -75602,7 +75642,7 @@
     "p_not_lose": 0.279,
     "ev": -0.23,
     "reliability": 1.004,
-    "priority": 6,
+    "priority": 8,
     "level": "basse"
    },
    {
@@ -75637,7 +75677,7 @@
     "p_not_lose": 0.25,
     "ev": -0.239,
     "reliability": 0.98,
-    "priority": 7,
+    "priority": 9,
     "level": "basse"
    },
    {
@@ -75667,6 +75707,16 @@
       "min_odds": 1.91
      },
      {
+      "id": "20261123|F2|Nantes|Grenoble",
+      "market": "wh1",
+      "team": null,
+      "odds": 1.68,
+      "odds_source": "estimée",
+      "p_win": 0.561,
+      "p_push": 0.0,
+      "min_odds": 1.84
+     },
+     {
       "id": "20261123|G1|Asteras Tripolis|Aris",
       "market": "wh2",
       "team": null,
@@ -75685,24 +75735,14 @@
       "p_win": 0.599,
       "p_push": 0.0,
       "min_odds": 1.72
-     },
-     {
-      "id": "20261123|SP1|Levante|Elche",
-      "market": "wh1",
-      "team": null,
-      "odds": 1.52,
-      "odds_source": "estimée",
-      "p_win": 0.621,
-      "p_push": 0.0,
-      "min_odds": 1.66
      }
     ],
-    "odds": 11.69,
-    "p_win": 0.064,
-    "p_not_lose": 0.064,
-    "ev": -0.384,
-    "reliability": 1.059,
-    "priority": 8,
+    "odds": 12.93,
+    "p_win": 0.058,
+    "p_not_lose": 0.058,
+    "ev": -0.387,
+    "reliability": 1.086,
+    "priority": 10,
     "level": "basse"
    },
    {
@@ -75730,6 +75770,16 @@
       "p_win": 0.539,
       "p_push": 0.0,
       "min_odds": 1.91
+     },
+     {
+      "id": "20261123|F2|Nantes|Grenoble",
+      "market": "wh1",
+      "team": null,
+      "odds": 1.68,
+      "odds_source": "estimée",
+      "p_win": 0.561,
+      "p_push": 0.0,
+      "min_odds": 1.84
      },
      {
       "id": "20261123|G1|Asteras Tripolis|Aris",
@@ -75770,24 +75820,14 @@
       "p_win": 0.645,
       "p_push": 0.0,
       "min_odds": 1.6
-     },
-     {
-      "id": "20261123|E0|Brentford|Everton",
-      "market": "wh1",
-      "team": null,
-      "odds": 1.46,
-      "odds_source": "estimée",
-      "p_win": 0.645,
-      "p_push": 0.0,
-      "min_odds": 1.6
      }
     ],
-    "odds": 24.93,
-    "p_win": 0.027,
-    "p_not_lose": 0.027,
+    "odds": 28.68,
+    "p_win": 0.023,
+    "p_not_lose": 0.023,
     "ev": -0.46,
-    "reliability": 1.027,
-    "priority": 9,
+    "reliability": 1.061,
+    "priority": 11,
     "level": "basse"
    }
   ],
@@ -75795,7 +75835,7 @@
  },
  "2026-11-24": {
   "frozen": false,
-  "created": "2026-11-18T08:21+00:00",
+  "created": "2026-11-18T10:03+00:00",
   "coupons": [
    {
     "kind": "favoris",
@@ -76759,15 +76799,15 @@
       "team": null,
       "odds": 2.04,
       "odds_source": "estimée",
-      "p_win": 0.463,
+      "p_win": 0.462,
       "p_push": 0.0,
       "min_odds": 2.23
      }
     ],
     "odds": 3.94,
     "p_win": 0.164,
-    "p_not_lose": 0.291,
-    "ev": -0.218,
+    "p_not_lose": 0.29,
+    "ev": -0.22,
     "reliability": 1.046,
     "priority": 23,
     "level": "basse"
@@ -76897,7 +76937,7 @@
       "id": "20261124|UCL|Real Madrid|PSV Eindhoven",
       "market": "u35",
       "team": null,
-      "odds": 3.11,
+      "odds": 3.12,
       "odds_source": "estimée",
       "p_win": 0.303,
       "p_push": 0.0,
@@ -76924,10 +76964,10 @@
       "min_odds": 1.32
      }
     ],
-    "odds": 5.76,
+    "odds": 5.78,
     "p_win": 0.109,
     "p_not_lose": 0.169,
-    "ev": -0.284,
+    "ev": -0.281,
     "reliability": 1.072,
     "priority": 27,
     "level": "basse"
@@ -76942,7 +76982,7 @@
       "id": "20261124|UCL|Como|AEK Athens",
       "market": "u45",
       "team": null,
-      "odds": 1.43,
+      "odds": 1.44,
       "odds_source": "estimée",
       "p_win": 0.657,
       "p_push": 0.0,
@@ -76969,10 +77009,10 @@
       "min_odds": 3.25
      }
     ],
-    "odds": 5.03,
+    "odds": 5.06,
     "p_win": 0.167,
     "p_not_lose": 0.167,
-    "ev": -0.295,
+    "ev": -0.29,
     "reliability": 1.058,
     "priority": 28,
     "level": "basse"
@@ -77337,7 +77377,7 @@
  },
  "2026-11-25": {
   "frozen": false,
-  "created": "2026-11-18T08:21+00:00",
+  "created": "2026-11-18T10:03+00:00",
   "coupons": [
    {
     "kind": "dc",
