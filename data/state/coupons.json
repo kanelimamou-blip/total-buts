@@ -70207,7 +70207,7 @@
  },
  "2026-11-20": {
   "frozen": false,
-  "created": "2026-11-19T11:59+00:00",
+  "created": "2026-11-19T13:16+00:00",
   "coupons": [
    {
     "kind": "mix",
@@ -71274,7 +71274,7 @@
  },
  "2026-11-21": {
   "frozen": false,
-  "created": "2026-11-19T11:59+00:00",
+  "created": "2026-11-19T13:16+00:00",
   "coupons": [
    {
     "kind": "favoris",
@@ -73441,7 +73441,7 @@
  },
  "2026-11-22": {
   "frozen": false,
-  "created": "2026-11-19T11:59+00:00",
+  "created": "2026-11-19T13:16+00:00",
   "coupons": [
    {
     "kind": "mix",
@@ -75333,7 +75333,7 @@
  },
  "2026-11-23": {
   "frozen": false,
-  "created": "2026-11-19T11:59+00:00",
+  "created": "2026-11-19T13:16+00:00",
   "coupons": [
    {
     "kind": "dc",
@@ -75845,7 +75845,7 @@
  },
  "2026-11-24": {
   "frozen": false,
-  "created": "2026-11-19T11:59+00:00",
+  "created": "2026-11-19T13:16+00:00",
   "coupons": [
    {
     "kind": "favoris",
@@ -76947,7 +76947,7 @@
       "id": "20261124|UCL|Real Madrid|PSV Eindhoven",
       "market": "u35",
       "team": null,
-      "odds": 3.12,
+      "odds": 3.11,
       "odds_source": "estimée",
       "p_win": 0.303,
       "p_push": 0.0,
@@ -76974,10 +76974,10 @@
       "min_odds": 1.32
      }
     ],
-    "odds": 5.78,
+    "odds": 5.76,
     "p_win": 0.109,
     "p_not_lose": 0.169,
-    "ev": -0.281,
+    "ev": -0.284,
     "reliability": 1.072,
     "priority": 27,
     "level": "basse"
@@ -77387,7 +77387,7 @@
  },
  "2026-11-25": {
   "frozen": false,
-  "created": "2026-11-19T11:59+00:00",
+  "created": "2026-11-19T13:16+00:00",
   "coupons": [
    {
     "kind": "favoris",
@@ -77998,7 +77998,7 @@
       "odds_source": "estimée",
       "p_win": 0.694,
       "p_push": 0.0,
-      "min_odds": 1.49
+      "min_odds": 1.48
      },
      {
       "id": "20261125|UCL|Slavia Prague|Villarreal",
@@ -78091,6 +78091,16 @@
       "min_odds": 2.04
      },
      {
+      "id": "20261125|UCL|Shakhtar Donetsk|Fenerbahce",
+      "market": "h15",
+      "team": null,
+      "odds": 1.81,
+      "odds_source": "estimée",
+      "p_win": 0.523,
+      "p_push": 0.0,
+      "min_odds": 1.97
+     },
+     {
       "id": "20261125|I2|Cremonese|Avellino",
       "market": "1",
       "team": "Cremonese",
@@ -78109,22 +78119,12 @@
       "p_win": 0.513,
       "p_push": 0.0,
       "min_odds": 2.01
-     },
-     {
-      "id": "20261125|UCL|Shakhtar Donetsk|Fenerbahce",
-      "market": "h15",
-      "team": null,
-      "odds": 1.81,
-      "odds_source": "estimée",
-      "p_win": 0.522,
-      "p_push": 0.0,
-      "min_odds": 1.97
      }
     ],
     "odds": 11.52,
     "p_win": 0.069,
     "p_not_lose": 0.069,
-    "ev": -0.349,
+    "ev": -0.348,
     "reliability": 1.068,
     "priority": 16,
     "level": "basse"
@@ -78146,6 +78146,16 @@
       "min_odds": 2.04
      },
      {
+      "id": "20261125|UCL|Shakhtar Donetsk|Fenerbahce",
+      "market": "h15",
+      "team": null,
+      "odds": 1.81,
+      "odds_source": "estimée",
+      "p_win": 0.523,
+      "p_push": 0.0,
+      "min_odds": 1.97
+     },
+     {
       "id": "20261125|I2|Cremonese|Avellino",
       "market": "1",
       "team": "Cremonese",
@@ -78166,16 +78176,6 @@
       "min_odds": 2.01
      },
      {
-      "id": "20261125|UCL|Shakhtar Donetsk|Fenerbahce",
-      "market": "h15",
-      "team": null,
-      "odds": 1.81,
-      "odds_source": "estimée",
-      "p_win": 0.522,
-      "p_push": 0.0,
-      "min_odds": 1.97
-     },
-     {
       "id": "20261125|I2|Mantova|Arezzo",
       "market": "h15",
       "team": null,
@@ -78189,7 +78189,7 @@
     "odds": 20.74,
     "p_win": 0.036,
     "p_not_lose": 0.036,
-    "ev": -0.391,
+    "ev": -0.39,
     "reliability": 1.049,
     "priority": 17,
     "level": "basse"
@@ -78211,6 +78211,16 @@
       "min_odds": 2.04
      },
      {
+      "id": "20261125|UCL|Shakhtar Donetsk|Fenerbahce",
+      "market": "h15",
+      "team": null,
+      "odds": 1.81,
+      "odds_source": "estimée",
+      "p_win": 0.523,
+      "p_push": 0.0,
+      "min_odds": 1.97
+     },
+     {
       "id": "20261125|I2|Cremonese|Avellino",
       "market": "1",
       "team": "Cremonese",
@@ -78229,16 +78239,6 @@
       "p_win": 0.513,
       "p_push": 0.0,
       "min_odds": 2.01
-     },
-     {
-      "id": "20261125|UCL|Shakhtar Donetsk|Fenerbahce",
-      "market": "h15",
-      "team": null,
-      "odds": 1.81,
-      "odds_source": "estimée",
-      "p_win": 0.522,
-      "p_push": 0.0,
-      "min_odds": 1.97
      },
      {
       "id": "20261125|I2|Mantova|Arezzo",
@@ -78274,7 +78274,7 @@
     "odds": 60.29,
     "p_win": 0.011,
     "p_not_lose": 0.011,
-    "ev": -0.46,
+    "ev": -0.459,
     "reliability": 1.04,
     "priority": 18,
     "level": "basse"
@@ -78306,6 +78306,16 @@
       "min_odds": 2.65
      },
      {
+      "id": "20261125|UCL|Shakhtar Donetsk|Fenerbahce",
+      "market": "1",
+      "team": "Shakhtar Donetsk",
+      "odds": 2.23,
+      "odds_source": "estimée",
+      "p_win": 0.424,
+      "p_push": 0.0,
+      "min_odds": 2.43
+     },
+     {
       "id": "20261125|I2|Padova|Sampdoria",
       "market": "1",
       "team": "Padova",
@@ -78324,16 +78334,6 @@
       "p_win": 0.417,
       "p_push": 0.0,
       "min_odds": 2.47
-     },
-     {
-      "id": "20261125|UCL|Shakhtar Donetsk|Fenerbahce",
-      "market": "1",
-      "team": "Shakhtar Donetsk",
-      "odds": 2.23,
-      "odds_source": "estimée",
-      "p_win": 0.423,
-      "p_push": 0.0,
-      "min_odds": 2.43
      },
      {
       "id": "20261125|I2|Pisa|Modena",
@@ -78379,7 +78379,7 @@
     "odds": 1172.81,
     "p_win": 0.001,
     "p_not_lose": 0.001,
-    "ev": -0.527,
+    "ev": -0.526,
     "reliability": 1.035,
     "priority": 19,
     "level": "basse"
@@ -80737,7 +80737,7 @@
  },
  "2026-11-26": {
   "frozen": false,
-  "created": "2026-11-19T11:59+00:00",
+  "created": "2026-11-19T13:16+00:00",
   "coupons": [],
   "odds_fixed": true
  },
