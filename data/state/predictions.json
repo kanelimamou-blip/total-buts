@@ -12078,7 +12078,7 @@
 "div": "UCL",
 "home": "Manchester City",
 "away": "Napoli",
-"fav_p": 0.781,
+"fav_p": 0.78,
 "fav_side": "1",
 "o15": 0.908,
 "o25": 0.764
@@ -12108,7 +12108,7 @@
 "div": "UCL",
 "home": "Feyenoord Rotterdam",
 "away": "FC Porto",
-"fav_p": 0.51,
+"fav_p": 0.509,
 "fav_side": "2",
 "o15": 0.856,
 "o25": 0.665
@@ -12372,5 +12372,45 @@
 "fav_side": "2",
 "o15": 0.765,
 "o25": 0.535
+},
+"20261205|SP2|Sabadell|Eibar": {
+"date": "2026-12-05",
+"div": "SP2",
+"home": "Sabadell",
+"away": "Eibar",
+"fav_p": 0.37,
+"fav_side": "2",
+"o15": 0.638,
+"o25": 0.393
+},
+"20261205|SP2|Tenerife|Eldense": {
+"date": "2026-12-05",
+"div": "SP2",
+"home": "Tenerife",
+"away": "Eldense",
+"fav_p": 0.464,
+"fav_side": "1",
+"o15": 0.595,
+"o25": 0.386
+},
+"20261207|SP2|Burgos|Cadiz": {
+"date": "2026-12-07",
+"div": "SP2",
+"home": "Burgos",
+"away": "Cadiz",
+"fav_p": 0.537,
+"fav_side": "1",
+"o15": 0.645,
+"o25": 0.458
+},
+"20261207|SP2|Cordoba|Las Palmas": {
+"date": "2026-12-07",
+"div": "SP2",
+"home": "Cordoba",
+"away": "Las Palmas",
+"fav_p": 0.429,
+"fav_side": "1",
+"o15": 0.729,
+"o25": 0.523
 }
 }
