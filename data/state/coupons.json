@@ -70207,7 +70207,7 @@
  },
  "2026-11-20": {
   "frozen": false,
-  "created": "2026-11-19T13:16+00:00",
+  "created": "2026-11-19T14:56+00:00",
   "coupons": [
    {
     "kind": "mix",
@@ -71274,7 +71274,7 @@
  },
  "2026-11-21": {
   "frozen": false,
-  "created": "2026-11-19T13:16+00:00",
+  "created": "2026-11-19T14:56+00:00",
   "coupons": [
    {
     "kind": "favoris",
@@ -73441,7 +73441,7 @@
  },
  "2026-11-22": {
   "frozen": false,
-  "created": "2026-11-19T13:16+00:00",
+  "created": "2026-11-19T14:56+00:00",
   "coupons": [
    {
     "kind": "mix",
@@ -75333,7 +75333,7 @@
  },
  "2026-11-23": {
   "frozen": false,
-  "created": "2026-11-19T13:16+00:00",
+  "created": "2026-11-19T14:56+00:00",
   "coupons": [
    {
     "kind": "dc",
@@ -75845,7 +75845,7 @@
  },
  "2026-11-24": {
   "frozen": false,
-  "created": "2026-11-19T13:16+00:00",
+  "created": "2026-11-19T14:56+00:00",
   "coupons": [
    {
     "kind": "favoris",
@@ -75974,7 +75974,7 @@
       "team": "FC Porto",
       "odds": 1.85,
       "odds_source": "estimée",
-      "p_win": 0.509,
+      "p_win": 0.51,
       "p_push": 0.0,
       "min_odds": 2.02
      },
@@ -75990,9 +75990,9 @@
      }
     ],
     "odds": 2.16,
-    "p_win": 0.335,
+    "p_win": 0.336,
     "p_not_lose": 0.427,
-    "ev": -0.199,
+    "ev": -0.197,
     "reliability": 1.096,
     "priority": 4,
     "level": "moyenne"
@@ -77099,6 +77099,16 @@
       "min_odds": 2.02
      },
      {
+      "id": "20261124|UCL|Feyenoord Rotterdam|FC Porto",
+      "market": "2",
+      "team": "FC Porto",
+      "odds": 1.85,
+      "odds_source": "estimée",
+      "p_win": 0.51,
+      "p_push": 0.0,
+      "min_odds": 2.02
+     },
+     {
       "id": "20261124|E1|Norwich|QPR",
       "market": "h15",
       "team": null,
@@ -77107,23 +77117,13 @@
       "p_win": 0.522,
       "p_push": 0.0,
       "min_odds": 1.97
-     },
-     {
-      "id": "20261124|E1|Middlesbrough|Swansea",
-      "market": "h15",
-      "team": null,
-      "odds": 1.8,
-      "odds_source": "estimée",
-      "p_win": 0.525,
-      "p_push": 0.0,
-      "min_odds": 1.96
      }
     ],
-    "odds": 11.33,
-    "p_win": 0.07,
-    "p_not_lose": 0.07,
-    "ev": -0.349,
-    "reliability": 1.045,
+    "odds": 11.65,
+    "p_win": 0.068,
+    "p_not_lose": 0.068,
+    "ev": -0.35,
+    "reliability": 1.066,
     "priority": 30,
     "level": "basse"
    },
@@ -77154,6 +77154,16 @@
       "min_odds": 2.02
      },
      {
+      "id": "20261124|UCL|Feyenoord Rotterdam|FC Porto",
+      "market": "2",
+      "team": "FC Porto",
+      "odds": 1.85,
+      "odds_source": "estimée",
+      "p_win": 0.51,
+      "p_push": 0.0,
+      "min_odds": 2.02
+     },
+     {
       "id": "20261124|E1|Norwich|QPR",
       "market": "h15",
       "team": null,
@@ -77172,22 +77182,12 @@
       "p_win": 0.525,
       "p_push": 0.0,
       "min_odds": 1.96
-     },
-     {
-      "id": "20261124|UCL|Feyenoord Rotterdam|FC Porto",
-      "market": "2",
-      "team": "FC Porto",
-      "odds": 1.85,
-      "odds_source": "estimée",
-      "p_win": 0.509,
-      "p_push": 0.0,
-      "min_odds": 2.02
      }
     ],
     "odds": 20.96,
     "p_win": 0.036,
     "p_not_lose": 0.036,
-    "ev": -0.393,
+    "ev": -0.392,
     "reliability": 1.056,
     "priority": 31,
     "level": "basse"
@@ -77219,6 +77219,16 @@
       "min_odds": 2.02
      },
      {
+      "id": "20261124|UCL|Feyenoord Rotterdam|FC Porto",
+      "market": "2",
+      "team": "FC Porto",
+      "odds": 1.85,
+      "odds_source": "estimée",
+      "p_win": 0.51,
+      "p_push": 0.0,
+      "min_odds": 2.02
+     },
+     {
       "id": "20261124|E1|Norwich|QPR",
       "market": "h15",
       "team": null,
@@ -77237,16 +77247,6 @@
       "p_win": 0.525,
       "p_push": 0.0,
       "min_odds": 1.96
-     },
-     {
-      "id": "20261124|UCL|Feyenoord Rotterdam|FC Porto",
-      "market": "2",
-      "team": "FC Porto",
-      "odds": 1.85,
-      "odds_source": "estimée",
-      "p_win": 0.509,
-      "p_push": 0.0,
-      "min_odds": 2.02
      },
      {
       "id": "20261124|I2|Benevento|Empoli",
@@ -77272,7 +77272,7 @@
     "odds": 68.67,
     "p_win": 0.01,
     "p_not_lose": 0.01,
-    "ev": -0.464,
+    "ev": -0.463,
     "reliability": 1.05,
     "priority": 32,
     "level": "basse"
@@ -77387,7 +77387,7 @@
  },
  "2026-11-25": {
   "frozen": false,
-  "created": "2026-11-19T13:16+00:00",
+  "created": "2026-11-19T14:56+00:00",
   "coupons": [
    {
     "kind": "favoris",
@@ -77466,15 +77466,15 @@
       "team": null,
       "odds": 1.53,
       "odds_source": "estimée",
-      "p_win": 0.616,
+      "p_win": 0.617,
       "p_push": 0.0,
       "min_odds": 1.67
      }
     ],
     "odds": 2.22,
     "p_win": 0.226,
-    "p_not_lose": 0.432,
-    "ev": -0.221,
+    "p_not_lose": 0.433,
+    "ev": -0.22,
     "reliability": 1.058,
     "priority": 2,
     "level": "moyenne"
@@ -77509,17 +77509,17 @@
       "id": "20261125|UCL|Sporting CP|Manchester United",
       "market": "1X",
       "team": null,
-      "odds": 1.41,
+      "odds": 1.4,
       "odds_source": "estimée",
-      "p_win": 0.671,
+      "p_win": 0.672,
       "p_push": 0.0,
       "min_odds": 1.53
      }
     ],
-    "odds": 2.15,
+    "odds": 2.13,
     "p_win": 0.316,
-    "p_not_lose": 0.413,
-    "ev": -0.234,
+    "p_not_lose": 0.414,
+    "ev": -0.237,
     "reliability": 1.058,
     "priority": 3,
     "level": "moyenne"
@@ -77536,7 +77536,7 @@
       "team": null,
       "odds": 1.12,
       "odds_source": "estimée",
-      "p_win": 0.845,
+      "p_win": 0.846,
       "p_push": 0.0,
       "min_odds": 1.22
      },
@@ -77552,9 +77552,9 @@
      }
     ],
     "odds": 2.06,
-    "p_win": 0.433,
-    "p_not_lose": 0.433,
-    "ev": -0.199,
+    "p_win": 0.434,
+    "p_not_lose": 0.434,
+    "ev": -0.198,
     "reliability": 1.1,
     "priority": 4,
     "level": "moyenne"
@@ -77998,7 +77998,7 @@
       "odds_source": "estimée",
       "p_win": 0.694,
       "p_push": 0.0,
-      "min_odds": 1.48
+      "min_odds": 1.49
      },
      {
       "id": "20261125|UCL|Slavia Prague|Villarreal",
@@ -80737,7 +80737,7 @@
  },
  "2026-11-26": {
   "frozen": false,
-  "created": "2026-11-19T13:16+00:00",
+  "created": "2026-11-19T14:56+00:00",
   "coupons": [],
   "odds_fixed": true
  },
