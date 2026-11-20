@@ -121,8 +121,8 @@ summary{font-weight:800;cursor:pointer;min-height:32px}
 <script>
 {
 const START=new Date(2026,10,20),END=new Date(2027,5,30);
-const DEF={start:0,cai0:0,q1:0,q2:0,we:0,tk:0,sco:0,tr:0,fact:0,mut:0,veh:0,loy:0,sal:0,om:0,prime:0,divF:0,divM:0,plaf:500000,perso:200000};
-const LAB={start:'Solde de départ au 20 nov (au matin)',cai0:'Déjà mis de côté pour la mutuelle',q1:'Quotidien famille (lun-ven)',q2:'Quotidien perso (lun-ven)',we:'Quotidien week-end (par jour)',tk:'Ticket scolarité (lun, mar, jeu, ven)',sco:'Scolarité (le 7)',tr:'Transport enfants (le 13)',fact:'Factures (le 15)',mut:'Mutuelle (avant le 20)',veh:'Véhicule (le 20)',loy:'Loyer net agence (le 10)',sal:'Salaire net',om:'Orange Money',prime:'Prime de décembre',divF:'Dividende février',divM:'Dividende mai',plaf:'Plafond découvert banque',perso:'Plafond personnel'};
+const DEF={pre:4000,start:0,cai0:0,q1:0,q2:0,we:0,tk:0,sco:0,tr:0,fact:0,mut:0,veh:0,loy:0,sal:0,om:0,prime:0,divF:0,divM:0,plaf:500000,perso:200000};
+const LAB={pre:'Quotidien déjà payé par jour (jusqu\'au 30 nov)',start:'Solde de départ au 20 nov (au matin)',cai0:'Déjà mis de côté pour la mutuelle',q1:'Quotidien famille (lun-ven)',q2:'Quotidien perso (lun-ven)',we:'Quotidien week-end (par jour)',tk:'Ticket scolarité (lun, mar, jeu, ven)',sco:'Scolarité (le 7)',tr:'Transport enfants (le 13)',fact:'Factures (le 15)',mut:'Mutuelle (avant le 20)',veh:'Véhicule (le 20)',loy:'Loyer net agence (le 10)',sal:'Salaire net',om:'Orange Money',prime:'Prime de décembre',divF:'Dividende février',divM:'Dividende mai',plaf:'Plafond découvert banque',perso:'Plafond personnel'};
 let st={s:{...DEF},v:{},r:{}};
 try{const x=JSON.parse(localStorage.getItem('treso-v1')||'null');if(x&&x.s)st={s:{...DEF,...x.s},v:x.v||{},r:x.r||{}}}catch(e){}
 try{if(location.hash.startsWith('#cfg=')){const b=location.hash.slice(5).replace(/-/g,'+').replace(/_/g,'/');const c=JSON.parse(decodeURIComponent(escape(atob(b))));st.s={...DEF,...st.s,...c};localStorage.setItem('treso-v1',JSON.stringify(st));history.replaceState(null,'',location.pathname)}}catch(e){}
@@ -136,6 +136,7 @@ function plan(d,s){
   const y=d.getFullYear(),m=d.getMonth(),dd=d.getDate(),wd=d.getDay(),last=new Date(y,m+1,0).getDate(),L=[];
   const nov=y===2026&&m===10,dec=y===2026&&m===11;
   if(wd===0||wd===6)L.push({k:'quot',l:'Quotidien week-end',a:-s.we});else L.push({k:'quot',l:'Quotidien famille + perso',a:-(s.q1+s.q2)});
+  if(nov&&s.pre){L[0].a=Math.min(0,L[0].a+s.pre);L[0].l+=` (${(s.pre/1000).toLocaleString('fr-FR')}k déjà payés)`}
   if([1,2,4,5].includes(wd))L.push({k:'tk',l:'Ticket scolarité',a:-s.tk});
   if(!nov){
     if(dd===7)L.push({k:'sco',l:'Scolarité',a:-s.sco});
