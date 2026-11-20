@@ -104,7 +104,7 @@ summary{font-weight:800;cursor:pointer;min-height:32px}
         <input id="relIn" type="number" inputmode="numeric" placeholder="ex. 450000">
         <button id="relClear">Effacer</button>
       </div>
-      <p class="note">Coche ce qui est fait et corrige le montant si besoin. Le solde réel, s'il est saisi, remplace le calcul à partir de ce jour.</p>
+      <p class="note">Coche ce qui est fait et corrige le montant si besoin. Avance : si tu donnes plusieurs jours d'un coup (quotidien ou bloc de tickets), tape le montant total donné ; le surplus couvre automatiquement les jours suivants. Le solde réel, s'il est saisi, remplace le calcul à partir de ce jour.</p>
     </section>
     <section class="card">
       <h2>Rétropédalage</h2>
@@ -154,7 +154,7 @@ function plan(d,s){
 function due20(d){const t=new Date(d.getFullYear(),d.getMonth(),20);if(d.getDate()>=20)t.setMonth(t.getMonth()+1);return t}
 function mondaysBefore(d,t){let n=0;for(const x=new Date(d);x<t;x.setDate(x.getDate()+1))if(x.getDay()===1)n++;return n}
 function sim(o){
-  const s=st.s,out=[];let bal=o.bal,cai=o.cai;
+  const s=st.s,out=[];let bal=o.bal,cai=o.cai;const cr={quot:0,tk:0,...(o.cr||{})};
   for(let i=o.from;i<days.length;i++){
     const d=days[i],id0=iso(d),items=plan(d,s);
     if(o.q!=null&&d.getDay()>0&&d.getDay()<6)items[0].a=-o.q;
@@ -165,13 +165,15 @@ function sim(o){
     let nOk=0,nTot=0;
     for(const it of items){
       const v=o.real&&st.v[id0+':'+it.k];it.ok=!!(v&&v.ok);
+      if(it.k in cr){const need=Math.abs(it.a),cov=Math.min(cr[it.k],need);cr[it.k]-=cov;it.cov=cov;it.a=-(need-cov)}
       it.eff=it.ok?Math.sign(it.a||(it.k==='veh'||it.k==='loy'||it.k==='om'||it.k==='sal'?1:-1))*Math.abs(v.a):it.a;
+      if(it.k in cr){if(it.ok)cr[it.k]+=Math.max(0,Math.abs(it.eff)-Math.abs(it.a));it.cr=cr[it.k]}
       if(it.a!==0||it.ok){nTot++;if(it.ok)nOk++}
       if(it.env)cai+=-it.eff;
       else{bal+=it.eff;if(it.k==='dep')cai=Math.max(0,cai+it.eff)}
     }
     const rel=o.real?st.r[id0]:null;if(rel!=null&&rel!=='')bal=+rel;
-    out.push({d,items,bal,cai,nOk,nTot,rel});
+    out.push({d,items,bal,cai,nOk,nTot,rel,cr:{...cr}});
   }
   return out;
 }
@@ -182,7 +184,7 @@ sel=tIdx;
 function maxQ(lim){
   const b=res[tIdx];let lo=0,hi=60000,best=null;
   if(tIdx>=days.length-1)return null;
-  for(let q=hi;q>=lo;q-=500){const r=sim({from:tIdx+1,bal:b.bal,cai:b.cai,q,real:false});if(Math.min(...r.map(x=>x.bal))>=-lim){best=q;break}}
+  for(let q=hi;q>=lo;q-=500){const r=sim({from:tIdx+1,bal:b.bal,cai:b.cai,cr:b.cr,q,real:false});if(Math.min(...r.map(x=>x.bal))>=-lim){best=q;break}}
   return best;
 }
 function draw(){
@@ -228,7 +230,7 @@ function render(){
   document.getElementById('rows').innerHTML=r.items.map(it=>{
     const id=iso(d)+':'+it.k,v=st.v[id],inc=it.a>0||['veh','loy','om','sal','prime','divF','divM'].includes(it.k);
     const amt=v&&v.ok?v.a:Math.abs(it.a);
-    return `<div class="row${it.ok?' done':''}${inc?' in':''}${it.env?' env':''}"><input class="ck" type="checkbox" id="c-${it.k}" data-k="${it.k}" data-p="${Math.abs(it.a)}" ${it.ok?'checked':''} aria-label="Fait"><div><label for="c-${it.k}">${inc?'+ ':''}${it.l}</label><small>Prévu ${F(Math.abs(it.a))}</small></div><input type="number" inputmode="numeric" id="a-${it.k}" data-k="${it.k}" value="${amt}" aria-label="Montant réel"></div>`}).join('');
+    return `<div class="row${it.ok?' done':''}${inc?' in':''}${it.env?' env':''}"><input class="ck" type="checkbox" id="c-${it.k}" data-k="${it.k}" data-p="${Math.abs(it.a)}" ${it.ok?'checked':''} aria-label="Fait"><div><label for="c-${it.k}">${inc?'+ ':''}${it.l}</label><small>Prévu ${F(Math.abs(it.a))}${it.cov?` · ${F(it.cov)} déjà donné à l'avance`:''}${it.cr?` · <b>avance restante ${F(it.cr)}</b>`:''}</small></div><input type="number" inputmode="numeric" id="a-${it.k}" data-k="${it.k}" value="${amt}" aria-label="Montant réel"></div>`}).join('');
   document.getElementById('dayBal').innerHTML=`Solde ce soir : <b class="${cls(r.bal)}">${F(r.bal)}</b>`;
   document.getElementById('relIn').value=st.r[iso(d)]??'';
   const q1=maxQ(s.plaf),q2=maxQ(s.perso),q3=maxQ(0),cur=s.q1+s.q2;
