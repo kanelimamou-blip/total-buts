@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Ma trésorerie</title>
+<meta name="theme-color" content="#0a5cff">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon-192.png">
+<link rel="apple-touch-icon" href="icon-192.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+/* VOICE work: un outil d'argent au quotidien, net et calme
+   IDEA une ligne de métro : chaque jour est une station, les échéances sont les correspondances
+   PICTURE la courbe du solde du 21 nov au 30 juin, plafond de découvert en rouge, aujourd'hui marqué
+   COLOUR blanc, encre noire, bleu ligne #0a5cff, rouge #e6261f découvert, ambre #ffb400 mutuelle, vert #00a05a ok
+   TYPE Figtree 800 titres + Figtree texte
+   LAYOUT bandeau chiffres + courbe en haut, puis journée à valider à gauche et rétropédalage à droite ; tout empilé sur téléphone */
+:root{color-scheme:light dark;--bg:light-dark(#ffffff,#0e1116);--ink:light-dark(#111418,#eef1f5);--mute:light-dark(#5b6470,#9aa4b1);--line:light-dark(#e3e7ed,#262c36);--panel:light-dark(#f5f7fa,#161b23);--blue:#0a5cff;--red:#e6261f;--amber:#ffb400;--green:#00a05a;--blueSoft:light-dark(#e7efff,#13213d)}
+:root[data-theme=light]{color-scheme:light}:root[data-theme=dark]{color-scheme:dark}
+*{box-sizing:border-box;min-width:0}
+html,body{margin:0}
+body{background:var(--bg);color:var(--ink);font:16px/1.5 Figtree,system-ui,sans-serif;overflow-x:clip}
+.wrap{max-width:1240px;margin:0 auto;padding:20px max(4vw,16px) 48px}
+h1{font-size:clamp(30px,5vw,44px);line-height:1.05;letter-spacing:-.02em;margin:0;font-weight:800}
+h2{font-size:22px;margin:0 0 12px;font-weight:800;letter-spacing:-.01em}
+.top{display:flex;flex-wrap:wrap;align-items:end;justify-content:space-between;gap:12px;margin-bottom:16px}
+.sub{color:var(--mute);margin:4px 0 0}
+.sync{font-size:13px;color:var(--mute)}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(10.5em,1fr));gap:10px;margin-bottom:14px}
+.kpi{background:var(--panel);border-radius:12px;padding:12px 14px}
+.kpi b{display:block;font-size:clamp(22px,3.4vw,30px);font-weight:800;white-space:nowrap;font-variant-numeric:tabular-nums}
+.kpi span{font-size:13px;color:var(--mute)}
+.neg{color:var(--red)}.pos{color:var(--green)}.warn{color:#c98a00}
+.fig{position:relative;height:300px;background:var(--panel);border-radius:14px;margin-bottom:22px}
+.fig>svg{position:absolute;inset:0;width:100%;height:100%}
+svg text{font:13px Figtree,sans-serif;fill:var(--mute);paint-order:stroke;stroke:var(--panel);stroke-width:4px}
+.grid2{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:22px;align-items:start}
+@media(max-width:860px){.grid2{grid-template-columns:minmax(0,1fr)}}
+.card{border:1px solid var(--line);border-radius:14px;padding:16px}
+.nav{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:10px}
+.nav .d{font-weight:800;font-size:19px;flex:1 1 auto}
+button{font:inherit;font-weight:600;min-height:44px;padding:0 14px;border-radius:10px;border:1px solid var(--line);background:var(--bg);color:var(--ink);cursor:pointer}
+button:hover{border-color:var(--blue)}
+button:focus-visible,input:focus-visible{outline:3px solid var(--blue);outline-offset:2px}
+button.pri{background:var(--blue);border-color:var(--blue);color:#fff}
+.strip{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:4px;margin-bottom:14px}
+.st{border-radius:8px;padding:6px 2px;text-align:center;font-size:13px;background:var(--panel);border:2px solid transparent;cursor:pointer;min-height:44px}
+.st.sel{border-color:var(--blue)}
+.st i{display:block;width:8px;height:8px;border-radius:50%;margin:3px auto 0;background:var(--line)}
+.st i.full{background:var(--green)}.st i.part{background:var(--amber)}
+.rows{display:grid;gap:6px}
+.row{display:grid;grid-template-columns:44px minmax(0,1fr) 7.5em;gap:8px;align-items:center;padding:6px 8px;border-radius:10px;background:var(--panel)}
+.row.done{background:color-mix(in srgb,var(--green) 12%,var(--panel))}
+.row label{display:block;font-weight:600;line-height:1.25}
+.row small{display:block;color:var(--mute);font-size:13px}
+.row input[type=number]{width:100%;font:16px Figtree,sans-serif;padding:9px 8px;border-radius:8px;border:1px solid var(--line);background:var(--bg);color:var(--ink);text-align:right}
+.ck{width:28px;height:28px;accent-color:var(--green);margin:0 auto;display:block}
+.in label{color:var(--green)}.env label{color:#b07800}
+.foot{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;margin-top:12px}
+.rel{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:12px;padding-top:12px;border-top:1px solid var(--line)}
+.rel input{width:9em;font:16px Figtree,sans-serif;padding:9px 8px;border-radius:8px;border:1px solid var(--line);background:var(--bg);color:var(--ink);text-align:right}
+.big{font-size:clamp(24px,4vw,34px);font-weight:800;font-variant-numeric:tabular-nums;white-space:nowrap}
+.meter{height:12px;background:var(--panel);border-radius:6px;overflow:hidden;margin:6px 0}
+.meter div{height:100%;background:var(--amber)}
+table{width:100%;border-collapse:collapse;font-size:15px}
+td,th{padding:8px 4px;border-bottom:1px solid var(--line);text-align:left}
+td.n,th.n{text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}
+.sec{margin-top:18px}
+details{margin-top:22px;border:1px solid var(--line);border-radius:14px;padding:12px 16px}
+summary{font-weight:800;cursor:pointer;min-height:32px}
+.set{display:grid;grid-template-columns:repeat(auto-fit,minmax(15em,1fr));gap:10px 16px;margin-top:12px}
+.set label{font-size:14px;color:var(--mute);display:block}
+.set input{width:100%;font:16px Figtree,sans-serif;padding:9px 8px;border-radius:8px;border:1px solid var(--line);background:var(--bg);color:var(--ink);text-align:right}
+.note{font-size:13px;color:var(--mute)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="top">
+    <div><h1>Ma trésorerie</h1><p class="sub" id="headline">Du 21 novembre 2026 au 30 juin 2027</p></div>
+    <div class="sync" id="sync">Données gardées sur ce téléphone</div>
+  </div>
+  <div class="kpis" id="kpis"></div>
+  <div class="fig" id="fig"><svg id="chart" role="img" aria-label="Évolution du solde prévu"></svg></div>
+  <div class="grid2">
+    <section class="card">
+      <div class="nav">
+        <button id="prev" aria-label="Jour précédent">‹</button>
+        <span class="d" id="dayTitle"></span>
+        <button id="next" aria-label="Jour suivant">›</button>
+        <button id="today">Aujourd'hui</button>
+      </div>
+      <div class="strip" id="strip"></div>
+      <div class="rows" id="rows"></div>
+      <div class="foot">
+        <span id="dayBal"></span>
+        <button class="pri" id="valAll">Tout valider</button>
+      </div>
+      <div class="rel">
+        <label for="relIn">Solde réel constaté ce soir</label>
+        <input id="relIn" type="number" inputmode="numeric" placeholder="ex. 450000">
+        <button id="relClear">Effacer</button>
+      </div>
+      <p class="note">Coche ce qui est fait et corrige le montant si besoin. Le solde réel, s'il est saisi, remplace le calcul à partir de ce jour.</p>
+    </section>
+    <section class="card">
+      <h2>Rétropédalage</h2>
+      <div id="retro"></div>
+      <div class="sec"><h2>Caisse mutuelle</h2><div id="mut"></div></div>
+      <div class="sec"><h2>Prochaines échéances</h2><div class="scroll"><table id="next5"></table></div></div>
+    </section>
+  </div>
+  <details id="setBox"><summary>Réglages</summary><div class="set" id="set"></div>
+    <p class="note">Les dates suivent ton cycle : scolarité le 7, loyer le 10 (dès janvier), transport le 13 (dès janvier), factures le 15, véhicule et mutuelle le 20, Orange Money 5 jours avant la fin du mois, salaire vers le 27 (le 17 en décembre, le 25 en février), prime le 30 décembre, dividendes le 28 février et le 31 mai.</p>
+    <div class="foot"><button id="copyBk">Copier ma sauvegarde</button><button id="reset">Tout remettre à zéro</button></div><div class="rel"><label for="bkIn">Restaurer une sauvegarde</label><input id="bkIn" placeholder="coller ici" style="width:14em;text-align:left"><button id="bkGo">Restaurer</button></div><p class="note" id="bkMsg"></p>
+  </details>
+</div>
+<script>
+{
+const START=new Date(2026,10,21),END=new Date(2027,5,30);
+const DEF={start:0,cai0:0,q1:0,q2:0,we:0,tk:0,sco:0,tr:0,fact:0,mut:0,veh:0,loy:0,sal:0,om:0,prime:0,divF:0,divM:0,plaf:500000,perso:200000};
+const LAB={start:'Solde de départ au 21 nov',cai0:'Déjà mis de côté pour la mutuelle',q1:'Quotidien famille (lun-ven)',q2:'Quotidien perso (lun-ven)',we:'Quotidien week-end (par jour)',tk:'Ticket scolarité (lun, mar, jeu, ven)',sco:'Scolarité (le 7)',tr:'Transport enfants (le 13)',fact:'Factures (le 15)',mut:'Mutuelle (avant le 20)',veh:'Véhicule (le 20)',loy:'Loyer net agence (le 10)',sal:'Salaire net',om:'Orange Money',prime:'Prime de décembre',divF:'Dividende février',divM:'Dividende mai',plaf:'Plafond découvert banque',perso:'Plafond personnel'};
+let st={s:{...DEF},v:{},r:{}};
+try{const x=JSON.parse(localStorage.getItem('treso-v1')||'null');if(x&&x.s)st={s:{...DEF,...x.s},v:x.v||{},r:x.r||{}}}catch(e){}
+try{if(location.hash.startsWith('#cfg=')){const b=location.hash.slice(5).replace(/-/g,'+').replace(/_/g,'/');const c=JSON.parse(decodeURIComponent(escape(atob(b))));st.s={...DEF,...st.s,...c};localStorage.setItem('treso-v1',JSON.stringify(st));history.replaceState(null,'',location.pathname)}}catch(e){}
+const iso=d=>d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
+const days=[];for(let d=new Date(START);d<=END;d.setDate(d.getDate()+1))days.push(new Date(d));
+const JN=['dim','lun','mar','mer','jeu','ven','sam'],MN=['janv.','févr.','mars','avr.','mai','juin','juil.','août','sept.','oct.','nov.','déc.'];
+const F=n=>Math.round(n).toLocaleString('fr-FR')+' F';
+const K=n=>(Math.round(n/1000)).toLocaleString('fr-FR')+'k';
+const longD=d=>JN[d.getDay()]+' '+d.getDate()+' '+MN[d.getMonth()];
+function plan(d,s){
+  const y=d.getFullYear(),m=d.getMonth(),dd=d.getDate(),wd=d.getDay(),last=new Date(y,m+1,0).getDate(),L=[];
+  const nov=y===2026&&m===10,dec=y===2026&&m===11;
+  if(wd===0||wd===6)L.push({k:'quot',l:'Quotidien week-end',a:-s.we});else L.push({k:'quot',l:'Quotidien famille + perso',a:-(s.q1+s.q2)});
+  if([1,2,4,5].includes(wd))L.push({k:'tk',l:'Ticket scolarité',a:-s.tk});
+  if(!nov){
+    if(dd===7)L.push({k:'sco',l:'Scolarité',a:-s.sco});
+    if(dd===10&&!dec)L.push({k:'loy',l:'Loyer (agence)',a:s.loy});
+    if(dd===13&&!dec)L.push({k:'tr',l:'Transport enfants',a:-s.tr});
+    if(dd===15)L.push({k:'fact',l:'Factures',a:-s.fact});
+    if(dd===20){L.push({k:'veh',l:'Véhicule (mois précédent)',a:s.veh});L.push({k:'dep',l:'Dépôt mutuelle',a:-s.mut});}
+  }
+  if(dd===last-5)L.push({k:'om',l:'Orange Money (pour le mois suivant)',a:s.om});
+  if(dd===(dec?17:m===1?25:27))L.push({k:'sal',l:'Salaire (pour le mois suivant)',a:s.sal});
+  if(dec&&dd===30)L.push({k:'prime',l:'Prime de décembre',a:s.prime});
+  if(y===2027&&m===1&&dd===28)L.push({k:'divF',l:'Dividende février',a:s.divF});
+  if(y===2027&&m===4&&dd===31)L.push({k:'divM',l:'Dividende mai',a:s.divM});
+  return L;
+}
+function due20(d){const t=new Date(d.getFullYear(),d.getMonth(),20);if(d.getDate()>=20)t.setMonth(t.getMonth()+1);return t}
+function mondaysBefore(d,t){let n=0;for(const x=new Date(d);x<t;x.setDate(x.getDate()+1))if(x.getDay()===1)n++;return n}
+function sim(o){
+  const s=st.s,out=[];let bal=o.bal,cai=o.cai;
+  for(let i=o.from;i<days.length;i++){
+    const d=days[i],id0=iso(d),items=plan(d,s);
+    if(o.q!=null&&d.getDay()>0&&d.getDay()<6)items[0].a=-o.q;
+    let envP=0;
+    if(d.getDay()===1&&d.getDate()!==20){const t=due20(d),n=mondaysBefore(d,t);envP=n?Math.ceil(Math.max(0,s.mut-cai)/n/1000)*1000:0}
+    items.push({k:'env',l:'Envoi caisse mutuelle',a:-envP,env:true});
+    items.push({k:'aut',l:'Autre dépense imprévue',a:0});
+    let nOk=0,nTot=0;
+    for(const it of items){
+      const v=o.real&&st.v[id0+':'+it.k];it.ok=!!(v&&v.ok);
+      it.eff=it.ok?Math.sign(it.a||(it.k==='veh'||it.k==='loy'||it.k==='om'||it.k==='sal'?1:-1))*Math.abs(v.a):it.a;
+      if(it.a!==0||it.ok){nTot++;if(it.ok)nOk++}
+      if(it.env)cai+=-it.eff;
+      else{bal+=it.eff;if(it.k==='dep')cai=Math.max(0,cai+it.eff)}
+    }
+    const rel=o.real?st.r[id0]:null;if(rel!=null&&rel!=='')bal=+rel;
+    out.push({d,items,bal,cai,nOk,nTot,rel});
+  }
+  return out;
+}
+let res=[],sel=0;
+const now=new Date(),todayD=new Date(now.getFullYear(),now.getMonth(),now.getDate());
+const tIdx=Math.max(0,Math.min(days.length-1,Math.round((todayD-START)/864e5)));
+sel=tIdx;
+function maxQ(lim){
+  const b=res[tIdx];let lo=0,hi=60000,best=null;
+  if(tIdx>=days.length-1)return null;
+  for(let q=hi;q>=lo;q-=500){const r=sim({from:tIdx+1,bal:b.bal,cai:b.cai,q,real:false});if(Math.min(...r.map(x=>x.bal))>=-lim){best=q;break}}
+  return best;
+}
+function draw(){
+  const s=document.getElementById('chart'),W=s.clientWidth,H=s.clientHeight;if(!W||!res.length)return;
+  const P={l:W<520?8:52,r:14,t:18,b:28},vals=res.map(x=>x.bal),mn=Math.min(...vals,-st.s.plaf*1.1),mx=Math.max(...vals,0)*1.05;
+  const X=i=>P.l+i*(W-P.l-P.r)/(res.length-1),Y=v=>P.t+(mx-v)*(H-P.t-P.b)/(mx-mn);
+  let path=res.map((x,i)=>(i?'L':'M')+X(i).toFixed(1)+' '+Y(x.bal).toFixed(1)).join('');
+  const area=path+`L${X(res.length-1)} ${Y(0)}L${X(0)} ${Y(0)}Z`;
+  let g='';
+  for(let v=Math.ceil(mn/500000)*500000;v<=mx;v+=500000){if(W>=520)g+=`<text x="${P.l-6}" y="${Y(v)+4}" text-anchor="end">${K(v)}</text>`;g+=`<line x1="${P.l}" x2="${W-P.r}" y1="${Y(v)}" y2="${Y(v)}" stroke="var(--line)"/>`}
+  let mt='';res.forEach((x,i)=>{if(x.d.getDate()===1&&(W>=520||x.d.getMonth()%2===0))mt+=`<text x="${X(i)}" y="${H-8}" text-anchor="middle">${MN[x.d.getMonth()]}</text>`});
+  const lo=res.reduce((a,x,i)=>x.bal<res[a].bal?i:a,0),lx=X(lo),ly=Y(res[lo].bal);
+  s.innerHTML=`<defs><clipPath id="cn"><rect x="0" y="${Y(0)}" width="${W}" height="${H}"/></clipPath><clipPath id="cp"><rect x="0" y="0" width="${W}" height="${Y(0)}"/></clipPath></defs>${g}
+  <path d="${area}" fill="var(--blue)" opacity=".14" clip-path="url(#cp)"/><path d="${area}" fill="var(--red)" opacity=".16" clip-path="url(#cn)"/>
+  <line x1="${P.l}" x2="${W-P.r}" y1="${Y(0)}" y2="${Y(0)}" stroke="var(--ink)" stroke-width="1.5"/>
+  <line x1="${P.l}" x2="${W-P.r}" y1="${Y(-st.s.plaf)}" y2="${Y(-st.s.plaf)}" stroke="var(--red)" stroke-width="2" stroke-dasharray="6 5"/>
+  <text x="${P.l+6}" y="${Y(-st.s.plaf)+16}" text-anchor="start" style="fill:var(--red)">plafond −${K(st.s.plaf)}</text>
+  <path d="${path}" fill="none" stroke="var(--blue)" stroke-width="3" stroke-linejoin="round" clip-path="url(#cp)"/>
+  <path d="${path}" fill="none" stroke="var(--red)" stroke-width="3" stroke-linejoin="round" clip-path="url(#cn)"/>
+  <line x1="${X(tIdx)}" x2="${X(tIdx)}" y1="${P.t}" y2="${H-P.b}" stroke="var(--ink)" stroke-dasharray="2 4"/>
+  <text x="${X(tIdx)+6}" y="${P.t+10}">aujourd'hui</text>
+  ${sel!==tIdx?`<circle cx="${X(sel)}" cy="${Y(res[sel].bal)}" r="6" fill="var(--bg)" stroke="var(--blue)" stroke-width="3"/>`:''}
+  <circle cx="${lx}" cy="${ly}" r="5" fill="var(--red)"/>
+  <text x="${lx+(lx>W/2?-10:10)}" y="${Math.min(ly+20,H-P.b-6)}" text-anchor="${lx>W/2?'end':'start'}" style="fill:var(--ink)">plus bas ${K(res[lo].bal)} le ${res[lo].d.getDate()} ${MN[res[lo].d.getMonth()]}</text>${mt}`;
+}
+const fig=document.getElementById('fig');const ro=new ResizeObserver(draw);ro.observe(fig);
+function render(){
+  const s=st.s;res=sim({from:0,bal:s.start,cai:s.cai0,real:true});
+  const b=res[tIdx],fut=res.slice(tIdx),lo=fut.reduce((a,x)=>x.bal<a.bal?x:a,fut[0]);
+  const over=fut.filter(x=>x.bal<-s.plaf).length,cls=v=>v<-s.plaf?'neg':v<0?'warn':'pos';
+  document.getElementById('kpis').innerHTML=[
+    [K(b.bal),'Solde prévu ce soir',cls(b.bal)],
+    [K(b.bal-b.cai),'Disponible hors mutuelle',cls(b.bal-b.cai)],
+    [K(lo.bal),'Point le plus bas, le '+lo.d.getDate()+' '+MN[lo.d.getMonth()],cls(lo.bal)],
+    [over+' j','Au-delà du plafond d\'ici fin juin',over?'neg':'pos']
+  ].map(k=>`<div class="kpi"><b class="${k[2]}">${k[0]}</b><span>${k[1]}</span></div>`).join('');
+  document.getElementById('headline').textContent=over?`Au rythme actuel, le plafond est dépassé ${over} jours d'ici fin juin`:'Au rythme actuel, tu restes sous le plafond jusqu\'au 30 juin';
+  const r=res[sel],d=r.d;
+  document.getElementById('dayTitle').textContent=longD(d)+(sel===tIdx?' (aujourd\'hui)':'');
+  let sh='';const w0=Math.max(0,Math.min(days.length-7,sel-3));
+  for(let i=w0;i<w0+7;i++){const x=res[i];sh+=`<button class="st${i===sel?' sel':''}" data-i="${i}">${JN[x.d.getDay()]} ${x.d.getDate()}<i class="${x.nOk&&x.nOk>=x.nTot?'full':x.nOk?'part':''}"></i></button>`}
+  document.getElementById('strip').innerHTML=sh;
+  document.getElementById('rows').innerHTML=r.items.map(it=>{
+    const id=iso(d)+':'+it.k,v=st.v[id],inc=it.a>0||['veh','loy','om','sal','prime','divF','divM'].includes(it.k);
+    const amt=v&&v.ok?v.a:Math.abs(it.a);
+    return `<div class="row${it.ok?' done':''}${inc?' in':''}${it.env?' env':''}"><input class="ck" type="checkbox" id="c-${it.k}" data-k="${it.k}" data-p="${Math.abs(it.a)}" ${it.ok?'checked':''} aria-label="Fait"><div><label for="c-${it.k}">${inc?'+ ':''}${it.l}</label><small>Prévu ${F(Math.abs(it.a))}</small></div><input type="number" inputmode="numeric" id="a-${it.k}" data-k="${it.k}" value="${amt}" aria-label="Montant réel"></div>`}).join('');
+  document.getElementById('dayBal').innerHTML=`Solde ce soir : <b class="${cls(r.bal)}">${F(r.bal)}</b>`;
+  document.getElementById('relIn').value=st.r[iso(d)]??'';
+  const q1=maxQ(s.plaf),q2=maxQ(s.perso),q3=maxQ(0),cur=s.q1+s.q2;
+  const line=(t,q)=>`<tr><td>${t}</td><td class="n">${q==null?'impossible':F(q)}</td></tr>`;
+  document.getElementById('retro').innerHTML=`<p style="margin:0 0 6px">Quotidien maximum en semaine (famille + perso), à partir de demain, pour tenir jusqu'au 30 juin :</p>
+  <div class="scroll"><table><tr><th>Objectif</th><th class="n">Par jour</th></tr>${line('Rester sous le plafond ('+K(s.plaf)+')',q1)}${line('Rester sous '+K(s.perso)+' de découvert',q2)}${line('Ne jamais être à découvert',q3)}<tr><td>Ton rythme actuel</td><td class="n"><b>${F(cur)}</b></td></tr></table></div>
+  <p class="note">${q1!=null&&cur>q1?`Il faut réduire de ${F(cur-q1)} par jour en semaine pour éviter le dépassement.`:'Ton rythme actuel tient sous le plafond.'} Week-end compté à ${F(s.we)}, tickets en plus.</p>`;
+  const t=due20(days[tIdx]),need=Math.max(0,s.mut-b.cai),nm=mondaysBefore(new Date(days[tIdx].getTime()+864e5),t),dl=Math.round((t-days[tIdx])/864e5);
+  document.getElementById('mut').innerHTML=`<div class="big">${K(b.cai)} <span style="font-size:16px;color:var(--mute)">/ ${K(s.mut)}</span></div><div class="meter"><div style="width:${Math.min(100,b.cai/s.mut*100)}%"></div></div>
+  <p style="margin:6px 0 0">Dépôt du ${t.getDate()} ${MN[t.getMonth()]} dans ${dl} jours. Reste à mettre de côté : <b>${F(need)}</b>${need?`, soit <b>${F(Math.ceil(need/Math.max(1,nm)/1000)*1000)}</b> par lundi (${nm} lundi${nm>1?'s':''}) ou <b>${F(Math.ceil(need/Math.max(1,dl)/500)*500)}</b> par jour.`:'. Tout est prêt.'}</p>`;
+  const nx=[];for(let i=tIdx+1;i<res.length&&nx.length<6;i++)for(const it of res[i].items)if(!['quot','tk','env','aut'].includes(it.k)&&nx.length<6)nx.push([res[i].d,it]);
+  document.getElementById('next5').innerHTML='<tr><th>Date</th><th>Échéance</th><th class="n">Montant</th></tr>'+nx.map(([d,it])=>`<tr><td>${d.getDate()} ${MN[d.getMonth()]}</td><td>${it.l}</td><td class="n ${it.a>0?'pos':''}">${it.a>0?'+':'−'}${K(Math.abs(it.a))}</td></tr>`).join('');
+  draw();
+}
+function setForm(){document.getElementById('set').innerHTML=Object.keys(DEF).map(k=>`<div><label for="s-${k}">${LAB[k]}</label><input type="number" inputmode="numeric" id="s-${k}" data-s="${k}" value="${st.s[k]}"></div>`).join('')}
+const sync=document.getElementById('sync');
+function save(){try{localStorage.setItem('treso-v1',JSON.stringify(st))}catch(e){}
+}
+function change(){save();render()}
+document.getElementById('rows').addEventListener('change',e=>{
+  const k=e.target.dataset.k;if(!k)return;const id=iso(days[sel])+':'+k,a=document.getElementById('a-'+k),c=document.getElementById('c-'+k);
+  if(e.target.type==='checkbox'){if(c.checked)st.v[id]={ok:true,a:+a.value||0};else delete st.v[id]}
+  else{c.checked=true;st.v[id]={ok:true,a:+e.target.value||0}}
+  change()});
+document.getElementById('valAll').onclick=()=>{for(const it of res[sel].items){if(it.a===0&&it.k!=='aut'&&it.k!=='env')continue;if(it.a===0)continue;const id=iso(days[sel])+':'+it.k;if(!st.v[id])st.v[id]={ok:true,a:+document.getElementById('a-'+it.k).value||0}}change()};
+document.getElementById('strip').addEventListener('click',e=>{const b=e.target.closest('[data-i]');if(b){sel=+b.dataset.i;render()}});
+document.getElementById('prev').onclick=()=>{sel=Math.max(0,sel-1);render()};
+document.getElementById('next').onclick=()=>{sel=Math.min(days.length-1,sel+1);render()};
+document.getElementById('today').onclick=()=>{sel=tIdx;render()};
+document.getElementById('relIn').addEventListener('change',e=>{const k=iso(days[sel]);if(e.target.value==='')delete st.r[k];else st.r[k]=+e.target.value;change()});
+document.getElementById('relClear').onclick=()=>{delete st.r[iso(days[sel])];change()};
+document.getElementById('set').addEventListener('change',e=>{const k=e.target.dataset.s;if(k){st.s[k]=+e.target.value||0;change()}});
+document.getElementById('reset').onclick=()=>{st.s={...DEF};setForm();change()};
+const bkMsg=document.getElementById('bkMsg');
+document.getElementById('copyBk').onclick=async()=>{try{await navigator.clipboard.writeText(btoa(unescape(encodeURIComponent(JSON.stringify(st)))));bkMsg.textContent='Sauvegarde copiée : colle-la dans tes notes.'}catch(e){bkMsg.textContent='Copie impossible sur cet appareil.'}};
+document.getElementById('bkGo').onclick=()=>{try{const x=JSON.parse(decodeURIComponent(escape(atob(document.getElementById('bkIn').value.trim()))));st={s:{...DEF,...(x.s||{})},v:x.v||{},r:x.r||{}};setForm();change();bkMsg.textContent='Sauvegarde restaurée.'}catch(e){bkMsg.textContent='Ce texte n\'est pas une sauvegarde valide.'}};
+setForm();render();
+if(!st.s.sal&&!st.s.q1){document.getElementById('setBox').open=true;document.getElementById('sync').textContent='Commence par saisir tes montants dans Réglages'}
+if('serviceWorker' in navigator)navigator.serviceWorker.register('sw.js').catch(()=>{});
+}
+</script>
+</body>
+</html>
