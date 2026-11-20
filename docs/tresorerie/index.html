@@ -37,6 +37,16 @@ h2{font-size:22px;margin:0 0 12px;font-weight:800;letter-spacing:-.01em}
 .fig{position:relative;height:300px;background:var(--panel);border-radius:14px;margin-bottom:22px}
 .fig>svg{position:absolute;inset:0;width:100%;height:100%}
 svg text{font:13px Figtree,sans-serif;fill:var(--mute);paint-order:stroke;stroke:var(--panel);stroke-width:4px}
+.tabs{display:flex;gap:6px;overflow-x:auto;margin-bottom:10px;padding-bottom:2px}
+.tabs button{flex:none}
+.tabs button[aria-selected=true]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.view{margin-bottom:22px}
+.al{display:grid;gap:8px}
+.alt{display:grid;grid-template-columns:auto minmax(0,1fr);gap:10px;align-items:start;padding:12px 14px;border-radius:12px;background:var(--panel)}
+.alt .b{font-size:12px;font-weight:800;padding:3px 8px;border-radius:20px;color:#fff;white-space:nowrap;margin-top:2px}
+.b.r{background:var(--red)}.b.o{background:#d98a00}.b.g{background:var(--green)}.b.i{background:var(--blue)}
+.alt p{margin:0;line-height:1.4}.alt small{display:block;color:var(--mute);font-size:13px;margin-top:2px}
+.fig[hidden]{display:none}
 .grid2{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:22px;align-items:start}
 @media(max-width:860px){.grid2{grid-template-columns:minmax(0,1fr)}}
 .card{border:1px solid var(--line);border-radius:14px;padding:16px}
@@ -84,7 +94,11 @@ summary{font-weight:800;cursor:pointer;min-height:32px}
     <div class="sync" id="sync">Données gardées sur ce téléphone</div>
   </div>
   <div class="kpis" id="kpis"></div>
-  <div class="fig" id="fig"><svg id="chart" role="img" aria-label="Évolution du solde prévu"></svg></div>
+  <div class="tabs" role="tablist" id="tabs">
+    <button data-v="al" role="tab">Alertes</button><button data-v="j10" role="tab">10 jours</button><button data-v="sem" role="tab">Semaines</button><button data-v="mois" role="tab">Mois</button><button data-v="courbe" role="tab">Courbe</button>
+  </div>
+  <div id="view" class="view"></div>
+  <div class="fig" id="fig" hidden><svg id="chart" role="img" aria-label="Évolution du solde prévu"></svg></div>
   <div class="grid2">
     <section class="card">
       <div class="nav">
@@ -212,6 +226,7 @@ function draw(){
   <text x="${lx+(lx>W/2?-10:10)}" y="${Math.min(ly+20,H-P.b-6)}" text-anchor="${lx>W/2?'end':'start'}" style="fill:var(--ink)">plus bas ${K(res[lo].bal)} le ${res[lo].d.getDate()} ${MN[res[lo].d.getMonth()]}</text>${mt}`;
 }
 const fig=document.getElementById('fig');const ro=new ResizeObserver(draw);ro.observe(fig);
+const VIEW={v:(()=>{try{return localStorage.getItem('treso-view')||'al'}catch(e){return 'al'}})()};
 function render(){
   const s=st.s;res=sim({from:0,bal:s.start,cai:s.cai0,real:true});
   const b=res[tIdx],fut=res.slice(tIdx),lo=fut.reduce((a,x)=>x.bal<a.bal?x:a,fut[0]);
@@ -244,8 +259,74 @@ function render(){
   <p style="margin:6px 0 0">Dépôt du ${t.getDate()} ${MN[t.getMonth()]} dans ${dl} jours. Reste à mettre de côté : <b>${F(need)}</b>${need?`, soit <b>${F(Math.ceil(need/Math.max(1,nm)/1000)*1000)}</b> par lundi (${nm} lundi${nm>1?'s':''}) ou <b>${F(Math.ceil(need/Math.max(1,dl)/500)*500)}</b> par jour.`:'. Tout est prêt.'}</p>`;
   const nx=[];for(let i=tIdx+1;i<res.length&&nx.length<6;i++)for(const it of res[i].items)if(!['quot','tk','env','aut'].includes(it.k)&&nx.length<6)nx.push([res[i].d,it]);
   document.getElementById('next5').innerHTML='<tr><th>Date</th><th>Échéance</th><th class="n">Montant</th></tr>'+nx.map(([d,it])=>`<tr><td>${d.getDate()} ${MN[d.getMonth()]}</td><td>${it.l}</td><td class="n ${it.a>0?'pos':''}">${it.a>0?'+':'−'}${K(Math.abs(it.a))}</td></tr>`).join('');
-  draw();
+  renderView();
 }
+
+function stat(v){const s=st.s;return v<-s.plaf?'🔴':v<-s.perso?'🟠':v<0?'🟡':'🟢'}
+function sgn(v){return (v>0?'+':v<0?'−':'')+K(Math.abs(v))}
+function alerts(){
+  const s=st.s,A=[],b=res[tIdx],P=sim({from:0,bal:s.start,cai:s.cai0,real:false});
+  const add=(lv,t,sm)=>A.push({lv,t,sm});
+  // jours non validés
+  const nv=[];for(let i=0;i<tIdx;i++)if(res[i].nTot>res[i].nOk)nv.push(res[i].d);
+  if(nv.length)add('o',`${nv.length} jour${nv.length>1?'s':''} pas encore validé${nv.length>1?'s':''}`,'Le calcul suppose que tout s\'est passé comme prévu : '+nv.slice(-4).map(longD).join(', ')+'.');
+  const td=res[tIdx];if(td.nTot>td.nOk)add('i',`Ce soir : ${td.nTot-td.nOk} ligne${td.nTot-td.nOk>1?'s':''} à valider`,'Coche ce qui a été fait et corrige les montants.');
+  // découvert à venir
+  const fut=res.slice(tIdx+1),f0=fut.find(x=>x.bal<0),f1=fut.find(x=>x.bal<-s.perso),f2=fut.find(x=>x.bal<-s.plaf);
+  if(b.bal<-s.plaf)add('r','Tu es au-delà du plafond de découvert','Solde prévu ce soir : '+F(b.bal)+'. Réduis le quotidien jusqu\'à la prochaine rentrée.');
+  else if(b.bal<0)add('o','Tu es à découvert ce soir',`Solde prévu : ${F(b.bal)}.`);
+  if(f2)add('r',`Plafond de ${K(s.plaf)} dépassé le ${longD(f2.d)}`,`Dans ${Math.round((f2.d-days[tIdx])/864e5)} jours, au rythme actuel. Le plus bas : ${F(Math.min(...fut.map(x=>x.bal)))}.`);
+  else if(f1)add('o',`Découvert de plus de ${K(s.perso)} le ${longD(f1.d)}`,'Tu restes sous le plafond de la banque, mais au-delà de ta limite personnelle.');
+  else if(f0)add('i',`Premier passage à découvert le ${longD(f0.d)}`,'Il reste sous ta limite personnelle : c\'est un usage normal du découvert.');
+  else add('g','Pas de découvert prévu d\'ici fin juin','Continue à valider chaque jour pour que ça reste vrai.');
+  // rétropédalage
+  const q1=maxQ(s.plaf),cur=s.q1+s.q2;
+  if(q1!=null&&cur>q1)add('r',`Quotidien trop élevé : ${F(cur)} au lieu de ${F(q1)} max`,`Réduis de ${F(cur-q1)} par jour en semaine pour tenir jusqu'au 30 juin sans dépasser le plafond.`);
+  else if(q1!=null)add('g',`Quotidien tenable : jusqu'à ${F(q1)} par jour en semaine`,`Tu es à ${F(cur)}.`);
+  // dérive sur 7 jours
+  let act=0,nd=0,n=0;const i0=Math.max(0,tIdx-6),c0=i0>0?res[i0-1].cr:{quot:0,tk:0};
+  for(let i=i0;i<=tIdx;i++)for(const it of res[i].items)if(['quot','tk','aut'].includes(it.k)&&it.ok){act+=-it.eff;nd+=Math.abs(it.a)+(it.cov||0);n++}
+  const dc=(res[tIdx].cr.quot+res[tIdx].cr.tk)-(c0.quot+c0.tk),dr=act-dc-nd;
+  if(n){if(dr>1000)add('o',`Dérive : ${F(dr)} de plus que prévu sur 7 jours`,'Quotidien, tickets et imprévus validés, hors avances. Rattrape-le dans les jours qui viennent.');
+    else if(dr<-1000)add('g',`Bravo : ${F(-dr)} d'économie sur 7 jours`,'Par rapport au prévu, hors avances.');}
+  let imp=0;for(let i=Math.max(0,tIdx-29);i<=tIdx;i++)for(const it of res[i].items)if(it.k==='aut'&&it.ok)imp+=-it.eff;
+  if(imp>0)add(imp>50000?'o':'i',`Imprévus sur 30 jours : ${F(imp)}`,'Si ça revient souvent, ajoute-les à ton quotidien prévu dans Réglages.');
+  // mutuelle
+  const t=due20(days[tIdx]),gap=P[tIdx].cai-b.cai,need=Math.max(0,s.mut-b.cai),dl=Math.round((t-days[tIdx])/864e5);
+  if(s.mut){if(gap>1000)add('o',`Caisse mutuelle en retard de ${F(gap)}`,`Il manque ${F(need)} pour le dépôt du ${t.getDate()} ${MN[t.getMonth()]} (dans ${dl} jours).`);
+    else if(need&&dl<=5)add('o',`Dépôt mutuelle dans ${dl} jours : il manque ${F(need)}`,'Le véhicule arrive vers le 20 : ne compte pas dessus pour le dépôt.');
+    else if(!need)add('g','Caisse mutuelle prête',`${F(b.cai)} de côté pour le ${t.getDate()} ${MN[t.getMonth()]}.`);}
+  // échéances proches et argent du mois suivant
+  for(let i=tIdx+1;i<res.length&&i<=tIdx+5;i++)for(const it of res[i].items){
+    if(['sco','tr','fact'].includes(it.k))add('i',`${it.l} : ${F(-it.a)} le ${longD(res[i].d)}`,'Garde ce montant de côté dès maintenant.');
+    if(['sal','om'].includes(it.k))add('i',`${it.l.split(' (')[0]} attendu le ${longD(res[i].d)}`,'Cet argent sert au mois suivant : ne le dépense pas avant le 1er.');}
+  // avances
+  const cr=b.cr;if(cr.quot||cr.tk)add('i',`Avance en cours : ${F(cr.quot+cr.tk)}`,'Elle couvre automatiquement les prochains jours.');
+  // relevé réel
+  const rk=Object.keys(st.r).filter(k=>k<=iso(days[tIdx])).sort().pop();
+  if(!rk||(days[tIdx]-new Date(rk))/864e5>7)add('i','Saisis ton solde réel ce soir',rk?'Dernier relevé le '+rk.split('-').reverse().join('/')+'. Un relevé par semaine garde les calculs justes.':'Aucun relevé pour l\'instant. Un relevé par semaine garde les calculs justes.');
+  const ord={r:0,o:1,i:2,g:3};return A.sort((a,b)=>ord[a.lv]-ord[b.lv]);
+}
+function renderView(){
+  const v=VIEW.v,el=document.getElementById('view'),fg=document.getElementById('fig'),s=st.s;
+  document.querySelectorAll('#tabs button').forEach(b=>b.setAttribute('aria-selected',b.dataset.v===v));
+  fg.hidden=v!=='courbe';el.hidden=v==='courbe';
+  if(v==='courbe'){draw();return}
+  const L={r:'Alerte',o:'Attention',i:'Info',g:'Bien'};
+  if(v==='al'){el.innerHTML='<div class="al">'+alerts().map(a=>`<div class="alt"><span class="b ${a.lv}">${L[a.lv]}</span><div><p><b>${a.t}</b></p><small>${a.sm}</small></div></div>`).join('')+'</div>';return}
+  if(v==='j10'){let h='<div class="scroll"><table><tr><th>Jour</th><th>Mouvements</th><th class="n">Solde soir</th></tr>';
+    for(let i=tIdx;i<Math.min(res.length,tIdx+10);i++){const x=res[i],mv=x.items.filter(it=>!['quot','tk','aut'].includes(it.k)&&it.a!==0).map(it=>`${it.a>0?'+':'−'}${it.l.split(' (')[0]} ${K(Math.abs(it.a))}`);
+      h+=`<tr><td>${JN[x.d.getDay()]} ${x.d.getDate()}</td><td>${mv.length?mv.join('<br>'):'<span class="note">Quotidien seulement</span>'}</td><td class="n">${stat(x.bal)} ${K(x.bal)}</td></tr>`}
+    el.innerHTML=h+'</table></div>';return}
+  const grp=v==='sem'?(x=>{const m=new Date(x.d);m.setDate(m.getDate()-((m.getDay()+6)%7));return iso(m)}):(x=>x.d.getFullYear()+'-'+x.d.getMonth());
+  const G=new Map();res.slice(tIdx).forEach(x=>{const k=grp(x);if(!G.has(k))G.set(k,[]);G.get(k).push(x)});
+  let h=`<div class="scroll"><table><tr><th>${v==='sem'?'Semaine':'Mois'}</th><th class="n">Plus bas</th><th class="n">${v==='sem'?'Fin sem.':'Fin mois'}</th><th class="n">Statut</th></tr>`;
+  for(const [k,a] of G){const lo=a.reduce((m,x)=>x.bal<m.bal?x:m,a[0]),f=a[0].d,l=a[a.length-1].d;
+    const lab=v==='sem'?`${f.getDate()} ${MN[f.getMonth()]} – ${l.getDate()} ${MN[l.getMonth()]}`:MN[f.getMonth()]+' '+f.getFullYear();
+    h+=`<tr><td>${lab}</td><td class="n">${K(lo.bal)}<br><span class="note">le ${lo.d.getDate()}</span></td><td class="n">${K(a[a.length-1].bal)}</td><td class="n">${stat(lo.bal)}</td></tr>`}
+  el.innerHTML=h+'</table></div><p class="note">🟢 positif · 🟡 découvert léger · 🟠 au-delà de '+K(s.perso)+' · 🔴 au-delà du plafond</p>';
+}
+document.getElementById('tabs').addEventListener('click',e=>{const b=e.target.closest('[data-v]');if(!b)return;VIEW.v=b.dataset.v;try{localStorage.setItem('treso-view',VIEW.v)}catch(x){};renderView()});
 function setForm(){document.getElementById('set').innerHTML=Object.keys(DEF).map(k=>`<div><label for="s-${k}">${LAB[k]}</label><input type="number" inputmode="numeric" id="s-${k}" data-s="${k}" value="${st.s[k]}"></div>`).join('')}
 const sync=document.getElementById('sync');
 function save(){try{localStorage.setItem('treso-v1',JSON.stringify(st))}catch(e){}
