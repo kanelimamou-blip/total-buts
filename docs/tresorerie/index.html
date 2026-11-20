@@ -137,8 +137,8 @@ summary{font-weight:800;cursor:pointer;min-height:32px}
 const START=new Date(2026,10,20),END=new Date(2027,5,30);
 const DEF={pre:4000,start:0,cai0:0,q1:0,q2:0,we:0,tk:0,sco:0,tr:0,fact:0,mut:0,veh:0,loy:0,sal:0,om:0,prime:0,divF:0,divM:0,plaf:500000,perso:200000};
 const LAB={pre:'Quotidien déjà payé par jour (jusqu\'au 30 nov)',start:'Solde de départ au 20 nov (au matin)',cai0:'Déjà mis de côté pour la mutuelle',q1:'Quotidien famille (lun-ven)',q2:'Quotidien perso (lun-ven)',we:'Quotidien week-end (par jour)',tk:'Ticket scolarité (lun, mar, jeu, ven)',sco:'Scolarité (le 7)',tr:'Transport enfants (le 13)',fact:'Factures (le 15)',mut:'Mutuelle (avant le 20)',veh:'Véhicule (le 20)',loy:'Loyer net agence (le 10)',sal:'Salaire net',om:'Orange Money',prime:'Prime de décembre',divF:'Dividende février',divM:'Dividende mai',plaf:'Plafond découvert banque',perso:'Plafond personnel'};
-let st={s:{...DEF},v:{},r:{}};
-try{const x=JSON.parse(localStorage.getItem('treso-v1')||'null');if(x&&x.s)st={s:{...DEF,...x.s},v:x.v||{},r:x.r||{}}}catch(e){}
+let st={s:{...DEF},v:{},r:{},e:{}};
+try{const x=JSON.parse(localStorage.getItem('treso-v1')||'null');if(x&&x.s)st={s:{...DEF,...x.s},v:x.v||{},r:x.r||{},e:x.e||{}}}catch(e){}
 try{if(location.hash.startsWith('#cfg=')){const b=location.hash.slice(5).replace(/-/g,'+').replace(/_/g,'/');const c=JSON.parse(decodeURIComponent(escape(atob(b))));st.s={...DEF,...st.s,...c};localStorage.setItem('treso-v1',JSON.stringify(st));history.replaceState(null,'',location.pathname)}}catch(e){}
 const iso=d=>d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
 const days=[];for(let d=new Date(START);d<=END;d.setDate(d.getDate()+1))days.push(new Date(d));
@@ -146,6 +146,7 @@ const JN=['dim','lun','mar','mer','jeu','ven','sam'],MN=['janv.','févr.','mars'
 const F=n=>Math.round(n).toLocaleString('fr-FR')+' F';
 const K=n=>(Math.round(n/1000)).toLocaleString('fr-FR')+'k';
 const longD=d=>JN[d.getDay()]+' '+d.getDate()+' '+MN[d.getMonth()];
+const INC=['veh','loy','om','sal','prime','divF','divM'];
 function plan(d,s){
   const y=d.getFullYear(),m=d.getMonth(),dd=d.getDate(),wd=d.getDay(),last=new Date(y,m+1,0).getDate(),L=[];
   const nov=y===2026&&m===10,dec=y===2026&&m===11;
@@ -170,8 +171,10 @@ function due20(d){const t=new Date(d.getFullYear(),d.getMonth(),20);if(d.getDate
 function mondaysBefore(d,t){let n=0;for(const x=new Date(d);x<t;x.setDate(x.getDate()+1))if(x.getDay()===1)n++;return n}
 function sim(o){
   const s=st.s,out=[];let bal=o.bal,cai=o.cai;const cr={quot:0,tk:0,...(o.cr||{})};
+  const RB={},RS={};if(o.real)for(const [id,l] of Object.entries(st.e||{}))for(const r of l){RB[r.d]=(RB[r.d]||0)+r.a;RS[id]=(RS[id]||0)+r.a}
   for(let i=o.from;i<days.length;i++){
     const d=days[i],id0=iso(d),items=plan(d,s);
+    bal+=RB[id0]||0;
     if(o.q!=null&&d.getDay()>0&&d.getDay()<6)items[0].a=-o.q;
     let envP=0;
     if(d.getDay()===1&&d.getDate()!==20){const t=due20(d),n=mondaysBefore(d,t);envP=n?Math.ceil(Math.max(0,s.mut-cai)/n/1000)*1000:0}
@@ -180,6 +183,7 @@ function sim(o){
     let nOk=0,nTot=0;
     for(const it of items){
       const v=o.real&&st.v[id0+':'+it.k];it.ok=!!(v&&v.ok);
+      if(INC.includes(it.k)){it.P=it.a;it.rec=RS[id0+':'+it.k]||0;it.a=Math.max(0,it.P-it.rec)}
       if(it.k in cr){const need=Math.abs(it.a),cov=Math.min(cr[it.k],need);cr[it.k]-=cov;it.cov=cov;it.a=-(need-cov)}
       it.eff=it.ok?Math.sign(it.a||(it.k==='veh'||it.k==='loy'||it.k==='om'||it.k==='sal'?1:-1))*Math.abs(v.a):it.a;
       if(it.k in cr){if(it.ok)cr[it.k]+=Math.max(0,Math.abs(it.eff)-Math.abs(it.a));it.cr=cr[it.k]}
@@ -246,7 +250,7 @@ function render(){
   document.getElementById('rows').innerHTML=r.items.map(it=>{
     const id=iso(d)+':'+it.k,v=st.v[id],inc=it.a>0||['veh','loy','om','sal','prime','divF','divM'].includes(it.k);
     const amt=v&&v.ok?v.a:Math.abs(it.a);
-    return `<div class="row${it.ok?' done':''}${inc?' in':''}${it.env?' env':''}"><input class="ck" type="checkbox" id="c-${it.k}" data-k="${it.k}" data-p="${Math.abs(it.a)}" ${it.ok?'checked':''} aria-label="Fait"><div><label for="c-${it.k}">${inc?'+ ':''}${it.l}</label><small>Prévu ${F(Math.abs(it.a))}${it.cov?` · ${F(it.cov)} déjà donné à l'avance`:''}${it.cr?` · <b>avance restante ${F(it.cr)}</b>`:''}</small></div><input type="number" inputmode="numeric" id="a-${it.k}" data-k="${it.k}" value="${amt}" aria-label="Montant réel"></div>`}).join('');
+    return `<div class="row${it.ok?' done':''}${inc?' in':''}${it.env?' env':''}"><input class="ck" type="checkbox" id="c-${it.k}" data-k="${it.k}" data-p="${Math.abs(it.a)}" ${it.ok?'checked':''} aria-label="Fait"><div><label for="c-${it.k}">${inc?'+ ':''}${it.l}</label><small>${it.rec?`Prévu ${F(it.P)} · déjà reçu ${F(it.rec)} · reste `:'Prévu '}${F(Math.abs(it.a))}${it.cov?` · ${F(it.cov)} déjà donné à l'avance`:''}${it.cr?` · <b>avance restante ${F(it.cr)}</b>`:''}</small></div><input type="number" inputmode="numeric" id="a-${it.k}" data-k="${it.k}" value="${amt}" aria-label="Montant réel"></div>`}).join('');
   document.getElementById('dayBal').innerHTML=`Solde ce soir : <b class="${cls(r.bal)}">${F(r.bal)}</b>`;
   document.getElementById('relIn').value=st.r[iso(d)]??'';
   const q1=maxQ(s.plaf),q2=maxQ(s.perso),q3=maxQ(0),cur=s.q1+s.q2;
@@ -313,7 +317,7 @@ function renderView(){
   fg.hidden=v!=='courbe';el.hidden=v==='courbe';
   if(v==='courbe'){draw();return}
   const L={r:'Alerte',o:'Attention',i:'Info',g:'Bien'};
-  if(v==='al'){el.innerHTML='<div class="al">'+alerts().map(a=>`<div class="alt"><span class="b ${a.lv}">${L[a.lv]}</span><div><p><b>${a.t}</b></p><small>${a.sm}</small></div></div>`).join('')+'</div>';return}
+  if(v==='al'){el.innerHTML=incomesHTML()+'<div class="al">'+alerts().map(a=>`<div class="alt"><span class="b ${a.lv}">${L[a.lv]}</span><div><p><b>${a.t}</b></p><small>${a.sm}</small></div></div>`).join('')+'</div>';return}
   if(v==='j10'){let h='<div class="scroll"><table><tr><th>Jour</th><th>Mouvements</th><th class="n">Solde soir</th></tr>';
     for(let i=tIdx;i<Math.min(res.length,tIdx+10);i++){const x=res[i],mv=x.items.filter(it=>!['quot','tk','aut'].includes(it.k)&&it.a!==0).map(it=>`${it.a>0?'+':'−'}${it.l.split(' (')[0]} ${K(Math.abs(it.a))}`);
       h+=`<tr><td>${JN[x.d.getDay()]} ${x.d.getDate()}</td><td>${mv.length?mv.join('<br>'):'<span class="note">Quotidien seulement</span>'}</td><td class="n">${stat(x.bal)} ${K(x.bal)}</td></tr>`}
@@ -327,6 +331,27 @@ function renderView(){
   el.innerHTML=h+'</table></div><p class="note">🟢 positif · 🟡 découvert léger · 🟠 au-delà de '+K(s.perso)+' · 🔴 au-delà du plafond</p>';
 }
 document.getElementById('tabs').addEventListener('click',e=>{const b=e.target.closest('[data-v]');if(!b)return;VIEW.v=b.dataset.v;try{localStorage.setItem('treso-view',VIEW.v)}catch(x){};renderView()});
+
+let openInc=null;
+function incomesHTML(){
+  const L=[];
+  for(let i=0;i<res.length;i++){const x=res[i];for(const it of x.items){if(!INC.includes(it.k))continue;
+    const id=iso(x.d)+':'+it.k,v=st.v[id],got=(it.rec||0)+(v&&v.ok?v.a:0),rest=Math.max(0,it.P-got),past=i<tIdx;
+    if((i>=tIdx&&i<=tIdx+40)||(past&&rest>0&&v&&v.ok)||(it.rec&&i>=tIdx))L.push({x,it,id,got,rest,done:!!(v&&v.ok)||rest===0})}}
+  if(!L.length)return '';
+  return '<h2 style="margin-top:4px">Rentrées d\'argent</h2><div class="al" style="margin-bottom:14px">'+L.slice(0,8).map(o=>{
+    const nm=o.it.l.split(' (')[0],when=o.x.d<days[tIdx]?'prévu le '+longD(o.x.d):'prévu le '+longD(o.x.d);
+    const st2=o.done&&o.rest===0?'<span class="b g">Reçu</span>':o.got?'<span class="b o">Partiel</span>':'<span class="b i">À venir</span>';
+    const form=openInc===o.id?`<div class="rel" style="border:0;padding-top:6px;margin-top:4px"><label for="ri">Montant reçu aujourd'hui</label><input id="ri" type="number" inputmode="numeric" value="${o.rest}"><button class="pri" data-ok="${o.id}">Enregistrer</button></div>`:'';
+    return `<div class="alt">${st2}<div><p><b>${nm} : ${F(o.it.P)}</b></p><small>${when}${o.got?` · reçu ${F(o.got)} · reste ${F(o.rest)}`:''}</small>
+    ${o.rest>0?`<div class="foot" style="margin-top:8px;justify-content:flex-start"><button data-rc="${o.id}">J'ai reçu…</button>${(st.e[o.id]||[]).length?`<button data-un="${o.id}">Annuler le dernier</button>`:''}</div>`:''}${form}</div></div>`}).join('')+'</div><p class="note" style="margin:-6px 0 14px">Un montant reçu en avance est compté le jour où tu le reçois ; le reste reste attendu à la date prévue. Un reste après la date prévue n\'est compté que quand tu le reçois.</p>';
+}
+document.getElementById('view').addEventListener('click',e=>{
+  const rc=e.target.closest('[data-rc]'),ok=e.target.closest('[data-ok]'),un=e.target.closest('[data-un]');
+  if(rc){openInc=openInc===rc.dataset.rc?null:rc.dataset.rc;renderView();const ri=document.getElementById('ri');if(ri)ri.focus()}
+  if(ok){const a=+document.getElementById('ri').value||0;if(a>0){(st.e[ok.dataset.ok]=st.e[ok.dataset.ok]||[]).push({d:iso(todayD<START?START:todayD),a})}openInc=null;change()}
+  if(un){const l=st.e[un.dataset.un];if(l){l.pop();if(!l.length)delete st.e[un.dataset.un]}change()}
+});
 function setForm(){document.getElementById('set').innerHTML=Object.keys(DEF).map(k=>`<div><label for="s-${k}">${LAB[k]}</label><input type="number" inputmode="numeric" id="s-${k}" data-s="${k}" value="${st.s[k]}"></div>`).join('')}
 const sync=document.getElementById('sync');
 function save(){try{localStorage.setItem('treso-v1',JSON.stringify(st))}catch(e){}
@@ -348,7 +373,7 @@ document.getElementById('set').addEventListener('change',e=>{const k=e.target.da
 document.getElementById('reset').onclick=()=>{st.s={...DEF};setForm();change()};
 const bkMsg=document.getElementById('bkMsg');
 document.getElementById('copyBk').onclick=async()=>{try{await navigator.clipboard.writeText(btoa(unescape(encodeURIComponent(JSON.stringify(st)))));bkMsg.textContent='Sauvegarde copiée : colle-la dans tes notes.'}catch(e){bkMsg.textContent='Copie impossible sur cet appareil.'}};
-document.getElementById('bkGo').onclick=()=>{try{const x=JSON.parse(decodeURIComponent(escape(atob(document.getElementById('bkIn').value.trim()))));st={s:{...DEF,...(x.s||{})},v:x.v||{},r:x.r||{}};setForm();change();bkMsg.textContent='Sauvegarde restaurée.'}catch(e){bkMsg.textContent='Ce texte n\'est pas une sauvegarde valide.'}};
+document.getElementById('bkGo').onclick=()=>{try{const x=JSON.parse(decodeURIComponent(escape(atob(document.getElementById('bkIn').value.trim()))));st={s:{...DEF,...(x.s||{})},v:x.v||{},r:x.r||{},e:x.e||{}};setForm();change();bkMsg.textContent='Sauvegarde restaurée.'}catch(e){bkMsg.textContent='Ce texte n\'est pas une sauvegarde valide.'}};
 setForm();render();
 if(!st.s.sal&&!st.s.q1){document.getElementById('setBox').open=true;document.getElementById('sync').textContent='Commence par saisir tes montants dans Réglages'}
 if('serviceWorker' in navigator)navigator.serviceWorker.register('sw.js').catch(()=>{});
