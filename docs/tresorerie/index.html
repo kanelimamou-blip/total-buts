@@ -80,7 +80,7 @@ summary{font-weight:800;cursor:pointer;min-height:32px}
 <body>
 <div class="wrap">
   <div class="top">
-    <div><h1>Ma trésorerie</h1><p class="sub" id="headline">Du 21 novembre 2026 au 30 juin 2027</p></div>
+    <div><h1>Ma trésorerie</h1><p class="sub" id="headline">Du 20 novembre 2026 au 30 juin 2027</p></div>
     <div class="sync" id="sync">Données gardées sur ce téléphone</div>
   </div>
   <div class="kpis" id="kpis"></div>
@@ -120,9 +120,9 @@ summary{font-weight:800;cursor:pointer;min-height:32px}
 </div>
 <script>
 {
-const START=new Date(2026,10,21),END=new Date(2027,5,30);
+const START=new Date(2026,10,20),END=new Date(2027,5,30);
 const DEF={start:0,cai0:0,q1:0,q2:0,we:0,tk:0,sco:0,tr:0,fact:0,mut:0,veh:0,loy:0,sal:0,om:0,prime:0,divF:0,divM:0,plaf:500000,perso:200000};
-const LAB={start:'Solde de départ au 21 nov',cai0:'Déjà mis de côté pour la mutuelle',q1:'Quotidien famille (lun-ven)',q2:'Quotidien perso (lun-ven)',we:'Quotidien week-end (par jour)',tk:'Ticket scolarité (lun, mar, jeu, ven)',sco:'Scolarité (le 7)',tr:'Transport enfants (le 13)',fact:'Factures (le 15)',mut:'Mutuelle (avant le 20)',veh:'Véhicule (le 20)',loy:'Loyer net agence (le 10)',sal:'Salaire net',om:'Orange Money',prime:'Prime de décembre',divF:'Dividende février',divM:'Dividende mai',plaf:'Plafond découvert banque',perso:'Plafond personnel'};
+const LAB={start:'Solde de départ au 20 nov (au matin)',cai0:'Déjà mis de côté pour la mutuelle',q1:'Quotidien famille (lun-ven)',q2:'Quotidien perso (lun-ven)',we:'Quotidien week-end (par jour)',tk:'Ticket scolarité (lun, mar, jeu, ven)',sco:'Scolarité (le 7)',tr:'Transport enfants (le 13)',fact:'Factures (le 15)',mut:'Mutuelle (avant le 20)',veh:'Véhicule (le 20)',loy:'Loyer net agence (le 10)',sal:'Salaire net',om:'Orange Money',prime:'Prime de décembre',divF:'Dividende février',divM:'Dividende mai',plaf:'Plafond découvert banque',perso:'Plafond personnel'};
 let st={s:{...DEF},v:{},r:{}};
 try{const x=JSON.parse(localStorage.getItem('treso-v1')||'null');if(x&&x.s)st={s:{...DEF,...x.s},v:x.v||{},r:x.r||{}}}catch(e){}
 try{if(location.hash.startsWith('#cfg=')){const b=location.hash.slice(5).replace(/-/g,'+').replace(/_/g,'/');const c=JSON.parse(decodeURIComponent(escape(atob(b))));st.s={...DEF,...st.s,...c};localStorage.setItem('treso-v1',JSON.stringify(st));history.replaceState(null,'',location.pathname)}}catch(e){}
