@@ -135,8 +135,8 @@ summary{font-weight:800;cursor:pointer;min-height:32px}
 <script>
 {
 const START=new Date(2026,10,20),END=new Date(2027,5,30);
-const DEF={pre:4000,start:0,cai0:0,q1:0,q2:0,we:0,tk:0,sco:0,tr:0,fact:0,mut:0,veh:0,loy:0,sal:0,om:0,prime:0,divF:0,divM:0,plaf:500000,perso:200000};
-const LAB={pre:'Quotidien déjà payé par jour (jusqu\'au 30 nov)',start:'Solde de départ au 20 nov (au matin)',cai0:'Déjà mis de côté pour la mutuelle',q1:'Quotidien famille (lun-ven)',q2:'Quotidien perso (lun-ven)',we:'Quotidien week-end (par jour)',tk:'Ticket scolarité (lun, mar, jeu, ven)',sco:'Scolarité (le 7)',tr:'Transport enfants (le 13)',fact:'Factures (le 15)',mut:'Mutuelle (avant le 20)',veh:'Véhicule (le 20)',loy:'Loyer net agence (le 10)',sal:'Salaire net',om:'Orange Money',prime:'Prime de décembre',divF:'Dividende février',divM:'Dividende mai',plaf:'Plafond découvert banque',perso:'Plafond personnel'};
+const DEF={qc:0,smin:0,pre:4000,start:0,cai0:0,q1:0,q2:0,we:0,tk:0,sco:0,tr:0,fact:0,mut:0,veh:0,loy:0,sal:0,om:0,prime:0,divF:0,divM:0,plaf:500000,perso:200000};
+const LAB={qc:'Quotidien cible en semaine (0 = calculé)',smin:'Solde minimum visé (0 = jamais à découvert)',pre:'Quotidien déjà payé par jour (jusqu\'au 30 nov)',start:'Solde de départ au 20 nov (au matin)',cai0:'Déjà mis de côté pour la mutuelle',q1:'Quotidien famille (lun-ven)',q2:'Quotidien perso (lun-ven)',we:'Quotidien week-end (par jour)',tk:'Ticket scolarité (lun, mar, jeu, ven)',sco:'Scolarité (le 7)',tr:'Transport enfants (le 13)',fact:'Factures (le 15)',mut:'Mutuelle (avant le 20)',veh:'Véhicule (le 20)',loy:'Loyer net agence (le 10)',sal:'Salaire net',om:'Orange Money',prime:'Prime de décembre',divF:'Dividende février',divM:'Dividende mai',plaf:'Plafond découvert banque',perso:'Plafond personnel'};
 let st={s:{...DEF},v:{},r:{},e:{}};
 try{const x=JSON.parse(localStorage.getItem('treso-v1')||'null');if(x&&x.s)st={s:{...DEF,...x.s},v:x.v||{},r:x.r||{},e:x.e||{}}}catch(e){}
 try{if(location.hash.startsWith('#cfg=')){const b=location.hash.slice(5).replace(/-/g,'+').replace(/_/g,'/');const c=JSON.parse(decodeURIComponent(escape(atob(b))));st.s={...DEF,...st.s,...c};localStorage.setItem('treso-v1',JSON.stringify(st));history.replaceState(null,'',location.pathname)}}catch(e){}
@@ -200,10 +200,11 @@ let res=[],sel=0;
 const now=new Date(),todayD=new Date(now.getFullYear(),now.getMonth(),now.getDate());
 const tIdx=Math.max(0,Math.min(days.length-1,Math.round((todayD-START)/864e5)));
 sel=tIdx;
-function maxQ(lim){
+const HZ=30;
+function maxQ(lim,hz){
   const b=res[tIdx];let lo=0,hi=60000,best=null;
   if(tIdx>=days.length-1)return null;
-  for(let q=hi;q>=lo;q-=500){const r=sim({from:tIdx+1,bal:b.bal,cai:b.cai,cr:b.cr,q,real:false});if(Math.min(...r.map(x=>x.bal))>=-lim){best=q;break}}
+  for(let q=hi;q>=lo;q-=500){let r=sim({from:tIdx+1,bal:b.bal,cai:b.cai,cr:b.cr,q,real:false});if(hz)r=r.slice(0,hz);if(Math.min(...r.map(x=>x.bal))>=-lim){best=q;break}}
   return best;
 }
 function draw(){
@@ -231,7 +232,7 @@ function draw(){
 }
 const fig=document.getElementById('fig');const ro=new ResizeObserver(draw);ro.observe(fig);
 const VIEW={v:(()=>{try{return localStorage.getItem('treso-view')||'al'}catch(e){return 'al'}})()};
-function render(){
+function render(){TQ=null;
   const s=st.s;res=sim({from:0,bal:s.start,cai:s.cai0,real:true});
   const b=res[tIdx],fut=res.slice(tIdx),lo=fut.reduce((a,x)=>x.bal<a.bal?x:a,fut[0]);
   const over=fut.filter(x=>x.bal<-s.plaf).length,cls=v=>v<-s.plaf?'neg':v<0?'warn':'pos';
@@ -275,18 +276,14 @@ function alerts(){
   const nv=[];for(let i=0;i<tIdx;i++)if(res[i].nTot>res[i].nOk)nv.push(res[i].d);
   if(nv.length)add('o',`${nv.length} jour${nv.length>1?'s':''} pas encore validé${nv.length>1?'s':''}`,'Le calcul suppose que tout s\'est passé comme prévu : '+nv.slice(-4).map(longD).join(', ')+'.');
   const td=res[tIdx];if(td.nTot>td.nOk)add('i',`Ce soir : ${td.nTot-td.nOk} ligne${td.nTot-td.nOk>1?'s':''} à valider`,'Coche ce qui a été fait et corrige les montants.');
-  // découvert à venir
-  const fut=res.slice(tIdx+1),f0=fut.find(x=>x.bal<0),f1=fut.find(x=>x.bal<-s.perso),f2=fut.find(x=>x.bal<-s.plaf);
-  if(b.bal<-s.plaf)add('r','Tu es au-delà du plafond de découvert','Solde prévu ce soir : '+F(b.bal)+'. Réduis le quotidien jusqu\'à la prochaine rentrée.');
+  // découvert à venir : 30 jours seulement
+  const fut=res.slice(tIdx+1,tIdx+1+HZ),f0=fut.find(x=>x.bal<0),f1=fut.find(x=>x.bal<-s.perso),f2=fut.find(x=>x.bal<-s.plaf);
+  if(b.bal<-s.plaf)add('r','Tu es au-delà du plafond de découvert','Solde prévu ce soir : '+F(b.bal)+'. Suis le plan d\'action ci-dessus.');
   else if(b.bal<0)add('o','Tu es à découvert ce soir',`Solde prévu : ${F(b.bal)}.`);
-  if(f2)add('r',`Plafond de ${K(s.plaf)} dépassé le ${longD(f2.d)}`,`Dans ${Math.round((f2.d-days[tIdx])/864e5)} jours, au rythme actuel. Le plus bas : ${F(Math.min(...fut.map(x=>x.bal)))}.`);
-  else if(f1)add('o',`Découvert de plus de ${K(s.perso)} le ${longD(f1.d)}`,'Tu restes sous le plafond de la banque, mais au-delà de ta limite personnelle.');
-  else if(f0)add('i',`Premier passage à découvert le ${longD(f0.d)}`,'Il reste sous ta limite personnelle : c\'est un usage normal du découvert.');
-  else add('g','Pas de découvert prévu d\'ici fin juin','Continue à valider chaque jour pour que ça reste vrai.');
-  // rétropédalage
-  const q1=maxQ(s.plaf),cur=s.q1+s.q2;
-  if(q1!=null&&cur>q1)add('r',`Quotidien trop élevé : ${F(cur)} au lieu de ${F(q1)} max`,`Réduis de ${F(cur-q1)} par jour en semaine pour tenir jusqu'au 30 juin sans dépasser le plafond.`);
-  else if(q1!=null)add('g',`Quotidien tenable : jusqu'à ${F(q1)} par jour en semaine`,`Tu es à ${F(cur)}.`);
+  if(f2)add('r',`Plafond de ${K(s.plaf)} dépassé le ${longD(f2.d)}`,`Dans ${Math.round((f2.d-days[tIdx])/864e5)} jours, au rythme actuel.`);
+  else if(f1)add('o',`Découvert de plus de ${K(s.perso)} le ${longD(f1.d)}`,'Sous le plafond de la banque, mais au-delà de ta limite personnelle.');
+  else if(f0)add('i',`Passage à découvert le ${longD(f0.d)}`,'Il reste sous ta limite personnelle : usage normal du découvert.');
+  else add('g','Pas de découvert dans les 30 prochains jours','Continue à valider chaque jour pour que ça reste vrai.');
   // dérive sur 7 jours
   let act=0,nd=0,n=0;const i0=Math.max(0,tIdx-6),c0=i0>0?res[i0-1].cr:{quot:0,tk:0};
   for(let i=i0;i<=tIdx;i++)for(const it of res[i].items)if(['quot','tk','aut'].includes(it.k)&&it.ok){act+=-it.eff;nd+=Math.abs(it.a)+(it.cov||0);n++}
@@ -309,6 +306,7 @@ function alerts(){
   // relevé réel
   const rk=Object.keys(st.r).filter(k=>k<=iso(days[tIdx])).sort().pop();
   if(!rk||(days[tIdx]-new Date(rk))/864e5>7)add('i','Saisis ton solde réel ce soir',rk?'Dernier relevé le '+rk.split('-').reverse().join('/')+'. Un relevé par semaine garde les calculs justes.':'Aucun relevé pour l\'instant. Un relevé par semaine garde les calculs justes.');
+  tipsFor(add);
   const ord={r:0,o:1,i:2,g:3};return A.sort((a,b)=>ord[a.lv]-ord[b.lv]);
 }
 function renderView(){
@@ -317,7 +315,7 @@ function renderView(){
   fg.hidden=v!=='courbe';el.hidden=v==='courbe';
   if(v==='courbe'){draw();return}
   const L={r:'Alerte',o:'Attention',i:'Info',g:'Bien'};
-  if(v==='al'){el.innerHTML=incomesHTML()+'<div class="al">'+alerts().map(a=>`<div class="alt"><span class="b ${a.lv}">${L[a.lv]}</span><div><p><b>${a.t}</b></p><small>${a.sm}</small></div></div>`).join('')+'</div>';return}
+  if(v==='al'){el.innerHTML=capHTML()+planHTML()+objHTML()+incomesHTML()+'<h2>Alertes et conseils</h2><div class="al">'+alerts().map(a=>`<div class="alt"><span class="b ${a.lv}">${L[a.lv]}</span><div><p><b>${a.t}</b></p><small>${a.sm}</small></div></div>`).join('')+'</div>';return}
   if(v==='j10'){let h='<div class="scroll"><table><tr><th>Jour</th><th>Mouvements</th><th class="n">Solde soir</th></tr>';
     for(let i=tIdx;i<Math.min(res.length,tIdx+10);i++){const x=res[i],mv=x.items.filter(it=>!['quot','tk','aut'].includes(it.k)&&it.a!==0).map(it=>`${it.a>0?'+':'−'}${it.l.split(' (')[0]} ${K(Math.abs(it.a))}`);
       h+=`<tr><td>${JN[x.d.getDay()]} ${x.d.getDate()}</td><td>${mv.length?mv.join('<br>'):'<span class="note">Quotidien seulement</span>'}</td><td class="n">${stat(x.bal)} ${K(x.bal)}</td></tr>`}
@@ -333,11 +331,61 @@ function renderView(){
 document.getElementById('tabs').addEventListener('click',e=>{const b=e.target.closest('[data-v]');if(!b)return;VIEW.v=b.dataset.v;try{localStorage.setItem('treso-view',VIEW.v)}catch(x){};renderView()});
 
 let openInc=null;
+
+let TQ=null;
+function targetInfo(){const s=st.s;if(s.qc)return {q:s.qc,lab:'fixée dans Réglages'};let q=maxQ(-s.smin);if(q!=null)return {q,lab:'calculée pour '+(s.smin?'garder au moins '+F(s.smin):'ne jamais être à découvert')+' jusqu\'au 30 juin'};q=maxQ(s.perso);if(q!=null)return {q,lab:'calculée pour rester sous '+K(s.perso)+' de découvert (zéro découvert pas encore atteignable)'};q=maxQ(s.plaf);if(q!=null)return {q,lab:'calculée pour rester sous le plafond de la banque'};return {q:0,lab:'aucune cible ne suffit : suis le plan d\'action'}}
+function targetQ(){return (TQ=TQ||targetInfo()).q}
+function tgtDay(d,Q){const s=st.s;let t=0;for(const it of plan(d,s)){if(it.k==='quot')t+=(d.getDay()===0||d.getDay()===6)?Math.abs(it.a):Math.max(0,Q-(d.getFullYear()===2026&&d.getMonth()===10?s.pre:0));if(it.k==='tk')t+=Math.abs(it.a)}return t}
+function spentRange(i0,i1){let sp=0,val=0;for(let i=i0;i<=i1;i++){let ok=false;for(const it of res[i].items)if(['quot','tk','aut'].includes(it.k)&&it.ok){sp+=-it.eff;ok=true}if(ok)val++}
+  const c0=i0>0?res[i0-1].cr:{quot:0,tk:0},c1=res[i1].cr;return {sp:sp-((c1.quot+c1.tk)-(c0.quot+c0.tk)),val}}
+function objHTML(){
+  const Q=targetQ(),s=st.s;
+  const per=(lab,i0,i1)=>{let bud=0,budToDate=0;for(let i=i0;i<=i1;i++){const t=tgtDay(days[i],Q);bud+=t;if(i<=tIdx)budToDate+=t}
+    const {sp}=spentRange(i0,Math.min(i1,tIdx)),left=bud-sp,dl=Math.max(1,i1-tIdx),pct=bud?Math.min(100,sp/bud*100):0,dr=sp-budToDate;
+    const lv=dr>2000?'o':'g',msg=i1===i0?(dr>2000?`Dépassement de ${F(dr)} aujourd'hui : reprends-le sur le reste de la semaine.`:'Dans la cible du jour.'):dr>2000?`Dérive de ${F(dr)} : rattrape avec ${F(Math.max(0,left/dl))} par jour max.`:`Dans le budget. Il reste ${F(Math.max(0,left))}${i1>tIdx?`, soit ${F(Math.max(0,left/dl))} par jour`:''}.`;
+    return `<div class="alt"><span class="b ${lv}">${lab}</span><div><p><b>${F(sp)} dépensés sur ${F(bud)}</b></p><div class="meter"><div style="width:${pct}%;background:${dr>2000?'var(--red)':'var(--green)'}"></div></div><small>${msg}</small></div></div>`};
+  const wk=(()=>{const d=days[tIdx],m=(d.getDay()+6)%7;return [Math.max(0,tIdx-m),Math.min(days.length-1,tIdx-m+6)]})();
+  const mo=(()=>{const d=days[tIdx];let a=tIdx,z=tIdx;while(a>0&&days[a-1].getMonth()===d.getMonth())a--;while(z<days.length-1&&days[z+1].getMonth()===d.getMonth())z++;return [a,z]})();
+  return `<h2>Mon atterrissage</h2><p class="note" style="margin:-6px 0 10px">Cible : ${F(Q)} par jour en semaine (${TQ.lab}), week-end ${F(s.we)}, tickets compris. Quotidien, tickets et imprévus validés, hors avances.</p><div class="al" style="margin-bottom:14px">${per('Jour',tIdx,tIdx)}${per('Semaine',...wk)}${per('Mois',...mo)}</div>`;
+}
+
+function capHTML(){
+  const s=st.s,b=res[tIdx],nx=res.slice(tIdx+1,tIdx+1+HZ),mn=nx.length?Math.min(...nx.map(x=>x.bal)):b.bal,Q=targetQ(),td=res[tIdx];
+  let t,sm,lv;
+  if(b.bal<-s.plaf||mn<-s.plaf){lv='r';t='Priorité : revenir sous le plafond';sm='Suis le plan d\'action ci-dessous, étape par étape.'}
+  else if(b.bal<0||mn<-s.perso){lv='o';t='Priorité : limiter le découvert';sm=`Tiens le quotidien à ${F(Q)} par jour en semaine et suis le plan d'action.`}
+  else if(td.nTot>td.nOk){lv='i';t='Priorité : valider ta journée ce soir';sm=`Cible du jour : ${F(tgtDay(days[tIdx],Q))} (quotidien et tickets).`}
+  else{lv='g';t='Tu es sur ta trajectoire';sm=`Cible : ${F(Q)} par jour en semaine. Garde le cap et saisis ton solde réel une fois par semaine.`}
+  const goal=s.smin?`garder au moins ${F(s.smin)} en permanence`:'ne plus jamais être à découvert';
+  return `<div class="alt" style="margin-bottom:14px;background:color-mix(in srgb,var(--blue) 10%,var(--panel))"><span class="b ${lv}">Cap</span><div><p><b>${t}</b></p><small>${sm} Objectif de l'appli : assainir ta trésorerie pour ${goal} d'ici le 30 juin.</small></div></div>`;
+}
+function planHTML(){
+  const s=st.s,b=res[tIdx],nx=res.slice(tIdx+1,tIdx+1+HZ),mn=nx.length?nx.reduce((a,x)=>x.bal<a.bal?x:a,nx[0]):b;
+  if(!(b.bal<0||mn.bal<-s.perso))return '';
+  const lim=mn.bal<-s.plaf?s.plaf:s.perso,Q30=maxQ(s.perso,HZ),Qp=maxQ(s.plaf,HZ),cur=s.q1+s.q2;
+  let ni=null;for(let i=tIdx+1;i<res.length&&!ni;i++)for(const it of res[i].items)if(['veh','loy','prime','divF','divM'].includes(it.k)&&it.a>=200000){ni={d:res[i].d,l:it.l.split(' (')[0],a:it.a};break}
+  let imp=0;for(let i=Math.max(0,tIdx-29);i<=tIdx;i++)for(const it of res[i].items)if(it.k==='aut'&&it.ok)imp+=-it.eff;
+  const S=[];
+  S.push(['Bloque la caisse mutuelle','Ne touche pas à l\'argent mis de côté pour le dépôt du 20 : c\'est la seule dépense qui ne peut pas attendre.']);
+  if(Q30!=null&&Q30<cur)S.push([`Passe le quotidien à ${F(Q30)} par jour en semaine`,`Au lieu de ${F(cur)}, jusqu'au ${ni?longD(ni.d):'prochain encaissement'}. C'est ce qui te garde sous ${K(s.perso)} de découvert sur 30 jours.`]);
+  else if(Q30==null&&Qp!=null)S.push([`Passe le quotidien à ${F(Qp)} par jour en semaine`,`Ta limite de ${K(s.perso)} n'est plus tenable ce mois-ci : vise au moins de rester sous le plafond de la banque.`]);
+  S.push(['Gèle les imprévus et les achats non urgents',imp?`Tu en as validé ${F(imp)} ces 30 derniers jours. Reporte tout ce qui peut attendre après le ${ni?longD(ni.d):'prochain encaissement'}.`:'Reporte tout ce qui peut attendre après la prochaine rentrée.']);
+  S.push(['Donne le quotidien semaine par semaine','Pas d\'avance au-delà de 7 jours tant que la situation est tendue : tu gardes la main.']);
+  S.push(['Relance les rentrées attendues','Véhicule, loyer, Orange Money : demande-les dès qu\'elles sont dues, et note-les avec « J\'ai reçu… » pour voir l\'effet tout de suite.']);
+  if(Qp==null||Qp<8000)S.push(['Appelle la mutuelle avant le 20','Même avec un quotidien très bas, le plafond saute : demande un étalement ou un décalage du prochain dépôt.']);
+  S.push([`Le découvert sert de pont, pas de revenu`,`Utilise-le jusqu'au ${ni?longD(ni.d)+' ('+ni.l+', '+K(ni.a)+')':'prochain encaissement'}, puis rembourse-le en priorité avec cette rentrée.`]);
+  return `<h2 style="color:var(--red)">Plan d'action</h2><p class="note" style="margin:-6px 0 10px">Le plus bas à 30 jours : ${F(mn.bal)} (${longD(mn.d)}). À faire dans cet ordre :</p><div class="al" style="margin-bottom:14px">${S.map((x,i)=>`<div class="alt"><span class="b ${i<2?'r':'o'}">${i+1}</span><div><p><b>${x[0]}</b></p><small>${x[1]}</small></div></div>`).join('')}</div>`;
+}
+function tipsFor(A){const s=st.s,d=days[tIdx],wd=d.getDay();
+  for(let i=tIdx;i<=tIdx+2&&i<res.length;i++)for(const it of res[i].items){if(it.k==='sal')A('i','Conseil : salaire en vue',`Dès réception, mets de côté scolarité (${K(s.sco)}) et factures (${K(s.fact)}) du mois suivant avant toute dépense.`);
+    if(['prime','divF','divM'].includes(it.k))A('i',`Conseil : ${it.l.toLowerCase()} en vue`,'Rembourse d\'abord le découvert, puis complète la caisse mutuelle, et garde le reste en réserve pour les mois sans rentrée.')}
+  if(wd===0)A('i','Conseil du dimanche','Prépare la semaine : calcule l\'enveloppe du quotidien et l\'envoi mutuelle de lundi.');
+}
 function incomesHTML(){
   const L=[];
   for(let i=0;i<res.length;i++){const x=res[i];for(const it of x.items){if(!INC.includes(it.k))continue;
     const id=iso(x.d)+':'+it.k,v=st.v[id],got=(it.rec||0)+(v&&v.ok?v.a:0),rest=Math.max(0,it.P-got),past=i<tIdx;
-    if((i>=tIdx&&i<=tIdx+40)||(past&&rest>0&&v&&v.ok)||(it.rec&&i>=tIdx))L.push({x,it,id,got,rest,done:!!(v&&v.ok)||rest===0})}}
+    if((i>=tIdx&&i<=tIdx+HZ)||(past&&rest>0&&v&&v.ok)||(it.rec&&i>=tIdx))L.push({x,it,id,got,rest,done:!!(v&&v.ok)||rest===0})}}
   if(!L.length)return '';
   return '<h2 style="margin-top:4px">Rentrées d\'argent</h2><div class="al" style="margin-bottom:14px">'+L.slice(0,8).map(o=>{
     const nm=o.it.l.split(' (')[0],when=o.x.d<days[tIdx]?'prévu le '+longD(o.x.d):'prévu le '+longD(o.x.d);
