@@ -175,7 +175,7 @@ function viewCoupons() {
   <div class="chips">${days.map((x) => `<button class="chip" data-day="${x}" aria-pressed="${x === state.day}">${dayLabel(x, d.today)}</button>`).join("")}</div>
   <div class="chips">${KIND_FILTERS.filter(([k]) => count(k)).map(([k, l]) => `<button class="chip" data-kind="${k}" aria-pressed="${k === state.kind}">${l}<span class="c">${count(k)}</span></button>`).join("")}</div>
   ${liveBlock()}
-  ${state.kind === "all" ? jumeauBlock(state.day) + planBlock(state.day) : ""}
+  ${state.kind === "all" ? jumeauBlock(state.day) + `<h2>Les autres coupons</h2><p class="small muted">Pour information seulement : ils perdent plus sur l\u2019historique. Le plan de 10 tickets n\u2019est plus conseillé.</p>` : ""}
   <p class="small muted">${frozen ? "Coupons du jour figés au premier calcul du matin." : "Coupons provisoires : ils seront affinés quand les cotes du marché seront publiées, puis figés le jour du match."} Classés par priorité.</p>
   ${state.kind === "obs" ? `<p class="note">En observation : jackpots, cote 1000, relais et combinés longue durée ont beaucoup perdu en réel (bilan du 16 novembre). Ils restent suivis pour voir s’ils se redressent, mais ne sont plus conseillés.</p>` : ""}
   ${shown.map(couponCard).join("") || `<div class="empty">Aucun coupon de ce type ce jour-là.</div>`}
@@ -184,18 +184,22 @@ function viewCoupons() {
 
 // Jumeau : la même appli réduite à la seule règle qui a gagné après taxe sur 3 ans (pipeline/jumeau.py)
 function jumeauBlock(date) {
+  // « À jouer aujourd'hui » : une seule consigne simple (règle de pipeline/jumeau.py, la moins perdante sur 3 ans)
   const d = state.data, j = d.jumeau, bt = state.bt?.jumeau;
   if (!j) return "";
-  const r = (x) => (x >= 0 ? "+" : "") + Math.round(x * 100) + " %";
-  const start = j.start.split("-").reverse().slice(0, 2).join("/");
-  const btLine = bt && bt.n ? `Sur 3 ans rejoués : <b>${bt.n} tickets, ${pct(bt.won / bt.n)} gagnés, ${r(bt.roi)} par mise après taxe</b> (avant août 2025 : ${r(bt.avant.roi)}, après : ${r(bt.apres.roi)} ; pire série : ${String(bt.pire_baisse).replace(".", ",")} mises).` : "";
   const lv = j.live || { n: 0 };
-  const liveLine = lv.n ? `En réel depuis le ${start} : <b>${lv.won} gagnés sur ${lv.n}, ${signed(lv.net)} mises</b> après taxe.` : `Suivi réel à partir du ${start}.`;
-  const list = date ? d.coupons.filter((c) => c.jumeau && c.date === date) : [];
-  return `<section class="card"><h2>Jumeau</h2>
-    <p class="small">Le jumeau est la version disciplinée de l'appli. Il ne garde qu'une règle : coupons mix de 2 ou 3 matchs, cote 2 à 2,6, au plus 2 par jour. C'est la règle qui perd le moins sur 3 ans, la même chose chaque année. ${btLine} ${liveLine}</p>
-    <p class="note">Le jumeau perd moins que l'appli entière (environ −23 % par mise sur 3 ans), mais il ne gagne pas encore : la taxe de 20 % et la marge du bookmaker restent plus fortes. Chaque match ajouté à un ticket coûte cette marge une fois de plus.</p>
-    ${date ? list.map(couponCard).join("") || `<p class="small muted">Pas de ticket jumeau ce jour-là : aucun coupon ne remplit la règle.</p>` : ""}</section>`;
+  const per100 = (x) => Math.round(-x * 100);
+  const hist = bt && bt.n ? `Sur 3 ans, ce type de ticket a gagné ${pct(bt.won / bt.n)} du temps. Il reste perdant : environ ${per100(bt.roi)} F perdus pour 100 F misés, contre 23 F pour l'ensemble des coupons.` : "";
+  const reel = lv.n ? ` En vrai depuis le ${j.start.split("-").reverse().slice(0, 2).join("/")} : ${lv.won} gagnés sur ${lv.n}.` : "";
+  if (!date) return `<section class="card"><h2>À jouer aujourd'hui : résultats</h2><p class="small">${hist}${reel}</p></section>`;
+  const list = d.coupons.filter((c) => c.jumeau && c.date === date);
+  const head = list.length
+    ? `<p><b>Joue seulement ${list.length === 1 ? "ce ticket" : "ces " + list.length + " tickets"}, rien d'autre.</b> Mise petite et toujours la même : ${String(list[0].stake_pct).replace(".", ",")} % de ton argent de paris par ticket (${Math.round(list[0].stake_pct * 500)} F si tu as 50 000 F).</p>`
+    : `<p><b>Rien à jouer ce jour-là.</b> Aucun ticket ne remplit la règle : ne pas jouer, c'est ne pas perdre.</p>`;
+  return `<section class="card"><h2>À jouer aujourd'hui</h2>${head}
+    <p class="small">Pourquoi ces tickets : 2 ou 3 matchs, cote 2 à 2,6, au plus 2 par jour. C'est ce qui perd le moins dans tout l'historique. ${hist}${reel}</p>
+    <p class="note">Aucun ticket ne peut garantir de ne pas perdre, à cause de la taxe de 20 % et de la marge de 1xBet. La seule façon sûre de ne pas perdre est de ne pas jouer. Si tu joues, reste sur ces tickets et oublie le reste.</p>
+    ${list.map(couponCard).join("")}</section>`;
 }
 
 function couponCard(c) {
