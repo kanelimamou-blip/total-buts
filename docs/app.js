@@ -194,10 +194,10 @@ function jumeauBlock(date) {
   if (!date) return `<section class="card"><h2>À jouer aujourd'hui : résultats</h2><p class="small">${hist}${reel}</p></section>`;
   const list = d.coupons.filter((c) => c.jumeau && c.date === date);
   const head = list.length
-    ? `<p><b>Joue seulement ${list.length === 1 ? "ce ticket" : "ces " + list.length + " tickets"}, rien d'autre.</b>${list.length < 5 ? ` Aujourd'hui, seulement ${list.length} ticket${list.length > 1 ? "s" : ""} rempli${list.length > 1 ? "ssent" : "t"} la règle : on n'en invente pas d'autres.` : ""} Mise petite et toujours la même : ${String(list[0].stake_pct).replace(".", ",")} % de ton argent de paris par ticket (${Math.round(list[0].stake_pct * 500)} F si tu as 50 000 F).</p>`
+    ? `<p><b>Joue seulement ${list.length === 1 ? "ce ticket" : "ces " + list.length + " tickets"}, rien d'autre.</b> Si tu veux jouer moins, garde ceux du haut. Mise petite et toujours la même : ${String(list[0].stake_pct).replace(".", ",")} % de ton argent de paris par ticket (${Math.round(list[0].stake_pct * 500)} F si tu as 50 000 F).</p>`
     : `<p><b>Rien à jouer ce jour-là.</b> Aucun ticket ne remplit la règle : ne pas jouer, c'est ne pas perdre.</p>`;
   return `<section class="card"><h2>À jouer aujourd'hui</h2>${head}
-    <p class="small">Pourquoi ces tickets : 2 ou 3 matchs, cote 2 à 2,6, au plus 5 par jour, du plus sûr au moins sûr. C'est ce qui perd le moins dans tout l'historique. ${hist}${reel}</p>
+    <p class="small">Pourquoi ces tickets : 2 ou 3 matchs, cote 2 à 2,6, sans match en double, du plus sûr au moins sûr : « 1. Le plus sûr » (45 chances sur 100 ou plus), « 2. Sûr » (40 à 45), « 3. Bonus » (moins de 40). C'est ce qui perd le moins dans tout l'historique. ${hist}${reel}</p>
     <p class="note">Aucun ticket ne peut garantir de ne pas perdre, à cause de la taxe de 20 % et de la marge de 1xBet. La seule façon sûre de ne pas perdre est de ne pas jouer. Si tu joues, reste sur ces tickets et oublie le reste.</p>
     ${list.map((c, i) => couponCard(c, i + 1)).join("")}</section>`;
 }
@@ -209,7 +209,7 @@ function couponCard(c, rank) {
   return `<article class="card">
     <div class="coupon-head">
       <div class="t">
-        ${rank ? `<span class="prio haute"><i></i>Ticket ${rank} sur ${state.data.coupons.filter((x) => x.jumeau && x.date === c.date).length} · ${Math.round(c.p_not_lose * 100)} chances sur 100</span>` : `<span class="prio ${confLevel(c)}"><i></i>Priorité ${c.priority} · confiance ${confLevel(c)}${!PLAN_SKIP.has(c.kind) && c.odds >= 2 && !couponStatus(c).on ? ' · <span class="tag">en veille</span>' : ""}</span>`}
+        ${rank ? `<span class="prio ${c.p_not_lose >= 0.45 ? "haute" : c.p_not_lose >= 0.4 ? "moyenne" : "basse"}"><i></i>${c.p_not_lose >= 0.45 ? "1. Le plus sûr" : c.p_not_lose >= 0.4 ? "2. Sûr" : "3. Bonus"} · ${Math.round(c.p_not_lose * 100)} chances sur 100</span>` : `<span class="prio ${confLevel(c)}"><i></i>Priorité ${c.priority} · confiance ${confLevel(c)}${!PLAN_SKIP.has(c.kind) && c.odds >= 2 && !couponStatus(c).on ? ' · <span class="tag">en veille</span>' : ""}</span>`}
         <h3>${esc(c.label)}${c.scope && c.scope !== "Toutes ligues" ? " · " + esc(c.scope) : ""}</h3>
         <span class="small muted">${c.legs.length} sélections${c.kind.startsWith("periode") ? " · ticket du " + dayLabel(c.date, state.data.today).toLowerCase() : settled ? "" : " · " + dayLabel(c.date, state.data.today)}</span>
       </div>

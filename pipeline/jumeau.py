@@ -2,7 +2,7 @@
 
 Étude du 16/11/2026 (17 218 coupons rejoués de sept. 2023 à nov. 2026, coupés avant et après août 2025 pour ne
 pas garder un hasard) : après la taxe de 20 %, aucun type de coupon ne gagne. L'appli entière perd environ 23 %
-par mise. La règle la plus stable est le coupon « mix » de 2 ou 3 matchs à cote 2 à 2,6, au plus 2 par jour (5 par jour depuis le 21/11, demande d'Est) :
+par mise. La règle la plus stable est le coupon « mix » de 2 ou 3 matchs à cote 2 à 2,6, au plus 2 par jour (sans limite depuis le 21/11, demande d'Est) :
 environ −11 % par mise, la même chose chaque année (−15 % en 2023, −10 % en 2024, −13 % en 2025, −9 % en 2026).
 Chaque match ajouté coûte la marge du bookmaker une fois de plus : c'est la première cause des pertes.
 
@@ -12,12 +12,12 @@ from __future__ import annotations
 
 from config import TAX
 
-RULE = {"kind": "mix", "min_odds": 2.0, "max_odds": 2.6, "max_legs": 3, "per_day": 5}
+RULE = {"kind": "mix", "min_odds": 2.0, "max_odds": 2.6, "max_legs": 3, "per_day": 99}
 START = "2026-11-17"  # suivi réel du jumeau à partir de ce jour (règle choisie le 16/11)
 
 
 def select(day_coupons: list[dict]) -> list[dict]:
-    """Les coupons du jour que le jumeau joue : au plus 5, les plus sûrs d'abord, sans match en commun."""
+    """Les coupons du jour que le jumeau joue : tous, les plus sûrs d'abord, sans match en commun."""
     ok = [c for c in day_coupons if c["kind"] == RULE["kind"] and RULE["min_odds"] <= c["odds"] <= RULE["max_odds"]
           and len(c["legs"]) <= RULE["max_legs"]]
     ok.sort(key=lambda c: -c["p_not_lose"])
