@@ -135,8 +135,8 @@ summary{font-weight:800;cursor:pointer;min-height:32px}
 <script>
 {
 const START=new Date(2026,10,20),END=new Date(2027,5,30);
-const DEF={qc:0,smin:0,pre:4000,pre2:3000,start:0,cai0:0,q1:0,q2:0,we:0,tk:0,sco:0,tr:0,fact:0,mut:0,veh:0,loy:0,sal:0,om:0,prime:0,divF:0,divM:0,plaf:500000,perso:200000};
-const LAB={pre2:'Quotidien déjà payé en plus par jour (21 au 30 nov)',qc:'Quotidien cible en semaine (0 = calculé)',smin:'Solde minimum visé (0 = jamais à découvert)',pre:'Quotidien déjà payé par jour (jusqu\'au 30 nov)',start:'Solde de départ au 20 nov (au matin)',cai0:'Déjà mis de côté pour la mutuelle',q1:'Quotidien famille (lun-ven)',q2:'Quotidien perso (lun-ven)',we:'Quotidien week-end (par jour)',tk:'Ticket scolarité (lun, mar, jeu, ven)',sco:'Scolarité (le 7)',tr:'Transport enfants (le 13)',fact:'Factures (le 15)',mut:'Mutuelle (avant le 20)',veh:'Véhicule (le 16)',loy:'Loyer net agence (le 10)',sal:'Salaire net',om:'Orange Money',prime:'Prime de décembre',divF:'Dividende février',divM:'Dividende mai',plaf:'Plafond découvert banque',perso:'Plafond personnel'};
+const DEF={qc:0,smin:0,pre:4000,pre2:3000,tkPre:16000,start:0,cai0:0,q1:0,q2:0,we:0,tk:0,sco:0,tr:0,fact:0,mut:0,veh:0,loy:0,sal:0,om:0,prime:0,divF:0,divM:0,plaf:500000,perso:200000};
+const LAB={tkPre:'Tickets déjà achetés au 21 nov (avance)',pre2:'Quotidien déjà payé en plus par jour (21 au 30 nov)',qc:'Quotidien cible en semaine (0 = calculé)',smin:'Solde minimum visé (0 = jamais à découvert)',pre:'Quotidien déjà payé par jour (jusqu\'au 30 nov)',start:'Solde de départ au 20 nov (au matin)',cai0:'Déjà mis de côté pour la mutuelle',q1:'Quotidien famille (lun-ven)',q2:'Quotidien perso (lun-ven)',we:'Quotidien week-end (par jour)',tk:'Ticket scolarité (lun, mar, jeu, ven)',sco:'Scolarité (le 7)',tr:'Transport enfants (le 13)',fact:'Factures (le 15)',mut:'Mutuelle (avant le 20)',veh:'Véhicule (le 16)',loy:'Loyer net agence (le 10)',sal:'Salaire net',om:'Orange Money',prime:'Prime de décembre',divF:'Dividende février',divM:'Dividende mai',plaf:'Plafond découvert banque',perso:'Plafond personnel'};
 let st={s:{...DEF},v:{},r:{},e:{}};
 try{const x=JSON.parse(localStorage.getItem('treso-v1')||'null');if(x&&x.s)st={s:{...DEF,...x.s},v:x.v||{},r:x.r||{},e:x.e||{}}}catch(e){}
 try{if(location.hash.startsWith('#cfg=')){const b=location.hash.slice(5).replace(/-/g,'+').replace(/_/g,'/');const c=JSON.parse(decodeURIComponent(escape(atob(b))));st.s={...DEF,...st.s,...c};localStorage.setItem('treso-v1',JSON.stringify(st));history.replaceState(null,'',location.pathname)}}catch(e){}
@@ -177,6 +177,7 @@ function sim(o){
   for(let i=o.from;i<days.length;i++){
     const d=days[i],id0=iso(d),items=plan(d,s);
     bal+=RB[id0]||0;
+    if(id0==='2026-11-21'&&o.from===0)cr.tk+=s.tkPre||0;
     if(o.q!=null&&d.getDay()>0&&d.getDay()<6)items[0].a=-o.q;
     let envP=0;
     if(d.getDay()===1&&d.getDate()!==20){const t=due20(d),n=mondaysBefore(d,t);envP=n?Math.ceil(Math.max(0,s.mut-cai)/n/1000)*1000:0}
