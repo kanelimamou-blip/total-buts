@@ -135,11 +135,12 @@ summary{font-weight:800;cursor:pointer;min-height:32px}
 <script>
 {
 const START=new Date(2026,10,20),END=new Date(2027,5,30);
-const DEF={qc:0,smin:0,pre:4000,pre2:3000,tkPre:16000,start:0,cai0:0,q1:0,q2:0,we:0,tk:0,sco:0,tr:0,fact:0,mut:0,veh:0,loy:0,sal:0,om:0,prime:0,divF:0,divM:0,plaf:500000,perso:200000};
-const LAB={tkPre:'Tickets déjà achetés au 21 nov (avance)',pre2:'Quotidien déjà payé en plus par jour (21 au 30 nov)',qc:'Quotidien cible en semaine (0 = calculé)',smin:'Solde minimum visé (0 = jamais à découvert)',pre:'Quotidien déjà payé par jour (jusqu\'au 30 nov)',start:'Solde de départ au 20 nov (au matin)',cai0:'Déjà mis de côté pour la mutuelle',q1:'Quotidien famille (lun-ven)',q2:'Quotidien perso (lun-ven)',we:'Quotidien week-end (par jour)',tk:'Ticket scolarité (lun, mar, jeu, ven)',sco:'Scolarité (le 7)',tr:'Transport enfants (le 13)',fact:'Factures (le 15)',mut:'Mutuelle (avant le 20)',veh:'Véhicule (le 16)',loy:'Loyer net agence (le 10)',sal:'Salaire net',om:'Orange Money',prime:'Prime de décembre',divF:'Dividende février',divM:'Dividende mai',plaf:'Plafond découvert banque',perso:'Plafond personnel'};
+const DEF={qc:0,smin:0,preNov:7000,tkPre:16000,start:0,cai0:0,q1:0,q2:0,we:0,tk:0,sco:0,tr:0,fact:0,mut:0,veh:0,loy:0,sal:0,om:0,prime:0,divF:0,divM:0,plaf:500000,perso:200000};
+const LAB={tkPre:'Tickets déjà achetés au 21 nov (avance)',qc:'Quotidien cible en semaine (0 = calculé)',smin:'Solde minimum visé (0 = jamais à découvert)',preNov:'Quotidien déjà payé par jour (jusqu\'au 30 nov)',start:'Solde de départ au 20 nov (au matin)',cai0:'Déjà mis de côté pour la mutuelle',q1:'Quotidien famille (lun-ven)',q2:'Quotidien perso (lun-ven)',we:'Quotidien week-end (par jour)',tk:'Ticket scolarité (lun, mar, jeu, ven)',sco:'Scolarité (le 7)',tr:'Transport enfants (le 13)',fact:'Factures (le 15)',mut:'Mutuelle (avant le 20)',veh:'Véhicule (le 16)',loy:'Loyer net agence (le 10)',sal:'Salaire net',om:'Orange Money',prime:'Prime de décembre',divF:'Dividende février',divM:'Dividende mai',plaf:'Plafond découvert banque',perso:'Plafond personnel'};
 let st={s:{...DEF},v:{},r:{},e:{}};
 try{const x=JSON.parse(localStorage.getItem('treso-v1')||'null');if(x&&x.s)st={s:{...DEF,...x.s},v:x.v||{},r:x.r||{},e:x.e||{}}}catch(e){}
 try{if(location.hash.startsWith('#cfg=')){const b=location.hash.slice(5).replace(/-/g,'+').replace(/_/g,'/');const c=JSON.parse(decodeURIComponent(escape(atob(b))));st.s={...DEF,...st.s,...c};localStorage.setItem('treso-v1',JSON.stringify(st));history.replaceState(null,'',location.pathname)}}catch(e){}
+try{delete st.s.pre;delete st.s.pre2}catch(e){}
 const iso=d=>d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
 const days=[];for(let d=new Date(START);d<=END;d.setDate(d.getDate()+1))days.push(new Date(d));
 const JN=['dim','lun','mar','mer','jeu','ven','sam'],MN=['janv.','févr.','mars','avr.','mai','juin','juil.','août','sept.','oct.','nov.','déc.'];
@@ -151,7 +152,7 @@ function plan(d,s){
   const y=d.getFullYear(),m=d.getMonth(),dd=d.getDate(),wd=d.getDay(),last=new Date(y,m+1,0).getDate(),L=[];
   const nov=y===2026&&m===10,dec=y===2026&&m===11;
   if(wd===0||wd===6)L.push({k:'quot',l:'Quotidien week-end',a:-s.we});else L.push({k:'quot',l:'Quotidien famille + perso',a:-(s.q1+s.q2)});
-  const pp=nov?(s.pre||0)+(dd>=21?(s.pre2||0):0):0;
+  const pp=nov?(s.preNov||0):0;
   if(pp){L[0].a=Math.min(0,L[0].a+pp);L[0].l+=` (${(pp/1000).toLocaleString('fr-FR')}k déjà payés)`}
   if([1,2,4,5].includes(wd))L.push({k:'tk',l:'Ticket scolarité',a:-s.tk});
   if(!nov){
@@ -338,7 +339,7 @@ let openInc=null;
 let TQ=null;
 function targetInfo(){const s=st.s;if(s.qc)return {q:s.qc,lab:'fixée dans Réglages'};let q=maxQ(-s.smin);if(q!=null)return {q,lab:'calculée pour '+(s.smin?'garder au moins '+F(s.smin):'ne jamais être à découvert')+' jusqu\'au 30 juin'};q=maxQ(s.perso);if(q!=null)return {q,lab:'calculée pour rester sous '+K(s.perso)+' de découvert (zéro découvert pas encore atteignable)'};q=maxQ(s.plaf);if(q!=null)return {q,lab:'calculée pour rester sous le plafond de la banque'};return {q:0,lab:'aucune cible ne suffit : suis le plan d\'action'}}
 function targetQ(){return (TQ=TQ||targetInfo()).q}
-function tgtDay(d,Q){const s=st.s;let t=0;for(const it of plan(d,s)){if(it.k==='quot')t+=(d.getDay()===0||d.getDay()===6)?Math.abs(it.a):Math.max(0,Q-(d.getFullYear()===2026&&d.getMonth()===10?(s.pre||0)+(d.getDate()>=21?(s.pre2||0):0):0));if(it.k==='tk')t+=Math.abs(it.a)}return t}
+function tgtDay(d,Q){const s=st.s;let t=0;for(const it of plan(d,s)){if(it.k==='quot')t+=(d.getDay()===0||d.getDay()===6)?Math.abs(it.a):Math.max(0,Q-(d.getFullYear()===2026&&d.getMonth()===10?(s.preNov||0):0));if(it.k==='tk')t+=Math.abs(it.a)}return t}
 function spentRange(i0,i1){let sp=0,val=0;for(let i=i0;i<=i1;i++){let ok=false;for(const it of res[i].items)if(['quot','tk','aut'].includes(it.k)&&it.ok){sp+=-it.eff;ok=true}if(ok)val++}
   const c0=i0>0?res[i0-1].cr:{quot:0,tk:0},c1=res[i1].cr;return {sp:sp-((c1.quot+c1.tk)-(c0.quot+c0.tk)),val}}
 function objHTML(){
