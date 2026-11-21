@@ -128,7 +128,7 @@ summary{font-weight:800;cursor:pointer;min-height:32px}
     </section>
   </div>
   <details id="setBox"><summary>Réglages</summary><div class="set" id="set"></div>
-    <p class="note">Les dates suivent ton cycle : scolarité le 7, loyer le 10 (dès janvier), transport le 13 (dès janvier), factures le 15, véhicule et mutuelle le 20, Orange Money 5 jours avant la fin du mois, salaire vers le 27 (le 17 en décembre, le 25 en février), prime le 30 décembre, dividendes le 28 février et le 31 mai.</p>
+    <p class="note">Les dates suivent ton cycle : scolarité le 7, loyer le 10 (dès janvier), transport le 13 (dès janvier), factures le 15, véhicule le 16, mutuelle le 20, Orange Money 5 jours avant la fin du mois, salaire vers le 27 (le 17 en décembre, le 25 en février), prime le 30 décembre, dividendes le 28 février et le 31 mai.</p>
     <div class="foot"><button id="copyBk">Copier ma sauvegarde</button><button id="reset">Tout remettre à zéro</button></div><div class="rel"><label for="bkIn">Restaurer une sauvegarde</label><input id="bkIn" placeholder="coller ici" style="width:14em;text-align:left"><button id="bkGo">Restaurer</button></div><p class="note" id="bkMsg"></p>
   </details>
 </div>
@@ -136,7 +136,7 @@ summary{font-weight:800;cursor:pointer;min-height:32px}
 {
 const START=new Date(2026,10,20),END=new Date(2027,5,30);
 const DEF={qc:0,smin:0,pre:4000,pre2:3000,start:0,cai0:0,q1:0,q2:0,we:0,tk:0,sco:0,tr:0,fact:0,mut:0,veh:0,loy:0,sal:0,om:0,prime:0,divF:0,divM:0,plaf:500000,perso:200000};
-const LAB={pre2:'Quotidien déjà payé en plus par jour (23 au 30 nov)',qc:'Quotidien cible en semaine (0 = calculé)',smin:'Solde minimum visé (0 = jamais à découvert)',pre:'Quotidien déjà payé par jour (jusqu\'au 30 nov)',start:'Solde de départ au 20 nov (au matin)',cai0:'Déjà mis de côté pour la mutuelle',q1:'Quotidien famille (lun-ven)',q2:'Quotidien perso (lun-ven)',we:'Quotidien week-end (par jour)',tk:'Ticket scolarité (lun, mar, jeu, ven)',sco:'Scolarité (le 7)',tr:'Transport enfants (le 13)',fact:'Factures (le 15)',mut:'Mutuelle (avant le 20)',veh:'Véhicule (le 20)',loy:'Loyer net agence (le 10)',sal:'Salaire net',om:'Orange Money',prime:'Prime de décembre',divF:'Dividende février',divM:'Dividende mai',plaf:'Plafond découvert banque',perso:'Plafond personnel'};
+const LAB={pre2:'Quotidien déjà payé en plus par jour (23 au 30 nov)',qc:'Quotidien cible en semaine (0 = calculé)',smin:'Solde minimum visé (0 = jamais à découvert)',pre:'Quotidien déjà payé par jour (jusqu\'au 30 nov)',start:'Solde de départ au 20 nov (au matin)',cai0:'Déjà mis de côté pour la mutuelle',q1:'Quotidien famille (lun-ven)',q2:'Quotidien perso (lun-ven)',we:'Quotidien week-end (par jour)',tk:'Ticket scolarité (lun, mar, jeu, ven)',sco:'Scolarité (le 7)',tr:'Transport enfants (le 13)',fact:'Factures (le 15)',mut:'Mutuelle (avant le 20)',veh:'Véhicule (le 16)',loy:'Loyer net agence (le 10)',sal:'Salaire net',om:'Orange Money',prime:'Prime de décembre',divF:'Dividende février',divM:'Dividende mai',plaf:'Plafond découvert banque',perso:'Plafond personnel'};
 let st={s:{...DEF},v:{},r:{},e:{}};
 try{const x=JSON.parse(localStorage.getItem('treso-v1')||'null');if(x&&x.s)st={s:{...DEF,...x.s},v:x.v||{},r:x.r||{},e:x.e||{}}}catch(e){}
 try{if(location.hash.startsWith('#cfg=')){const b=location.hash.slice(5).replace(/-/g,'+').replace(/_/g,'/');const c=JSON.parse(decodeURIComponent(escape(atob(b))));st.s={...DEF,...st.s,...c};localStorage.setItem('treso-v1',JSON.stringify(st));history.replaceState(null,'',location.pathname)}}catch(e){}
@@ -159,7 +159,8 @@ function plan(d,s){
     if(dd===10&&!dec)L.push({k:'loy',l:'Loyer (agence)',a:s.loy});
     if(dd===13&&!dec)L.push({k:'tr',l:'Transport enfants',a:-s.tr});
     if(dd===15)L.push({k:'fact',l:'Factures',a:-s.fact});
-    if(dd===20){L.push({k:'veh',l:'Véhicule (mois précédent)',a:s.veh});L.push({k:'dep',l:'Dépôt mutuelle',a:-s.mut});}
+    if(dd===16)L.push({k:'veh',l:'Véhicule (mois précédent)',a:s.veh});
+    if(dd===20)L.push({k:'dep',l:'Dépôt mutuelle',a:-s.mut});
   }
   if(dd===last-5)L.push({k:'om',l:'Orange Money (pour le mois suivant)',a:s.om});
   if(dd===(dec?17:m===1?25:27))L.push({k:'sal',l:'Salaire (pour le mois suivant)',a:s.sal});
@@ -296,7 +297,7 @@ function alerts(){
   // mutuelle
   const t=due20(days[tIdx]),gap=P[tIdx].cai-b.cai,need=Math.max(0,s.mut-b.cai),dl=Math.round((t-days[tIdx])/864e5);
   if(s.mut){if(gap>1000)add('o',`Caisse mutuelle en retard de ${F(gap)}`,`Il manque ${F(need)} pour le dépôt du ${t.getDate()} ${MN[t.getMonth()]} (dans ${dl} jours).`);
-    else if(need&&dl<=5)add('o',`Dépôt mutuelle dans ${dl} jours : il manque ${F(need)}`,'Le véhicule arrive vers le 20 : ne compte pas dessus pour le dépôt.');
+    else if(need&&dl<=5)add('o',`Dépôt mutuelle dans ${dl} jours : il manque ${F(need)}`,'Le véhicule arrive au plus tard le 16 : vérifie qu\'il est bien payé.');
     else if(!need)add('g','Caisse mutuelle prête',`${F(b.cai)} de côté pour le ${t.getDate()} ${MN[t.getMonth()]}.`);}
   // échéances proches et argent du mois suivant
   for(let i=tIdx+1;i<res.length&&i<=tIdx+5;i++)for(const it of res[i].items){
