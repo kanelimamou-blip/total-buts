@@ -40,6 +40,12 @@ def legs_for_match(pred: dict, market_pred: dict | None, real_o25: float | None)
             # Everton–Coventry 1,22 et Nancy–Sochaux 1,23, contre 1,34 et 1,51 estimés). On garde la plus basse des deux
             # estimations, celle tirée de notre probabilité calibrée, pour ne jamais promettre une cote introuvable.
             odds = max(min(odds, fair / (1 + BOOK_MARGIN)), 1.05)
+            # Relevé des tickets réels d'Est du 22 au 25/11 : 1xBet payait 2 à 8 % de plus que cette estimation
+            # sur +1,5 / +2 (Brentford–Everton 1,254 contre 1,16 ; Monza–Fiorentina 1,186 contre 1,15 ;
+            # Levante–Elche 1,21 contre 1,19 ; Ceuta–Almería 1,21 contre 1,18 ; OM–Le Mans 1,207 contre 1,19).
+            # On ajoute la médiane (+3 %), sans jamais dépasser la cote juste.
+            if m in ("o15", "o20"):
+                odds = min(odds * 1.03, fair)
         out.append({
             "market": m, "p_win": p_win, "p_push": p_push, "p_lose": 1 - p_win - p_push,
             "odds": round(max(odds, 1.01), 2), "odds_source": source,
@@ -168,7 +174,7 @@ def _virtual(matches: list[dict], markets: set) -> list[dict]:
 
 
 def build_day(matches: list[dict], kinds=("sur", "favoris", "buts15", "buts20", "mix", "dc", "autres", "ligue", "value", "audace", "large3", "large5",
-                                          "large_dom", "mt2", "favplus", "jackpot", "jackpot_fiable"),
+                                          "large_dom", "mt2", "favplus", "lignes", "jackpot", "jackpot_fiable"),
               league_names=None) -> list[dict]:
     """Coupons d'une journée. matches : [{"id", "div", "rel", "legs"}].
 
@@ -278,6 +284,32 @@ def build_day(matches: list[dict], kinds=("sur", "favoris", "buts15", "buts20", 
         if o >= cfg["min_odds"] and len(picks) >= cfg["legs"][0]:
             stats = [_leg_stats(l) for _, _, l in cand[:len(picks)]]
             out.append(_pack("mt2", sum(x[0] for x in stats), sum(x[1] for x in stats), [tuple(p) for p in picks]))
+    if "lignes" in kinds:
+        # Ticket « lignes de buts » (exemples d'Est du 28/11) : pour chaque match, la ligne de buts la plus haute
+        # (+0,5 à +4,5) qui reste très probable, puis les matchs les plus sûrs jusqu'à la cote visée.
+        cfg, LINES = COUPONS["lignes"], ["o45", "o35", "o25", "o15", "o05"]
+        cand = []
+        for m in matches:
+            if m.get("provisional") or m.get("nations"):
+                continue
+            for mk in LINES:
+                l = next((x for x in m["legs"] if x["market"] == mk and not x.get("excluded")), None)
+                if l and l["p_win"] >= LIGNES_MIN_P and l["odds"] >= 1.08:
+                    cand.append((l["p_win"] * m.get("rel", 1.0), m, l))
+                    break
+        cand.sort(key=lambda x: -x[0])
+        made = 0
+        while cand and made < MAX_PER_DAY.get("lignes", 3):
+            picks, o, stats = [], 1.0, []
+            while cand and len(picks) < cfg["legs"][1] and o < cfg["min_odds"]:
+                _, m, l = cand.pop(0)
+                picks.append((dict(m, legs=[l]), l["market"]))
+                stats.append(_leg_stats(l))
+                o *= l["odds"]
+            if o < cfg["min_odds"] or len(picks) < cfg["legs"][0] or o > cfg["max_odds"]:
+                break
+            add([_pack("lignes", sum(x[0] for x in stats), sum(x[1] for x in stats), picks)])
+            made += 1
     if "jackpot_fiable" in kinds:
         out.extend(build_jackpots(matches))
     if "jackpot" in kinds:
@@ -306,12 +338,13 @@ KIND_FACTOR: dict = {}  # rempli chaque jour par le retour d'expérience (feedba
 
 
 # Coupons « à jouer » : 2-3 matchs (parfois plus), cote 2 au moins, suivis par combinaison
+LIGNES_MIN_P = 0.80  # chaque ligne choisie doit passer au moins 8 fois sur 10
 SMALL_KINDS = {"sur", "ligue", "favoris", "buts15", "buts20", "mix", "dc", "autres", "value", "tendance"}
 COMBO_FACTOR: dict = {}  # signature -> facteur, rempli chaque jour (feedback.combo_factors)
 
 
 def leg_family(market: str) -> str:
-    if market in ("o15", "o20", "o25"):
+    if market in ("o05", "o15", "o20", "o25", "o35", "o45"):
         return "buts"
     if market in ("1", "2"):
         return "favori"

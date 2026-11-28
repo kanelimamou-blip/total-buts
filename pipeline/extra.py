@@ -20,6 +20,9 @@ LABELS = {
     "X2": ("Double chance X2", "Double chance X2"),
     "dnb1": ("Remboursé si nul : domicile", "Victoire 1 remboursé si nul (Handicap 0)"),
     "dnb2": ("Remboursé si nul : extérieur", "Victoire 2 remboursé si nul (Handicap 0)"),
+    "o05": ("Plus de 0,5 but", "Total Plus de 0.5"),
+    "o35": ("Plus de 3,5 buts", "Total Plus de 3.5"),
+    "o45": ("Plus de 4,5 buts", "Total Plus de 4.5"),
     "u35": ("Moins de 3,5 buts", "Total Moins de 3.5"),
     "u45": ("Moins de 4,5 buts", "Total Moins de 4.5"),
     "h05": ("Domicile marque +0,5", "Total individuel 1 Plus de 0.5"),
@@ -51,6 +54,10 @@ def raw_probs(xg_h: float, xg_a: float, rho: float, res: dict, ht_share: float =
         ("dnb1" if fav == "1" else "dnb2"): (res[fav], res["X"]),
         "u35": (float(tot[:4].sum()), 0.0),
         "u45": (float(tot[:5].sum()), 0.0),
+        # lignes de buts du ticket « lignes » (demande d'Est du 28/11 : une ligne par match, choisie très probable)
+        "o05": (float(1 - tot[0]), 0.0),
+        "o35": (float(1 - tot[:4].sum()), 0.0),
+        "o45": (float(1 - tot[:5].sum()), 0.0),
     }
     if fav == "1":
         out["h05"], out["h15"] = (float(1 - ph[0]), 0.0), (float(1 - ph[:2].sum()), 0.0)
@@ -98,6 +105,8 @@ def settle(market: str, hg: int, ag: int, info: dict | None = None) -> str | Non
         if hg == ag:
             return "push"
         return "won" if (hg > ag) == (market == "dnb1") else "lost"
+    if market in ("o05", "o35", "o45"):
+        return "won" if t > int(market[1]) else "lost"
     if market == "u35":
         return "won" if t <= 3 else "lost"
     if market == "u45":

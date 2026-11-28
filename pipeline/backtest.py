@@ -19,7 +19,7 @@ import meta
 from coupons import settle_leg
 from model import devig, fit, markets_from_total, predict, result_probs, score_matrix, total_dist
 
-VERSION = 16  # à augmenter quand le test change, pour qu'il soit relancé sans attendre la semaine
+VERSION = 17  # à augmenter quand le test change, pour qu'il soit relancé sans attendre la semaine
 DUMP: list | None = None  # rempli seulement pour une étude hors ligne
 BACKTEST_YEARS = 3.2
 REFIT_DAYS = 7
