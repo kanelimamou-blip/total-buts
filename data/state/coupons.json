@@ -86033,7 +86033,10 @@
       "odds_source": "estimée",
       "p_win": 0.728,
       "p_push": 0.0,
-      "min_odds": 1.42
+      "min_odds": 1.42,
+      "goals": 3,
+      "score": "3-0",
+      "result": "won"
      }
     ],
     "odds": 124.59,
@@ -87451,7 +87454,10 @@
       "odds_source": "estimée",
       "p_win": 0.44,
       "p_push": 0.264,
-      "min_odds": 1.72
+      "min_odds": 1.72,
+      "goals": 1,
+      "score": "1-0",
+      "result": "lost"
      }
     ],
     "odds": 2.49,
@@ -87908,7 +87914,10 @@
       "odds_source": "estimée",
       "p_win": 0.626,
       "p_push": 0.0,
-      "min_odds": 1.65
+      "min_odds": 1.65,
+      "goals": 4,
+      "score": "4-0",
+      "result": "won"
      }
     ],
     "odds": 2.35,
@@ -99652,7 +99661,10 @@
       "odds_source": "estimée",
       "p_win": 0.669,
       "p_push": 0.0,
-      "min_odds": 1.54
+      "min_odds": 1.54,
+      "goals": 1,
+      "score": "1-0",
+      "result": "lost"
      }
     ],
     "odds": 2.27,
@@ -106467,7 +106479,10 @@
       "odds_source": "estimée",
       "p_win": 0.433,
       "p_push": 0.236,
-      "min_odds": 1.82
+      "min_odds": 1.82,
+      "goals": 1,
+      "score": "1-0",
+      "result": "lost"
      }
     ],
     "odds": 2.65,
@@ -113124,7 +113139,10 @@
       "odds_source": "estimée",
       "p_win": 0.433,
       "p_push": 0.236,
-      "min_odds": 1.82
+      "min_odds": 1.82,
+      "goals": 1,
+      "score": "1-0",
+      "result": "lost"
      }
     ],
     "odds": 2.65,
@@ -122944,7 +122962,10 @@
       "odds_source": "estimée",
       "p_win": 0.714,
       "p_push": 0.0,
-      "min_odds": 1.44
+      "min_odds": 1.44,
+      "goals": 1,
+      "score": "1-0",
+      "result": "lost"
      }
     ],
     "odds": 2.16,
@@ -125606,7 +125627,10 @@
       "odds_source": "marché",
       "p_win": 0.672,
       "p_push": 0.0,
-      "min_odds": 1.53
+      "min_odds": 1.53,
+      "goals": 4,
+      "score": "4-0",
+      "result": "won"
      },
      {
       "id": "20261128|B1|Charleroi|Beveren",
@@ -125721,7 +125745,10 @@
       "odds_source": "estimée",
       "p_win": 0.517,
       "p_push": 0.0,
-      "min_odds": 1.99
+      "min_odds": 1.99,
+      "goals": 4,
+      "score": "4-0",
+      "result": "lost"
      },
      {
       "id": "20261128|B1|Charleroi|Beveren",
@@ -125916,7 +125943,10 @@
       "odds_source": "marché",
       "p_win": 0.601,
       "p_push": 0.0,
-      "min_odds": 1.71
+      "min_odds": 1.71,
+      "goals": 0,
+      "score": "0-0",
+      "result": "lost"
      }
     ],
     "odds": 2.0,
@@ -126256,7 +126286,10 @@
       "odds_source": "estimée",
       "p_win": 0.739,
       "p_push": 0.0,
-      "min_odds": 1.39
+      "min_odds": 1.39,
+      "goals": 4,
+      "score": "1-3",
+      "result": "won"
      },
      {
       "id": "20261128|E3|Fleetwood Town|Accrington",
@@ -126311,7 +126344,10 @@
       "odds_source": "estimée",
       "p_win": 0.841,
       "p_push": 0.0,
-      "min_odds": 1.22
+      "min_odds": 1.22,
+      "goals": 0,
+      "score": "0-0",
+      "result": "lost"
      },
      {
       "id": "20261128|I2|Ascoli|Virtus Entella",
@@ -126411,7 +126447,10 @@
       "odds_source": "estimée",
       "p_win": 0.507,
       "p_push": 0.252,
-      "min_odds": 1.52
+      "min_odds": 1.52,
+      "goals": 0,
+      "score": "0-0",
+      "result": "push"
      },
      {
       "id": "20261128|SP1|Betis|Vallecano",
@@ -126588,6 +126627,57 @@
     "level": "moyenne"
    },
    {
+    "kind": "live_combi",
+    "label": "Coupon live",
+    "scope": "3 matchs en cours",
+    "stake_pct": 0.5,
+    "legs": [
+     {
+      "id": "20261128|I1|Frosinone|Parma",
+      "market": "h05",
+      "team": "Frosinone",
+      "odds": 1.27,
+      "odds_source": "estimée",
+      "p_win": 0.73,
+      "p_push": 0.0,
+      "min_odds": 1.41,
+      "live_minute": 39,
+      "live_score": "0-0"
+     },
+     {
+      "id": "20261128|D1|FC Koln|Elversberg",
+      "market": "u45",
+      "team": null,
+      "odds": 1.28,
+      "odds_source": "estimée",
+      "p_win": 0.721,
+      "p_push": 0.0,
+      "min_odds": 1.43,
+      "live_minute": 12,
+      "live_score": "1-0"
+     },
+     {
+      "id": "20261128|D1|Hamburg|Bayern Munich",
+      "market": "a15",
+      "team": "Bayern Munich",
+      "odds": 1.29,
+      "odds_source": "estimée",
+      "p_win": 0.72,
+      "p_push": 0.0,
+      "min_odds": 1.43,
+      "live_minute": 11,
+      "live_score": "0-0"
+     }
+    ],
+    "odds": 2.1,
+    "p_win": 0.379,
+    "p_not_lose": 0.379,
+    "ev": -0.288,
+    "reliability": 1.0,
+    "priority": 25,
+    "level": "basse"
+   },
+   {
     "kind": "periode_fav",
     "label": "Favoris sur la période",
     "scope": "3 semaines",
@@ -126649,7 +126739,7 @@
     "p_not_lose": 0.328,
     "ev": -0.335,
     "reliability": 1.008,
-    "priority": 25,
+    "priority": 26,
     "level": "basse"
    },
    {
@@ -126704,7 +126794,7 @@
     "p_not_lose": 0.463,
     "ev": -0.157,
     "reliability": 0.996,
-    "priority": 26,
+    "priority": 27,
     "level": "moyenne"
    },
    {
@@ -126759,7 +126849,7 @@
     "p_not_lose": 0.463,
     "ev": -0.157,
     "reliability": 0.996,
-    "priority": 27,
+    "priority": 28,
     "level": "moyenne"
    },
    {
@@ -126814,7 +126904,7 @@
     "p_not_lose": 0.463,
     "ev": -0.157,
     "reliability": 0.996,
-    "priority": 28,
+    "priority": 29,
     "level": "moyenne"
    },
    {
@@ -126879,7 +126969,7 @@
     "p_not_lose": 0.312,
     "ev": -0.353,
     "reliability": 1.038,
-    "priority": 29,
+    "priority": 30,
     "level": "basse"
    },
    {
@@ -126916,7 +127006,10 @@
       "odds_source": "marché",
       "p_win": 0.426,
       "p_push": 0.0,
-      "min_odds": 2.42
+      "min_odds": 2.42,
+      "goals": 3,
+      "score": "3-0",
+      "result": "won"
      }
     ],
     "odds": 3.21,
@@ -126924,7 +127017,58 @@
     "p_not_lose": 0.288,
     "ev": -0.24,
     "reliability": 1.052,
-    "priority": 30,
+    "priority": 31,
+    "level": "basse"
+   },
+   {
+    "kind": "live_combi",
+    "label": "Coupon live",
+    "scope": "3 matchs en cours",
+    "stake_pct": 0.5,
+    "legs": [
+     {
+      "id": "20261128|I2|Carrarese|Juve Stabia",
+      "market": "1X",
+      "team": null,
+      "odds": 1.29,
+      "odds_source": "estimée",
+      "p_win": 0.716,
+      "p_push": 0.0,
+      "min_odds": 1.44,
+      "live_minute": 40,
+      "live_score": "0-0"
+     },
+     {
+      "id": "20261128|D1|Paderborn|Schalke 04",
+      "market": "o15",
+      "team": null,
+      "odds": 1.3,
+      "odds_source": "estimée",
+      "p_win": 0.711,
+      "p_push": 0.0,
+      "min_odds": 1.45,
+      "live_minute": 11,
+      "live_score": "0-0"
+     },
+     {
+      "id": "20261128|I2|Empoli|Verona",
+      "market": "X2",
+      "team": null,
+      "odds": 1.33,
+      "odds_source": "estimée",
+      "p_win": 0.695,
+      "p_push": 0.0,
+      "min_odds": 1.48,
+      "live_minute": 39,
+      "live_score": "1-1"
+     }
+    ],
+    "odds": 2.23,
+    "p_win": 0.354,
+    "p_not_lose": 0.354,
+    "ev": -0.298,
+    "reliability": 1.0,
+    "priority": 32,
     "level": "basse"
    },
    {
@@ -126951,7 +127095,10 @@
       "odds_source": "estimée",
       "p_win": 0.487,
       "p_push": 0.259,
-      "min_odds": 1.57
+      "min_odds": 1.57,
+      "goals": 1,
+      "score": "1-0",
+      "result": "lost"
      },
      {
       "id": "20261128|E1|Wrexham|Portsmouth",
@@ -126969,7 +127116,7 @@
     "p_not_lose": 0.427,
     "ev": -0.23,
     "reliability": 0.837,
-    "priority": 31,
+    "priority": 33,
     "level": "moyenne"
    },
    {
@@ -127024,7 +127171,7 @@
     "p_not_lose": 0.432,
     "ev": -0.188,
     "reliability": 1.033,
-    "priority": 32,
+    "priority": 34,
     "level": "moyenne"
    },
    {
@@ -127079,7 +127226,7 @@
     "p_not_lose": 0.431,
     "ev": -0.191,
     "reliability": 1.018,
-    "priority": 33,
+    "priority": 35,
     "level": "moyenne"
    },
    {
@@ -127124,7 +127271,7 @@
     "p_not_lose": 0.276,
     "ev": -0.274,
     "reliability": 1.056,
-    "priority": 34,
+    "priority": 36,
     "level": "basse"
    },
    {
@@ -127159,7 +127306,7 @@
     "p_not_lose": 0.296,
     "ev": -0.218,
     "reliability": 0.966,
-    "priority": 35,
+    "priority": 37,
     "level": "basse"
    },
    {
@@ -127225,7 +127372,7 @@
     "ev": -0.281,
     "reliability": 1.037,
     "target": 3.0,
-    "priority": 36,
+    "priority": 38,
     "level": "basse"
    },
    {
@@ -127291,7 +127438,7 @@
     "ev": -0.281,
     "reliability": 1.037,
     "target": 3.0,
-    "priority": 37,
+    "priority": 39,
     "level": "basse"
    },
    {
@@ -127318,7 +127465,10 @@
       "odds_source": "estimée",
       "p_win": 0.487,
       "p_push": 0.259,
-      "min_odds": 1.57
+      "min_odds": 1.57,
+      "goals": 1,
+      "score": "1-0",
+      "result": "lost"
      },
      {
       "id": "20261129|T1|Corum|Kocaelispor",
@@ -127336,7 +127486,7 @@
     "p_not_lose": 0.422,
     "ev": -0.238,
     "reliability": 1.0,
-    "priority": 38,
+    "priority": 40,
     "level": "moyenne"
    },
    {
@@ -127402,7 +127552,7 @@
     "ev": -0.263,
     "reliability": 1.046,
     "target": 3.0,
-    "priority": 39,
+    "priority": 41,
     "level": "basse"
    },
    {
@@ -127447,7 +127597,7 @@
     "p_not_lose": 0.256,
     "ev": -0.276,
     "reliability": 1.097,
-    "priority": 40,
+    "priority": 42,
     "level": "basse"
    },
    {
@@ -127492,7 +127642,7 @@
     "p_not_lose": 0.281,
     "ev": -0.268,
     "reliability": 0.974,
-    "priority": 41,
+    "priority": 43,
     "level": "basse"
    },
    {
@@ -127547,7 +127697,7 @@
     "p_not_lose": 0.403,
     "ev": -0.273,
     "reliability": 1.0,
-    "priority": 42,
+    "priority": 44,
     "level": "moyenne"
    },
    {
@@ -127582,7 +127732,7 @@
     "p_not_lose": 0.3,
     "ev": -0.203,
     "reliability": 1.118,
-    "priority": 43,
+    "priority": 45,
     "level": "basse"
    },
    {
@@ -127637,7 +127787,7 @@
     "p_not_lose": 0.272,
     "ev": -0.287,
     "reliability": 0.969,
-    "priority": 44,
+    "priority": 46,
     "level": "basse"
    },
    {
@@ -127694,7 +127844,10 @@
       "odds_source": "estimée",
       "p_win": 0.838,
       "p_push": 0.0,
-      "min_odds": 1.23
+      "min_odds": 1.23,
+      "goals": 0,
+      "score": "0-0",
+      "result": "won"
      }
     ],
     "odds": 3.39,
@@ -127702,7 +127855,7 @@
     "p_not_lose": 0.255,
     "ev": -0.336,
     "reliability": 1.016,
-    "priority": 45,
+    "priority": 47,
     "level": "basse"
    },
    {
@@ -127747,7 +127900,7 @@
     "p_not_lose": 0.275,
     "ev": -0.276,
     "reliability": 0.911,
-    "priority": 46,
+    "priority": 48,
     "level": "basse"
    },
    {
@@ -127782,7 +127935,7 @@
     "p_not_lose": 0.282,
     "ev": -0.244,
     "reliability": 1.079,
-    "priority": 47,
+    "priority": 49,
     "level": "basse"
    },
    {
@@ -127799,7 +127952,10 @@
       "odds_source": "marché",
       "p_win": 0.526,
       "p_push": 0.0,
-      "min_odds": 1.96
+      "min_odds": 1.96,
+      "goals": 0,
+      "score": "0-0",
+      "result": "lost"
      },
      {
       "id": "20261128|G1|Kifisia|Kalamata",
@@ -127817,7 +127973,7 @@
     "p_not_lose": 0.268,
     "ev": -0.24,
     "reliability": 1.073,
-    "priority": 48,
+    "priority": 50,
     "level": "basse"
    },
    {
@@ -127893,7 +128049,7 @@
     "ev": -0.306,
     "reliability": 1.051,
     "target": 5.0,
-    "priority": 49,
+    "priority": 51,
     "level": "basse"
    },
    {
@@ -127969,7 +128125,7 @@
     "ev": -0.322,
     "reliability": 1.032,
     "target": 5.0,
-    "priority": 50,
+    "priority": 52,
     "level": "basse"
    },
    {
@@ -128045,7 +128201,7 @@
     "ev": -0.322,
     "reliability": 1.032,
     "target": 5.0,
-    "priority": 51,
+    "priority": 53,
     "level": "basse"
    },
    {
@@ -128090,7 +128246,7 @@
     "p_not_lose": 0.176,
     "ev": -0.244,
     "reliability": 1.027,
-    "priority": 52,
+    "priority": 54,
     "level": "basse"
    },
    {
@@ -128107,7 +128263,10 @@
       "odds_source": "estimée",
       "p_win": 0.836,
       "p_push": 0.0,
-      "min_odds": 1.23
+      "min_odds": 1.23,
+      "goals": 0,
+      "score": "0-0",
+      "result": "lost"
      },
      {
       "id": "20261128|E1|West Brom|Bristol City",
@@ -128127,7 +128286,10 @@
       "odds_source": "estimée",
       "p_win": 0.567,
       "p_push": 0.219,
-      "min_odds": 1.42
+      "min_odds": 1.42,
+      "goals": 3,
+      "score": "2-1",
+      "result": "won"
      },
      {
       "id": "20261128|B1|Westerlo|RAAL La Louviere",
@@ -128145,7 +128307,7 @@
     "p_not_lose": 0.174,
     "ev": -0.267,
     "reliability": 0.958,
-    "priority": 53,
+    "priority": 55,
     "level": "basse"
    },
    {
@@ -128182,7 +128344,10 @@
       "odds_source": "estimée",
       "p_win": 0.832,
       "p_push": 0.0,
-      "min_odds": 1.24
+      "min_odds": 1.24,
+      "goals": 3,
+      "score": "3-0",
+      "result": "won"
      },
      {
       "id": "20261128|E3|Swindon|Chesterfield",
@@ -128200,7 +128365,7 @@
     "p_not_lose": 0.15,
     "ev": -0.338,
     "reliability": 0.984,
-    "priority": 54,
+    "priority": 56,
     "level": "basse"
    },
    {
@@ -128296,7 +128461,7 @@
     "ev": -0.4,
     "reliability": 1.046,
     "target": 10.0,
-    "priority": 55,
+    "priority": 57,
     "level": "basse"
    },
    {
@@ -128392,7 +128557,7 @@
     "ev": -0.399,
     "reliability": 1.035,
     "target": 10.0,
-    "priority": 56,
+    "priority": 58,
     "level": "basse"
    },
    {
@@ -128488,7 +128653,7 @@
     "ev": -0.385,
     "reliability": 1.03,
     "target": 10.0,
-    "priority": 57,
+    "priority": 59,
     "level": "basse"
    },
    {
@@ -128614,7 +128779,7 @@
     "ev": -0.482,
     "reliability": 1.025,
     "target": 20.0,
-    "priority": 58,
+    "priority": 60,
     "level": "basse"
    },
    {
@@ -128731,7 +128896,10 @@
       "odds_source": "estimée",
       "p_win": 0.487,
       "p_push": 0.259,
-      "min_odds": 1.57
+      "min_odds": 1.57,
+      "goals": 1,
+      "score": "1-0",
+      "result": "lost"
      }
     ],
     "odds": 24.83,
@@ -128740,7 +128908,7 @@
     "ev": -0.489,
     "reliability": 1.028,
     "target": 20.0,
-    "priority": 59,
+    "priority": 61,
     "level": "basse"
    },
    {
@@ -128866,7 +129034,7 @@
     "ev": -0.475,
     "reliability": 1.044,
     "target": 20.0,
-    "priority": 60,
+    "priority": 62,
     "level": "basse"
    },
    {
@@ -129012,7 +129180,7 @@
     "ev": -0.522,
     "reliability": 1.053,
     "target": 50.0,
-    "priority": 61,
+    "priority": 63,
     "level": "basse"
    },
    {
@@ -129129,7 +129297,10 @@
       "odds_source": "estimée",
       "p_win": 0.487,
       "p_push": 0.259,
-      "min_odds": 1.57
+      "min_odds": 1.57,
+      "goals": 1,
+      "score": "1-0",
+      "result": "lost"
      },
      {
       "id": "20261128|P1|Academico Viseu|Alverca",
@@ -129158,7 +129329,7 @@
     "ev": -0.536,
     "reliability": 1.038,
     "target": 50.0,
-    "priority": 62,
+    "priority": 64,
     "level": "basse"
    },
    {
@@ -129314,7 +129485,7 @@
     "ev": -0.55,
     "reliability": 1.023,
     "target": 50.0,
-    "priority": 63,
+    "priority": 65,
     "level": "basse"
    },
    {
@@ -129431,7 +129602,10 @@
       "odds_source": "estimée",
       "p_win": 0.487,
       "p_push": 0.259,
-      "min_odds": 1.57
+      "min_odds": 1.57,
+      "goals": 1,
+      "score": "1-0",
+      "result": "lost"
      },
      {
       "id": "20261128|P1|Academico Viseu|Alverca",
@@ -129490,7 +129664,7 @@
     "ev": -0.615,
     "reliability": 1.048,
     "target": 100.0,
-    "priority": 64,
+    "priority": 66,
     "level": "basse"
    },
    {
@@ -129666,7 +129840,7 @@
     "ev": -0.598,
     "reliability": 1.016,
     "target": 100.0,
-    "priority": 65,
+    "priority": 67,
     "level": "basse"
    },
    {
@@ -129842,7 +130016,7 @@
     "ev": -0.598,
     "reliability": 1.043,
     "target": 100.0,
-    "priority": 66,
+    "priority": 68,
     "level": "basse"
    },
    {
@@ -129947,7 +130121,7 @@
     "p_not_lose": 0.183,
     "ev": -0.489,
     "reliability": 1.101,
-    "priority": 67,
+    "priority": 69,
     "level": "basse"
    },
    {
@@ -130002,7 +130176,7 @@
     "p_not_lose": 0.077,
     "ev": -0.149,
     "reliability": 1.031,
-    "priority": 68,
+    "priority": 70,
     "level": "basse"
    },
    {
@@ -130067,7 +130241,7 @@
     "p_not_lose": 0.051,
     "ev": -0.169,
     "reliability": 1.043,
-    "priority": 69,
+    "priority": 71,
     "level": "basse"
    },
    {
@@ -130152,7 +130326,7 @@
     "p_not_lose": 0.013,
     "ev": -0.222,
     "reliability": 1.063,
-    "priority": 70,
+    "priority": 72,
     "level": "basse"
    },
    {
@@ -130257,7 +130431,7 @@
     "p_not_lose": 0.001,
     "ev": 0.071,
     "reliability": 1.077,
-    "priority": 71,
+    "priority": 73,
     "level": "basse"
    }
   ],
@@ -130268,7 +130442,7 @@
  },
  "2026-11-29": {
   "frozen": false,
-  "created": "2026-11-28T09:30+00:00",
+  "created": "2026-11-28T14:39+00:00",
   "coupons": [
    {
     "kind": "mix",
@@ -130306,6 +130480,41 @@
     "level": "moyenne"
    },
    {
+    "kind": "mix",
+    "label": "Coupon mix",
+    "scope": "Toutes ligues",
+    "stake_pct": 1.5,
+    "legs": [
+     {
+      "id": "20261129|SC0|Hearts|Celtic",
+      "market": "o15",
+      "team": null,
+      "odds": 1.12,
+      "odds_source": "estimée",
+      "p_win": 0.869,
+      "p_push": 0.0,
+      "min_odds": 1.19
+     },
+     {
+      "id": "20261129|D2|Braunschweig|Wolfsburg",
+      "market": "2",
+      "team": "Wolfsburg",
+      "odds": 1.81,
+      "odds_source": "marché",
+      "p_win": 0.544,
+      "p_push": 0.0,
+      "min_odds": 1.89
+     }
+    ],
+    "odds": 2.03,
+    "p_win": 0.473,
+    "p_not_lose": 0.473,
+    "ev": -0.139,
+    "reliability": 1.045,
+    "priority": 2,
+    "level": "moyenne"
+   },
+   {
     "kind": "favoris",
     "label": "Ticket favoris",
     "scope": "Toutes ligues",
@@ -130337,41 +130546,6 @@
     "p_not_lose": 0.474,
     "ev": -0.136,
     "reliability": 1.071,
-    "priority": 2,
-    "level": "moyenne"
-   },
-   {
-    "kind": "mix",
-    "label": "Coupon mix",
-    "scope": "Toutes ligues",
-    "stake_pct": 1.5,
-    "legs": [
-     {
-      "id": "20261129|SC0|Hearts|Celtic",
-      "market": "o15",
-      "team": null,
-      "odds": 1.12,
-      "odds_source": "estimée",
-      "p_win": 0.869,
-      "p_push": 0.0,
-      "min_odds": 1.19
-     },
-     {
-      "id": "20261129|D2|Braunschweig|Wolfsburg",
-      "market": "2",
-      "team": "Wolfsburg",
-      "odds": 1.81,
-      "odds_source": "marché",
-      "p_win": 0.541,
-      "p_push": 0.0,
-      "min_odds": 1.91
-     }
-    ],
-    "odds": 2.03,
-    "p_win": 0.47,
-    "p_not_lose": 0.47,
-    "ev": -0.144,
-    "reliability": 1.045,
     "priority": 3,
     "level": "moyenne"
    },
@@ -130457,9 +130631,9 @@
       "team": "Magdeburg",
       "odds": 1.58,
       "odds_source": "marché",
-      "p_win": 0.617,
+      "p_win": 0.621,
       "p_push": 0.0,
-      "min_odds": 1.67
+      "min_odds": 1.66
      },
      {
       "id": "20261129|D1|Dortmund|Leverkusen",
@@ -130483,9 +130657,9 @@
      }
     ],
     "odds": 2.05,
-    "p_win": 0.451,
-    "p_not_lose": 0.451,
-    "ev": -0.17,
+    "p_win": 0.453,
+    "p_not_lose": 0.453,
+    "ev": -0.164,
     "reliability": 1.045,
     "priority": 6,
     "level": "moyenne"
@@ -131587,9 +131761,19 @@
       "team": "Wolfsburg",
       "odds": 1.81,
       "odds_source": "marché",
-      "p_win": 0.541,
+      "p_win": 0.544,
       "p_push": 0.0,
-      "min_odds": 1.91
+      "min_odds": 1.89
+     },
+     {
+      "id": "20261129|D2|Magdeburg|Cottbus",
+      "market": "1",
+      "team": "Magdeburg",
+      "odds": 1.58,
+      "odds_source": "marché",
+      "p_win": 0.621,
+      "p_push": 0.0,
+      "min_odds": 1.66
      },
      {
       "id": "20261129|B1|St. Gilloise|Gent",
@@ -131610,22 +131794,12 @@
       "p_win": 0.639,
       "p_push": 0.0,
       "min_odds": 1.61
-     },
-     {
-      "id": "20261129|D2|Magdeburg|Cottbus",
-      "market": "1",
-      "team": "Magdeburg",
-      "odds": 1.58,
-      "odds_source": "marché",
-      "p_win": 0.617,
-      "p_push": 0.0,
-      "min_odds": 1.67
      }
     ],
     "odds": 10.47,
-    "p_win": 0.087,
-    "p_not_lose": 0.087,
-    "ev": -0.255,
+    "p_win": 0.088,
+    "p_not_lose": 0.088,
+    "ev": -0.246,
     "reliability": 1.037,
     "priority": 30,
     "level": "basse"
@@ -131652,9 +131826,19 @@
       "team": "Wolfsburg",
       "odds": 1.81,
       "odds_source": "marché",
-      "p_win": 0.541,
+      "p_win": 0.544,
       "p_push": 0.0,
-      "min_odds": 1.91
+      "min_odds": 1.89
+     },
+     {
+      "id": "20261129|D2|Magdeburg|Cottbus",
+      "market": "1",
+      "team": "Magdeburg",
+      "odds": 1.58,
+      "odds_source": "marché",
+      "p_win": 0.621,
+      "p_push": 0.0,
+      "min_odds": 1.66
      },
      {
       "id": "20261129|B1|St. Gilloise|Gent",
@@ -131675,16 +131859,6 @@
       "p_win": 0.639,
       "p_push": 0.0,
       "min_odds": 1.61
-     },
-     {
-      "id": "20261129|D2|Magdeburg|Cottbus",
-      "market": "1",
-      "team": "Magdeburg",
-      "odds": 1.58,
-      "odds_source": "marché",
-      "p_win": 0.617,
-      "p_push": 0.0,
-      "min_odds": 1.67
      },
      {
       "id": "20261129|T1|Corum|Kocaelispor",
@@ -131708,9 +131882,9 @@
      }
     ],
     "odds": 33.46,
-    "p_win": 0.025,
-    "p_not_lose": 0.025,
-    "ev": -0.32,
+    "p_win": 0.026,
+    "p_not_lose": 0.026,
+    "ev": -0.312,
     "reliability": 1.055,
     "priority": 31,
     "level": "basse"
@@ -131737,9 +131911,19 @@
       "team": "Wolfsburg",
       "odds": 1.81,
       "odds_source": "marché",
-      "p_win": 0.541,
+      "p_win": 0.544,
       "p_push": 0.0,
-      "min_odds": 1.91
+      "min_odds": 1.89
+     },
+     {
+      "id": "20261129|D2|Magdeburg|Cottbus",
+      "market": "1",
+      "team": "Magdeburg",
+      "odds": 1.58,
+      "odds_source": "marché",
+      "p_win": 0.621,
+      "p_push": 0.0,
+      "min_odds": 1.66
      },
      {
       "id": "20261129|B1|St. Gilloise|Gent",
@@ -131760,16 +131944,6 @@
       "p_win": 0.639,
       "p_push": 0.0,
       "min_odds": 1.61
-     },
-     {
-      "id": "20261129|D2|Magdeburg|Cottbus",
-      "market": "1",
-      "team": "Magdeburg",
-      "odds": 1.58,
-      "odds_source": "marché",
-      "p_win": 0.617,
-      "p_push": 0.0,
-      "min_odds": 1.67
      },
      {
       "id": "20261129|T1|Corum|Kocaelispor",
@@ -131805,7 +131979,7 @@
     "odds": 59.55,
     "p_win": 0.014,
     "p_not_lose": 0.014,
-    "ev": -0.349,
+    "ev": -0.342,
     "reliability": 1.058,
     "priority": 32,
     "level": "basse"
@@ -131867,24 +132041,24 @@
       "min_odds": 2.32
      },
      {
-      "id": "20261129|E1|Swansea|Cardiff",
-      "market": "1",
-      "team": "Swansea",
-      "odds": 2.04,
-      "odds_source": "marché",
-      "p_win": 0.479,
-      "p_push": 0.0,
-      "min_odds": 2.15
-     },
-     {
       "id": "20261129|D2|Braunschweig|Wolfsburg",
       "market": "2",
       "team": "Wolfsburg",
       "odds": 1.81,
       "odds_source": "marché",
-      "p_win": 0.541,
+      "p_win": 0.544,
       "p_push": 0.0,
-      "min_odds": 1.91
+      "min_odds": 1.89
+     },
+     {
+      "id": "20261129|D2|Magdeburg|Cottbus",
+      "market": "1",
+      "team": "Magdeburg",
+      "odds": 1.58,
+      "odds_source": "marché",
+      "p_win": 0.621,
+      "p_push": 0.0,
+      "min_odds": 1.66
      },
      {
       "id": "20261129|B1|St. Gilloise|Gent",
@@ -131907,6 +132081,16 @@
       "min_odds": 2.09
      },
      {
+      "id": "20261129|E1|Swansea|Cardiff",
+      "market": "1",
+      "team": "Swansea",
+      "odds": 2.04,
+      "odds_source": "marché",
+      "p_win": 0.475,
+      "p_push": 0.0,
+      "min_odds": 2.17
+     },
+     {
       "id": "20261129|F1|Toulouse|Rennes",
       "market": "1",
       "team": "Toulouse",
@@ -131917,11 +132101,11 @@
       "min_odds": 2.71
      }
     ],
-    "odds": 1100.05,
-    "p_win": 0.001,
-    "p_not_lose": 0.001,
-    "ev": -0.306,
-    "reliability": 0.986,
+    "odds": 1738.07,
+    "p_win": 0.0,
+    "p_not_lose": 0.0,
+    "ev": -0.321,
+    "reliability": 0.987,
     "priority": 33,
     "level": "basse"
    }
@@ -131930,7 +132114,7 @@
  },
  "2026-11-30": {
   "frozen": false,
-  "created": "2026-11-28T09:30+00:00",
+  "created": "2026-11-28T14:39+00:00",
   "coupons": [
    {
     "kind": "mix",
@@ -132707,7 +132891,7 @@
  },
  "2026-12-01": {
   "frozen": false,
-  "created": "2026-11-28T09:30+00:00",
+  "created": "2026-11-28T14:39+00:00",
   "coupons": [
    {
     "kind": "mix",
@@ -132719,29 +132903,64 @@
       "id": "20261201|E3|York|Shrewsbury",
       "market": "1",
       "team": "York",
-      "odds": 1.59,
+      "odds": 1.61,
       "odds_source": "estimée",
-      "p_win": 0.595,
+      "p_win": 0.587,
       "p_push": 0.0,
-      "min_odds": 1.73
+      "min_odds": 1.76
      },
      {
-      "id": "20261201|E2|Blackpool|Luton",
-      "market": "o20",
+      "id": "20261201|E2|Reading|Doncaster",
+      "market": "o15",
       "team": null,
-      "odds": 1.35,
+      "odds": 1.25,
       "odds_source": "estimée",
-      "p_win": 0.563,
-      "p_push": 0.192,
-      "min_odds": 1.48
+      "p_win": 0.774,
+      "p_push": 0.0,
+      "min_odds": 1.33
      }
     ],
-    "odds": 2.15,
-    "p_win": 0.335,
-    "p_not_lose": 0.449,
-    "ev": -0.19,
+    "odds": 2.01,
+    "p_win": 0.454,
+    "p_not_lose": 0.454,
+    "ev": -0.178,
     "reliability": 0.986,
     "priority": 1,
+    "level": "moyenne"
+   },
+   {
+    "kind": "mix",
+    "label": "Coupon mix",
+    "scope": "Toutes ligues",
+    "stake_pct": 1.5,
+    "legs": [
+     {
+      "id": "20261201|E3|Cheltenham|Rochdale",
+      "market": "1",
+      "team": "Cheltenham",
+      "odds": 1.78,
+      "odds_source": "estimée",
+      "p_win": 0.531,
+      "p_push": 0.0,
+      "min_odds": 1.94
+     },
+     {
+      "id": "20261201|E3|Barnet|Rotherham",
+      "market": "o15",
+      "team": null,
+      "odds": 1.14,
+      "odds_source": "estimée",
+      "p_win": 0.765,
+      "p_push": 0.0,
+      "min_odds": 1.35
+     }
+    ],
+    "odds": 2.03,
+    "p_win": 0.406,
+    "p_not_lose": 0.406,
+    "ev": -0.259,
+    "reliability": 1.067,
+    "priority": 2,
     "level": "moyenne"
    },
    {
@@ -132758,7 +132977,7 @@
       "odds_source": "estimée",
       "p_win": 0.54,
       "p_push": 0.237,
-      "min_odds": 1.45
+      "min_odds": 1.46
      },
      {
       "id": "20261201|E3|Newport County|Walsall",
@@ -132767,7 +132986,7 @@
       "odds": 1.43,
       "odds_source": "estimée",
       "p_win": 0.507,
-      "p_push": 0.257,
+      "p_push": 0.256,
       "min_odds": 1.51
      },
      {
@@ -132777,16 +132996,16 @@
       "odds": 1.44,
       "odds_source": "estimée",
       "p_win": 0.527,
-      "p_push": 0.221,
+      "p_push": 0.22,
       "min_odds": 1.52
      }
     ],
     "odds": 2.78,
     "p_win": 0.144,
-    "p_not_lose": 0.444,
-    "ev": -0.168,
+    "p_not_lose": 0.443,
+    "ev": -0.169,
     "reliability": 1.067,
-    "priority": 2,
+    "priority": 3,
     "level": "moyenne"
    },
    {
@@ -132821,42 +133040,52 @@
     "p_not_lose": 0.441,
     "ev": -0.203,
     "reliability": 0.986,
-    "priority": 3,
+    "priority": 4,
     "level": "moyenne"
    },
    {
-    "kind": "mix",
-    "label": "Coupon mix",
+    "kind": "autres",
+    "label": "Autres paris",
     "scope": "Toutes ligues",
-    "stake_pct": 1.5,
+    "stake_pct": 1.0,
     "legs": [
      {
-      "id": "20261201|E2|Barnsley|Wycombe",
-      "market": "o15",
+      "id": "20261201|E3|Barnet|Rotherham",
+      "market": "u35",
+      "team": null,
+      "odds": 1.47,
+      "odds_source": "estimée",
+      "p_win": 0.643,
+      "p_push": 0.0,
+      "min_odds": 1.6
+     },
+     {
+      "id": "20261201|E3|Northampton|Fleetwood Town",
+      "market": "u35",
       "team": null,
       "odds": 1.16,
       "odds_source": "estimée",
-      "p_win": 0.777,
+      "p_win": 0.813,
       "p_push": 0.0,
-      "min_odds": 1.33
+      "min_odds": 1.27
      },
      {
-      "id": "20261201|E3|Cheltenham|Rochdale",
-      "market": "1",
-      "team": "Cheltenham",
-      "odds": 1.75,
+      "id": "20261201|E3|Chesterfield|Exeter",
+      "market": "u35",
+      "team": null,
+      "odds": 1.18,
       "odds_source": "estimée",
-      "p_win": 0.539,
+      "p_win": 0.799,
       "p_push": 0.0,
-      "min_odds": 1.91
+      "min_odds": 1.29
      }
     ],
-    "odds": 2.03,
-    "p_win": 0.419,
-    "p_not_lose": 0.419,
-    "ev": -0.236,
-    "reliability": 0.986,
-    "priority": 4,
+    "odds": 2.01,
+    "p_win": 0.418,
+    "p_not_lose": 0.418,
+    "ev": -0.244,
+    "reliability": 1.067,
+    "priority": 5,
     "level": "moyenne"
    },
    {
@@ -132866,13 +133095,13 @@
     "stake_pct": 1.5,
     "legs": [
      {
-      "id": "20261201|E3|Cheltenham|Rochdale",
-      "market": "1X",
+      "id": "20261201|E2|Notts County|AFC Wimbledon",
+      "market": "dnb1",
       "team": null,
       "odds": 1.23,
       "odds_source": "estimée",
-      "p_win": 0.766,
-      "p_push": 0.0,
+      "p_win": 0.557,
+      "p_push": 0.272,
       "min_odds": 1.35
      },
      {
@@ -132886,6 +133115,41 @@
       "min_odds": 1.35
      },
      {
+      "id": "20261201|E3|Accrington|Crewe",
+      "market": "1X",
+      "team": null,
+      "odds": 1.4,
+      "odds_source": "estimée",
+      "p_win": 0.674,
+      "p_push": 0.0,
+      "min_odds": 1.53
+     }
+    ],
+    "odds": 2.14,
+    "p_win": 0.286,
+    "p_not_lose": 0.425,
+    "ev": -0.233,
+    "reliability": 1.013,
+    "priority": 6,
+    "level": "moyenne"
+   },
+   {
+    "kind": "dc",
+    "label": "Double chance",
+    "scope": "Toutes ligues",
+    "stake_pct": 1.5,
+    "legs": [
+     {
+      "id": "20261201|E2|Reading|Doncaster",
+      "market": "dnb1",
+      "team": null,
+      "odds": 1.21,
+      "odds_source": "estimée",
+      "p_win": 0.604,
+      "p_push": 0.228,
+      "min_odds": 1.32
+     },
+     {
       "id": "20261201|E3|Northampton|Fleetwood Town",
       "market": "1X",
       "team": null,
@@ -132894,119 +133158,24 @@
       "p_win": 0.716,
       "p_push": 0.0,
       "min_odds": 1.44
-     }
-    ],
-    "odds": 2.01,
-    "p_win": 0.417,
-    "p_not_lose": 0.417,
-    "ev": -0.244,
-    "reliability": 1.067,
-    "priority": 5,
-    "level": "moyenne"
-   },
-   {
-    "kind": "mix",
-    "label": "Coupon mix",
-    "scope": "Toutes ligues",
-    "stake_pct": 1.5,
-    "legs": [
-     {
-      "id": "20261201|E2|Plymouth|Bromley",
-      "market": "o15",
-      "team": null,
-      "odds": 1.12,
-      "odds_source": "estimée",
-      "p_win": 0.817,
-      "p_push": 0.0,
-      "min_odds": 1.26
      },
      {
-      "id": "20261201|E3|Oldham|Bristol Rvs",
-      "market": "1",
-      "team": "Oldham",
-      "odds": 1.92,
-      "odds_source": "estimée",
-      "p_win": 0.493,
-      "p_push": 0.0,
-      "min_odds": 2.09
-     }
-    ],
-    "odds": 2.15,
-    "p_win": 0.403,
-    "p_not_lose": 0.403,
-    "ev": -0.227,
-    "reliability": 0.986,
-    "priority": 6,
-    "level": "moyenne"
-   },
-   {
-    "kind": "mix",
-    "label": "Coupon mix",
-    "scope": "Toutes ligues",
-    "stake_pct": 1.5,
-    "legs": [
-     {
-      "id": "20261201|E3|Barnet|Rotherham",
-      "market": "o20",
+      "id": "20261201|E3|Crawley Town|Port Vale",
+      "market": "X2",
       "team": null,
-      "odds": 1.19,
+      "odds": 1.33,
       "odds_source": "estimée",
-      "p_win": 0.571,
-      "p_push": 0.194,
+      "p_win": 0.712,
+      "p_push": 0.0,
       "min_odds": 1.45
-     },
-     {
-      "id": "20261201|E2|Notts County|AFC Wimbledon",
-      "market": "1",
-      "team": "Notts County",
-      "odds": 1.79,
-      "odds_source": "estimée",
-      "p_win": 0.527,
-      "p_push": 0.0,
-      "min_odds": 1.95
      }
     ],
-    "odds": 2.13,
-    "p_win": 0.301,
-    "p_not_lose": 0.403,
-    "ev": -0.26,
-    "reliability": 0.986,
+    "odds": 2.12,
+    "p_win": 0.308,
+    "p_not_lose": 0.424,
+    "ev": -0.229,
+    "reliability": 1.013,
     "priority": 7,
-    "level": "moyenne"
-   },
-   {
-    "kind": "mix",
-    "label": "Coupon mix",
-    "scope": "Toutes ligues",
-    "stake_pct": 1.5,
-    "legs": [
-     {
-      "id": "20261201|E0|Coventry|Ipswich",
-      "market": "o20",
-      "team": null,
-      "odds": 1.16,
-      "odds_source": "estimée",
-      "p_win": 0.607,
-      "p_push": 0.241,
-      "min_odds": 1.29
-     },
-     {
-      "id": "20261201|E3|Grimsby|Colchester",
-      "market": "1",
-      "team": "Grimsby",
-      "odds": 1.93,
-      "odds_source": "estimée",
-      "p_win": 0.49,
-      "p_push": 0.0,
-      "min_odds": 2.1
-     }
-    ],
-    "odds": 2.24,
-    "p_win": 0.297,
-    "p_not_lose": 0.416,
-    "ev": -0.202,
-    "reliability": 0.948,
-    "priority": 8,
     "level": "moyenne"
    },
    {
@@ -133021,9 +133190,9 @@
       "team": null,
       "odds": 1.41,
       "odds_source": "estimée",
-      "p_win": 0.689,
+      "p_win": 0.688,
       "p_push": 0.0,
-      "min_odds": 1.49
+      "min_odds": 1.5
      },
      {
       "id": "20261201|E3|Chesterfield|Exeter",
@@ -133031,16 +133200,51 @@
       "team": null,
       "odds": 1.44,
       "odds_source": "estimée",
-      "p_win": 0.675,
+      "p_win": 0.674,
       "p_push": 0.0,
       "min_odds": 1.53
      }
     ],
     "odds": 2.03,
-    "p_win": 0.465,
-    "p_not_lose": 0.465,
-    "ev": -0.152,
+    "p_win": 0.464,
+    "p_not_lose": 0.464,
+    "ev": -0.154,
     "reliability": 1.067,
+    "priority": 8,
+    "level": "moyenne"
+   },
+   {
+    "kind": "mix",
+    "label": "Coupon mix",
+    "scope": "Toutes ligues",
+    "stake_pct": 1.5,
+    "legs": [
+     {
+      "id": "20261201|E0|Coventry|Ipswich",
+      "market": "o15",
+      "team": null,
+      "odds": 1.12,
+      "odds_source": "estimée",
+      "p_win": 0.848,
+      "p_push": 0.0,
+      "min_odds": 1.21
+     },
+     {
+      "id": "20261201|E3|Oldham|Bristol Rvs",
+      "market": "1",
+      "team": "Oldham",
+      "odds": 1.95,
+      "odds_source": "estimée",
+      "p_win": 0.484,
+      "p_push": 0.0,
+      "min_odds": 2.13
+     }
+    ],
+    "odds": 2.18,
+    "p_win": 0.41,
+    "p_not_lose": 0.41,
+    "ev": -0.201,
+    "reliability": 0.948,
     "priority": 9,
     "level": "moyenne"
    },
@@ -133051,78 +133255,33 @@
     "stake_pct": 1.5,
     "legs": [
      {
-      "id": "20261201|E2|Reading|Doncaster",
+      "id": "20261201|E2|Plymouth|Bromley",
+      "market": "o15",
+      "team": null,
+      "odds": 1.12,
+      "odds_source": "estimée",
+      "p_win": 0.816,
+      "p_push": 0.0,
+      "min_odds": 1.26
+     },
+     {
+      "id": "20261201|E3|Grimsby|Colchester",
       "market": "1",
-      "team": "Reading",
-      "odds": 1.65,
+      "team": "Grimsby",
+      "odds": 1.96,
       "odds_source": "estimée",
-      "p_win": 0.572,
+      "p_win": 0.482,
       "p_push": 0.0,
-      "min_odds": 1.8
-     },
-     {
-      "id": "20261201|E2|Leyton Orient|Peterboro",
-      "market": "o20",
-      "team": null,
-      "odds": 1.29,
-      "odds_source": "estimée",
-      "p_win": 0.562,
-      "p_push": 0.195,
-      "min_odds": 1.48
+      "min_odds": 2.14
      }
     ],
-    "odds": 2.13,
-    "p_win": 0.321,
-    "p_not_lose": 0.433,
-    "ev": -0.219,
-    "reliability": 0.906,
+    "odds": 2.2,
+    "p_win": 0.393,
+    "p_not_lose": 0.393,
+    "ev": -0.231,
+    "reliability": 0.986,
     "priority": 10,
-    "level": "moyenne"
-   },
-   {
-    "kind": "dc",
-    "label": "Double chance",
-    "scope": "Toutes ligues",
-    "stake_pct": 1.5,
-    "legs": [
-     {
-      "id": "20261201|E2|Notts County|AFC Wimbledon",
-      "market": "1X",
-      "team": null,
-      "odds": 1.13,
-      "odds_source": "estimée",
-      "p_win": 0.832,
-      "p_push": 0.0,
-      "min_odds": 1.24
-     },
-     {
-      "id": "20261201|E3|Crawley Town|Port Vale",
-      "market": "X2",
-      "team": null,
-      "odds": 1.33,
-      "odds_source": "estimée",
-      "p_win": 0.712,
-      "p_push": 0.0,
-      "min_odds": 1.45
-     },
-     {
-      "id": "20261201|E3|Newport County|Walsall",
-      "market": "X2",
-      "team": null,
-      "odds": 1.34,
-      "odds_source": "estimée",
-      "p_win": 0.706,
-      "p_push": 0.0,
-      "min_odds": 1.46
-     }
-    ],
-    "odds": 2.01,
-    "p_win": 0.418,
-    "p_not_lose": 0.418,
-    "ev": -0.243,
-    "reliability": 1.013,
-    "priority": 11,
-    "level": "moyenne"
+    "level": "basse"
    },
    {
     "kind": "buts20",
@@ -133131,13 +133290,13 @@
     "stake_pct": 1.0,
     "legs": [
      {
-      "id": "20261201|E2|Barnsley|Wycombe",
+      "id": "20261201|E2|Oxford|Sheffield Weds",
       "market": "o20",
       "team": null,
-      "odds": 1.22,
+      "odds": 1.35,
       "odds_source": "estimée",
-      "p_win": 0.58,
-      "p_push": 0.197,
+      "p_win": 0.554,
+      "p_push": 0.229,
       "min_odds": 1.43
      },
      {
@@ -133147,7 +133306,7 @@
       "odds": 1.45,
       "odds_source": "estimée",
       "p_win": 0.482,
-      "p_push": 0.258,
+      "p_push": 0.257,
       "min_odds": 1.59
      },
      {
@@ -133157,16 +133316,16 @@
       "odds": 1.55,
       "odds_source": "estimée",
       "p_win": 0.459,
-      "p_push": 0.269,
+      "p_push": 0.268,
       "min_odds": 1.64
      }
     ],
-    "odds": 2.74,
-    "p_win": 0.128,
-    "p_not_lose": 0.419,
-    "ev": -0.237,
+    "odds": 3.03,
+    "p_win": 0.123,
+    "p_not_lose": 0.421,
+    "ev": -0.184,
     "reliability": 1.013,
-    "priority": 12,
+    "priority": 11,
     "level": "moyenne"
    },
    {
@@ -133181,9 +133340,9 @@
       "team": null,
       "odds": 1.24,
       "odds_source": "estimée",
-      "p_win": 0.778,
+      "p_win": 0.777,
       "p_push": 0.0,
-      "min_odds": 1.32
+      "min_odds": 1.33
      },
      {
       "id": "20261201|E3|Newport County|Walsall",
@@ -133207,112 +133366,47 @@
      }
     ],
     "odds": 2.05,
-    "p_win": 0.444,
-    "p_not_lose": 0.444,
-    "ev": -0.184,
+    "p_win": 0.443,
+    "p_not_lose": 0.443,
+    "ev": -0.185,
     "reliability": 1.067,
-    "priority": 13,
+    "priority": 12,
     "level": "moyenne"
    },
    {
-    "kind": "buts20",
-    "label": "Coupon +2 (remboursé à 2 buts)",
+    "kind": "mix",
+    "label": "Coupon mix",
     "scope": "Toutes ligues",
-    "stake_pct": 1.0,
+    "stake_pct": 1.5,
     "legs": [
      {
-      "id": "20261201|E2|Oxford|Sheffield Weds",
-      "market": "o20",
-      "team": null,
-      "odds": 1.35,
-      "odds_source": "estimée",
-      "p_win": 0.555,
-      "p_push": 0.23,
-      "min_odds": 1.43
-     },
-     {
-      "id": "20261201|E2|Reading|Doncaster",
-      "market": "o20",
-      "team": null,
-      "odds": 1.34,
-      "odds_source": "estimée",
-      "p_win": 0.586,
-      "p_push": 0.189,
-      "min_odds": 1.42
-     },
-     {
-      "id": "20261201|E3|Oldham|Bristol Rvs",
-      "market": "o20",
-      "team": null,
-      "odds": 1.55,
-      "odds_source": "estimée",
-      "p_win": 0.478,
-      "p_push": 0.24,
-      "min_odds": 1.64
-     }
-    ],
-    "odds": 2.8,
-    "p_win": 0.155,
-    "p_not_lose": 0.437,
-    "ev": -0.164,
-    "reliability": 0.96,
-    "priority": 14,
-    "level": "moyenne"
-   },
-   {
-    "kind": "autres",
-    "label": "Autres paris",
-    "scope": "Toutes ligues",
-    "stake_pct": 1.0,
-    "legs": [
-     {
-      "id": "20261201|E3|Cheltenham|Rochdale",
-      "market": "dnb1",
-      "team": null,
-      "odds": 1.35,
-      "odds_source": "estimée",
-      "p_win": 0.547,
-      "p_push": 0.217,
-      "min_odds": 1.47
-     },
-     {
-      "id": "20261201|E3|Northampton|Fleetwood Town",
-      "market": "u35",
+      "id": "20261201|E2|Barnsley|Wycombe",
+      "market": "o15",
       "team": null,
       "odds": 1.16,
       "odds_source": "estimée",
-      "p_win": 0.813,
+      "p_win": 0.776,
       "p_push": 0.0,
-      "min_odds": 1.27
+      "min_odds": 1.33
      },
      {
-      "id": "20261201|E3|Chesterfield|Exeter",
-      "market": "u35",
-      "team": null,
-      "odds": 1.18,
+      "id": "20261201|E2|Notts County|AFC Wimbledon",
+      "market": "1",
+      "team": "Notts County",
+      "odds": 1.81,
       "odds_source": "estimée",
-      "p_win": 0.799,
+      "p_win": 0.521,
       "p_push": 0.0,
-      "min_odds": 1.29
-     },
-     {
-      "id": "20261201|E2|Cambridge|Leicester",
-      "market": "a05",
-      "team": null,
-      "odds": 1.18,
-      "odds_source": "estimée",
-      "p_win": 0.798,
-      "p_push": 0.0,
-      "min_odds": 1.29
+      "min_odds": 1.98
      }
     ],
-    "odds": 2.18,
-    "p_win": 0.284,
-    "p_not_lose": 0.396,
-    "ev": -0.281,
-    "reliability": 1.027,
-    "priority": 15,
-    "level": "basse"
+    "odds": 2.1,
+    "p_win": 0.404,
+    "p_not_lose": 0.404,
+    "ev": -0.24,
+    "reliability": 0.906,
+    "priority": 13,
+    "level": "moyenne"
    },
    {
     "kind": "dc",
@@ -133341,23 +133435,103 @@
       "min_odds": 1.36
      },
      {
-      "id": "20261201|E3|Accrington|Crewe",
-      "market": "1X",
+      "id": "20261201|E3|Newport County|Walsall",
+      "market": "X2",
       "team": null,
-      "odds": 1.4,
+      "odds": 1.34,
       "odds_source": "estimée",
-      "p_win": 0.674,
+      "p_win": 0.706,
       "p_push": 0.0,
-      "min_odds": 1.53
+      "min_odds": 1.46
      }
     ],
-    "odds": 2.12,
-    "p_win": 0.395,
-    "p_not_lose": 0.395,
-    "ev": -0.252,
+    "odds": 2.03,
+    "p_win": 0.414,
+    "p_not_lose": 0.414,
+    "ev": -0.246,
     "reliability": 0.96,
-    "priority": 16,
+    "priority": 14,
+    "level": "moyenne"
+   },
+   {
+    "kind": "buts20",
+    "label": "Coupon +2 (remboursé à 2 buts)",
+    "scope": "Toutes ligues",
+    "stake_pct": 1.0,
+    "legs": [
+     {
+      "id": "20261201|E3|Cheltenham|Rochdale",
+      "market": "o20",
+      "team": null,
+      "odds": 1.17,
+      "odds_source": "estimée",
+      "p_win": 0.55,
+      "p_push": 0.218,
+      "min_odds": 1.46
+     },
+     {
+      "id": "20261201|E2|Mansfield|Stockport",
+      "market": "o20",
+      "team": null,
+      "odds": 1.46,
+      "odds_source": "estimée",
+      "p_win": 0.484,
+      "p_push": 0.236,
+      "min_odds": 1.63
+     },
+     {
+      "id": "20261201|E3|Oldham|Bristol Rvs",
+      "market": "o20",
+      "team": null,
+      "odds": 1.55,
+      "odds_source": "estimée",
+      "p_win": 0.478,
+      "p_push": 0.239,
+      "min_odds": 1.64
+     }
+    ],
+    "odds": 2.65,
+    "p_win": 0.127,
+    "p_not_lose": 0.396,
+    "ev": -0.284,
+    "reliability": 1.013,
+    "priority": 15,
     "level": "basse"
+   },
+   {
+    "kind": "sur",
+    "label": "Coupon sûr",
+    "scope": "Toutes ligues",
+    "stake_pct": 2.0,
+    "legs": [
+     {
+      "id": "20261201|E2|Bradford|Milton Keynes Dons",
+      "market": "o20",
+      "team": null,
+      "odds": 1.48,
+      "odds_source": "estimée",
+      "p_win": 0.487,
+      "p_push": 0.233,
+      "min_odds": 1.62
+     },
+     {
+      "id": "20261201|E3|Northampton|Fleetwood Town",
+      "market": "o15",
+      "team": null,
+      "odds": 1.51,
+      "odds_source": "estimée",
+      "p_win": 0.645,
+      "p_push": 0.0,
+      "min_odds": 1.6
+     }
+    ],
+    "odds": 2.23,
+    "p_win": 0.314,
+    "p_not_lose": 0.464,
+    "ev": -0.164,
+    "reliability": 0.986,
+    "priority": 16,
+    "level": "moyenne"
    },
    {
     "kind": "sur",
@@ -133371,7 +133545,7 @@
       "team": null,
       "odds": 1.24,
       "odds_source": "estimée",
-      "p_win": 0.785,
+      "p_win": 0.784,
       "p_push": 0.0,
       "min_odds": 1.31
      },
@@ -133381,7 +133555,7 @@
       "team": null,
       "odds": 1.29,
       "odds_source": "estimée",
-      "p_win": 0.74,
+      "p_win": 0.739,
       "p_push": 0.0,
       "min_odds": 1.39
      },
@@ -133389,19 +133563,74 @@
       "id": "20261201|E3|Accrington|Crewe",
       "market": "o15",
       "team": null,
-      "odds": 1.33,
+      "odds": 1.34,
       "odds_source": "estimée",
-      "p_win": 0.728,
+      "p_win": 0.727,
       "p_push": 0.0,
-      "min_odds": 1.41
+      "min_odds": 1.42
      }
     ],
-    "odds": 2.13,
-    "p_win": 0.423,
-    "p_not_lose": 0.423,
-    "ev": -0.196,
+    "odds": 2.14,
+    "p_win": 0.421,
+    "p_not_lose": 0.421,
+    "ev": -0.193,
     "reliability": 1.013,
     "priority": 17,
+    "level": "moyenne"
+   },
+   {
+    "kind": "autres",
+    "label": "Autres paris",
+    "scope": "Toutes ligues",
+    "stake_pct": 1.0,
+    "legs": [
+     {
+      "id": "20261201|E2|Leyton Orient|Peterboro",
+      "market": "dnb1",
+      "team": null,
+      "odds": 1.35,
+      "odds_source": "estimée",
+      "p_win": 0.536,
+      "p_push": 0.233,
+      "min_odds": 1.47
+     },
+     {
+      "id": "20261201|E2|Blackpool|Luton",
+      "market": "u45",
+      "team": null,
+      "odds": 1.14,
+      "odds_source": "estimée",
+      "p_win": 0.829,
+      "p_push": 0.0,
+      "min_odds": 1.24
+     },
+     {
+      "id": "20261201|E2|Barnsley|Wycombe",
+      "market": "sh05",
+      "team": null,
+      "odds": 1.15,
+      "odds_source": "estimée",
+      "p_win": 0.822,
+      "p_push": 0.0,
+      "min_odds": 1.25
+     },
+     {
+      "id": "20261201|E3|Crawley Town|Port Vale",
+      "market": "u35",
+      "team": null,
+      "odds": 1.23,
+      "odds_source": "estimée",
+      "p_win": 0.766,
+      "p_push": 0.0,
+      "min_odds": 1.34
+     }
+    ],
+    "odds": 2.18,
+    "p_win": 0.28,
+    "p_not_lose": 0.401,
+    "ev": -0.276,
+    "reliability": 0.946,
+    "priority": 18,
     "level": "moyenne"
    },
    {
@@ -133411,32 +133640,42 @@
     "stake_pct": 2.0,
     "legs": [
      {
-      "id": "20261201|E2|Burton|Wigan",
-      "market": "o15",
+      "id": "20261201|E2|Barnsley|Wycombe",
+      "market": "o20",
       "team": null,
-      "odds": 1.45,
+      "odds": 1.22,
       "odds_source": "estimée",
-      "p_win": 0.671,
-      "p_push": 0.0,
-      "min_odds": 1.53
+      "p_win": 0.58,
+      "p_push": 0.196,
+      "min_odds": 1.43
      },
      {
-      "id": "20261201|E3|Northampton|Fleetwood Town",
+      "id": "20261201|E2|Reading|Doncaster",
+      "market": "o20",
+      "team": null,
+      "odds": 1.35,
+      "odds_source": "estimée",
+      "p_win": 0.586,
+      "p_push": 0.188,
+      "min_odds": 1.43
+     },
+     {
+      "id": "20261201|E3|Oldham|Bristol Rvs",
       "market": "o15",
       "team": null,
-      "odds": 1.5,
+      "odds": 1.36,
       "odds_source": "estimée",
-      "p_win": 0.646,
+      "p_win": 0.717,
       "p_push": 0.0,
-      "min_odds": 1.59
+      "min_odds": 1.44
      }
     ],
-    "odds": 2.17,
-    "p_win": 0.433,
-    "p_not_lose": 0.433,
-    "ev": -0.159,
-    "reliability": 0.986,
-    "priority": 18,
+    "odds": 2.24,
+    "p_win": 0.244,
+    "p_not_lose": 0.431,
+    "ev": -0.224,
+    "reliability": 0.96,
+    "priority": 19,
     "level": "moyenne"
    },
    {
@@ -133451,73 +133690,28 @@
       "team": null,
       "odds": 1.41,
       "odds_source": "estimée",
-      "p_win": 0.689,
+      "p_win": 0.688,
       "p_push": 0.0,
-      "min_odds": 1.49
+      "min_odds": 1.5
      },
      {
       "id": "20261201|E2|Huddersfield|Stevenage",
       "market": "o15",
       "team": null,
-      "odds": 1.44,
+      "odds": 1.45,
       "odds_source": "estimée",
-      "p_win": 0.673,
+      "p_win": 0.672,
       "p_push": 0.0,
       "min_odds": 1.53
      }
     ],
-    "odds": 2.03,
-    "p_win": 0.464,
-    "p_not_lose": 0.464,
-    "ev": -0.154,
+    "odds": 2.04,
+    "p_win": 0.462,
+    "p_not_lose": 0.462,
+    "ev": -0.151,
     "reliability": 0.906,
-    "priority": 19,
-    "level": "moyenne"
-   },
-   {
-    "kind": "sur",
-    "label": "Coupon sûr",
-    "scope": "Toutes ligues",
-    "stake_pct": 2.0,
-    "legs": [
-     {
-      "id": "20261201|E3|Barnet|Rotherham",
-      "market": "o15",
-      "team": null,
-      "odds": 1.14,
-      "odds_source": "estimée",
-      "p_win": 0.766,
-      "p_push": 0.0,
-      "min_odds": 1.34
-     },
-     {
-      "id": "20261201|E2|Mansfield|Stockport",
-      "market": "o15",
-      "team": null,
-      "odds": 1.3,
-      "odds_source": "estimée",
-      "p_win": 0.721,
-      "p_push": 0.0,
-      "min_odds": 1.43
-     },
-     {
-      "id": "20261201|E3|Oldham|Bristol Rvs",
-      "market": "o15",
-      "team": null,
-      "odds": 1.35,
-      "odds_source": "estimée",
-      "p_win": 0.718,
-      "p_push": 0.0,
-      "min_odds": 1.43
-     }
-    ],
-    "odds": 2.0,
-    "p_win": 0.397,
-    "p_not_lose": 0.397,
-    "ev": -0.286,
-    "reliability": 1.013,
     "priority": 20,
-    "level": "basse"
+    "level": "moyenne"
    },
    {
     "kind": "dc",
@@ -133571,14 +133765,14 @@
     "stake_pct": 2.0,
     "legs": [
      {
-      "id": "20261201|E2|Reading|Doncaster",
+      "id": "20261201|E3|Cheltenham|Rochdale",
       "market": "o15",
       "team": null,
-      "odds": 1.25,
+      "odds": 1.13,
       "odds_source": "estimée",
-      "p_win": 0.775,
+      "p_win": 0.769,
       "p_push": 0.0,
-      "min_odds": 1.33
+      "min_odds": 1.34
      },
      {
       "id": "20261201|E2|Blackpool|Luton",
@@ -133586,9 +133780,54 @@
       "team": null,
       "odds": 1.23,
       "odds_source": "estimée",
-      "p_win": 0.755,
+      "p_win": 0.754,
+      "p_push": 0.0,
+      "min_odds": 1.37
+     },
+     {
+      "id": "20261201|E2|Burton|Wigan",
+      "market": "o15",
+      "team": null,
+      "odds": 1.45,
+      "odds_source": "estimée",
+      "p_win": 0.67,
+      "p_push": 0.0,
+      "min_odds": 1.54
+     }
+    ],
+    "odds": 2.02,
+    "p_win": 0.388,
+    "p_not_lose": 0.388,
+    "ev": -0.296,
+    "reliability": 0.96,
+    "priority": 22,
+    "level": "basse"
+   },
+   {
+    "kind": "ligue",
+    "label": "Coupon championnat",
+    "scope": "League One",
+    "stake_pct": 1.5,
+    "legs": [
+     {
+      "id": "20261201|E2|Leyton Orient|Peterboro",
+      "market": "o15",
+      "team": null,
+      "odds": 1.2,
+      "odds_source": "estimée",
+      "p_win": 0.756,
       "p_push": 0.0,
       "min_odds": 1.36
+     },
+     {
+      "id": "20261201|E2|Cambridge|Leicester",
+      "market": "o20",
+      "team": null,
+      "odds": 1.39,
+      "odds_source": "estimée",
+      "p_win": 0.513,
+      "p_push": 0.22,
+      "min_odds": 1.57
      },
      {
       "id": "20261201|E2|Bradford|Milton Keynes Dons",
@@ -133596,18 +133835,18 @@
       "team": null,
       "odds": 1.31,
       "odds_source": "estimée",
-      "p_win": 0.721,
+      "p_win": 0.72,
       "p_push": 0.0,
       "min_odds": 1.43
      }
     ],
-    "odds": 2.01,
-    "p_win": 0.422,
-    "p_not_lose": 0.422,
-    "ev": -0.236,
+    "odds": 2.19,
+    "p_win": 0.279,
+    "p_not_lose": 0.399,
+    "ev": -0.281,
     "reliability": 0.906,
-    "priority": 22,
-    "level": "moyenne"
+    "priority": 23,
+    "level": "basse"
    },
    {
     "kind": "autres",
@@ -133616,14 +133855,14 @@
     "stake_pct": 1.0,
     "legs": [
      {
-      "id": "20261201|E2|Blackpool|Luton",
-      "market": "u45",
+      "id": "20261201|E2|Cambridge|Leicester",
+      "market": "a05",
       "team": null,
-      "odds": 1.14,
+      "odds": 1.18,
       "odds_source": "estimée",
-      "p_win": 0.829,
+      "p_win": 0.798,
       "p_push": 0.0,
-      "min_odds": 1.24
+      "min_odds": 1.29
      },
      {
       "id": "20261201|E2|Bradford|Milton Keynes Dons",
@@ -133646,68 +133885,23 @@
       "min_odds": 1.32
      },
      {
-      "id": "20261201|E3|Crawley Town|Port Vale",
+      "id": "20261201|E2|Burton|Wigan",
       "market": "u35",
       "team": null,
-      "odds": 1.23,
+      "odds": 1.21,
       "odds_source": "estimée",
-      "p_win": 0.766,
+      "p_win": 0.777,
       "p_push": 0.0,
-      "min_odds": 1.34
+      "min_odds": 1.33
      }
     ],
-    "odds": 2.04,
-    "p_win": 0.39,
-    "p_not_lose": 0.39,
-    "ev": -0.286,
-    "reliability": 0.946,
-    "priority": 23,
-    "level": "basse"
-   },
-   {
-    "kind": "ligue",
-    "label": "Coupon championnat",
-    "scope": "League One",
-    "stake_pct": 1.5,
-    "legs": [
-     {
-      "id": "20261201|E2|Leyton Orient|Peterboro",
-      "market": "o15",
-      "team": null,
-      "odds": 1.2,
-      "odds_source": "estimée",
-      "p_win": 0.757,
-      "p_push": 0.0,
-      "min_odds": 1.36
-     },
-     {
-      "id": "20261201|E2|Cambridge|Leicester",
-      "market": "o15",
-      "team": null,
-      "odds": 1.26,
-      "odds_source": "estimée",
-      "p_win": 0.733,
-      "p_push": 0.0,
-      "min_odds": 1.4
-     },
-     {
-      "id": "20261201|E2|Bradford|Milton Keynes Dons",
-      "market": "o20",
-      "team": null,
-      "odds": 1.48,
-      "odds_source": "estimée",
-      "p_win": 0.488,
-      "p_push": 0.234,
-      "min_odds": 1.62
-     }
-    ],
-    "odds": 2.24,
-    "p_win": 0.271,
-    "p_not_lose": 0.401,
-    "ev": -0.278,
+    "odds": 2.07,
+    "p_win": 0.381,
+    "p_not_lose": 0.381,
+    "ev": -0.292,
     "reliability": 0.906,
     "priority": 24,
-    "level": "moyenne"
+    "level": "basse"
    },
    {
     "kind": "favplus",
@@ -133846,24 +134040,44 @@
     "stake_pct": 0.25,
     "legs": [
      {
+      "id": "20261201|E3|Northampton|Fleetwood Town",
+      "market": "o15",
+      "team": null,
+      "odds": 1.51,
+      "odds_source": "estimée",
+      "p_win": 0.645,
+      "p_push": 0.0,
+      "min_odds": 1.6
+     },
+     {
+      "id": "20261201|E2|Huddersfield|Stevenage",
+      "market": "o15",
+      "team": null,
+      "odds": 1.45,
+      "odds_source": "estimée",
+      "p_win": 0.672,
+      "p_push": 0.0,
+      "min_odds": 1.53
+     },
+     {
       "id": "20261201|E2|Burton|Wigan",
       "market": "o15",
       "team": null,
       "odds": 1.45,
       "odds_source": "estimée",
-      "p_win": 0.671,
+      "p_win": 0.67,
       "p_push": 0.0,
-      "min_odds": 1.53
+      "min_odds": 1.54
      },
      {
-      "id": "20261201|E3|Northampton|Fleetwood Town",
+      "id": "20261201|E3|Oldham|Bristol Rvs",
       "market": "o15",
       "team": null,
-      "odds": 1.5,
+      "odds": 1.36,
       "odds_source": "estimée",
-      "p_win": 0.646,
+      "p_win": 0.717,
       "p_push": 0.0,
-      "min_odds": 1.59
+      "min_odds": 1.44
      },
      {
       "id": "20261201|E3|Chesterfield|Exeter",
@@ -133871,7 +134085,7 @@
       "team": null,
       "odds": 1.44,
       "odds_source": "estimée",
-      "p_win": 0.675,
+      "p_win": 0.674,
       "p_push": 0.0,
       "min_odds": 1.53
      },
@@ -133881,9 +134095,9 @@
       "team": null,
       "odds": 1.41,
       "odds_source": "estimée",
-      "p_win": 0.689,
+      "p_win": 0.688,
       "p_push": 0.0,
-      "min_odds": 1.49
+      "min_odds": 1.5
      },
      {
       "id": "20261201|E2|Notts County|AFC Wimbledon",
@@ -133891,36 +134105,16 @@
       "team": null,
       "odds": 1.41,
       "odds_source": "estimée",
-      "p_win": 0.689,
+      "p_win": 0.688,
       "p_push": 0.0,
-      "min_odds": 1.49
-     },
-     {
-      "id": "20261201|E2|Huddersfield|Stevenage",
-      "market": "o15",
-      "team": null,
-      "odds": 1.44,
-      "odds_source": "estimée",
-      "p_win": 0.673,
-      "p_push": 0.0,
-      "min_odds": 1.53
-     },
-     {
-      "id": "20261201|E2|Leyton Orient|Peterboro",
-      "market": "1",
-      "team": "Leyton Orient",
-      "odds": 1.85,
-      "odds_source": "estimée",
-      "p_win": 0.511,
-      "p_push": 0.0,
-      "min_odds": 2.02
+      "min_odds": 1.5
      }
     ],
-    "odds": 16.59,
-    "p_win": 0.048,
-    "p_not_lose": 0.048,
-    "ev": -0.357,
-    "reliability": 0.975,
+    "odds": 12.36,
+    "p_win": 0.066,
+    "p_not_lose": 0.066,
+    "ev": -0.33,
+    "reliability": 0.998,
     "priority": 27,
     "level": "basse"
    },
@@ -133931,24 +134125,44 @@
     "stake_pct": 0.25,
     "legs": [
      {
+      "id": "20261201|E3|Northampton|Fleetwood Town",
+      "market": "o15",
+      "team": null,
+      "odds": 1.51,
+      "odds_source": "estimée",
+      "p_win": 0.645,
+      "p_push": 0.0,
+      "min_odds": 1.6
+     },
+     {
+      "id": "20261201|E2|Huddersfield|Stevenage",
+      "market": "o15",
+      "team": null,
+      "odds": 1.45,
+      "odds_source": "estimée",
+      "p_win": 0.672,
+      "p_push": 0.0,
+      "min_odds": 1.53
+     },
+     {
       "id": "20261201|E2|Burton|Wigan",
       "market": "o15",
       "team": null,
       "odds": 1.45,
       "odds_source": "estimée",
-      "p_win": 0.671,
+      "p_win": 0.67,
       "p_push": 0.0,
-      "min_odds": 1.53
+      "min_odds": 1.54
      },
      {
-      "id": "20261201|E3|Northampton|Fleetwood Town",
+      "id": "20261201|E3|Oldham|Bristol Rvs",
       "market": "o15",
       "team": null,
-      "odds": 1.5,
+      "odds": 1.36,
       "odds_source": "estimée",
-      "p_win": 0.646,
+      "p_win": 0.717,
       "p_push": 0.0,
-      "min_odds": 1.59
+      "min_odds": 1.44
      },
      {
       "id": "20261201|E3|Chesterfield|Exeter",
@@ -133956,7 +134170,7 @@
       "team": null,
       "odds": 1.44,
       "odds_source": "estimée",
-      "p_win": 0.675,
+      "p_win": 0.674,
       "p_push": 0.0,
       "min_odds": 1.53
      },
@@ -133966,9 +134180,9 @@
       "team": null,
       "odds": 1.41,
       "odds_source": "estimée",
-      "p_win": 0.689,
+      "p_win": 0.688,
       "p_push": 0.0,
-      "min_odds": 1.49
+      "min_odds": 1.5
      },
      {
       "id": "20261201|E2|Notts County|AFC Wimbledon",
@@ -133976,46 +134190,36 @@
       "team": null,
       "odds": 1.41,
       "odds_source": "estimée",
-      "p_win": 0.689,
+      "p_win": 0.688,
       "p_push": 0.0,
-      "min_odds": 1.49
+      "min_odds": 1.5
      },
      {
-      "id": "20261201|E2|Huddersfield|Stevenage",
+      "id": "20261201|E3|Accrington|Crewe",
       "market": "o15",
       "team": null,
-      "odds": 1.44,
+      "odds": 1.34,
       "odds_source": "estimée",
-      "p_win": 0.673,
+      "p_win": 0.727,
       "p_push": 0.0,
-      "min_odds": 1.53
+      "min_odds": 1.42
      },
      {
       "id": "20261201|E2|Leyton Orient|Peterboro",
       "market": "1",
       "team": "Leyton Orient",
-      "odds": 1.85,
+      "odds": 1.87,
       "odds_source": "estimée",
-      "p_win": 0.511,
+      "p_win": 0.504,
       "p_push": 0.0,
-      "min_odds": 2.02
-     },
-     {
-      "id": "20261201|E3|Grimsby|Colchester",
-      "market": "h15",
-      "team": null,
-      "odds": 1.88,
-      "odds_source": "estimée",
-      "p_win": 0.501,
-      "p_push": 0.0,
-      "min_odds": 2.06
+      "min_odds": 2.04
      }
     ],
-    "odds": 31.19,
+    "odds": 30.97,
     "p_win": 0.024,
     "p_not_lose": 0.024,
-    "ev": -0.398,
-    "reliability": 0.986,
+    "ev": -0.392,
+    "reliability": 0.995,
     "priority": 28,
     "level": "basse"
    },
@@ -134026,24 +134230,44 @@
     "stake_pct": 0.25,
     "legs": [
      {
+      "id": "20261201|E3|Northampton|Fleetwood Town",
+      "market": "o15",
+      "team": null,
+      "odds": 1.51,
+      "odds_source": "estimée",
+      "p_win": 0.645,
+      "p_push": 0.0,
+      "min_odds": 1.6
+     },
+     {
+      "id": "20261201|E2|Huddersfield|Stevenage",
+      "market": "o15",
+      "team": null,
+      "odds": 1.45,
+      "odds_source": "estimée",
+      "p_win": 0.672,
+      "p_push": 0.0,
+      "min_odds": 1.53
+     },
+     {
       "id": "20261201|E2|Burton|Wigan",
       "market": "o15",
       "team": null,
       "odds": 1.45,
       "odds_source": "estimée",
-      "p_win": 0.671,
+      "p_win": 0.67,
       "p_push": 0.0,
-      "min_odds": 1.53
+      "min_odds": 1.54
      },
      {
-      "id": "20261201|E3|Northampton|Fleetwood Town",
+      "id": "20261201|E3|Oldham|Bristol Rvs",
       "market": "o15",
       "team": null,
-      "odds": 1.5,
+      "odds": 1.36,
       "odds_source": "estimée",
-      "p_win": 0.646,
+      "p_win": 0.717,
       "p_push": 0.0,
-      "min_odds": 1.59
+      "min_odds": 1.44
      },
      {
       "id": "20261201|E3|Chesterfield|Exeter",
@@ -134051,7 +134275,7 @@
       "team": null,
       "odds": 1.44,
       "odds_source": "estimée",
-      "p_win": 0.675,
+      "p_win": 0.674,
       "p_push": 0.0,
       "min_odds": 1.53
      },
@@ -134061,9 +134285,9 @@
       "team": null,
       "odds": 1.41,
       "odds_source": "estimée",
-      "p_win": 0.689,
+      "p_win": 0.688,
       "p_push": 0.0,
-      "min_odds": 1.49
+      "min_odds": 1.5
      },
      {
       "id": "20261201|E2|Notts County|AFC Wimbledon",
@@ -134071,29 +134295,29 @@
       "team": null,
       "odds": 1.41,
       "odds_source": "estimée",
-      "p_win": 0.689,
+      "p_win": 0.688,
       "p_push": 0.0,
-      "min_odds": 1.49
+      "min_odds": 1.5
      },
      {
-      "id": "20261201|E2|Huddersfield|Stevenage",
+      "id": "20261201|E3|Accrington|Crewe",
       "market": "o15",
       "team": null,
-      "odds": 1.44,
+      "odds": 1.34,
       "odds_source": "estimée",
-      "p_win": 0.673,
+      "p_win": 0.727,
       "p_push": 0.0,
-      "min_odds": 1.53
+      "min_odds": 1.42
      },
      {
       "id": "20261201|E2|Leyton Orient|Peterboro",
       "market": "1",
       "team": "Leyton Orient",
-      "odds": 1.85,
+      "odds": 1.87,
       "odds_source": "estimée",
-      "p_win": 0.511,
+      "p_win": 0.504,
       "p_push": 0.0,
-      "min_odds": 2.02
+      "min_odds": 2.04
      },
      {
       "id": "20261201|E3|Grimsby|Colchester",
@@ -134104,23 +134328,13 @@
       "p_win": 0.501,
       "p_push": 0.0,
       "min_odds": 2.06
-     },
-     {
-      "id": "20261201|E3|Cheltenham|Rochdale",
-      "market": "h15",
-      "team": null,
-      "odds": 1.81,
-      "odds_source": "estimée",
-      "p_win": 0.522,
-      "p_push": 0.0,
-      "min_odds": 1.97
      }
     ],
-    "odds": 56.45,
+    "odds": 58.23,
     "p_win": 0.012,
     "p_not_lose": 0.012,
-    "ev": -0.433,
-    "reliability": 0.995,
+    "ev": -0.429,
+    "reliability": 1.003,
     "priority": 29,
     "level": "basse"
    },
@@ -134134,98 +134348,108 @@
       "id": "20261201|E3|Gillingham|Swindon",
       "market": "2",
       "team": "Swindon",
-      "odds": 2.5,
+      "odds": 2.56,
       "odds_source": "estimée",
-      "p_win": 0.377,
+      "p_win": 0.369,
       "p_push": 0.0,
-      "min_odds": 2.73
-     },
-     {
-      "id": "20261201|E2|Burton|Wigan",
-      "market": "1",
-      "team": "Burton",
-      "odds": 2.45,
-      "odds_source": "estimée",
-      "p_win": 0.385,
-      "p_push": 0.0,
-      "min_odds": 2.67
-     },
-     {
-      "id": "20261201|E3|Northampton|Fleetwood Town",
-      "market": "1",
-      "team": "Northampton",
-      "odds": 2.48,
-      "odds_source": "estimée",
-      "p_win": 0.38,
-      "p_push": 0.0,
-      "min_odds": 2.71
-     },
-     {
-      "id": "20261201|E2|Mansfield|Stockport",
-      "market": "2",
-      "team": "Stockport",
-      "odds": 2.34,
-      "odds_source": "estimée",
-      "p_win": 0.403,
-      "p_push": 0.0,
-      "min_odds": 2.56
-     },
-     {
-      "id": "20261201|E3|Accrington|Crewe",
-      "market": "1",
-      "team": "Accrington",
-      "odds": 2.35,
-      "odds_source": "estimée",
-      "p_win": 0.401,
-      "p_push": 0.0,
-      "min_odds": 2.57
-     },
-     {
-      "id": "20261201|E3|Crawley Town|Port Vale",
-      "market": "2",
-      "team": "Port Vale",
-      "odds": 2.28,
-      "odds_source": "estimée",
-      "p_win": 0.414,
-      "p_push": 0.0,
-      "min_odds": 2.49
+      "min_odds": 2.79
      },
      {
       "id": "20261201|E2|Blackpool|Luton",
       "market": "2",
       "team": "Luton",
-      "odds": 2.34,
+      "odds": 2.39,
       "odds_source": "estimée",
-      "p_win": 0.402,
+      "p_win": 0.396,
       "p_push": 0.0,
-      "min_odds": 2.56
+      "min_odds": 2.6
      },
      {
-      "id": "20261201|E3|Chesterfield|Exeter",
-      "market": "1",
-      "team": "Chesterfield",
-      "odds": 2.24,
+      "id": "20261201|E3|Northampton|Fleetwood Town",
+      "market": "o15",
+      "team": null,
+      "odds": 1.51,
       "odds_source": "estimée",
-      "p_win": 0.421,
+      "p_win": 0.645,
       "p_push": 0.0,
-      "min_odds": 2.44
+      "min_odds": 1.6
+     },
+     {
+      "id": "20261201|E2|Burton|Wigan",
+      "market": "1",
+      "team": "Burton",
+      "odds": 2.49,
+      "odds_source": "estimée",
+      "p_win": 0.378,
+      "p_push": 0.0,
+      "min_odds": 2.72
+     },
+     {
+      "id": "20261201|E3|Accrington|Crewe",
+      "market": "1",
+      "team": "Accrington",
+      "odds": 2.4,
+      "odds_source": "estimée",
+      "p_win": 0.393,
+      "p_push": 0.0,
+      "min_odds": 2.62
+     },
+     {
+      "id": "20261201|E2|Mansfield|Stockport",
+      "market": "2",
+      "team": "Stockport",
+      "odds": 2.38,
+      "odds_source": "estimée",
+      "p_win": 0.396,
+      "p_push": 0.0,
+      "min_odds": 2.6
+     },
+     {
+      "id": "20261201|E2|Huddersfield|Stevenage",
+      "market": "o15",
+      "team": null,
+      "odds": 1.45,
+      "odds_source": "estimée",
+      "p_win": 0.672,
+      "p_push": 0.0,
+      "min_odds": 1.53
+     },
+     {
+      "id": "20261201|E2|Bradford|Milton Keynes Dons",
+      "market": "1",
+      "team": "Bradford",
+      "odds": 2.27,
+      "odds_source": "estimée",
+      "p_win": 0.416,
+      "p_push": 0.0,
+      "min_odds": 2.48
      },
      {
       "id": "20261201|E2|Barnsley|Wycombe",
       "market": "2",
       "team": "Wycombe",
-      "odds": 2.26,
+      "odds": 2.3,
       "odds_source": "estimée",
-      "p_win": 0.417,
+      "p_win": 0.41,
       "p_push": 0.0,
-      "min_odds": 2.47
+      "min_odds": 2.51
+     },
+     {
+      "id": "20261201|E3|Crawley Town|Port Vale",
+      "market": "2",
+      "team": "Port Vale",
+      "odds": 2.32,
+      "odds_source": "estimée",
+      "p_win": 0.406,
+      "p_push": 0.0,
+      "min_odds": 2.54
      }
     ],
-    "odds": 2256.05,
+    "odds": 2307.87,
     "p_win": 0.0,
     "p_not_lose": 0.0,
-    "ev": -0.53,
-    "reliability": 0.995,
+    "ev": -0.524,
+    "reliability": 0.97,
     "priority": 30,
     "level": "basse"
    }
@@ -134234,7 +134458,7 @@
  },
  "2026-12-02": {
   "frozen": false,
-  "created": "2026-11-28T09:30+00:00",
+  "created": "2026-11-28T14:39+00:00",
   "coupons": [
    {
     "kind": "buts20",
@@ -135371,13 +135595,13 @@
  },
  "2026-12-03": {
   "frozen": false,
-  "created": "2026-11-28T09:30+00:00",
+  "created": "2026-11-28T14:39+00:00",
   "coupons": [],
   "odds_fixed": true
  },
  "2026-12-04": {
   "frozen": false,
-  "created": "2026-11-28T09:30+00:00",
+  "created": "2026-11-28T14:39+00:00",
   "coupons": [
    {
     "kind": "autres",
@@ -135496,9 +135720,9 @@
       "team": null,
       "odds": 1.15,
       "odds_source": "estimée",
-      "p_win": 0.783,
+      "p_win": 0.784,
       "p_push": 0.0,
-      "min_odds": 1.32
+      "min_odds": 1.31
      },
      {
       "id": "20261204|I1|Bologna|Roma",
@@ -135512,9 +135736,9 @@
      }
     ],
     "odds": 2.02,
-    "p_win": 0.42,
-    "p_not_lose": 0.42,
-    "ev": -0.235,
+    "p_win": 0.421,
+    "p_not_lose": 0.421,
+    "ev": -0.234,
     "reliability": 1.002,
     "priority": 4,
     "level": "moyenne"
@@ -135676,8 +135900,8 @@
       "team": null,
       "odds": 1.29,
       "odds_source": "estimée",
-      "p_win": 0.607,
-      "p_push": 0.191,
+      "p_win": 0.61,
+      "p_push": 0.19,
       "min_odds": 1.37
      },
      {
@@ -135692,9 +135916,9 @@
      }
     ],
     "odds": 2.48,
-    "p_win": 0.178,
-    "p_not_lose": 0.436,
-    "ev": -0.21,
+    "p_win": 0.179,
+    "p_not_lose": 0.437,
+    "ev": -0.208,
     "reliability": 0.975,
     "priority": 8,
     "level": "moyenne"
@@ -135756,9 +135980,9 @@
       "team": null,
       "odds": 1.16,
       "odds_source": "estimée",
-      "p_win": 0.552,
-      "p_push": 0.228,
-      "min_odds": 1.44
+      "p_win": 0.549,
+      "p_push": 0.229,
+      "min_odds": 1.45
      },
      {
       "id": "20261204|F2|Clermont|Metz",
@@ -135772,9 +135996,9 @@
      }
     ],
     "odds": 2.15,
-    "p_win": 0.281,
-    "p_not_lose": 0.397,
-    "ev": -0.266,
+    "p_win": 0.279,
+    "p_not_lose": 0.396,
+    "ev": -0.269,
     "reliability": 0.95,
     "priority": 10,
     "level": "basse"
@@ -135969,9 +136193,9 @@
       "id": "20261204|D2|Cottbus|Osnabruck",
       "market": "o15",
       "team": null,
-      "odds": 1.22,
+      "odds": 1.21,
       "odds_source": "estimée",
-      "p_win": 0.799,
+      "p_win": 0.8,
       "p_push": 0.0,
       "min_odds": 1.29
      },
@@ -135996,10 +136220,10 @@
       "min_odds": 1.65
      }
     ],
-    "odds": 2.16,
+    "odds": 2.14,
     "p_win": 0.315,
-    "p_not_lose": 0.408,
-    "ev": -0.258,
+    "p_not_lose": 0.409,
+    "ev": -0.262,
     "reliability": 1.023,
     "priority": 15,
     "level": "moyenne"
@@ -136216,6 +136440,16 @@
       "min_odds": 1.49
      },
      {
+      "id": "20261204|D2|Bielefeld|Dresden",
+      "market": "1",
+      "team": "Bielefeld",
+      "odds": 1.83,
+      "odds_source": "estimée",
+      "p_win": 0.517,
+      "p_push": 0.0,
+      "min_odds": 1.99
+     },
+     {
       "id": "20261204|T1|Galatasaray|Rizespor",
       "market": "u35",
       "team": null,
@@ -136236,16 +136470,6 @@
       "min_odds": 2.01
      },
      {
-      "id": "20261204|D2|Bielefeld|Dresden",
-      "market": "h15",
-      "team": null,
-      "odds": 1.84,
-      "odds_source": "estimée",
-      "p_win": 0.513,
-      "p_push": 0.0,
-      "min_odds": 2.01
-     },
-     {
       "id": "20261204|F2|Clermont|Metz",
       "market": "a15",
       "team": null,
@@ -136256,10 +136480,10 @@
       "min_odds": 2.06
      }
     ],
-    "odds": 16.33,
-    "p_win": 0.047,
-    "p_not_lose": 0.047,
-    "ev": -0.371,
+    "odds": 16.24,
+    "p_win": 0.048,
+    "p_not_lose": 0.048,
+    "ev": -0.37,
     "reliability": 1.023,
     "priority": 19,
     "level": "basse"
@@ -136281,6 +136505,16 @@
       "min_odds": 1.49
      },
      {
+      "id": "20261204|D2|Bielefeld|Dresden",
+      "market": "1",
+      "team": "Bielefeld",
+      "odds": 1.83,
+      "odds_source": "estimée",
+      "p_win": 0.517,
+      "p_push": 0.0,
+      "min_odds": 1.99
+     },
+     {
       "id": "20261204|T1|Galatasaray|Rizespor",
       "market": "u35",
       "team": null,
@@ -136292,16 +136526,6 @@
      },
      {
       "id": "20261204|D2|Cottbus|Osnabruck",
-      "market": "h15",
-      "team": null,
-      "odds": 1.84,
-      "odds_source": "estimée",
-      "p_win": 0.513,
-      "p_push": 0.0,
-      "min_odds": 2.01
-     },
-     {
-      "id": "20261204|D2|Bielefeld|Dresden",
       "market": "h15",
       "team": null,
       "odds": 1.84,
@@ -136331,10 +136555,10 @@
       "min_odds": 2.06
      }
     ],
-    "odds": 30.71,
+    "odds": 30.54,
     "p_win": 0.024,
     "p_not_lose": 0.024,
-    "ev": -0.412,
+    "ev": -0.411,
     "reliability": 1.021,
     "priority": 20,
     "level": "basse"
@@ -136356,6 +136580,16 @@
       "min_odds": 1.49
      },
      {
+      "id": "20261204|D2|Bielefeld|Dresden",
+      "market": "1",
+      "team": "Bielefeld",
+      "odds": 1.83,
+      "odds_source": "estimée",
+      "p_win": 0.517,
+      "p_push": 0.0,
+      "min_odds": 1.99
+     },
+     {
       "id": "20261204|T1|Galatasaray|Rizespor",
       "market": "u35",
       "team": null,
@@ -136367,16 +136601,6 @@
      },
      {
       "id": "20261204|D2|Cottbus|Osnabruck",
-      "market": "h15",
-      "team": null,
-      "odds": 1.84,
-      "odds_source": "estimée",
-      "p_win": 0.513,
-      "p_push": 0.0,
-      "min_odds": 2.01
-     },
-     {
-      "id": "20261204|D2|Bielefeld|Dresden",
       "market": "h15",
       "team": null,
       "odds": 1.84,
@@ -136426,10 +136650,10 @@
       "min_odds": 1.96
      }
     ],
-    "odds": 75.17,
+    "odds": 74.76,
     "p_win": 0.009,
     "p_not_lose": 0.009,
-    "ev": -0.463,
+    "ev": -0.462,
     "reliability": 1.024,
     "priority": 21,
     "level": "basse"
@@ -136474,11 +136698,11 @@
       "id": "20261204|E1|Sheffield United|West Ham",
       "market": "1",
       "team": "Sheffield United",
-      "odds": 2.26,
+      "odds": 2.28,
       "odds_source": "estimée",
-      "p_win": 0.417,
+      "p_win": 0.413,
       "p_push": 0.0,
-      "min_odds": 2.47
+      "min_odds": 2.49
      },
      {
       "id": "20261204|SP1|Alaves|Espanol",
@@ -136494,21 +136718,21 @@
       "id": "20261204|D2|Cottbus|Osnabruck",
       "market": "1",
       "team": "Cottbus",
-      "odds": 2.04,
+      "odds": 2.02,
       "odds_source": "estimée",
-      "p_win": 0.463,
+      "p_win": 0.467,
       "p_push": 0.0,
-      "min_odds": 2.22
+      "min_odds": 2.21
      },
      {
       "id": "20261204|D2|Bielefeld|Dresden",
       "market": "1",
       "team": "Bielefeld",
-      "odds": 1.84,
+      "odds": 1.83,
       "odds_source": "estimée",
-      "p_win": 0.513,
+      "p_win": 0.517,
       "p_push": 0.0,
-      "min_odds": 2.01
+      "min_odds": 1.99
      },
      {
       "id": "20261204|F2|Clermont|Metz",
@@ -136541,7 +136765,7 @@
       "min_odds": 1.87
      }
     ],
-    "odds": 1422.63,
+    "odds": 1413.43,
     "p_win": 0.0,
     "p_not_lose": 0.0,
     "ev": -0.553,
@@ -136554,7 +136778,7 @@
  },
  "2026-12-05": {
   "frozen": false,
-  "created": "2026-11-28T09:30+00:00",
+  "created": "2026-11-28T14:39+00:00",
   "coupons": [
    {
     "kind": "mix",
@@ -136611,16 +136835,16 @@
       "id": "20261205|D2|Nurnberg|Bochum",
       "market": "1",
       "team": "Nurnberg",
-      "odds": 1.74,
+      "odds": 1.73,
       "odds_source": "estimée",
-      "p_win": 0.542,
+      "p_win": 0.545,
       "p_push": 0.0,
-      "min_odds": 1.9
+      "min_odds": 1.89
      }
     ],
-    "odds": 2.09,
-    "p_win": 0.352,
-    "p_not_lose": 0.45,
+    "odds": 2.08,
+    "p_win": 0.354,
+    "p_not_lose": 0.453,
     "ev": -0.185,
     "reliability": 1.034,
     "priority": 2,
@@ -136742,41 +136966,6 @@
     "level": "moyenne"
    },
    {
-    "kind": "mix",
-    "label": "Coupon mix",
-    "scope": "Toutes ligues",
-    "stake_pct": 1.5,
-    "legs": [
-     {
-      "id": "20261205|D2|Kaiserslautern|Greuther Furth",
-      "market": "o15",
-      "team": null,
-      "odds": 1.19,
-      "odds_source": "estimée",
-      "p_win": 0.819,
-      "p_push": 0.0,
-      "min_odds": 1.26
-     },
-     {
-      "id": "20261205|D1|Freiburg|Hoffenheim",
-      "market": "1",
-      "team": "Freiburg",
-      "odds": 1.81,
-      "odds_source": "estimée",
-      "p_win": 0.521,
-      "p_push": 0.0,
-      "min_odds": 1.98
-     }
-    ],
-    "odds": 2.15,
-    "p_win": 0.427,
-    "p_not_lose": 0.427,
-    "ev": -0.179,
-    "reliability": 1.034,
-    "priority": 6,
-    "level": "moyenne"
-   },
-   {
     "kind": "favoris",
     "label": "Ticket favoris",
     "scope": "Toutes ligues",
@@ -136808,7 +136997,7 @@
     "p_not_lose": 0.441,
     "ev": -0.2,
     "reliability": 1.038,
-    "priority": 7,
+    "priority": 6,
     "level": "moyenne"
    },
    {
@@ -136843,6 +137032,41 @@
     "p_not_lose": 0.425,
     "ev": -0.18,
     "reliability": 1.037,
+    "priority": 7,
+    "level": "moyenne"
+   },
+   {
+    "kind": "mix",
+    "label": "Coupon mix",
+    "scope": "Toutes ligues",
+    "stake_pct": 1.5,
+    "legs": [
+     {
+      "id": "20261205|N1|For Sittard|Zwolle",
+      "market": "o15",
+      "team": null,
+      "odds": 1.16,
+      "odds_source": "estimée",
+      "p_win": 0.835,
+      "p_push": 0.0,
+      "min_odds": 1.23
+     },
+     {
+      "id": "20261205|D1|Freiburg|Hoffenheim",
+      "market": "1",
+      "team": "Freiburg",
+      "odds": 1.81,
+      "odds_source": "estimée",
+      "p_win": 0.521,
+      "p_push": 0.0,
+      "min_odds": 1.98
+     }
+    ],
+    "odds": 2.1,
+    "p_win": 0.435,
+    "p_not_lose": 0.435,
+    "ev": -0.182,
+    "reliability": 1.004,
     "priority": 8,
     "level": "moyenne"
    },
@@ -136863,21 +137087,21 @@
       "min_odds": 1.92
      },
      {
-      "id": "20261205|N1|For Sittard|Zwolle",
+      "id": "20261205|D2|Kaiserslautern|Greuther Furth",
       "market": "o15",
       "team": null,
-      "odds": 1.16,
+      "odds": 1.18,
       "odds_source": "estimée",
-      "p_win": 0.835,
+      "p_win": 0.821,
       "p_push": 0.0,
-      "min_odds": 1.23
+      "min_odds": 1.25
      }
     ],
-    "odds": 2.04,
-    "p_win": 0.448,
-    "p_not_lose": 0.448,
-    "ev": -0.179,
-    "reliability": 0.939,
+    "odds": 2.08,
+    "p_win": 0.44,
+    "p_not_lose": 0.44,
+    "ev": -0.181,
+    "reliability": 0.968,
     "priority": 9,
     "level": "moyenne"
    },
@@ -137638,9 +137862,9 @@
       "team": null,
       "odds": 1.28,
       "odds_source": "estimée",
-      "p_win": 0.621,
+      "p_win": 0.619,
       "p_push": 0.184,
-      "min_odds": 1.35
+      "min_odds": 1.36
      },
      {
       "id": "20261205|E1|Wolves|Southampton",
@@ -137648,7 +137872,7 @@
       "team": null,
       "odds": 1.21,
       "odds_source": "estimée",
-      "p_win": 0.794,
+      "p_win": 0.792,
       "p_push": 0.0,
       "min_odds": 1.3
      },
@@ -137658,15 +137882,15 @@
       "team": null,
       "odds": 1.36,
       "odds_source": "estimée",
-      "p_win": 0.713,
+      "p_win": 0.711,
       "p_push": 0.0,
       "min_odds": 1.45
      }
     ],
     "odds": 2.11,
-    "p_win": 0.352,
-    "p_not_lose": 0.456,
-    "ev": -0.179,
+    "p_win": 0.349,
+    "p_not_lose": 0.452,
+    "ev": -0.186,
     "reliability": 0.837,
     "priority": 25,
     "level": "moyenne"
@@ -137771,11 +137995,11 @@
       "id": "20261205|D2|Kaiserslautern|Greuther Furth",
       "market": "1",
       "team": "Kaiserslautern",
-      "odds": 1.59,
+      "odds": 1.58,
       "odds_source": "estimée",
-      "p_win": 0.594,
+      "p_win": 0.598,
       "p_push": 0.0,
-      "min_odds": 1.73
+      "min_odds": 1.72
      },
      {
       "id": "20261205|SC0|Motherwell|Kilmarnock",
@@ -137788,10 +138012,10 @@
       "min_odds": 1.78
      }
     ],
-    "odds": 3.11,
-    "p_win": 0.271,
-    "p_not_lose": 0.271,
-    "ev": -0.272,
+    "odds": 3.09,
+    "p_win": 0.273,
+    "p_not_lose": 0.273,
+    "ev": -0.271,
     "reliability": 1.032,
     "priority": 28,
     "level": "basse"
@@ -137816,11 +138040,11 @@
       "id": "20261205|E3|Walsall|Crawley Town",
       "market": "1",
       "team": "Walsall",
-      "odds": 1.65,
+      "odds": 1.67,
       "odds_source": "estimée",
-      "p_win": 0.573,
+      "p_win": 0.565,
       "p_push": 0.0,
-      "min_odds": 1.8
+      "min_odds": 1.82
      },
      {
       "id": "20261205|P1|Santa Clara|Porto",
@@ -137833,10 +138057,10 @@
       "min_odds": 1.44
      }
     ],
-    "odds": 3.11,
-    "p_win": 0.269,
-    "p_not_lose": 0.269,
-    "ev": -0.275,
+    "odds": 3.15,
+    "p_win": 0.266,
+    "p_not_lose": 0.266,
+    "ev": -0.277,
     "reliability": 1.01,
     "priority": 29,
     "level": "basse"
@@ -137931,11 +138155,11 @@
       "id": "20261205|E1|Middlesbrough|Derby",
       "market": "1",
       "team": "Middlesbrough",
-      "odds": 1.54,
+      "odds": 1.55,
       "odds_source": "estimée",
-      "p_win": 0.613,
+      "p_win": 0.609,
       "p_push": 0.0,
-      "min_odds": 1.68
+      "min_odds": 1.69
      },
      {
       "id": "20261205|F2|Dunkerque|Red Star",
@@ -137948,9 +138172,9 @@
       "min_odds": 2.13
      }
     ],
-    "odds": 3.0,
-    "p_win": 0.297,
-    "p_not_lose": 0.297,
+    "odds": 3.02,
+    "p_win": 0.295,
+    "p_not_lose": 0.295,
     "ev": -0.228,
     "reliability": 0.95,
     "priority": 32,
@@ -138093,9 +138317,9 @@
       "team": null,
       "odds": 1.25,
       "odds_source": "estimée",
-      "p_win": 0.629,
-      "p_push": 0.193,
-      "min_odds": 1.32
+      "p_win": 0.626,
+      "p_push": 0.194,
+      "min_odds": 1.33
      },
      {
       "id": "20261205|SP1|Barcelona|Celta",
@@ -138109,9 +138333,9 @@
      }
     ],
     "odds": 5.25,
-    "p_win": 0.133,
-    "p_not_lose": 0.174,
-    "ev": -0.27,
+    "p_win": 0.132,
+    "p_not_lose": 0.173,
+    "ev": -0.272,
     "reliability": 0.943,
     "priority": 36,
     "level": "basse"
@@ -138293,6 +138517,26 @@
       "min_odds": 1.43
      },
      {
+      "id": "20261205|E1|Watford|Millwall",
+      "market": "o15",
+      "team": null,
+      "odds": 1.37,
+      "odds_source": "estimée",
+      "p_win": 0.71,
+      "p_push": 0.0,
+      "min_odds": 1.45
+     },
+     {
+      "id": "20261205|E2|Peterboro|Oxford",
+      "market": "2",
+      "team": "Oxford",
+      "odds": 1.88,
+      "odds_source": "estimée",
+      "p_win": 0.503,
+      "p_push": 0.0,
+      "min_odds": 2.05
+     },
+     {
       "id": "20261205|F1|Lille|Auxerre",
       "market": "o15",
       "team": null,
@@ -138321,33 +138565,13 @@
       "p_win": 0.738,
       "p_push": 0.0,
       "min_odds": 1.4
-     },
-     {
-      "id": "20261205|D1|Leverkusen|M'gladbach",
-      "market": "o35",
-      "team": null,
-      "odds": 1.87,
-      "odds_source": "estimée",
-      "p_win": 0.504,
-      "p_push": 0.0,
-      "min_odds": 2.04
-     },
-     {
-      "id": "20261205|I2|Padova|Vicenza",
-      "market": "h15",
-      "team": null,
-      "odds": 1.87,
-      "odds_source": "estimée",
-      "p_win": 0.504,
-      "p_push": 0.0,
-      "min_odds": 2.05
      }
     ],
-    "odds": 17.89,
-    "p_win": 0.043,
-    "p_not_lose": 0.043,
-    "ev": -0.371,
-    "reliability": 1.028,
+    "odds": 13.17,
+    "p_win": 0.061,
+    "p_not_lose": 0.061,
+    "ev": -0.345,
+    "reliability": 0.98,
     "priority": 39,
     "level": "basse"
    },
@@ -138378,6 +138602,26 @@
       "min_odds": 1.43
      },
      {
+      "id": "20261205|E1|Watford|Millwall",
+      "market": "o15",
+      "team": null,
+      "odds": 1.37,
+      "odds_source": "estimée",
+      "p_win": 0.71,
+      "p_push": 0.0,
+      "min_odds": 1.45
+     },
+     {
+      "id": "20261205|E2|Peterboro|Oxford",
+      "market": "2",
+      "team": "Oxford",
+      "odds": 1.88,
+      "odds_source": "estimée",
+      "p_win": 0.503,
+      "p_push": 0.0,
+      "min_odds": 2.05
+     },
+     {
       "id": "20261205|F1|Lille|Auxerre",
       "market": "o15",
       "team": null,
@@ -138416,33 +138660,13 @@
       "p_win": 0.504,
       "p_push": 0.0,
       "min_odds": 2.04
-     },
-     {
-      "id": "20261205|I2|Padova|Vicenza",
-      "market": "h15",
-      "team": null,
-      "odds": 1.87,
-      "odds_source": "estimée",
-      "p_win": 0.504,
-      "p_push": 0.0,
-      "min_odds": 2.05
-     },
-     {
-      "id": "20261205|N1|For Sittard|Zwolle",
-      "market": "h15",
-      "team": null,
-      "odds": 1.84,
-      "odds_source": "estimée",
-      "p_win": 0.513,
-      "p_push": 0.0,
-      "min_odds": 2.01
      }
     ],
-    "odds": 32.91,
-    "p_win": 0.022,
-    "p_not_lose": 0.022,
-    "ev": -0.41,
-    "reliability": 1.016,
+    "odds": 24.63,
+    "p_win": 0.031,
+    "p_not_lose": 0.031,
+    "ev": -0.388,
+    "reliability": 0.991,
     "priority": 40,
     "level": "basse"
    },
@@ -138473,6 +138697,26 @@
       "min_odds": 1.43
      },
      {
+      "id": "20261205|E1|Watford|Millwall",
+      "market": "o15",
+      "team": null,
+      "odds": 1.37,
+      "odds_source": "estimée",
+      "p_win": 0.71,
+      "p_push": 0.0,
+      "min_odds": 1.45
+     },
+     {
+      "id": "20261205|E2|Peterboro|Oxford",
+      "market": "2",
+      "team": "Oxford",
+      "odds": 1.88,
+      "odds_source": "estimée",
+      "p_win": 0.503,
+      "p_push": 0.0,
+      "min_odds": 2.05
+     },
+     {
       "id": "20261205|F1|Lille|Auxerre",
       "market": "o15",
       "team": null,
@@ -138531,23 +138775,13 @@
       "p_win": 0.513,
       "p_push": 0.0,
       "min_odds": 2.01
-     },
-     {
-      "id": "20261205|E0|Chelsea|Liverpool",
-      "market": "a15",
-      "team": null,
-      "odds": 1.88,
-      "odds_source": "estimée",
-      "p_win": 0.501,
-      "p_push": 0.0,
-      "min_odds": 2.06
      }
     ],
-    "odds": 61.87,
-    "p_win": 0.011,
-    "p_not_lose": 0.011,
-    "ev": -0.446,
-    "reliability": 0.996,
+    "odds": 84.76,
+    "p_win": 0.008,
+    "p_not_lose": 0.008,
+    "ev": -0.46,
+    "reliability": 0.988,
     "priority": 41,
     "level": "basse"
    },
@@ -138557,6 +138791,16 @@
     "scope": "Toutes ligues",
     "stake_pct": 0.1,
     "legs": [
+     {
+      "id": "20261205|E1|Portsmouth|West Brom",
+      "market": "2",
+      "team": "West Brom",
+      "odds": 2.68,
+      "odds_source": "estimée",
+      "p_win": 0.352,
+      "p_push": 0.0,
+      "min_odds": 2.92
+     },
      {
       "id": "20261205|I2|Juve Stabia|Benevento",
       "market": "1",
@@ -138578,16 +138822,6 @@
       "min_odds": 3.02
      },
      {
-      "id": "20261205|E1|Portsmouth|West Brom",
-      "market": "2",
-      "team": "West Brom",
-      "odds": 2.65,
-      "odds_source": "estimée",
-      "p_win": 0.356,
-      "p_push": 0.0,
-      "min_odds": 2.89
-     },
-     {
       "id": "20261205|SP2|Sabadell|Eibar",
       "market": "2",
       "team": "Eibar",
@@ -138596,16 +138830,6 @@
       "p_win": 0.366,
       "p_push": 0.0,
       "min_odds": 2.82
-     },
-     {
-      "id": "20261205|E1|Bristol City|Swansea",
-      "market": "1",
-      "team": "Bristol City",
-      "odds": 2.46,
-      "odds_source": "estimée",
-      "p_win": 0.384,
-      "p_push": 0.0,
-      "min_odds": 2.69
      },
      {
       "id": "20261205|SP1|Santander|La Coruna",
@@ -138628,20 +138852,30 @@
       "min_odds": 2.58
      },
      {
-      "id": "20261205|E1|Watford|Millwall",
+      "id": "20261205|E1|Bolton|Blackburn",
       "market": "2",
-      "team": "Millwall",
-      "odds": 2.42,
+      "team": "Blackburn",
+      "odds": 2.48,
       "odds_source": "estimée",
-      "p_win": 0.39,
+      "p_win": 0.38,
       "p_push": 0.0,
-      "min_odds": 2.64
+      "min_odds": 2.71
+     },
+     {
+      "id": "20261205|E1|Bristol City|Swansea",
+      "market": "1",
+      "team": "Bristol City",
+      "odds": 2.48,
+      "odds_source": "estimée",
+      "p_win": 0.38,
+      "p_push": 0.0,
+      "min_odds": 2.71
      }
     ],
-    "odds": 1841.32,
+    "odds": 1923.85,
     "p_win": 0.0,
     "p_not_lose": 0.0,
-    "ev": -0.498,
+    "ev": -0.5,
     "reliability": 0.951,
     "priority": 42,
     "level": "basse"
