@@ -416,6 +416,45 @@
     "logloss_raw": 0.59667,
     "logloss_cal": 0.59682
    },
+   "o05": {
+    "label": "Plus de 0,5 but",
+    "n": 21201,
+    "pred": 0.928,
+    "obs": 0.931,
+    "use": false,
+    "coef": [
+     -0.3116,
+     1.1483
+    ],
+    "logloss_raw": 0.23906,
+    "logloss_cal": 0.23896
+   },
+   "o35": {
+    "label": "Plus de 3,5 buts",
+    "n": 21201,
+    "pred": 0.298,
+    "obs": 0.298,
+    "use": false,
+    "coef": [
+     0.0539,
+     1.0636
+    ],
+    "logloss_raw": 0.60159,
+    "logloss_cal": 0.60165
+   },
+   "o45": {
+    "label": "Plus de 4,5 buts",
+    "n": 21201,
+    "pred": 0.149,
+    "obs": 0.142,
+    "use": false,
+    "coef": [
+     0.0724,
+     1.072
+    ],
+    "logloss_raw": 0.40344,
+    "logloss_cal": 0.40321
+   },
    "sh05": {
     "label": "2e mi-temps +0,5 but",
     "n": 21196,
