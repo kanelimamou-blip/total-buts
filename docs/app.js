@@ -167,7 +167,7 @@ function viewCoupons() {
   const list = d.coupons.filter((c) => c.date === state.day);
   const viewKind = (c) => (OBSERVE.has(c.kind) ? "obs" : kindOf(c));
   const match = (c, k) => (k === "all" ? !OBSERVE.has(c.kind) : viewKind(c) === k);
-  const shown = list.filter((c) => match(c, state.kind)).sort((a, b) => a.priority - b.priority);
+  const shown = list.filter((c) => match(c, state.kind)).sort((a, b) => b.p_not_lose - a.p_not_lose);
   const count = (k) => list.filter((c) => match(c, k)).length;
   const frozen = list[0]?.frozen;
   return `
@@ -176,7 +176,7 @@ function viewCoupons() {
   <div class="chips">${KIND_FILTERS.filter(([k]) => count(k)).map(([k, l]) => `<button class="chip" data-kind="${k}" aria-pressed="${k === state.kind}">${l}<span class="c">${count(k)}</span></button>`).join("")}</div>
   ${liveBlock()}
   ${state.kind === "all" ? jumeauBlock(state.day) + `<h2>Les autres coupons</h2><p class="small muted">Pour information seulement : ils perdent plus sur l\u2019historique. Le plan de 10 tickets n\u2019est plus conseillé.</p>` : ""}
-  <p class="small muted">${frozen ? "Coupons du jour figés au premier calcul du matin." : "Coupons provisoires : ils seront affinés quand les cotes du marché seront publiées, puis figés le jour du match."} Classés par priorité.</p>
+  <p class="small muted">${frozen ? "Coupons du jour figés au premier calcul du matin." : "Coupons provisoires : ils seront affinés quand les cotes du marché seront publiées, puis figés le jour du match."} Classés du plus sûr au moins sûr. Seuls les tickets « À jouer » sont conseillés.</p>
   ${state.kind === "obs" ? `<p class="note">En observation : jackpots, cote 1000, relais et combinés longue durée ont beaucoup perdu en réel (bilan du 16 novembre). Ils restent suivis pour voir s’ils se redressent, mais ne sont plus conseillés.</p>` : ""}
   ${shown.map(couponCard).join("") || `<div class="empty">Aucun coupon de ce type ce jour-là.</div>`}
   ${pastBlock()}`;
@@ -209,7 +209,7 @@ function couponCard(c, rank) {
   return `<article class="card">
     <div class="coupon-head">
       <div class="t">
-        ${rank ? `<span class="prio ${c.p_not_lose >= 0.45 ? "haute" : c.p_not_lose >= 0.4 ? "moyenne" : "basse"}"><i></i>${c.p_not_lose >= 0.45 ? "1. Le plus sûr" : c.p_not_lose >= 0.4 ? "2. Sûr" : "3. Bonus"} · ${Math.round(c.p_not_lose * 100)} chances sur 100</span>` : `<span class="prio ${confLevel(c)}"><i></i>Priorité ${c.priority} · confiance ${confLevel(c)}${!PLAN_SKIP.has(c.kind) && c.odds >= 2 && !couponStatus(c).on ? ' · <span class="tag">en veille</span>' : ""}</span>`}
+        <span class="prio ${c.p_not_lose >= 0.45 ? "haute" : c.p_not_lose >= 0.4 ? "moyenne" : "basse"}"><i></i>${c.jumeau && !rank ? "À jouer · " : ""}${c.p_not_lose >= 0.45 ? "1. Le plus sûr" : c.p_not_lose >= 0.4 ? "2. Sûr" : "3. Bonus"} · ${Math.round(c.p_not_lose * 100)} chances sur 100</span>
         <h3>${esc(c.label)}${c.scope && c.scope !== "Toutes ligues" ? " · " + esc(c.scope) : ""}</h3>
         <span class="small muted">${c.legs.length} sélections${c.kind.startsWith("periode") ? " · ticket du " + dayLabel(c.date, state.data.today).toLowerCase() : settled ? "" : " · " + dayLabel(c.date, state.data.today)}</span>
       </div>
