@@ -170,15 +170,22 @@ function viewCoupons() {
   const shown = list.filter((c) => match(c, state.kind)).sort((a, b) => b.p_not_lose - a.p_not_lose);
   const count = (k) => list.filter((c) => match(c, k)).length;
   const frozen = list[0]?.frozen;
-  return `
-  <h1>Coupons</h1>
-  <div class="chips">${days.map((x) => `<button class="chip" data-day="${x}" aria-pressed="${x === state.day}">${dayLabel(x, d.today)}</button>`).join("")}</div>
+  const plan = dayPlan(state.day);
+  const head = `<h1>Coupons</h1>
+  <div class="chips">${days.map((x) => `<button class="chip" data-day="${x}" aria-pressed="${x === state.day}">${dayLabel(x, d.today)}</button>`).join("")}</div>`;
+  const toPlay = `<section class="card"><h2>À jouer · ${plan.length} ticket${plan.length > 1 ? "s" : ""}</h2>
+    ${plan.length ? `<p>Ce sont les tickets du plan que tu suis dans Suivi, et seulement eux. <b>Même petite mise sur chacun.</b> Ils sont rangés du premier au dernier : si tu veux en jouer moins, garde ceux du haut.</p>` : `<p><b>Rien à jouer ce jour-là.</b> Aucun ticket ne remplit les règles du plan.</p>`}
+    <p class="note">Le suivi du plan est encourageant, mais il faut encore quelques semaines pour savoir si c'est plus que de la chance. Aucun ticket n'est garanti, et la taxe de 20 % reste à payer sur les gains.</p></section>
+    ${plan.map((c, i) => couponCard(c, i + 1)).join("")}`;
+  const more = `<button class="btn-copy" data-showall="1">${state.showAll ? "Cacher les autres coupons" : "Voir tous les autres coupons (pour information)"}</button>`;
+  if (!state.showAll) return head + toPlay + more + pastBlock();
+  return head + toPlay + more + `
+  <h2>Tous les autres coupons</h2>
+  <p class="small muted">Pour information seulement, ils ne sont pas conseillés. ${frozen ? "Coupons du jour figés au premier calcul du matin." : "Coupons provisoires, figés le jour du match."}</p>
   <div class="chips">${KIND_FILTERS.filter(([k]) => count(k)).map(([k, l]) => `<button class="chip" data-kind="${k}" aria-pressed="${k === state.kind}">${l}<span class="c">${count(k)}</span></button>`).join("")}</div>
   ${liveBlock()}
-  ${state.kind === "all" ? jumeauBlock(state.day) + `<h2>Les autres coupons</h2><p class="small muted">Pour information seulement : ils perdent plus sur l\u2019historique. Le plan de 10 tickets n\u2019est plus conseillé.</p>` : ""}
-  <p class="small muted">${frozen ? "Coupons du jour figés au premier calcul du matin." : "Coupons provisoires : ils seront affinés quand les cotes du marché seront publiées, puis figés le jour du match."} Classés du plus sûr au moins sûr. Seuls les tickets « À jouer » sont conseillés.</p>
   ${state.kind === "obs" ? `<p class="note">En observation : jackpots, cote 1000, relais et combinés longue durée ont beaucoup perdu en réel (bilan du 16 novembre). Ils restent suivis pour voir s’ils se redressent, mais ne sont plus conseillés.</p>` : ""}
-  ${shown.map(couponCard).join("") || `<div class="empty">Aucun coupon de ce type ce jour-là.</div>`}
+  ${shown.filter((c) => !plan.includes(c)).map((c) => couponCard(c)).join("") || `<div class="empty">Aucun autre coupon de ce type ce jour-là.</div>`}
   ${pastBlock()}`;
 }
 
@@ -209,7 +216,7 @@ function couponCard(c, rank) {
   return `<article class="card">
     <div class="coupon-head">
       <div class="t">
-        <span class="prio ${c.p_not_lose >= 0.45 ? "haute" : c.p_not_lose >= 0.4 ? "moyenne" : "basse"}"><i></i>${c.jumeau && !rank ? "À jouer · " : ""}${c.p_not_lose >= 0.45 ? "1. Le plus sûr" : c.p_not_lose >= 0.4 ? "2. Sûr" : "3. Bonus"} · ${Math.round(c.p_not_lose * 100)} chances sur 100</span>
+        <span class="prio ${c.p_not_lose >= 0.45 ? "haute" : c.p_not_lose >= 0.4 ? "moyenne" : "basse"}"><i></i>${rank ? `Ticket ${rank}` : c.p_not_lose >= 0.45 ? "Le plus sûr" : c.p_not_lose >= 0.4 ? "Sûr" : "Bonus"} · ${Math.round(c.p_not_lose * 100)} chances sur 100</span>
         <h3>${esc(c.label)}${c.scope && c.scope !== "Toutes ligues" ? " · " + esc(c.scope) : ""}</h3>
         <span class="small muted">${c.legs.length} sélections${c.kind.startsWith("periode") ? " · ticket du " + dayLabel(c.date, state.data.today).toLowerCase() : settled ? "" : " · " + dayLabel(c.date, state.data.today)}</span>
       </div>
@@ -669,7 +676,7 @@ function viewTracking() {
   const kinds = Object.entries(d.coupon_kinds);
   const live = d.live || {};
   const tot = Object.values(live).reduce((a, s) => ({ n: a.n + s.n, won: a.won + s.won, units: a.units + s.units }), { n: 0, won: 0, units: 0 });
-  let html = `<h1>Suivi</h1>${myBetsBlock()}${jumeauBlock(null)}${planTracking()}${veilleBlock()}${combosBlock(d, bt)}<h2>Propositions de l'appli</h2>
+  let html = `<h1>Suivi</h1>${myBetsBlock()}${planTracking()}${veilleBlock()}${combosBlock(d, bt)}<h2>Propositions de l'appli</h2>
   <div class="stats">
     <div class="stat tap"${det("allcoupons")}><span class="k">Coupons réglés ›</span><span class="v">${tot.n}</span></div>
     <div class="stat tap"${det("won")}><span class="k">Gagnés ›</span><span class="v">${tot.n ? Math.round((tot.won / tot.n) * 100) + " %" : "–"}</span></div>
@@ -1039,7 +1046,7 @@ const fmt = (x) => Math.round(x).toLocaleString("fr-FR");
 
 /* ---------- Événements ---------- */
 document.addEventListener("click", (e) => {
-  const t = e.target.closest("[data-favview],[data-day],[data-mday],[data-kind],[data-league],[data-sort],[data-match],[data-close],[data-detail]");
+  const t = e.target.closest("[data-favview],[data-showall],[data-day],[data-mday],[data-kind],[data-league],[data-sort],[data-match],[data-close],[data-detail]");
   if (!t) return;
   if (t.dataset.close !== undefined) { $("#sheet").hidden = true; return; }
   if (t.dataset.detail) { openDetail(t.dataset.detail, t.dataset.dv); return; }
@@ -1048,6 +1055,7 @@ document.addEventListener("click", (e) => {
   if (t.dataset.mday) state.mday = t.dataset.mday;
   if (t.dataset.favview) state.favView = !state.favView;
   if (t.dataset.kind) { state.kind = t.dataset.kind; store.set("kind", state.kind); }
+  if (t.dataset.showall) { state.showAll = !state.showAll; }
   if (t.dataset.league) state.league = t.dataset.league;
   if (t.dataset.sort) { state.sort = t.dataset.sort; store.set("sort", state.sort); }
   const y = window.scrollY; route(); window.scrollTo(0, y);
