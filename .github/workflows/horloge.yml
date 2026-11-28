@@ -1,0 +1,35 @@
+name: Horloge (relance chaque heure)
+
+# Les tâches « schedule » de GitHub sont souvent retardées de plusieurs heures. Cette horloge reste allumée
+# près de 6 heures, lance la mise à jour toutes les heures, puis se relance elle-même. Dépôt public : gratuit.
+# Activée à la demande d'Est le 28/11/2026. Pour l'arrêter : désactiver ce workflow dans l'onglet Actions.
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "17 */6 * * *"   # filet de sécurité si la chaîne s'arrête
+
+permissions:
+  actions: write
+  contents: read
+
+concurrency:
+  group: horloge
+  cancel-in-progress: false
+
+jobs:
+  tic:
+    runs-on: ubuntu-latest
+    timeout-minutes: 355
+    env:
+      GH_TOKEN: ${{ github.token }}
+      GH_REPO: ${{ github.repository }}
+    steps:
+      - name: Mise à jour toutes les heures pendant 5 h 45
+        run: |
+          for i in 1 2 3 4 5 6; do
+            gh workflow run update.yml --ref main || echo "relance refusée, on continue"
+            [ "$i" = 6 ] || sleep 3450
+          done
+      - name: Se relancer
+        if: always()
+        run: gh workflow run horloge.yml --ref main
